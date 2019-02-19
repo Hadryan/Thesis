@@ -1,0 +1,38 @@
+\begin{table}[tbp]
+% \renewcommand{\arraystretch}{1.1}
+\caption{\label{tbl_variants_rank_cws}Performance of the variants of the \cws on different datasets for document ranking task. Baselines are described in Table~\ref{tbl_baselines}.}
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{r l l l l l}
+\toprule
+& \multirow{2}{*}{Method} &
+\multicolumn{2}{c}{Robust04} & \multicolumn{2}{c}{ClueWeb}
+\\ 
+\cmidrule(lr){3-4} \cmidrule(lr){5-6}
+& & \small{MAP} & \small{nDCG@20}
+& \small{MAP} & \small{nDCG@20}
+\\ \midrule
+8 & \small{\cws}
+&  \textbf{0.3017} & \textbf{0.4511}
+&  0.1363 & \textbf{0.2444}
+\\
+9 & \small{CWS$_\text{JT}^+$} 
+& 0.2786  & 0.4367  
+& 0.1310  & 0.2244 
+\\ 
+10 & \small{CWS$_\text{ST}$} 
+&  0.2716  & 0.4237 
+&  0.1320  & 0.2213
+\\
+11 & \small{\cws$_\text{CT}$} 
+&  0.2961 & 0.4440 
+&  \textbf{0.1378}  & 0.2431 
+\\ 
+12 & \small{\cws$_\text{PT}$} 
+& 0.2784  & 0.4292  
+& 0.1314  & 0.2207
+\\\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+

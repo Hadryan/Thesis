@@ -1,0 +1,31 @@
+\begin{algorithm}[t!]
+\small
+\caption{Clustered Gaussian processes.}%, 
+\begin{algorithmic}[1]
+\label{alg:CGP}
+\STATE{Let $N$ be the sample size, $n$ the sample size of each cluster, $K$ the number of clusters, and $c_i$ the center of cluster $i$.} 
+\medskip
+\STATE{Run K-means with $K$ clusters over all samples with true labels $\mathcal{D}_s=\{x_i,y_i\}$.}
+\begin{equation*}
+    {\rm K\mbox{-}means}({x_i}) \rightarrow {c_1, c_2, \ldots, c_K}
+\end{equation*}
+where $c_i$ represents the center of cluster $C_i$ containing samples $D_s^{c_i}=\{x_{i,1}, x_{i,2}, ... x_{i,n}\}$.
+\medskip
+\STATE{Assign each of $K$ clusters a Gaussian process and train them in parallel to approximate the label of each sample.}
+\begin{eqnarray*}
+\mathcal{GP}_{c_i}(\bm{m}_{\rm post}^{c_i}, K_{\rm post}^{c_i})&=&\mathcal{GP}(\bm{m}_{\rm prior}, K_{\rm prior}) | D_s^{c_i}=\{(\psi(x_{s,c_i}),y_{s,c_i})\}\\
+\tfunc_{c_i}(x_t) &=& g(\bm{m}_{\rm post}^{c_i}(x_t))\\
+\Sigma_{c_i}(x_t) &=& h(K_{\rm post}^{c_i}(x_t,x_t))
+\end{eqnarray*}
+
+
+
+% \tfunc_{{\rm prior},{c_i}}&=&\mathcal{GP}_{c_i}(\bm{0}, K_{\rm prior})\\
+% T_{c_i}|\mathcal{D}_s^{c_i}, \tfunc{\rm prior }&=&\mathcal{GP}_{c_i}(\bm{m}_{{\rm prior}, {c_i}}, K_{\rm prior})
+
+where $\mathcal{GP}_{c_i}$ is trained on $\mathcal{D}_s^{c_i}$ containing samples belonging to the cluster $c_i$. Other elements are defined in Section~\ref{sec:proposed-method}
+\medskip
+\STATE{Use trained teacher $\tfunc_{c_i}(.)$ to evaluate the soft label and uncertainty for samples from $\mathcal{D}_{sw}$ to compute $\eta_2(x_t)$ required for step 3 of Algorithm~\ref{alg:main}. We use $\tfunc(.)$ as a wrapper for all teachers $\{T_{c_i}\}$.}
+\end{algorithmic}
+\end{algorithm}
+\shrink

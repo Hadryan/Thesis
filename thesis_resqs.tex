@@ -1,0 +1,38 @@
+\usepackage{xstring}
+\newcommand{\resq}[1]{%
+    \IfEqCase{#1}{%
+    % -------------PART I-------------
+    {p1}{How to use the structure of the data as prior knowledge to learn robust and effective representations?}
+    % -------------chapter 2-------------
+    {c2}{How to learn robust representations that are affected by neither undiscerning general, nor noisy accidental features, given  the structural relations in the data?}%
+    %
+    {c2.1}{How to estimate a representation for a set of entities that captures all, and only, the essential shared commonalities of these entities?}
+    %
+    {c2.2}{How does \swlms captures the mutual notion of relevance for a set of feedback documents and prevent noisy terms by controlling the contribution of each of documents in the feedback model?}%
+    %
+    {c2.3}{How well can \swlms profile groups of entities and how effective these profiles are in content customization tasks?}%
+    % -------------chapter 3-------------
+    {c3}{How to learn separable representations for hierarchically structured data that are less sensitive to structural changes and more transferable across time?}%
+    %
+    {c3.1}{What makes separability of representations a desirable property for classifiers?}%
+    %
+    {c3.2}{How can we estimate horizontally and vertically separable representations for the hierarchically structured entities?}%
+    %
+    {c3.3}{How separability of representations can improve their transferability?}%
+    % -------------PART II-------------
+    {p2}{How to design models that can learn from imperfect examples?}
+    % -------------chapter 4-------------
+    {c4}{How to train neural networks using pragmatically generated labels, as the weak supervision signal, that will exhibit superior generalization capabilities?}%
+    %
+    {c4.1}{Can labels from an unsupervised heuristic-based model be used as pragmatically generated weak supervision signal to train an effective neural network?}
+    %
+    {c4.1}{Can labels from an unsupervised heuristic-based model be used as pragmatically generated weak supervision signal to train an effective neural network?}
+    %
+    {c4.2}{What setup in terms of input representation and learning objective is most suitable for a neural ranker when training on pragmatically generated labeled data?}
+    %
+    {c4.3}{How learning from weak supervision signals can help preserving privacy while training neural networks on sensitive data?}
+    % -------------chapter 5-------------
+    % -------------PART III-------------
+    % -------------chapter 6-------------
+    }[\PackageError{rq}{Undefined option to rq: #1}{}]%
+}%

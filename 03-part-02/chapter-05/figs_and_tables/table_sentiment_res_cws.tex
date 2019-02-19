@@ -1,0 +1,25 @@
+\begin{table}[!t]
+            \renewcommand{\arraystretch}{1.1}
+            \centering
+            \caption{\label{tbl_variants_sent_cws}Performance of the variants of the \cws on different datasets for the sentiment classification task. Baselines are described in Table~\ref{tbl_baselines}.}
+            \begin{tabular}{r l l l}
+            \toprule
+            & Method & SemEval-14 & SemEval-15
+            \\ \midrule
+            8 & \small{\cws} 
+            & 0.7362 & 0.6626
+            \\
+            9 & \small{\cws$_\text{JT+}$} 
+            & 0.7310 & 0.6551
+            \\
+            10 & \small{\cws$_\text{ST}$} 
+            & 0.7183 & 0.6501
+            \\
+            11 & \small{\cws$_\text{CT}$} 
+            & \textbf{0.7363} & \textbf{0.6667}
+            \\
+            12 & \small{\cws$_\text{PT}$}
+            & 0.7009 & 0.6118
+            \\\bottomrule
+            \end{tabular}
+\end{table}

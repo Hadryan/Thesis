@@ -1,0 +1,87 @@
+\begin{figure}[!t]
+\centering
+\resizebox{0.9\linewidth}{!}{%
+\begin{tikzpicture}
+\pgfkeys{
+     /pgf/number format/precision=2, 
+    /pgf/number format/fixed zerofill=true,
+    /pgf/number format/fixed
+}
+\begin{axis}[
+    width= 12cm, %\textwidth,
+    height=5cm, %5cm,
+    ybar,%=0pt,
+    ymajorgrids,
+    minor tick num=1,
+    bar width= 6.5pt,
+    enlarge y limits=0.25,
+    symbolic x coords={
+    VVD,
+    PvdA,
+    CDA,
+    PVV,
+    SP,
+    D66,
+    CU,
+    GL,
+    Opposition,
+    Government
+},
+    x tick label style={rotate=45,anchor=east},
+    xtick=data,
+    % ymin=0.0, 
+    % ymax=0.5,
+    ytick = {0.00,0.10,0.20,0.30,0.40,0.50},
+    ylabel={},
+    %legend style={at={(0.9,0.95),font=\fontsize{5}{6}},
+    anchor=north,
+    ylabel={JS-Divergence},
+%    legend style={at={(0.65,-0.2),font=\fontsize{5}{6}},
+    legend style={at={(0.965,0.95),font=\fontsize{5}{6}\selectfont},
+    legend columns=1
+    },
+    nodes near coords,
+    every node near coord/.append style={font=\fontsize{3}{4}\selectfont, rotate=90, anchor=west},
+    %nodes near coords align={vertical},
+    tick label style={font=\fontsize{5}{6}\selectfont}
+    ]
+\definecolor{b}{HTML}{3399FF}
+\definecolor{g}{HTML}{5C7C19}
+\addplot[fill=b, draw=b] coordinates
+{
+(VVD,0.3422)
+(PvdA,0.3917)
+(CDA,0.3889)
+(PVV,0.2422)
+(SP,0.3050)
+(D66,0.2979)
+(CU,0.4336)
+(GL,0.4471)
+(Opposition,0.1562)
+(Government,0.2471)
+};
+
+\addplot[fill=g, draw=g, pattern color = g, pattern = north west lines] coordinates
+{
+(VVD,0.1639)
+(PvdA,0.1631)
+(CDA,0.1666)
+(PVV,0.1641)
+(SP,0.1918)
+(D66,0.1890)
+(CU,0.1757)
+(GL,0.2759)
+(Opposition,0.0512)
+(Government,0.0759)
+};
+
+\legend{SLM,\acswlm}
+
+\end{axis}
+\end{tikzpicture}
+}
+\vspace{-12pt}
+\caption{
+Average of JS-Divergence of standard language models and {\acswlm}s for parliamentary entities in three different periods.\label{fig:cross_period_party_rep_divergence}}
+ \vspace{-10pt}
+ \end{figure}

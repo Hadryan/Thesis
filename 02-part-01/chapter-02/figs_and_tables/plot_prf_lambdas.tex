@@ -1,0 +1,70 @@
+\begin{figure*}[t!]
+    \centering
+    \begin{subfigure}[t]{0.35\textwidth}
+\begin{tikzpicture}[thick,scale=0.50, every node/.style={transform shape}]
+\begin{ternaryaxis} [colorbar style={ylabel=Rank},
+%   width= 7.6cm, %\textwidth,
+%   height=6cm, %5cm,
+   label style={font=\fontsize{6}{7}\selectfont},
+   ternary limits relative = false,
+   xmin=0, xmax=1, xlabel = \large{$\boldsymbol{\lambda_{d,sw}}$},
+   ymin=0, ymax=1, ylabel = \large{$\boldsymbol{\lambda_{d,g}}$},
+   zmin=0, zmax=1, zlabel = \large{$\boldsymbol{\lambda_{d,s}}$},
+   label style={sloped},
+   minor tick num=1,
+   %point meta rel=per plot,% I added this such that my patch plot does NOT affect the second plot
+   grid=both,
+   ]
+    %\addplot3[patch,patch type=triangle,shader=interp,point meta=\thisrow{Rank}] table {data1.dat};
+    \addplot3[scatter,only marks, point meta=\thisrow{Rank}] table {lambdas_robust.dat};
+\end{ternaryaxis}
+\end{tikzpicture}
+\caption{Robust04 dataset}
+% \vspace{-5pt}
+    \end{subfigure}%
+    %~
+    \begin{subfigure}[t]{0.35\textwidth}
+\centering
+\begin{tikzpicture}[thick,scale=0.50, every node/.style={transform shape}]
+\begin{ternaryaxis} [
+   colorbar style={ylabel=Rank,},
+   ternary limits relative=false,
+   xmin=0, xmax=1, xlabel = \large{$\boldsymbol{\lambda_{d,sw}}$},
+   ymin=0, ymax=1, ylabel = \large{$\boldsymbol{\lambda_{d,g}}$},
+   zmin=0, zmax=1, zlabel = \large{$\boldsymbol{\lambda_{d,s}}$},
+   label style={sloped},
+   minor tick num=1,
+   grid=both,
+   ]
+    \addplot3[scatter,only marks, point meta=\thisrow{Rank}] table {lambdas_wt10g.dat};
+\end{ternaryaxis}
+\end{tikzpicture}
+\caption{WT10G dataset}
+% \vspace{-5pt}
+    \end{subfigure}%
+    %~ 
+    \begin{subfigure}[t]{0.35\textwidth}
+\centering
+\begin{tikzpicture}[thick,scale=0.50, every node/.style={transform shape}]
+\begin{ternaryaxis} [colorbar, colorbar style={ylabel=Rank,  ytick = {1,20,40,60,80,100}},
+   ternary limits relative=false,
+   xmin=0, xmax=1, xlabel = \large{$\boldsymbol{\lambda_{d,sw}}$},
+   ymin=0, ymax=1, ylabel = \large{$\boldsymbol{\lambda_{d,g}}$},
+   zmin=0, zmax=1, zlabel = \large{$\boldsymbol{\lambda_{d,s}}$},
+   label style={sloped},
+   minor tick num=1,
+   grid=both,
+   ]
+    \addplot3[
+                scatter,
+                only marks,
+                point meta=\thisrow{Rank}
+                ] table {lambdas_gov2.dat};
+\end{ternaryaxis}
+\end{tikzpicture}
+\caption{GOV2 dataset}
+% \vspace{-5pt}
+    \end{subfigure}
+    \caption{\label{fig:lambdas} Contribution of each of the relevance, general, and specific models in the top-100 documents as the feedback set, according to the $\lambda$s learned in the \acrswlm (the average over all the queries).}
+% \vspace{-10pt}
+\end{figure*}

@@ -1,0 +1,56 @@
+\pgfplotstableread{
+0    0.4801  0.8616  0.7492  
+1    0.5667  0.5941  0.2422
+2    0.3422  0.3222  0.6822
+}\dataset
+
+\definecolor{b}{HTML}{4981CE}
+\definecolor{g}{HTML}{859C27}
+\definecolor{r}{HTML}{B22222}
+\definecolor{o}{HTML}{FF6600}
+
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}
+\pgfkeys{
+    /pgf/number format/precision=2, 
+    /pgf/number format/fixed zerofill=true,
+    /pgf/number format/fixed
+}
+\begin{axis}[
+    width= 8.4cm, %\textwidth,
+    height=5.7cm, %5cm,
+    enlarge y limits=0.0,
+    enlarge x limits=0.2,
+    ymajorgrids,
+    minor tick num=1,
+    ybar,%=0pt,,
+    bar width= 12pt,
+    xtick=data,
+    xticklabel style = {font=\fontsize{7}{8}\selectfont, align=center, text width=1.8cm},
+    xticklabels = {Different Parties Same Period, Same Party Different Periods, Different Parties  Different Periods},
+    ymin=0.0, 
+    ymax=1.0,
+    ytick = {0.00,0.10,0.20,0.30,0.40,0.50,0.60,0.70,0.80,0.90, 1.0},
+    label style = {font=\fontsize{7}{8}\selectfont, yshift=0.5ex},
+    anchor=north,
+    ylabel={JS-Divergence},
+    legend style={at={(0.965,0.95),font=\fontsize{5}{6}\selectfont},
+    legend columns=-1
+    },
+    nodes near coords,
+    every node near coord/.append style={font=\fontsize{5}{6}\selectfont, rotate=90, anchor=west},
+    tick label style={font=\tiny},
+    ]
+
+\addplot[fill=b, draw=b, pattern color = b, pattern = north east lines] table[x index=0,y index=1] \dataset; 
+
+\addplot[fill=r, draw=r, pattern color = r, pattern = dots] table[x index=0,y index=3] \dataset; 
+
+\legend{TF,\achswlm}
+
+\end{axis}
+\end{tikzpicture}
+\caption{
+Average diversity of the representation of features of CDA and PvdA in different situations\label{fig:cross_period_rep_divergence}.}
+ \end{figure}

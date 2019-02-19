@@ -1,0 +1,91 @@
+\chapter{Neither General, nor Specific, but Significant}
+\label{chap:2}
+
+\section{Introduction}
+Humans instinctively know how to efficiently ``select details'' that are useful for recognition and at the same time ``abstract away'' unnecessary or noisy details.~\cite{tenenbaum2011grow, gentner1997structure, battaglia2018relational} 
+This is, in fact, a survival trait, since we cannot possibly save all the detail around us in our brain. Hence, to define objects and actions, we can extract a subset from an extensive but finite set of existing features that are neither \emph{too specific}, nor \emph{too general}, but \emph{significant}. In many cases, this is done by analyzing inheritance (is-a) and composition (has-a) relationships between concepts, entities, and actions~\citep{goodwin2005reasoning, botvinick2008hierarchical}. 
+Inspired by that, in this chapter, we explore ideas to address one of our research questions:
+\begin{resqbox}
+\emph{\resq{c2}}
+\end{resqbox}
+
+
+We presents our ideas and discussions in the context of language understanding tasks, in particular modeling textual entities for information retrieval applications. As the modeling approach, we estimate unigram language model, or so-called  ``bag of words'' model, to represent an entity, like a person, organization, category, etc, given a set of texts connected to the entity.  In fact, we assume that the textual documents associated with an entity are samples drawn from the distribution of a model that represents the entity, and then estimate the model given these samples.
+
+More specifically, we introduce \textsl{\swlms}\ (\acswlm)~\cite{Dehghani:CIKM2016:long, Dehghani:2016:CHIIR, Dehghani2016:trec} as a family of models aim at learning representations for an entity, given a set of documents associated with the entity, so that \emph{all, and only}, the significant shared terms are captured in the models. This makes these models to be not only distinctive but also supported by all the documents in the set. In short, this is achieved by adjusting the weights of terms already well explained by the all the existing documents in the collection as well as the weight of terms that are only explained by a specific document in the set, which eventually results in having the significant terms left in the model. 
+\input{02-part-01/chapter-02/figs_and_tables/fig_luhn.tex}
+
+The general the idea of \acswlm is inspired by the early work of \citet{Luhn:1958}, in which he argues that to extract \textbf{significant words}, we need to avoid both common observations and rare observations. \citeauthor{Luhn:1958} assumed that frequency data can be used to measure the significance of words concerning their ability to represent a piece of text.  Considering Zipf's Law, he simply devised a counting technique for finding significant words where he specified two cut-offs based on collection frequency of terms, an upper and lower (see Figure~\ref{fig:Luhn}), to exclude non-significant words.
+
+There have been efforts to bring this idea to estimate a more precise language model, like mixture models~\citep{Zhai:SMM:2001} and parsimonious language models~\citep{Hiemstra:2004}. These work tried to improve the raw language model by eliminating the effect of common terms from the model. However, instead of using fixed frequency cut-offs, they made use of a more advanced way to do this. \citeauthor{Hiemstra:2004} stated the following in their paper:
+\begin{displayquote}
+
+\textsl{
+[\ldots] our approach bears some resemblance with early work on information retrieval by Luhn, who specifies
+two word frequency cut-offs, an upper and a lower to exclude non-significant words. 
+The words exceeding the upper cut-off are considered to be common and those below the lower cut-off rare, and therefore not contributing significantly to the content of the document. \ul{Unlike Luhn, we do not exclude rare words} and we do not have simple frequency cut-offs [\ldots]}
+
+\end{displayquote} 
+In a way, the idea of \acswlm completes the cycle, implementing the vision of \citeauthor{Luhn:1958}.  We introduce a meaningful translation of both \textit{specificity} and \textit{generality} against \textit{significance} in the context of learning representation for an entity given the set documents associated with it. Then we propose an effective way of estimating a model in which we learn a distribution over terms that is affected by neither the common observations nor the rare observations. 
+%
+
+While estimating \acswlm, as a distribution over terms to represent an entity given the set of documents associated with it, we cast aside terms that are not specific enough to reflect features of the entity that makes its representation distinguishable from other entities. At the same time, we abstract away from noisy factors of variation which are document specific terms that are not general enough to describe all the documents as a set representing the entity.
+
+
+\subsection{Preliminaries}
+~\label{chap2_preliminaries}
+In Part~\ref{part1} of this book, i.e. Chapter~\ref{chap:2} and ~\ref{chap:3}, an ``entity'' can refer to a concept, a person, an organization, a category, or an ideology, where the entity is associated with a set of texts that are sequences of words. The associated texts with an entity, for instance for the aforementioned examples, can be speeches given by the person, the documents published by the organization, the text associated by instances of the category, and the set of documents describing the ideology.
+%
+% We also focus on learning representations that capture the \emph{notion of relevance} for applications like retrieval, where the main goal is retrieving relevant information, given a query, and classification where the main goal is to classify entities into classes based on their relevance to the underlying concepts of class labels.
+%
+Here, as the modeling approach, we use ``language model'' and we stick to the simplest form of language models, unigram language model, in which we assume that a word sequence is generated by generating each word independently that specifies a multinomial distribution over all the words. Thus, the probability of a sequence of words would be equal to the product of the probability of each word.  
+
+In order to model an observed sequence of words $d$, we assume it is generated using a unigram language model $\theta$ and we would like to infer the $\theta$, i.e., estimate the probability of each word $w$ given the model, $p(w|\theta)$, based on the observed $d$. 
+
+As an standard and simple way, we can estimate the language model using maximum likelihood estimator and find the $\hat{\theta}$ that gives the observed data the highest likelihood:
+\begin{equation}
+\hat{\theta} = \argmax_\theta p(d|\theta)
+\end{equation}
+
+By writing down the log-likelihood function and using the Lagrange multiplier to combine the constraint of $\sigma_{w in v}p(w|d) =1$ with the original log-likelihood function, we can get to a new unconstrained optimization problem. Then, by taking partial derivatives of this function and setting them to zero, we can obtain the solution for $\theta$ which gives each word a probability equal to its relative frequency in $d$:
+\begin{equation}
+    p(w|\hat{\theta} = \frac{c(w, d)}{|d|},
+\end{equation}
+where $c(w, d)$ is the count of word $w$ in $d$ and $|d|$ is the length of $d$ that is equal to total number of words in $d$.
+
+Unigram language model clearly makes unrealistic assumptions about independent word occurrences in text. To address this limitation, $N-$gram language model captures some limited dependency between words and assumes the occurrence of a word depends on the proceeding $n-1$ words.  However, as the complexity of a language model increases, so does the number of parameters and we would need much more data to infer the model. Moreover, the computational cost of complex language models is also a concern for some of the large-scale retrieval or classification tasks. 
+%
+In information retrieval, bigram or trigram language models tend not to improve much over the unigram language model. This might be due to the data sparseness where bigram or trigram language models overfit, or the information about presence or absence of words and word frequencies may be sufficient to determine the relevance of a document while the exact word order may not be so important, unlike other language understanding tasks like machine translation or speech recognition. For machine translation, unigram language models are clearly insufficient and more sophisticated language models would be needed. 
+
+Since a language model is a probabilistic model of text data, a direct way of evaluating a language model would be to assess how well the model fits the test data, for instance using the likelihood of the test data given a model to be evaluated, where a higher likelihood would indicate a better fit, thus a better language model.
+However, fitting the data well does not necessarily imply better performance for the task at hand. To avoid this gap, here we use an indirect way of evaluating the quality of a language model by assessing the contribution of them to the retrieval or classification performance.
+
+\subsection{Detailed Research Questions}
+We break down our main research question in this chapter into three concrete research questions:
+\begin{resqbox}
+\begin{enumerate}
+\item[\textbf{RQ2.1}] \emph{\resq{c2.1}}
+\item[\textbf{RQ2.2}] \emph{\resq{c2.2}}
+\item[\textbf{RQ2.3}] \emph{\resq{c2.3}}
+\end{enumerate}
+\end{resqbox}
+In the following sections, we will address these research questions.
+
+\input{02-part-01/chapter-02/model.tex}
+\input{02-part-01/chapter-02/applications.tex}
+\input{02-part-01/chapter-02/related_work.tex}
+
+\section{Conclusion} 
+In this chapter, inspired by the discussion on the early work by~\citet{Luhn:1958} about \emph{significant words}, we proposed \emph{\swlms}\ (\acswlm) to estimate a representation for a set of documents that captures significant terms by avoiding the distracting effect of common observation as well as rare observation.
+
+We showed that utilizing \acswlm as the feedback model presents promising performance on both true and pseudo relevance feedback. Analysing the results, we indicated that the strength of \acswlm in feedback is due the fact that it is capable of controlling the contribution of feedback documents in the feedback model based on their level of relevancy which copes with the problem of topic drift in query expansion. We assessed the robustness of \acswlm in different experiments and showed that in PRF, both it has the least vulnerability against noise in the data in the form of non-relevant terms and/or non-relevant documents in feedback set.
+%
+We also employed \acswlm as a group profiling approach for the task of contextual suggestion, and our experimental results showed using the group representations estimated by \acswlm, we can improve the performance of content customization. 
+
+We named our model, significant ``words'' language model in honor of \citeauthor{Luhn:1958}, however, it could be employed in non-textual environments, since in general the idea is to extract significant ``features'' representing the shared essence of a group of entities.
+
+% connecting chapter 2 to chapter 3:
+The process of estimating \acswlm leads to a sparse model, i.e. $\theta_{sw}$ assigns zero probability to many terms that are identified as either too general or too specific for representing and entity. Sparsity has a central role in human episodic memory.  In human brain, sparse activities is important to separate representations as it reduces the risk that a single neuron holds representations of two overlapping memories\citep{cho2018blockchain}. In addition to human brain, for many systems, sparsity is a desirable property, like for instance sparse representations are easier to interpret or sparse representations are more likely to posses separability which is important for collision resistance hash functions. 
+In Chapter~\ref{chap:3}, we extend \acswlm to hierarchically structured entities and discuss separability as a key objective for learning the representations.
+
+

@@ -1,0 +1,92 @@
+    \definecolor{b}{HTML}{4981CE}
+    \definecolor{g}{HTML}{859C27}
+    \definecolor{r}{HTML}{B22222}
+    \definecolor{o}{HTML}{FF6600}
+
+\begin{figure}[!t]
+\centering
+\pgfplotsset{
+    % #1: index in the group(0,1,2,...)
+    % #2: number of plots of that group
+    bar group size/.style 2 args={
+        /pgf/bar shift={%
+                % total width = n*w + (n-1)*skip
+                % -> subtract half for centering
+                -0.5*(#2*\pgfplotbarwidth + (#2-1)*\pgfkeysvalueof{/pgfplots/bar group skip})  + 
+                % the '0.5*w' is for centering
+                (.5+#1)*\pgfplotbarwidth + #1*\pgfkeysvalueof{/pgfplots/bar group skip}},%
+    },
+    bar group skip/.initial=2pt,
+    plot 0/.style={fill=b, draw=b, pattern color = b, pattern = north east lines},%
+    plot 1/.style={fill=g, draw=g, pattern color = g, pattern = north west lines},%
+    plot 2/.style={fill=r, draw=r, pattern color = r, pattern = dots},%
+}
+\begin{tikzpicture}
+    \begin{axis}[
+       width= 8.6cm, %\textwidth,
+        height=7cm, %5cm,
+        ybar,%=0pt,
+        bar width= 7pt,
+        enlarge y limits=0.2,
+        ymajorgrids,
+        minor tick num=1,
+        %x tick label style={/pgf/number format/1000 sep=},
+        x tick label style={rotate=45,anchor=east},
+    xtick=data,
+    %legend style={at={(0.9,0.95),font=\fontsize{5}{6}},
+    anchor=north,
+    ylabel={MAP},
+  legend style={at={(0.965,-0.28)}
+  %legend style={at={(0.965,0.95),font=\fontsize{5}{6}}
+  ,legend columns=-1},
+    nodes near coords,
+    every node near coord/.append style={font=\tiny, rotate=90, anchor=west},
+    %nodes near coords align={vertical},
+%    tick label style={font=\tiny}
+            xtick={1,2,3,4,5,6,7},
+            xticklabels={
+            age,
+            gender,
+            group,
+            t-type,
+            t-duration,
+            season,
+            preferences
+        },
+        ]
+                
+\addplot[plot 0,bar group size={0}{2}]
+        coordinates 
+        {
+(1,0.3123)
+(2,0.2417)
+(3,0.2989)
+(4,0.2122)
+(5,0.3971)
+(6,0.2879)
+};
+        \addplot[plot 1,bar group size={1}{2}]
+        coordinates {
+(1,0.6713)
+(2,0.5187)
+(3,0.5811)
+(4,0.5066)
+(5,0.5799)
+(6,0.5562)
+};
+
+        \addplot[plot 2,bar group size={0}{1}]
+        coordinates {
+(7,0.5136)
+};
+
+
+\legend{Group, Group+Preferences, Preferences}
+
+\end{axis}
+\end{tikzpicture}
+% \vspace{-4pt}
+\caption{
+Performance of employing user preferences\:-\:based and group-\:based customization on contextual suggestion task. Improvements of combining group-\:based and preferences\:-\:based approach over the preferences\:-\:based approach and corresponding group-\:based approaches are statistically significant based on one-tailed t-test, with p-value $<$ 0.05. \label{fig:Chart1}}
+%  \vspace{-5pt}
+ \end{figure}

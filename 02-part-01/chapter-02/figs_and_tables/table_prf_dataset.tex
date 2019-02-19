@@ -1,0 +1,25 @@
+\newcommand{\multilinecell}[2][c]{%
+\begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+\begin{table}[tbp]
+\centering
+\caption{\label{tbl_dataset}Statistics of the collections used for experimental evaluations}
+% \vspace{-5pt}
+\begin{adjustbox}{max width=\columnwidth}
+% \fontsize{7}{8}\selectfont
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Dataset} 
+& \multicolumn{1}{c}{\textbf{Task}} 
+& \multicolumn{1}{c}{\textbf{Queries}} 
+& \multicolumn{1}{c}{\textbf{\#Docs}} 
+& \multicolumn{1}{c}{\textbf{\multilinecell{\#Queries in TRF exp.}}}
+\\ \midrule
+\textbf{Robust04} & 2004, Robust & \multilinecell{301-450 and 601-700} & 528,155 & 217
+\\ 
+\textbf{WT10G} & \multilinecell{TREC9, 10, Web ad-hoc} & 451-550 & 1,692,096  &  81
+\\ 
+\textbf{GOV2} & \multilinecell{TREC'04-'06 Terabyte Track} & 701-850 & 25,178,548 & 134
+\\ \bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

@@ -1,0 +1,51 @@
+\begin{figure}[tp]
+  \centering
+  \begin{small}
+  \begin{tikzpicture}
+    [
+      observed/.style={
+      minimum size=1pt,circle,draw=black!50,fill=black!20
+      },
+      unobserved/.style={
+      minimum size=1pt,circle,draw
+      },
+      hyper/.style={
+      minimum size=1pt,circle,fill=black
+      },
+      post/.style={
+      ->,>=stealth',shorten >=1pt,auto,node distance=7 cm,
+                semithick, scale = 1, transform shape
+      },
+      %thick,scale=0.65, 
+      %every node/.style={transform shape}
+    ]
+
+    \node (t) [observed] at (0,0) {$t$};
+    \node (X) [unobserved] at (-1.5,0) {$X$};
+    \node (l) [unobserved] at (-3,0) {$\lambda$};
+    \node (g) [observed] at (1.5,1) {$\theta_g$};
+    \node (r) [unobserved] at (1.5,0) {$\theta_{sw}$};
+    \node (s) [observed] at (1.5,-1) {$\theta_s$};
+    \node (q) [label=left:$\beta$] at (0,1.3) {};
+    \filldraw [black] (0,1.3) circle (3pt);
+   
+    \path
+    (X) edge [post] (t)
+    (l) edge [post] (X)
+    (r) edge [post] (t)
+    (s) edge [post] (t)
+    (g) edge [post] (t)
+    (q) edge [post] (t)
+    ;
+
+    \node [draw,fit= (t) (l), inner sep=15pt] (plate-context) {};
+    \node [above right] at (plate-context.south west) {$|\mathcal{F}|$};
+    \node [draw,fit=(t) (X), inner sep=10pt] (plate-token) {};
+    \node [above right] at (plate-token.south west) {$N$};
+    \node [draw,fit= (s) (r) (g), inner sep=5pt] (plate-context) {};
+    
+  \end{tikzpicture}
+  \end{small}
+  \caption{\label{fig:graphical_model_rswlm}Plate diagram of \acrswlm.}
+\vspace{-10pt}
+\end{figure}

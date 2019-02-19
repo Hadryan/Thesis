@@ -1,0 +1,23 @@
+\begin{figure}[!t]
+\centering
+\begin{algorithm}[H]
+\captionsetup{labelformat=empty}
+\begin{algorithmic}[1]
+\Procedure{Generalization}{}
+\State Stack $\gets$ all entities in breadth first order
+\While{Stack is not empty}
+  \State $e \gets$ Stack.pop()
+  \State $l \gets e$.Height()
+  \While{$l > 0$}
+    \State $D \gets e$.\Call{getDecedents}{$l$}
+    \State \Call{Parsimonize}{$e$,$D$}
+    \State $l \gets l-1$  
+  \EndWhile
+\EndWhile
+\EndProcedure
+\end{algorithmic}
+\captionof{algorithm}{Generalization Stage}
+\end{algorithm}
+\vspace{-10pt}
+\caption{\label{alg:generalization_stage}Procedure of Generalization. $e$. Function \Call{getDecedents}{$l$} gives all the decedents of entity $e$ with $l$ edges distance from it. Function \textsc{Parsimonize}($e$,$B$)  parsimonizes $\theta_e$ given background models in $B$.}
+\end{figure}

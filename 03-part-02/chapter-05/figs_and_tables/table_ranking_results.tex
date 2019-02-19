@@ -1,0 +1,53 @@
+\begin{table}[tbp]
+\renewcommand{\arraystretch}{1.1}
+\caption{\label{tbl_main}Performance of \cws and \fwl as well as the main baseline methods, described in Table~\ref{tbl_baselines}, for the document ranking task. \pssmall{i} indicates that the improvements with respect to the baseline $i$ are statistically significant at the 0.05 level using the paired two-tailed t-test with Bonferroni correction.}
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{r l l l l l}
+\toprule
+& \multirow{2}{*}{Method} &
+\multicolumn{2}{c}{Robust04} & \multicolumn{2}{c}{ClueWeb}
+\\ 
+\cmidrule(lr){3-4} \cmidrule(lr){5-6}
+& & \small{MAP} & \small{nDCG@20}
+& \small{MAP} & \small{nDCG@20}
+\\ \midrule
+1 & \small{WA$_\text{BM25}$} 
+& 0.2503\pssmall{2} & 0.4102\pssmall{2}  
+& 0.1021\pssmall{2} & 0.2070\pssmall{2}
+\\ \midrule
+2 & \small{$\text{NN}_{\text{S}}$} 
+& 0.1790 & 0.3519  
+& 0.0782 & 0.1730
+\\
+3 & \small{$\text{NN}_{\text{W}}$} 
+& 0.2702\pssmall{12} & 0.4290\pssmall{12}  
+& 0.1297\pssmall{12} & 0.2201\pssmall{12}
+\\ \midrule
+4 & \small{$\text{NN}_{\text{W}\text{/S}^+}$} 
+&  0.2763\pssmall{123} & 0.4330\pssmall{123} 
+&  0.1354\pssmall{123} & 0.2319\pssmall{123}
+\\
+5 & \small{$\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$} 
+&  0.2810\pssmall{12346} & 0.4372\pssmall{12346} 
+&  0.1346\pssmall{12346} & 0.2317\pssmall{12346}
+\\
+6 & \small{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Sup}}_{\text{S}}$}
+&  0.2711\pssmall{123} & 0.4203\pssmall{123} 
+&  0.1002\pssmall{123} & 0.1940\pssmall{123}
+\\
+7 & \small{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Rep}}_{\text{S}}$}
+&  0.2810\pssmall{1234} & 0.4316\pssmall{1234} 
+&  0.1286\pssmall{1234} & 0.2240\pssmall{1234}
+\\
+8 & \small{\cws}
+&  0.3017\pssmall{1234567} & 0.4511\pssmall{1234567} 
+&  0.1363\pssmall{1234567} & 0.2444\pssmall{1234567}
+\\
+13 & \small{\fwl}
+& \textbf{0.3124}\pssmall{1234567}  & \textbf{0.460}\pssmall{1234567} & \textbf{0.1472}\pssmall{1234567}  & \textbf{0.2453}\pssmall{1234567}
+\\\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+

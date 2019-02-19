@@ -1,0 +1,22 @@
+\begin{figure}[!t]
+\centering
+\begin{algorithm}[H]
+\captionsetup{labelformat=empty}
+\begin{algorithmic}[1]
+\Procedure{Specification}{}
+\State Queue $\gets$ all entities in breadth first order
+\While{Queue is not empty}
+  \State $e \gets$ Queue.pop()
+  \State $l \gets e$.Depth()
+  \While{$l > 0$}
+    \State $A \gets e$.\Call{getAncestor}{$l$}
+    \State \Call{Parsimonize}{$e$,$A$}
+    \State $l \gets l-1$  
+  \EndWhile
+\EndWhile
+\EndProcedure
+\end{algorithmic}
+\captionof{algorithm}{Specification Stage}
+\end{algorithm}
+\caption{\label{alg:specification_stage}Procedure of Specification. $e$. Function \Call{getAncestor}{$l$} gives the ancestor of entity $e$ with $l$ edges distance from it. Function \textsc{Parsimonize}($e$,$B$)  parsimonizes $\theta_e$ given background models in $B$}
+\end{figure}

@@ -1,0 +1,178 @@
+\begin{figure}[t!]
+\centering
+    \definecolor{b}{HTML}{A9A9F5}
+    \definecolor{g}{HTML}{6DDABD}
+    \definecolor{r}{HTML}{E58383}
+    \definecolor{bb}{HTML}{5C5CEA}
+    \definecolor{gg}{HTML}{09CF9A}
+    \definecolor{rr}{HTML}{E63636}
+\begin{tikzpicture}
+\begin{groupplot}[
+        group style={
+        group size=1 by 2,
+        xlabels at=edge bottom,
+        xticklabels at=edge bottom,
+        vertical sep=0pt,
+        },
+        xlabel=Number of Feedback document,
+        xtick align=outside,xtick pos=left,
+        scale only axis,
+	    minor tick num=1,
+	    width=7.4cm,
+        height=5.7cm,
+        xtick = {0,..., 10},
+        cycle list name=exotic, 
+        enlarge x limits=0.05,
+        ticklabel style = {font=\tiny,xshift=0.5ex},
+        ]
+\nextgroupplot[
+        grid = both,
+        grid style=dotted,
+        ymin=0.305, 
+        ymax=0.39,
+        ytick = {0.31,0.32,0.33,0.34, 0.35, 0.36,0.37,0.38},
+        ylabel=Average Precision,
+        height=4.5cm, 
+        legend columns=2,
+        ylabel style = {font=\fontsize{6}{7}\selectfont},
+        legend style={
+            legend image post style={xscale=0.75},
+            inner sep=0pt,
+            at={(0.012,0.85)},
+            anchor=west,
+            font=\fontsize{4}{5.5}\selectfont,
+            /tikz/column 2/.style={
+                column sep=5pt,
+            },
+        },
+        mark options={mark size=1.5, line width=0.7pt},
+        ]
+	%\addplot table [x=FBnum, y=RM1] {poison_pill_374.dat};
+	%\addplot table [x=FBnum, y=RM2] {poison_pill_374.dat};
+	\addplot table [x=FBnum, y=SMM] {poison_pill_374.dat};
+	\addplot table [x=FBnum, y=DMM] {poison_pill_374.dat};
+	\addplot table [x=FBnum, y=RM3] {poison_pill_374.dat};
+	\addplot table [x=FBnum, y=RM4] {poison_pill_374.dat};
+    \addplot table [x=FBnum, y=RMM] {poison_pill_374.dat};
+    \addplot table [x=FBnum, y=MEDMM] {poison_pill_374.dat};
+    \addplot table [x=FBnum, y=SWLM] {poison_pill_374.dat};
+    \addplot table [x=FBnum, y=RSWLM] {poison_pill_374.dat};
+    %\legend{RM1,RM2,RM3,RM4,DMM,MEDMM,SMM,RMM,SWLM,RSWLM}
+    \legend{SMM,DMM,RM3,RM4,RMM,MEDMM,SWLM,RSWLM}
+
+\nextgroupplot[
+                ymin=0, 
+                ymax=1,
+                ytick = {0,0.2,0.4,0.6,0.8},
+                ylabel=$\lambda$s in \acswlm,
+                ylabel style = {font=\fontsize{6}{7}\selectfont},
+                height=1.2cm,
+                ybar,
+                bar width= 5pt,
+                smooth,
+		        stack plots=y,
+		        area style,
+		        %enlarge x limits=false,
+		        legend style={
+		            legend image post style={xscale=0.37},
+		            font=\fontsize{4}{4.5}\selectfont,
+		            at={(0.33,0.45)},
+                    anchor=north,
+                    legend columns=-1
+                },
+            ]
+    	\addplot[fill=r, draw=rr] table [x=Rank, y=r] {poison_pill_lambdas.dat} 
+    		\closedcycle;
+    	\addplot[fill=b, draw=bb] table [x=Rank, y=g] {poison_pill_lambdas.dat} 
+    		\closedcycle;
+    	\addplot[fill=g, draw=gg] table [x=Rank, y=s] {poison_pill_lambdas.dat} 
+    		\closedcycle;
+    	\legend{$\lambda_{d,sw}$, $\lambda_{d,g}$, $\lambda_{d,s}$}
+\end{groupplot}
+\draw (5.08,2.3) ellipse (0.37cm and 1.7cm);
+% \vspace{-5pt}
+\end{tikzpicture}
+\caption{\label{fig:pp}Dealing with poison pills: Effectiveness of different feedback systems facing with a bad relevant document in topic $374$ of TREC Robust04.}
+% \vspace{-13pt}
+\end{figure}
+
+
+
+
+\if 0
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    spy using outlines={circle, magnification=6, connect spies}
+    ]
+\begin{axis}[
+        xtick align=outside,xtick pos=left,
+        scale only axis,
+        grid = both,
+        grid style=dashed,
+	    minor tick num=1,
+	    
+	    width=7cm,
+        height=5.5cm,
+        xtick = {0,..., 10},
+        ticklabel style = {font=\fontsize{6}{7}},
+        %ymin=0, 
+        %ymax=0.61, 
+        ylabel=AP,
+        %height=4.5cm, 
+        cycle list name=exotic, 
+        legend columns=2, 
+        legend style={
+                at={(0.03,0.84)},
+                anchor=west,
+                font=\fontsize{4}{5}\selectfont,
+                /tikz/column 2/.style={
+                    column sep=5pt,
+                },
+            },
+        ]
+%	\addplot table [x=FBnum, y=RM1] {poison_pill_374.dat};
+%	\addplot table [x=FBnum, y=RM2] {poison_pill_374.dat};
+	\addplot table [x=FBnum, y=RM3] {poison_pill_374.dat};
+	\addplot table [x=FBnum, y=RM4] {poison_pill_374.dat};
+	\addplot table [x=FBnum, y=DMM] {poison_pill_374.dat};
+    \addplot table [x=FBnum, y=MEDMM] {poison_pill_374.dat};
+    \addplot table [x=FBnum, y=SMM] {poison_pill_374.dat};
+    \addplot table [x=FBnum, y=RMM] {poison_pill_374.dat};
+    \addplot table [x=FBnum, y=SWLM] {poison_pill_374.dat};
+    \addplot table [x=FBnum, y=RSWLM] {poison_pill_374.dat};
+    \legend{RM3,RM4,DMM,MEDMM,SMM,RMM,SWLM,RSWLM}
+ %   \coordinate (spypoint) at (axis cs:3,0.8);
+    %\coordinate (magnifyglass) at (axis cs:5,0.7);
+\end{axis}
+\draw (6.35,2.8) ellipse (0.5cm and 2.4cm);
+%\spy [blue, size=2.5cm] on (spypoint) in node[fill=white] at (magnifyglass);
+\end{tikzpicture}
+\caption{Dirichlet Distribution}
+\end{figure}
+
+\begin{tikzpicture}
+	\begin{axis}[
+		smooth,
+		stack plots=y,
+		area style,
+		enlarge x limits=false,
+		legend style={at={(0.5,-0.20)},
+      anchor=north,legend columns=-1},
+      ]
+	\addplot table [x=Rank, y=r] {poison_pill_lambdas.dat} 
+		\closedcycle;
+	\addplot table [x=Rank, y=g] {poison_pill_lambdas.dat} 
+		\closedcycle;
+	\addplot table [x=Rank, y=s] {poison_pill_lambdas.dat} 
+		\closedcycle;
+	\legend{Relevant, General, Specific}
+	\end{axis}
+\end{tikzpicture}
+
+\fi
+
+
+
+

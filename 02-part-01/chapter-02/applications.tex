@@ -1,0 +1,288 @@
+\section{\acswlm for Relevance Feedback}
+Modeling and assessing ``relevance" is the main goal in information retrieval and search that requires understanding users' queries, documents, and the relation between them.
+One of the key factors affecting search quality is the fact that user queries are ultra-short statements of their complex information needs. Query expansion has been proven to be an effective technique to bring agreement between user information need and relevant documents~\citep{Harman:2009}. 
+Taking feedback information into account is a common approach for enriching the representation of queries and consequently improving retrieval performance. 
+
+In the True Relevance Feedback (TRF), given a query and a set of judged documents, either explicitly assessed by the user or implicitly inferred from user behavior, the system tries to enrich the query representation to improve the performance of the retrieval. However, feedback information is not available in most practical settings. An alternate approach is the Pseudo Relevance Feedback (PRF), also called blind relevance feedback, which uses the top-ranked documents in the initial retrieved results for the feedback.
+
+The main goal of feedback systems in retrieval task is to make use of feedback documents to estimate a more accurate query model representing the notion of relevance.
+%
+However, although documents in the feedback set contain relevant information, there is always also non-relevant information. For instance, in PRF, some documents in the feedback set might be non-relevant, or in TRF, some documents, despite the fact that they are relevant, may contain off-topic information and act like poison pills~\citep{Terra:2005} by hurting the performance of feedback systems.  
+Such non-relevant information can distract the feedback model by adding bad expansion terms, leading to \emph{topic drift}~\citep{Macdonald:2007,He:2009:ECIR}.  
+It has been shown that based on this observation, existing feedback systems are able to improve the performance of the retrieval, if feedback documents are not only relevant, but also have a dedicated interest in the topic~\citep{He:2009:ECIR}.
+
+
+Given that, taking advantage of feedback documents requires a robust and effective method to prevent topic drift caused by \emph{accidental}, non-relevant terms brought in by broader topic or multiple topics documents in the feedback set. 
+
+\textsl{\swlm} seems a great fit to this situation as it models the the set of feedback documents by capturing the essential terms representing a \emph{mutual notion of relevance}, i.e.\ a representation of characteristic terms which are supported by all the feedback documents.
+
+\input{02-part-01/chapter-02/figs_and_tables/fig_prf_example.tex}
+Figure~\ref{fig:prf_eg} shows an example of estimating language models from the set of top seven relevant documents retrieved for topic $374$, ``Nobel prize winners'', of the TREC Robust04 test collection.  
+Terms in each list are selected from top 50 terms of the models estimated after stop word removal. 
+Standard-LM is the language model estimated using MLE considering feedback documents as a single document. 
+SMM is the language model estimated using mixture model~\citep{Zhai:SMM:2001}, one of the most powerful feedback approaches, which generally tries to remove background terms from the feedback model.
+
+%
+General-LM denotes the probability of terms to be common based on their overall occurrence in the collection and Specific-LM determines the probability of terms to be specific in the feedback set, i.e being frequent in one of the feedback documents but not others. 
+The way General-LM and Specific-LM are estimated has been discussed in detail in Section~\ref{sec:swlm}. 
+And the last model in the figure is \acswlm, which is the extracted latent model with regards to General-LM and Specific-LM, using \swlms.
+
+As can be seen, considering feedback documents as a mixture of feedback model and collection model, mixture model~\citep{Zhai:SMM:2001} penalizes some general terms like ``time'' and ``year'' by decreasing their probabilities. However, since some frequent words in the feedback set are not frequent in the whole collection, their probabilities are boosted, like ``Palestinian'' and ``Arafat'', while they are not good indicators for the whole feedback set. The point is although these terms are frequently observed, they only occur in some feedback documents not most of them, which means that they are in fact ``specific'' terms, not significant terms.
+By estimating both general model and specific model and taking them into consideration, \acswlm tries to control the contribution of each feedback document in the feedback model, based on its merit, and prevent the estimated model to be affected by indistinct or off-topic terms, resulting in a significant model that reflects the notion of relevance.
+
+Here, we are going to address our second research question of this chapter: 
+\begin{resqbox}
+\emph{\resq{c2.2}}
+\end{resqbox}
+We explain how to estimate \acswlm for a set of feedback documents and discuss its effectiveness in this task along with a set of analisys and ablation studies.
+
+\subsection{Language Models for Feedback}
+Language modeling is usually used to represent the user query by estimating a query language model, $\theta_q$, based on maximum likelihood estimation:
+$p(t|\theta_q)=\nicefrac{c(t,q)}{|q|}$, 
+where $c(t,q)$ is the frequency of term $t$ in $q$ and $|q|$ is the total number of terms in the query.
+Then, usually having the smoothed language model of documents~\citep{Zhai:2001}, the KL-divergence retrieval model~\citep{Lafferty:2001} is employed to score documents based on the negative KL-divergence between the estimated language models of the query and each document document:
+\begin{equation}
+Score(d,q) = -D(\theta_q||\theta_d)
+\label{scoring}
+\end{equation}
+In order to elaborate the problem of vocabulary difference between the query and relevant documents, and overcome the lack of agreement on the notion of relevance between the user and the system, a feedback language model, $\theta_\mathcal{F}$,  is estimated using the set of feedback documents and then this model is employed to expand the query. A common approach for expanding the query is interpolating $\theta_\mathcal{F}$ with the original query model~\cite{Zhai:SMM:2001,Abdul-jaleel:2004}:
+\begin{equation}
+p(t|\theta_{q}') = (1-\alpha)p(t|\theta_q)+\alpha p(t|\theta_\mathcal{F}),
+\label{interpolation}
+\end{equation}
+where $\alpha$ controls the amount of feedback. Thereafter the expanded query model is used in Equation~\ref{scoring} for ranking the documents.
+
+The main goal of feedback methods is to estimate an effective feedback model, $\theta_\mathcal{F}$, from the set of feedback documents. 
+We can use \swlms to represent feedback documents. In this context, the significant words are in fact words that are reflecting the notion of relevance. We use the approach described in ~\ref{sec:swlm}, where we take the $\theta_{sw}$ as the $\theta_\mathcal{F}$  and use it in Equation~\ref{interpolation} for expanding the query. 
+
+\input{02-part-01/chapter-02/figs_and_tables/fig_plate_diagram_rswlm.tex}
+\subsection{Regularized \acswlm}
+Using the original \swlms for estimating the feedback model, the original query model has not been considered for estimating the feedback model. Thus, in case of having a few relevant documents in the feedback set for a query, the model could be distracted by non-relevant information and converge to a local optimum point.
+
+To cope with this problem, and avoid degradation in the performance, a solution is to involve information from the original query~\citep{Harman:1992}. Inspired by the work by \citet{Tao:2006}, we modify the estimation process of \acswlm and estimate \RSWLMs (\acrswlm) by incorporating the extra knowledge from the query model. We define a prior parameter and employ maximum a posteriori to fit the model to feedback documents and solve the following problem:
+\begin{equation}
+\Upsilon^* \coloneqq \argmax_\Upsilon p(\mathcal{F}|\Upsilon)P(\Upsilon)
+\end{equation}
+%Since Dirichlet distribution is a conjugate prior for multinomial distributions, we only need to slightly modify the M-step for reestimating $\theta_{sw}$ in the EM algorithm to incorporate this prior.
+We define the a conjugate Dirichlet prior on $\theta_{sw}$ as follows:
+\begin{equation}
+p(\theta_{sw}) \varpropto \prod_{t \in V} p(t|\theta_{sw})^{\beta p(t|\theta_q)},
+\end{equation}
+where $\beta p(t|\theta_q)$ is the parameter of the Dirichlet distribution which in fact performs as the additional pseudo-count for  $t$ to push the model $\theta_{sw}$ to assign a higher probability to term $t$ as it has a high probability in $\theta_q$. 
+
+Generally speaking, this adds a bias in the estimation process to bend the feedback model toward the original query model. 
+Here, the value of $\beta$ controls the amount of this bias. 
+Taking the conjugate prior into account, we conduct the MAP estimation by updating Equation~\ref{EM_m1} in the EM algorithm as follows:
+\begin{equation}
+p(t|\theta_{sw}) = 
+\frac{\sum_{d \in \mathcal{F}}c(t,d) p(X_{d,t} = sw) + \beta p(t|\theta_q) }{\sum_{t' \in V}\sum_{d \in \mathcal{F}}c(t',d) p(X_{d,t'} = sw) + \beta}
+\label{EM_m1_new}
+\end{equation}
+So, by modifying the EM algorithm, we consider our observation from the query model as a pseudo-document which makes the feedback model become more rigid. 
+
+Similar to the approach in \citep{Tao:2006}, we initialize $\beta$ with a large value, and then dynamically decrease its value in each EM iteration until the point that we have equal contributions of the original query and the feedback documents. 
+Figure~\ref{fig:graphical_model_rswlm} represents the plate notation of \rswlms. 
+
+As it is shown, for each document the contribution of each of three models, $\lambda$s, are estimated. It can be seen that general model, $\theta_g$, and specific model, $\theta_s$ are considered as external observations, which are involved in the estimation process as infinitely strong priors. It is noteworthy that fixing these parameters also helps to decrease the number of local maximums. As it is illustrated in the diagram, $\beta$ plays the role of regularizing parameter. 
+
+Establishing a model consisting only the significant words using the fixed cut-offs based on frequency of terms, as was originally proposed by~\citet{Luhn:1958}, runs the risk of leaving good expansion terms out, especially trimming the model toward specific terms may lead to the loss of discriminative relevant terms that can have a high impact on retrieval effectiveness. \acswlm enables us to reduce this risk as estimating specific language model using Equation~\ref{theta_s}, makes a meaningful translation of specificity against the significance, which empowers our estimation process to retain the significant terms that are globally infrequent, but well supported by the feedback documents.
+
+%---------------------------------------
+\subsection{Experimental Setup}
+\label{sec:dataset}
+%---------------------------------------
+\input{02-part-01/chapter-02/figs_and_tables/table_prf_dataset.tex}
+In this section, we describe the test collections used in our experiments as well as the settings of our experiments. 
+We use the Robust04, WT10G, and GOV2 test collections, which are different in terms of both size and genre of documents. 
+Information about each collection is summarized in Table~\ref{tbl_dataset}.
+
+We have employed the Lemur toolkit and Indri\footnote{http://www.lemurproject.org/} search engine to carry out our experiments. We have implemented \acswlm and \acrswlm in Lemur project framework. 
+In all our experiments, we only use the ``title'' field of the TREC topics as queries. 
+We have used the Porter stemmer for stemming all queries and document's terms and removed stopwords using the standard InQuery stopword list. 
+We have used the KL-Divergence model~\citep{Lafferty:2001}, with Dirichlet smoothing~\citep{Zhai:2001} as the retrieval model in all of the experiments, including initial retrievals as well as feedback runs.
+We set the Dirichlet smoothing prior to $1,000$.  In the feedback runs, for each collection and each method, we have done full grid search and tuned three main parameters: the value of the feedback interpolation coefficient, the number of feedback documents, and the number of expansion terms, by dividing the queries into three folds and conducting 3-fold cross-validation with the same split for folding in all the experiments.  Also we have tuned the hyperparameters of each method during the cross validation.
+
+%
+The Mean Average Precision (MAP) performance measure for top $1,000$ documents is presented as the evaluation metric. 
+Moreover, we report P@10 (precision at 10) for PRF and P@20 (precision at 20) for TRF as the indicators of the precision for the \emph{first} and \emph{two-first} result pages, respectively.  
+To avoid the ranking effect in the evaluation of the TRF task, we have used modified freezing technique in the evaluation of the results of these experiments \citep{cirillo:1969,Harman:1992,Ruthven:2003}. In addition to the above metrics, we also report robustness index, $RI(Q)$, which is also called reliability of improvement~~\citep{Collins-Thompson:2007}. For a set of
+queries $Q$, the $RI$ measure is defined as: $RI(Q) = \nicefrac{N^+ - N^-}{|Q|}$, where $N^+$ is the number of queries helped by the feedback method and $N^-$ is the number of queries hurt.
+
+In our experiments, as the baseline methods, we have used the most popular unsupervised state-of-the-arts for the feedback task that are proposed in the language modeling framework. 
+Our baseline methods are: the maximum likelihood estimation\:---\:without feedback (MLE)~\citep{Lafferty:2001}, the simple mixture model (SMM)~\citep{Zhai:SMM:2001},  the divergence minimization model (DMM)~\citep{Zhai:SMM:2001}, the relevance models (RM3 and RM4)~\citep{Abdul-jaleel:2004,Lavrenko:2001}, the regularized mixture model (RMM)~\citep{Tao:2006}, and maximum-entropy divergence minimization model (MEDMM)~\citep{Lv:2014}. 
+
+%---------------------------------------
+\subsection{\acswlm for True Relevance Feedback}
+\label{sec:RF}
+%---------------------------------------
+\input{02-part-01/chapter-02/figs_and_tables/table_trf.tex}
+True relevance feedback is employed to expand the user query based on either the explicit ``relevant''/``non-relevant'' judgments given by the user or implicit relevancy information inferred from the user behavior during his interaction with the system, for the top-k results returned by the retrieval system. 
+In our experiments, we simulated this task. We consider the set of relevant documents on the top-10 results (first page of the search engine result page) in the ranked list as the documents judged as relevant by the user to form the feedback set. In our TRF experiments, same as~\citet{Lv:2009:CIKM}, we have removed queries that have no relevant documents in their top-10 results from the test collections. Information on the number of queries used for TRF in each collection is given in Table~\ref{tbl_dataset}.
+
+Table~\ref{tbl_rf} presents the results of different systems on the TRF task. As can be seen, \acswlm and \acrswlm are best methods in terms of MAP\@ and RI in all the collections and in terms of P@20 in the Web collections. 
+Since we have used the modified freezing technique~\cite{cirillo:1969,Ruthven:2003}, in the feedback runs, almost the top 10 results are the same as the initial run, so the improvements in the P@20 metric is sort of a reflection for the precision of second 10 results (second page of SERP). 
+
+In the TRF task, although the relevancy information of documents are available,  since documents can be multi-topic, it is still possible that the feedback mechanism selects the terms from non-relevant parts of the documents. In the Robust04, in which documents are not normally multi-topic, RM3 performs the best in terms of P@20. However, in the Web collections, which is more likely to contain multi-topic documents (partially relevant), \acswlm, by controlling the effect of individual documents on the feedback model, significantly outperforms all the baselines.
+
+Unlike the results in Table~\ref{tbl_prf}, in which \acrswlm performs better than \acswlm in terms of all metrics, in TRF, \acswlm presents higher performance in terms of P@20. This might be due to the fact that in TRF, there is less noise and consequently less need to lead the feedback model toward the original query model. On the other hand, since \acrswlm has no bias to the original query, it has the opportunity to retrieve some documents that are relevant but terms of the original query do not occur in them frequently. 
+
+\medskip
+Here, we presented the results of \acswlm  and \acrswlm  in the tasks of PRF and TRF compared to the baseline methods.
+We show that the new models are more effective than all previous methods, and also illustrated how they control the contribution of feedback documents in the feedback model based on their merit.
+Recall that our approach takes a considerable risk by removing specific terms that are the most powerful retrieval cues if relevant, making the feedback task a critical experiment in distinguishing relevant and non-relevant terms. 
+%
+These results provide strong support for effectiveness of \swlms, and the general intuitions on the importance of building accurate models of relevance underlying them.
+
+
+%---------------------------------------
+\subsection{\acswlm for Pseudo Relevance Feedback}
+\label{sec:PRF}
+%---------------------------------------
+Pseudo relevance feedback aims to expand the query to improve the performance of retrieval having no information about the judgments. In PRF, the underlying assumption is that the initial retrieval yields the relevant documents which can be used to refine the query. Thus, assuming the top-ranked documents $\mathcal{F} = \{d_1, \ldots ,d_{\mathcal{F}}\}$ from the initial run as relevant, the feedback model $\theta_{\mathcal{F}}$ is estimated and used for the query expansion.  
+Table~\ref{tbl_prf} presents the results of employing \swlms, \rswlms as the feedback model as well as baseline methods on the task of PRF\@. 
+As can be seen, \acrswlm significantly outperforms \emph{all} the baselines in terms of MAP, in WT10G and GOV2 collections, that are noisy Web collections.\footnote{Note that we only indicate when (R)\acswlm is significantly better than all baseline methods, they are always significantly better than the non-expansion MLE baseline.} Furthermore, it has the highest reliability of improvements in terms of Robustness Index in all the collections.
+In the PRF task, \acrswlm works better than \acswlm as it guides the estimator of the feedback model toward the query model and prevents it to be distracted by the noises of non-relevant documents.
+\input{02-part-01/chapter-02/figs_and_tables/table_prf.tex}
+
+Although it has been shown that PRF always improves the average performance of retrieval \citep{Harman:2009}, under some parameter settings, for some topics it decreases the average precision.  This is due to the fact that there might be some non-relevant documents in the feedback set containing non-relevant terms resulting to the topic drift in the extracted feedback model~\cite{He:2009:ECIR,He:2009:CIKM,Carpineto:2012}. Thus, as one of the main challenging problems in PRF, it is necessary to control the contribution of different feedback documents for inclusion in the feedback model based on their merit~\citep{He:2009:ECIR} for a specific query. 
+
+\subsection{Relevance Decomposition}
+\input{02-part-01/chapter-02/figs_and_tables/plot_prf_lambdas.tex}
+\Swlms empower our proposed feedback method to dynamically determine the quality of each document.
+In Figure~\ref{fig:lambdas}, as a sample, we take top-100 documents as the feedback set and illustrate the average contribution of each of the significant words, general, and specific models in this documents, according to the $\lambda$s learned in the \rswlms. 
+
+It is an interesting observation that in all the collections the trend of the change in the contribution of three models is similar. 
+In most cases, as the ranking goes down, the contribution of the significant words model decreases, which is in accordance with the relevance probability of documents based on their ranking.  However, this decay is slower in the Robust04 dataset compared to WT10G and GOV2 datasets.  This is likely because that Robust04 contains newswire articles, which are typically high-quality text data with little noise, in contrast to WT10G and GOV2 which are web collections containing a more heterogeneous set of documents.  
+%This could mean that lower ranked documents for Robust still having a considerable number of terms in common with top-ranked documents.
+
+Another interesting observation is that in all the collections we see that the top ranked documents are more likely to contain specific non-related terms than general non-related terms. In other words, as the rank of the document increases, the part of the document which is non-relevant becomes more general. 
+%
+One assumption would be that the retrieval models may tend to rank documents with specific non-related terms higher than documents with general non-related terms.  However, traditional retrieval models like KL-Divergence do not differ scores of documents based on their non-relevant part. Another hypothesis would be that, the specificity or generality of the non-related parts of documents is a matter of their length. For example, long documents are more probable to have specific non-related terms than short documents. We investigated the length of the retrieved documents based on their ranking in our experiments and, although the retrieval models in general might have some length bias~\citep{Losada:2008}, we observed no strong correlation between length and the ranking in our runs.
+
+Based on the observation from Figure~\ref{fig:lambdas}, we can conclude that the relevant component captured by the significant words dominates the ranking (as would be hoped and expected) and after that the specific component, and lastly the general component (in line with term weighting methods in the ranking models). These observations support that the proposed model is indeed more accurately modeling relevance than standard IR models.
+More generally, this analysis shows the analytic potential of the proposed model, for example to analyse the ranking of partially relevant or multi-topic documents, based on the generality or specificity of the subtopics involved, which we will defer to future work.
+
+%if the non-relevant part is about a specific topic, the relevant part is stronger in terms of relevancy compared to the case that the non-relevant part is general. 
+%In other words, on average, in multi-topic documents, the relevant part has a stronger focus on the query and they are ranked higher, while in broad topic documents, the relevant part has less interest to the query.
+%We are going to investigate this observation in more details in our future works.
+
+%---------------------------------------
+\subsection{Robustness Against Noise}
+\label{sec:robustness}
+%---------------------------------------
+This section present analysis resulted from experiments designed to study the robustness of our proposed feedback approach.
+
+\input{02-part-01/chapter-02/figs_and_tables/plot_prf_divergence.tex}
+%\subsection{Robustness in PRF: Divergence from Relevance}
+\subsubsection{Divergence from Relevance}
+\label{sec:DfR}
+%---------------------------------------
+As an experiment that we have designed to investigate the ability of the each feedback method to deal with noise in the PRF task, using top retrieved results, we measure the divergence of the estimated pseudo relevance feedback models, $\theta_{\mathcal{F}}^{prf}$, from the estimated true relevance models, $\theta_{\mathcal{F}}^{trf}$, that use only those documents from the top retrieved that are explicitly annotated as relevant.
+%
+%
+In fact, investigate that how much a feedback method is able to estimate model from a mixture of relevant and non-relevant documents that are similar to the model estimated using only the relevant part. 
+To this end, we assume that $\theta_{\mathcal{F}}^{trf}$, is a model affected by least amount of noise and calculate the JS-Divergence of $\theta_{\mathcal{F}}^{prf}$ and  $\theta_{\mathcal{F}}^{trf}$ for all the approaches and 
+to avoid the effect of the size of the models on the value of divergence, we take top 500 terms of each model as the fixed length representative of the model. 
+
+Figure~\ref{fig:div} shows the divergence of $\theta_{\mathcal{F}}^{prf}$ and  $\theta_{\mathcal{F}}^{trf}$ for different groups of queries with different ratio of relevant documents in top-10 documents, on all collections. As it is expected, in the queries that have a few documents in the top-10 documents are relevant, the divergence is high and two models getting to be the same when all top-10 documents are relevant. 
+In Web collections, convergence of $\theta_{\mathcal{F}}^{prf}$ and  $\theta_{\mathcal{F}}^{trf}$ are slower due to the fact that web documents are more noisy and it can be said that usually non-relevant retrieved documents are farther from relevant retrieved documents, compared to Robust04 dataset. 
+According to the plots in Figure~\ref{fig:div}, in all collections, \acswlm  and \acrswlm  have the least divergence in all the ratios. It means that our proposed models are more robust against being distracted by non-relevant documents. 
+An interesting observation is that in all the collections, the behavior of \acswlm  and \acrswlm  are almost the same when at least half of the documents are relevant. In other words, we do not need regularization if at least half of the documents are of interest to the query's topic, either completely or partially.
+
+\input{02-part-01/chapter-02/figs_and_tables/table_prf_robustness.tex}
+%---------------------------------------
+\subsubsection{Dealing with Poison Pills}
+\label{sec:pp}
+%---------------------------------------
+Although it has been shown that on average, the overall performance will be improved after feedback~\citep{Harman:2009,He:2009:ECIR}, for some topics, employing some documents may decrease the average precision of the initial run. 
+As we discussed, in the PRF, it could be due to the fact that the harming feedback documents are not relevant. However, this also could happen in the RF. This is because although the harming feedback document is relevant, there could be only a subset of it containing relevant information. So, adding off-topic terms from this document to the query results in loosing the retrieval performance. These relevant documents that hurt the performance of retrieval after feedback are called ``poison pills''~\citep{Harman:2009,Warren:2004,Terra:2005,Dehghani:CIKM2016:short}.
+
+\citet{Terra:2005} studied the effect of the poison pills. They used a single relevant document for feedback with several systems to find documents that make the precision drop in all systems. They showed that more than $5\%$ of all relevant documents perform poorly and in one third of all topics there exists at least one bad relevant document which can decrease the performance of the retrieval after relevance feedback.
+
+We have investigated this effect in the multiple feedback documents experiments. In these experiments, for each topic with more than ten relevant documents, we add relevant documents one by one, based on their ranking in the initial run, to the feedback set and keep the track of the change in the performance of the feedback run after adding each relevant document to the feedback set compared to the feedback run without its presence in the feedback set.  
+%
+\input{02-part-01/chapter-02/figs_and_tables/plot_prf_poisonpill.tex}
+%
+
+To evaluate the robustness of different systems against bad relevant documents, we define a variant of \emph{Robustness Index ($RI$)}~\citep{Collins-Thompson:2007} to be applicable in the document level instead of topic level. For a set of
+relevant documents,$D_r$, the $RI$ measure is defined as: $ RI(D_r)= \nicefrac{N_r^+ -  N_r^-}{|D_r|}$ where $N_r^+$ and $N_r^-$ denote number of relevant documents which adding them to the feedback set, based on the above setting, respectively helps or hurts the performance of the feedback run in terms of AP, compared to the case of not including them. $|D_r|$ is total number of tested relevant documents. The higher the value of $RI(D_r)$ is, the more the method is robust against poison pills. Table~\ref{tbl_pp} presents the $RI(D_r)$ of different systems on different datasets. As can be seen, both systems based on \swlms  are strongly robust against the effect of bad relevant documents in all datasets. 
+
+Furthermore, we have looked into the results of experiments in all the collections and extracted the set of poison pills, i.e. relevant documents that adding them to the feedback set decreases the  performance of feedback in \emph{all} the baseline systems. 
+Overal, we found $118$ poison pills and we observed that the performance of \acrswlm  in these situations always has the least drop and in $92\%$ of the cases, it provides the best average precision after adding the poison pill. 
+
+As it is discussed by~\citet{Terra:2005}, poison pills are usually relevant documents which have either a broad topic, or several topics. In these situations, employing \swlms  enables the feedback system to control the contribution of these documents and prevents their specific or general terms affect the feedback model. Figure~\ref{fig:pp} shows how using \swlm  empowers the feedback system to deal with the poison pills. In this figure, the performance of different systems in topic $374$ on Robust04 dataset are illustrated. As can be seen, adding the seventh relevant document to the feedback set leads to a substantial decrement in the performance of the feedback in all the systems. The query is ``Nobel prize winners" and the seventh document is about one of the Nobel peace prize winners, Yasser Arafat, but at the end, it has a discussion concerning Middle East issues, which contains some highly frequent terms that are non-relevant to the query (see Figure~\ref{fig:prf_eg}).  
+However, \acrswlm  and \acswlm  are able to distinguish this document as a poison pill and by reducing its contribution to the feedback model, i.e. learning a low value for $\lambda_{d_7,sw}$, they prevent the severe drop in the feedback performance. 
+
+So, our method inoculates the feedback model against poison pills by automatically determining whether adding a specific relevant document to the feedback set hurts the retrieval performance for a specific topic or not and controls its effect in the feedback model.
+
+
+\subsubsection{Sensitivity to the Number of Feedback Documents}
+\input{02-part-01/chapter-02/figs_and_tables/plot_prf_num_doc_sensitivity.tex}
+In order to investigate the sensitivity of our proposed method to the number of documents in the task of PRF, which is a proxy to it sensitivity to the noisy documents in the feedback set, we set all other free parameters to the values that result in optimal average performance and  plot the performance of \acswlm  and \acrswlm  with regard to the number of documents in the feedback set in Figure~\ref{fig:sens}. As it is noticed,  both methods have acceptable robustness. 
+\acswlm  is more sensitive, especially in Web collections, when low ranked documents are added, it is slightly affected by noises.  However, \acrswlm  is strongly robust and less sensitive to the number of feedback documents.
+
+Furthermore, according to Figure~\ref{fig:sens}, the performance of both systems in all collections is the best when the number of feedback documents are around 10, which is a more or less the same observation in other feedback methods as well~\citep{Lv:2009}. Moreover, this observation is in accordance with the information from the plots in Figure~\ref{fig:lambdas}, in which the top-10 documents always possess a strong contribution of the significant words model, i.e.\ high values of $\lambda_{d,sw}$.
+
+
+\section{\acswlm for Contextual Suggestion}
+Context is pervasive on the modern web, due to cloud-based and mobile applications, making every information access interaction part of an eternal user session.  Effective ways to leverage this context are key to further enhancing the user experience, both in terms of better quality of results as in terms of easier ways to articulate complex information needs.  This requires both effective ways of personalization to an individual user as well as customization to a profile based on groups of users.
+
+For group level analysis, there is a need for extracting a group profile that captures the essence of the group, separate from the sum of the profiles of its individual members. This profile should be ``specific'' enough to distinguish the preferences of the group from other groups, and in the same time, ``general'' enough to capture all shared tastes, expectations, and similarities of its members. 
+
+Group profiling can help understand both explicit groups, like Facebook groups, and implicit groups, like groups extracted by community detection algorithms. One of the important applications of group profiling is in the contextual suggestion problem problem.  
+Contextual suggestion is the task of searching for complex information needs that are highly dependent on both context and user interests. However, using individual preferences for contextual suggestion is not always possible. 
+For example, sometimes there is a new user in the system with no historical interactions and no rich information about the preferences\footnote{Cold start problem in contextual suggestion.}, or sometimes the user is not able to determine his/her preferences explicitly. In these situations, group based contextual suggestion would be beneficial to augment the user's profile and suggest content to the user based on the preferences of the groups that the user belongs to. 
+
+In contextual suggestion, given the information of users including their age, gender, and set of rated places or activities as the user preferences (ratings are in the range of -1 to 4), the task is to generate a list of ranked suggestions from a set of candidate attractions, by giving the user information as well as some information about the context, including location of trip, trip season, trip type, trip duration, and the type of group the person is travelling with.
+
+We employed \acswlm for group profiling to be able to employ group information in the contextual suggestion task~\citep{Dehghani2016:trec,Dehghani:2016:CHIIR,Hashemi:2015}. We use group profiles estimated by \acswlm with respect to the different grouping criteria and investigate how group-based information helps to improve the general performance of contextual suggestion task. 
+
+In the rest of this chapter, we address our third and last research question of this chapter: 
+\begin{resqbox}
+\emph{\resq{c2.3}}
+\end{resqbox}
+We explain how to use \acswlm as a profiling approach to represent a group of entities and use this representation to improve the quality of contextual suggestion task.
+
+%---------------------------------------
+\subsection{Experimental Setup}
+\label{sec:cs_exp}
+%---------------------------------------
+\input{02-part-01/chapter-02/figs_and_tables/table_cs_statistics.tex.tex}
+We use of the TREC 2015  contextual suggestion\footnote{\url{https://sites.google.com/site/treccontext/trec-2015}} Batch task dataset to evaluate the effectiveness of \acswlm as a profiling approach for the contextual suggestion task. The dataset contains the information from 207 users including their age, gender, and set of rated places or activities as the user preferences (rates are in the range of -1 to 4). 
+The task is to generate a list of ranked suggestions from a set of candidate attractions, by giving the user information as well as some information about the context, including location of trip, trip season, trip type, tripe duration, and the type of group the person is travelling with. Based on the information in the dataset, we divide users into several groups. Groupings are based on the users information and context information. Table~\ref{tbl:stat} presents grouping criteria, the groups, and number of users in each group.
+
+\subsection{\acswlm for Group Profiling}
+\label{sec:groupprofiling}
+We generate group-based rankings of suggestions based on the group profiles estimated by \acswlm to evaluate the quality of the estimated group profiles in contextual suggestion task. 
+To this end, first we choose one of the grouping criteria mentioned in Table~\ref{tbl:stat} like users' age. Then we estimate a language model representing each group as its profile using \acswlm. Afterward, regarding the information of the given request, i.e.\ the user information and context information, the group which the user belongs to is selected and based on the profile of the this group as well as the language model of the candidate, we rank the suggestions.
+
+Beside the group-based ranking, we generate a ranked list of suggestions based on the preferences of the users, regardless of their group memberships, as a baseline. To do so, a language model is estimated using the mixture of the language model representing user preferences weighted by their ratings. Then, based on the similarity of the preferences language model and the candidate language model, we rank the suggestions.
+
+Using \acswlm, we learn the contribution of each of \emph{specific}, and \emph{general}, \emph{group} (which is in fact \emph{significant words}) models, i.e.\ $\lambda_{user,s}$, $\lambda_{user,g}$, and $\lambda_{user,sw}$. Having these parameters empowers us to efficiently combine the group-based model with the preferences-based model for content customization. To this end, we smooth the preferences-based model of the user with both the group model and the general model using JM-smoothing \citep{Zhai:2001} employing the learn parameters.
+
+\input{02-part-01/chapter-02/figs_and_tables/plot_cs_perf.tex}
+Figure~\ref{fig:Chart1} presents the performance of well as preferences\:-\:based suggestion as well as when we employ different grouping criteria for group-\:based suggestion. The combinations of preferences\:-\:based suggestion and group-\:based suggestion are also reported. 
+
+Among the group-based strategies, suggestions based on the duration of the trip is the most effective strategy. Also age of the user and the type of the group the user travels with, are rather important while type of the trip is not so important. This could be due to the fact that most of the time, the user's interests and attractions do not change based on the type of trip which could be ``business'' or ``holiday''. 
+On the other hand, combining the preferences-based suggestions with group-based suggestions in all grouping strategies leads to improvement. This means in case of incompleteness of user's profile, customizing the content based on the groups that user belongs to, implicitly fills the missing information and improves the performance of the suggestions. However, this depends on the quality of the groups profiles that should reflect significant (not general, not specific) characteristics of the groups.
+
+\subsection{Effect of Group Granularity}
+\label{sec:gg}
+In the grouping stage, sometimes users can be grouped based on different levels of granularity. For example, having the age of users, discretization can be done using binning with different sizes of bin. In this section, we analyse the effect of granularity of groups, and consecutively the size of the groups with a fixed volume of train data, on the quality of group profiling.
+
+We have selected ``age'' of users as the grouping criterion and tried different bin sizes for discretization: 5 years, 10 years, 20 years and 40 years. 
+Figure~\ref{fig:Chart2} shows the quality of groups profiles on different levels of granularity and consequently on different sizes of groups in the task of contextual suggestion. 
+Each point in the figure represents a group of users and its position determines its size and the performance of group-based contextual suggestion for the users within the group. Moreover the horizontal lines represent overall performance of different levels of granularity. 
+As can be seen, since the number of sample users is limited fine-grained grouping leads to having smaller groups. So small number of samples affects the group profiling quality and slightly decreases the performance. While coarse-grained grouping leads to having large groups that leads to not being able to adequately customize the group profile. 
+
+In our dataset, 10 years granularity for ``age'' has the best performance since the formed groups are big enough so that the group profiling approach is able to estimate high quality models, and they are small enough so that the group profiles are easily distinguishable which leads to a more effective customization.
+\input{02-part-01/chapter-02/figs_and_tables/plot_cs_groupsize.tex}
+
+\subsection{Effect of Rating Behaviour}
+\label{sec:rb}
+As we showed, using group-based information that is modeled by \acswlm helps to improve the performance of contextual suggestion. To study where does this improvement come from, we looked into the data to see in which cases adding group information helps and in which cases it is not effective. We observed that there is a correlation between the amount of improvement in contextual suggestion using group-based information and the rating behavior of users.
+
+\input{02-part-01/chapter-02/figs_and_tables/plot_cs_gprate.tex}
+
+Figure~\ref{fig:gprates} shows the scatter plot of the change in $p@10$ after employing group-based information based on different rating tendency.
+According to the plot, group-based information works better when the users have a neutral tendency in their rating (around rate 2) and it is less likely to help when users have rather strong biases by rating attraction with high or low rates. This could be due to the fact that in case of having neutral users, we have less strong information coming from their profile and then group-based information is compensating this lack of strong signals.

@@ -1,0 +1,61 @@
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+        width= 8.6cm, %\textwidth,
+        height=6cm, %5cm,
+        xmin=0,xmax=200,
+    %    ymin=0,ymax=1,
+        grid = both,
+        ylabel={MAP},
+        xlabel={Group Size},
+        scatter/classes={
+        	a={mark=square*,b},%
+        	b={mark=triangle*,r},%
+        	c={mark=o,draw=g},
+        	d={mark=pentagon*,draw=o}
+    	},
+    	legend columns=2,
+    	grid = both,
+    	minor tick num=1,
+	]
+
+	% \addplot[] is better than \addplot+[] here:
+	% it avoids scalings of the cycle list
+	\addplot[scatter,only marks,
+		scatter src=explicit symbolic]
+		coordinates {
+			(9,0.2012)  [a]
+			(44,0.2914) [a]
+			(43,0.4181) [a]
+			(45,0.2545)  [a]
+			(15,0.2886)  [a]
+			(14,0.2245)  [a]
+			(8,0.1811)   [a]
+			(23,0.3214) [a]
+			(9,0.2012) [b]
+			(87,0.2739) [b]
+			(60,0.3855) [b]
+			(22,0.3008) [b]
+			(23,0.3214) [b]
+			(96,0.2501) [c]
+			(82,0.3300) [c]
+			(23,0.3214) [c]
+			(156,0.2418) [d]
+			(46, 0.3633) [d]
+		};
+		\addplot[b,sharp plot,update limits=false] coordinates {(0,0.3003) (200,0.3003)} node[b!50!black, above] at (axis cs:165,0.3003) {\tiny{\textbf{0.3003}}}; 
+		\addplot[r,sharp plot,update limits=false] coordinates {(0,0.3123) (200,0.3123)}node[r!50!black, above] at (axis cs:185,0.3123) {\tiny{\textbf{0.3123}}}; 
+	    \addplot[g,sharp plot,update limits=false] coordinates {(0,0.2908) (200,0.2908)}node[g!50!black, above] at (axis cs:145,0.2908) {\tiny{\textbf{0.2908}}};  
+		\addplot[o,sharp plot,update limits=false] coordinates {(0,0.2708) (200,0.2708)}node[o!50!black, above] at (axis cs:125,0.2708) {\tiny{\textbf{0.2708}}}; 
+	
+%	node[above] at (axis cs:0,0.26) {Houses};
+		\legend{5-years,10-years,20-years,40-years}
+\end{axis}
+\end{tikzpicture}
+% \vspace{-15pt}
+\caption{
+Effect of groups granularity on the performance group profiling
+ \label{fig:Chart2}}
+%  \vspace{-15pt}
+ \end{figure}

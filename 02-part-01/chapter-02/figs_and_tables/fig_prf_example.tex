@@ -1,0 +1,119 @@
+    \definecolor{sp}{HTML}{e92085}
+    \definecolor{ge}{HTML}{20b7e9}
+    \definecolor{re}{HTML}{b7e920}
+    
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\begin{figure}[!tb]
+\centering
+\makebox[\linewidth]{
+{
+\fontfamily{lmtt}\fontsize{6.5}{7}\selectfont
+    \begin{minipage}{0.190\linewidth}
+      \centering
+
+        \begin{tabular}{L{1.1cm}C{0.9cm}}
+            \hline
+            \multicolumn{2}{c}{\textbf{Standard-LM}} \\ 
+            \hline
+            prize&5.55e-02\\ 
+            nobel&3.36e-02\\ 
+            physics&2.35e-02\\ 
+            science&2.18e-02\\
+            \multicolumn{2}{c}{...} \\
+            \rowcolor{ge!30}time&1.68e-02\\ 
+            \multicolumn{2}{c}{...} \\
+            \rowcolor{sp!30}palestinian&1.34e-02\\ 
+            \rowcolor{ge!30}year&1.34e-02\\ 
+            \multicolumn{2}{c}{...} \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    ~
+    \begin{minipage}{0.190\linewidth}
+      \centering
+        \begin{tabular}{L{1.1cm}C{0.9cm}}
+            \hline
+            \rowcolor{ge!30}\multicolumn{2}{c}{\textbf{General-LM}} \\ 
+            \hline
+            new&3.70e-03\\ 
+            cent&2.98e-03\\ 
+            two&2.97e-03\\ 
+            dollars&2.76e-03\\ 
+            people&2.71e-03\\ 
+            \multicolumn{2}{c}{...} \\
+            time&2.47e-03\\ 
+            \multicolumn{2}{c}{...} \\
+            year&2.16e-03\\ 
+            \multicolumn{2}{c}{...} \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    ~
+    \begin{minipage}{0.190\linewidth}
+      \centering
+        \begin{tabular}{L{1.1cm}C{0.9cm}}
+            \hline
+            \multicolumn{2}{c}{\textbf{SMM~\citep{Zhai:SMM:2001}}} \\ 
+            \hline
+            prize&6.07e-02\\ 
+            nobel&4.37e-02\\ 
+            awards&3.43e-02\\ 
+            chemistry&3.23e-02\\ 
+            physics&2.82e-02\\ 
+            \rowcolor{sp!30}palestinian&2.18e-02\\ 
+            cesium&2.09e-02\\ 
+            \rowcolor{sp!30}arafat&1.94e-02\\ 
+            university&1.92e-02\\ 
+            \multicolumn{2}{c}{...} \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    ~
+    \begin{minipage}{0.190\linewidth}
+      \centering
+        \begin{tabular}{L{1.1cm}C{0.9cm}}
+            \hline
+            \rowcolor{sp!30}\multicolumn{2}{c}{\textbf{Specific-LM}} \\ 
+            \hline
+            insulin&2.25e-02\\ 
+            palestinian&2.15e-02\\ 
+            dehmelt&1.81e-02\\ 
+            oscillations&1.79e-02\\ 
+            waxman&1.69e-02\\ 
+            marcus&1.69e-02\\ 
+            attack&1.61e-02\\
+            \multicolumn{2}{c}{...} \\
+            arafat&1.29e-02\\ 
+            \multicolumn{2}{c}{...} \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    ~
+    \begin{minipage}{0.190\linewidth}
+      \centering
+        \begin{tabular}{L{1.1cm}C{0.9cm}}
+            \hline
+            \rowcolor{re!30}\multicolumn{2}{c}{\textbf{\acswlm}} \\ 
+            \hline
+            prize&6.02e-02\\ 
+            nobel&4.53e-02\\ 
+            science&2.68e-02\\ 
+            award&2.43e-02\\ 
+            physics&1.94e-02\\
+            winner&1.90e-02\\  
+            won&1.80e-02\\ 
+            peace&1.80e-02\\ 
+            discovery&1.71e-02\\
+            \multicolumn{2}{c}{...} \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    }
+% \vspace{-5pt}
+}
+\caption{\label{fig:prf_eg}Extracting \emph{significant terms} from relevant feedback documents. (topic $374$ of the TREC Robust04 test collection: ``Nobel prize winners'')}
+% \vspace{-10pt}
+\end{figure}

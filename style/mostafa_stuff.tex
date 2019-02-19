@@ -1,0 +1,411 @@
+%% now change the chapter style
+%% load up the quotchap package
+\input{data/data.tex}
+\usepackage[palatino]{quotchap}
+\usepackage{array}
+\usepackage{todonotes}
+\usepackage{tikz-qtree}
+\usetikzlibrary{decorations.text}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{pgfplots}
+\usepackage{graphics}
+\usepackage{adjustbox}
+\usepackage{csquotes}
+\usetikzlibrary{pgfplots.groupplots}
+\usepackage{mathrsfs} 
+\usepackage{nicefrac}
+\pgfplotsset{compat=1.11}
+\usepgfplotslibrary{ternary}
+\usepackage{tikz}
+\usetikzlibrary{calc,spy,shapes}
+\usepackage{soul}
+
+
+\usepackage{dirtytalk}
+\usepackage{wrapfig}
+\usepackage{enumitem}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{multicol}
+% \usepackage[subtle]{savetrees}
+%saves some space (stealing space very smoothly!):
+% \usepackage{setspace}
+% \setstretch{0.98}
+
+\usetikzlibrary{arrows,decorations.pathmorphing,fit,positioning,patterns}
+\usepackage{xspace} % insert space when needed.
+\usepackage[square,comma,numbers,sort&compress,sectionbib]{natbib}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algcompatible}
+% \usepackage{algorithmic}
+
+\usetikzlibrary{arrows.meta}
+\usepackage{tkz-graph}
+\usetikzlibrary{positioning,automata}
+\usetikzlibrary{calc,spy,shapes}
+\usetikzlibrary{arrows,decorations.pathmorphing,fit,positioning,patterns}
+\pgfplotsset{compat=newest}
+\usepackage{bm}
+\DeclareMathOperator*{\expectation}{\mathbb{E}}
+\newcommand{\subsup}[3]{{#1}_{\mkern-4mu #2}^{\mkern-4mu #3}}
+
+
+\usepackage{tabularx} % Tables spanning the \linewidth or \textwidth
+
+\renewcommand*\Call[2]{\textproc{#1}(#2)}
+\newcommand{\tc}{\cellcolor{lightgray}}
+
+\newcommand{\shrink}{\vspace{-1.5ex}}
+\newcommand{\sshrink}{\vspace{-.75ex}}
+\renewcommand{\shrink}{}
+\renewcommand{\sshrink}{}
+
+\usepackage{caption}
+\usepackage{subcaption}
+% \captionsetup[figure]{font=small}
+% \captionsetup[subfigure]{font=\fontsize{7}{8}\selectfont}
+% \captionsetup[table]{font=small}
+% \captionsetup[subtable]{font=\fontsize{7}{8}\selectfont}
+\makeatletter
+\DeclareCaptionLabelFormat{numberless}{\ALG@name#1}
+\captionsetup[algorithm]{labelformat=numberless} 
+\makeatother
+
+
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usepackage{xargs} 
+\usepackage{framed} 
+
+\renewenvironment{leftbar}[2][\hsize]
+{
+    \def\FrameCommand
+    {
+        {\color{#2}\vrule width 3pt}
+        \hspace{0pt}
+    }
+    \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}
+}
+{\endMakeFramed}
+
+
+% Part one's stuff
+\newcommand{\swlm}{significant words language model\xspace}
+\newcommand{\Swlm}{Significant words language model\xspace}
+\newcommand{\SWLM}{Significant Words Language Model\xspace}
+\newcommand{\swlms}{{\swlm}s\xspace}
+\newcommand{\Swlms}{{\Swlm}s\xspace}
+\newcommand{\SWLMs}{{\SWLM}s\xspace}
+\newcommand{\acswlm}{SWLM\xspace}
+
+\newcommand{\rswlm}{regularized significant words language model\xspace}
+\newcommand{\Rswlm}{Regularized significant words language model\xspace}
+\newcommand{\RSWLM}{Regularized Significant Words Language Model\xspace}
+\newcommand{\rswlms}{{\rswlm}s\xspace}
+\newcommand{\Rswlms}{{\Rswlm}s\xspace}
+\newcommand{\RSWLMs}{{\RSWLM}s\xspace}
+\newcommand{\acrswlm}{RSWLM\xspace}
+
+\newcommand{\hswlm}{hierarchical significant words language model\xspace}
+\newcommand{\Hswlm}{Hierarchical significant words language model\xspace}
+\newcommand{\HSWLM}{Hierarchical Significant Words Language Model\xspace}
+
+\newcommand{\hswlms}{{\hswlm}s\xspace}
+\newcommand{\Hswlms}{{\Hswlm}s\xspace}
+\newcommand{\HSWLMs}{{\HSWLM}s\xspace}
+\newcommand{\achswlm}{HSWLM\xspace}
+\newcommand{\ssp}{Strong Separation Principle\xspace}
+\newcommand{\acssp}{SSP\xspace}
+
+
+% Part two's stuff
+\newcommand{\Modelone}{Score model\xspace}
+\newcommand{\Modeltwo}{Rank model\xspace}
+\newcommand{\Modelthree}{Rank\-Prob model\xspace}
+
+\newcommand{\modelone}{\textit{score} model\xspace}
+\newcommand{\modeltwo}{\textit{rank} model\xspace}
+\newcommand{\modelthree}{\textit{rank\-prob} model\xspace}
+
+\newcommand{\mone}{Score\xspace}
+\newcommand{\mtwo}{Rank\xspace}
+\newcommand{\mthree}{RankProb\xspace}
+
+
+\newcommand{\Feedone}{Dense vector representation\xspace}
+\newcommand{\Feedtwo}{Sparse vector representation\xspace}
+\newcommand{\Feedthree}{Embedding vector representation\xspace}
+
+\newcommand{\feedone}{dense vector representation\xspace}
+\newcommand{\feedtwo}{sparse vector representation\xspace}
+\newcommand{\feedthree}{embedding vector representation\xspace}
+
+\newcommand{\fone}{Dense\xspace}
+\newcommand{\ftwo}{Sparse\xspace}
+\newcommand{\fthree}{Embed\xspace}
+
+
+\newcommand{\pssmall}[1]{\ensuremath{\operatorname{^{\blacktriangleup {#1}}}}}
+
+\newcommand{\tnet}{target network\xspace}
+\newcommand{\tnets}{target networks\xspace}
+\newcommand{\cnet}{confidence network\xspace}
+
+\newcommand{\cws}{CWS\xspace}
+
+\newcommand{\fwl}{FWL\xspace}
+\newcommand{\fwlnospace}{FWL}
+\newcommand{\fwlfull}{Fidelity-Weighted Learning\xspace}
+\newcommand{\fwlfulllc}{fidelity-weighted learning\xspace}
+
+\newcommand{\std}{student\xspace}
+\newcommand{\tch}{teacher\xspace}
+\newcommand{\repnet}{representation learner\xspace}
+\newcommand{\wa}{weak annotator\xspace}
+\newcommand{\was}{weak annotators\xspace}
+
+
+\newcommand{\ps}{$^\blacktriangleup$}
+\newcommand{\ns}{$^\smalltriangledown$}
+\newcommand{\fs}{\phantom{$^\blacktriangleup$}}
+
+
+% TeX Gyre Pagella Math
+\usepackage{mathpazo}
+
+\setlength{\parskip}{5pt}%
+\setlength{\parindent}{0pt}%
+
+% \usepackage{setspace}
+% \setstretch{1.1}
+
+\newtheorem{mydef}{\textbf{Definition}}%[chapter]
+
+
+%\usepackage{mathabx}
+% instead of \usepackage{mathabx}
+% Setup the mathb font (from mathabx.sty)
+\DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathb}{m}{n}{
+<-6> mathb5 <6-7> mathb6 <7-8> mathb7
+<8-9> mathb8 <9-10> mathb9
+<10-12> mathb10 <12-> mathb12
+}{}
+\DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
+
+\DeclareMathSymbol{\smalltriangleup} {2}{mathb}{"98}% name to be checked
+\DeclareMathSymbol{\smalltriangledown} {2}{mathb}{"99}% name to be checked
+\DeclareMathSymbol{\smalltriangleleft} {2}{mathb}{"9A}% name to be checked
+\DeclareMathSymbol{\smalltriangleright}{2}{mathb}{"9B}% name to be checked
+\DeclareMathSymbol{\blacktriangleup} {2}{mathb}{"9C}% name to be checked
+\DeclareMathSymbol{\blacktriangledown} {2}{mathb}{"9D}% name to be checked
+\DeclareMathSymbol{\blacktriangleleft} {2}{mathb}{"9E}% name to be checked
+\DeclareMathSymbol{\blacktriangleright}{2}{mathb}{"9F}% name to be checked
+
+
+
+
+
+% %% Load up fancy headers and footers package
+% \usepackage{fancyhdr}
+
+ 
+% %% now reset the headers and footers
+% \fancyhead{}
+% \fancyfoot{}
+% %% make the odd pages have the section name on the top right
+% \fancyhead[RO]{\sffamily \rightmark}
+% %% make the even pages have the chapter name on the top left
+% \fancyhead[LE]{\sffamily \leftmark}
+
+% %% put the page numbers on the bottom in a nice box
+% %% even side pages
+% \fancyfoot[LE]{\thepage}
+% %% odd side pages
+% \fancyfoot[RO]{\thepage}
+
+% %% make the bottom line above the page number box
+% \renewcommand{\footrulewidth}{0.4pt}
+% \renewcommand{\footruleskip}{0mm}
+
+% %% bring the style into effect
+% \pagestyle{fancy}
+
+% \renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+% \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}{}}
+
+% %% now redefine the plain style pages (chapter pages, contents pages)
+% %% to have the same page number stuff on the bottom
+% \fancypagestyle{plain}{
+% \fancyhf{}
+% \fancyfoot[RO]{\thepage}
+% \renewcommand{\headrulewidth}{0pt}
+% \renewcommand{\footrulewidth}{0.5pt}
+% }
+
+% %% this next section (till \makeatother) makes sure that blank pages
+% %% are actually completely blank, cause they're not usually
+% \makeatletter
+% \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+% 	\hbox{}
+% 	\vspace*{\fill}
+% 	\thispagestyle{empty}
+% 	\newpage
+% 	\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+% \makeatother
+
+
+% %% make the quotation appear next to the chapter number
+% \renewcommand\chapterheadstartvskip{\vspace*{-5\baselineskip}}
+
+% %% now change the section heading to have a line beneath it
+% %% load up the fancy title-style package
+% \usepackage[calcwidth]{titlesec}
+
+% \titleformat{\section}[hang]{\fontfamily{ccr}}
+% {\Large\thesection}{12pt}{\Large}[{\titlerule[0.5pt]}]
+
+% \titleformat{\subsection}[hang]{\fontfamily{ccr}}
+% {\large\thesubsection}{12pt}{\large }
+
+% \titleformat{\subsubsection}[hang]{\fontfamily{ccr}}
+% {}{12pt}{\bfseries}
+
+
+
+% % % Family                 Font Name
+% % % pag                    Avant Garde
+% % % fvs                    Bitstream Vera Sans
+% % % pbk                    Bookman
+% % % bch                    Charter
+% % % ccr                    Computer Concrete
+% % % cmr                    Computer Modern
+% % % pcr                    Courier
+% % % mdugm                  Garamond
+% % % phv                    Helvetica
+% % % fi4                    Inconsolata
+% % % lmr                    Latin Modern
+% % % lmss                   Latin Modern Sans
+% % % lmtt                   Latin Modern Typewriter
+% % % LinuxBiolinumT-OsF     Linux Biolinum (formerly 'fxb' in older package versions)
+% % % LinuxLibertineT-OsF    Linux Libertine (formerly 'fxl' in older package versions)
+% % % pnc                    New Century Schoolbook
+% % % ppl                    Palatino
+% % % qag                    TeX Gyre Adventor 
+% % % qbk                    TeX Gyre Bonum 
+% % % qzc                    TeX Gyre Chorus
+% % % qcr                    TeX Gyre Cursor
+% % % qhv                    TeX Gyre Heros
+% % % qpl                    TeX Gyre Pagella 
+% % % qcs                    TeX Gyre Schola
+% % % qtm                    TeX Gyre Termes
+% % % ptm                    Times
+% % % uncl                   Uncial
+% % % put                    Utopia
+% % % pzc                    Zapf Chancery
+
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+
+\makeatletter
+\def\@part[#1]#2{%
+    \ifnum \c@secnumdepth >-2\relax
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
+    \else
+      \addcontentsline{toc}{part}{#1}%
+    \fi
+    \markboth{}{}%
+  \reset@font
+  \parindent \z@ 
+  \vspace*{10\p@}%
+  \hbox{%
+    \vbox{%
+      \hsize=7mm%
+      \begin{tabular}{@{}p{7mm}@{}}
+        \makebox[7mm]{\scshape\strut\small\partname}\\
+        \makebox[7mm]{\cellcolor{gray}\Huge\color{white}\bfseries\strut\thepart\rule[-4cm]{0pt}{4cm}}%
+      \end{tabular}%
+      \makebox(0,0){\put(-10,-100){\fbox{\phantom{\rule[-4cm]{7mm}{4cm}}}}}
+      }%
+    \kern-2pt
+    \vbox to 0pt{%
+       \tabular[t]{@{}p{1cm}p{\dimexpr\hsize-2.1cm}@{}}\hline
+        %   & \fontsize{25}{25}\selectfovnt\itshape\bfseries\rule{0pt}{1.5\ht\strutbox}#1\endtabular}%
+        %   & \Huge\itshape\rule{0pt}{1.5\ht\strutbox}#1\endtabular}%
+         & \Huge\rule{0pt}{1.5\ht\strutbox}#1\endtabular}%
+    }%
+  \cleardoublepage
+%  \vskip 100\p@
+}
+% \renewcommand*\thepart{\arabic{part}}
+\renewcommand\thepart{\Roman{part}}
+\makeatother
+
+\makeatletter
+\let\size@chapter\LARGE
+\makeatother
+
+\newcommand{\mypar}[1]{\medskip\noindent\textit{#1}~}
+
+%   \usepackage[utf8]{inputenc}
+%     \usepackage{microtype} 
+%     \usepackage[garamond]{mathdesign}
+%     \usepackage{garamondx}%%
+%     \usepackage[x11names]{xcolor}
+%     \usepackage{graphicx}
+%     \usepackage{etoolbox}
+%     \usepackage{epigraph}
+%     \usepackage{environ} 
+
+%     \setlength\epigraphwidth{0.5\linewidth}
+%     \newbool{withepi}
+%     \NewEnviron{PartEpigraph}
+%     {\global\let\mypartepigraph\BODY}%
+%     \newcommand\thispartepigraph[2]{%
+%     \setbool{withepi}{true}%
+%     \begin{PartEpigraph}
+%       \epigraph{#1}{#2}
+%     \end{PartEpigraph}}%
+
+%     \usepackage{geometry}
+%     \usepackage{titlesec}%[newparttoc]
+%     \usepackage{lettrine}
+%     \renewcommand\LettrineFontHook{\fontfamily{EBGaramondInitials-TLF}\color{titlecolour}}
+%     %
+
+%     \setlength\fboxrule{0.6pt}
+%     \colorlet{titlecolour}{DarkSeaGreen4!80}
+%     \newlength\labelframewd
+%     \settowidth{\labelframewd}{~\footnotesize\textsc{part}~}
+
+%     \newsavebox\partlabelbox%
+
+%     \newcommand\partlabel{%
+%     \makebox[0pt]{\fcolorbox{titlecolour}{titlecolour}{%
+%     \raisebox{8.4ex}[0pt]{\rlap{\hspace{-\fboxsep}\resizebox*{\dimexpr\labelframewd+2\fboxsep\relax}{!}{\color{titlecolour}\lsstyle\scshape\scriptsize{part}}}}%
+%     \usebox{\partlabelbox}}}
+%     \hskip-\fboxsep\color{titlecolour}{\raisebox{-9ex}{\fbox{\phantom{\usebox{\partlabelbox}}}}}
+%     }%
+
+%     \titleformat{\part}[display]{}
+%     {%
+%     \sbox{\partlabelbox}{\raisebox{0pt}[7ex][27ex]{\resizebox{\labelframewd}{!}{\hfill\color{white}{\arabic{part}}\hfill}}}
+%     \smash{\partlabel}}%
+%     {6ex}
+%     {\thispagestyle{empty}{\color{titlecolour}\titlerule[\fboxrule]}\vskip2.5ex\hspace*{3\labelframewd}\fontsize{32}{40}\itshape}%
+%     [\ifbool{withepi}{\vspace{4\baselineskip}\mypartepigraph\global\setbool{withepi}{false}}{}]
+
+%     \titlespacing{\part}{0pt}{1.25\baselineskip}{10\baselineskip}
+%     \renewcommand*\thepart{\arabic{part}}
+
+    % \begin{document} 
+
+    % \thispartepigraph{For the Snark \emph{was} a Boojum,  you see.}{Lewis Carroll     --- \emph{The Hunting of the Snark}}

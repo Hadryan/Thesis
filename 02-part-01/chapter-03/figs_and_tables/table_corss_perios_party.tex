@@ -1,0 +1,48 @@
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\begin{table}[!t]
+\fontsize{7}{8}\selectfont
+%\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\caption{Results on the task of status classification.\vspace{-10pt}}
+\makebox[\linewidth][c]{
+\centering
+\begin{subtable}[b]{0.5\textwidth}
+\captionof{table}{\label{tbl:SVM-status}Accuracy of the $SVM$ classifier}
+\begin{tabular}{ c l l l l l } 
+\toprule
+\multicolumn{2}{ c }{\multirow{2}{*}{\textbf{Period}}} & \multicolumn{4}{ c }{\textbf{Test}}
+\\ \cmidrule{3-6}
+\multicolumn{1}{ c}{} & &2006-10&2010-12&2012-14 & All
+\\ \midrule
+\multirow{4}{*}{\rotatebox[origin=c]{90}{\textbf{Train}}} & 2006-10 & \tc 84.14 & 68.83 & 87.24 & -
+\\ 
+& 2010-12 & 68.29 & \tc 78.57 & 87.91 & -
+\\
+& 2012-14 & 68.90 & 75.97 & \tc 88.59 & -
+\\ 
+& All & - & - & - & \tc 79.87
+\\\bottomrule
+\end{tabular}
+\shrink
+\end{subtable}
+%
+~~~
+%
+\begin{subtable}[b]{0.5\textwidth}
+\captionof{table}{\label{tbl:swlm-status}Accuracy of the $SVM_{\achswlm}$ classifier}
+\begin{tabular}{ c l l l l l } \toprule
+\multicolumn{2}{ c }{\multirow{2}{*}{\textbf{Period}}} & \multicolumn{4}{ c }{\textbf{Test}}
+\\  \cmidrule{3-6}
+\multicolumn{1}{ c}{} & &2006-10&2010-12&2012-14 & All
+\\ \midrule
+\multirow{4}{*}{\rotatebox[origin=c]{90}{\textbf{Train}}} & 2006-10 & \tc 82.32 & 80.51 & 89.29 &-
+\\  
+& 2010-12 & 79.87 & \tc 74.66 & 88.58 &-
+\\   
+& 2012-14 & 78.65& 77.27 & \tc 93.28 & -
+\\   
+& All & - & - & - & \tc 86.98
+\\\bottomrule
+\end{tabular}
+\end{subtable}
+}
+\end{table}

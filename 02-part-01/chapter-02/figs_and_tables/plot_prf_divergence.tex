@@ -1,0 +1,182 @@
+\begin{figure*}[t!]
+\makebox[\linewidth]{
+    \centering
+    \begin{subfigure}[t]{0.33\textwidth}
+    \begin{tikzpicture}[thick,scale=0.55, every node/.style={transform shape}]
+\begin{axis}[
+        xlabel=Ratio of relevant documents ,
+        scale only axis,
+        grid = both,
+        grid style=dashed,
+	    minor tick num=1,
+	    width=7cm,
+        xtick = {0.1,0.2,..., 1.0},
+        ticklabel style = {font=\tiny,xshift=0.5ex},
+        ymin=0, 
+        ymax=0.61, 
+        ylabel=JS-Divergence,
+        height=5.5cm, 
+        cycle list name=exotic, 
+        legend style={font=\fontsize{7}{8}\selectfont},
+        %mark options={mark size=1.3, line width=0.1pt},
+        ]
+	\addplot table [x=relnum, y=SMM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=DMM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=RM3] {divergence_robust04.dat};
+	\addplot table [x=relnum, y=RM4] {divergence_robust04.dat};
+	\addplot table [x=relnum, y=RMM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=MEDMM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=SWLM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=RSWLM] {divergence_robust04.dat};    \legend{SMM,DMM,RM3,RM4,RMM,MEDMM,SWLM,RSWLM}
+\end{axis}
+\end{tikzpicture}
+\caption{Robust04 dataset}
+% \vspace{-5pt}
+\end{subfigure}
+%
+%~ 
+%
+
+\begin{subfigure}[t]{0.33\textwidth}
+\begin{tikzpicture}[thick,scale=0.55, every node/.style={transform shape}]
+\begin{axis}[
+        xlabel=Ratio of relevant documents ,
+        scale only axis,
+        grid = both,
+        grid style=dashed,
+	    minor tick num=1,
+	    width=7cm,
+        xtick = {0.1,0.2,..., 1.0},
+        ticklabel style = {font=\tiny,xshift=0.5ex},
+        ymin=0, 
+        ymax=0.77, 
+        ylabel=JS-Divergence,
+        height=5.5cm, 
+        cycle list name=exotic, 
+       legend style={font=\fontsize{7}{8}\selectfont},
+        %mark options={mark size=1.3, line width=0.1pt},
+        ]
+    \addplot table [x=relnum, y=SMM] {divergence_wt10g.dat};
+    \addplot table [x=relnum, y=DMM] {divergence_wt10g.dat};
+    \addplot table [x=relnum, y=RM3] {divergence_wt10g.dat};
+	\addplot table [x=relnum, y=RM4] {divergence_wt10g.dat};
+	\addplot table [x=relnum, y=RMM] {divergence_wt10g.dat};
+    \addplot table [x=relnum, y=MEDMM] {divergence_wt10g.dat};
+    \addplot table [x=relnum, y=SWLM] {divergence_wt10g.dat};
+    \addplot table [x=relnum, y=RSWLM] {divergence_wt10g.dat}; 
+ \legend{SMM,DMM,RM3,RM4,RMM,MEDMM,SWLM,RSWLM}
+\end{axis}
+\end{tikzpicture}
+\caption{WT10G dataset}
+% \vspace{-5pt}
+\end{subfigure}
+%
+%~ 
+%
+    \begin{subfigure}[t]{0.33\textwidth}
+    \begin{tikzpicture}[thick,scale=0.55, every node/.style={transform shape}]
+\begin{axis}[
+        xlabel=Ratio of relevant documents,
+        scale only axis,
+        grid = both,
+        grid style=dashed,
+	    minor tick num=1,
+	    width=7cm,
+        xtick = {0.1,0.2,..., 1.0},
+        ticklabel style = {font=\tiny,xshift=0.5ex},
+        ymin=0, 
+        ymax=0.48, 
+        ylabel=JS-Divergence,
+        height=5.5cm, 
+        cycle list name=exotic, 
+       legend style={font=\fontsize{7}{8}\selectfont},
+        %mark options={mark size=1.3, line width=0.1pt},
+        ]
+    \addplot table [x=relnum, y=SMM] {divergence_gov2.dat};
+    \addplot table [x=relnum, y=DMM] {divergence_gov2.dat};
+    \addplot table [x=relnum, y=RM3] {divergence_gov2.dat};
+	\addplot table [x=relnum, y=RM4] {divergence_gov2.dat};
+	\addplot table [x=relnum, y=RMM] {divergence_gov2.dat};
+    \addplot table [x=relnum, y=MEDMM] {divergence_gov2.dat};
+    \addplot table [x=relnum, y=SWLM] {divergence_gov2.dat};
+    \addplot table [x=relnum, y=RSWLM] {divergence_gov2.dat}; 
+\legend{SMM,DMM,RM3,RM4,RMM,MEDMM,SWLM,RSWLM}
+\end{axis}
+\end{tikzpicture}
+\caption{GOV2 dataset}
+% \vspace{-5pt}
+\end{subfigure}
+}
+\caption{\label{fig:div}Divergence of true relevance feedback models and pseudo relevance feedback models in different systems, for queries with different ratio of relevant documents in top-10 results.}
+% \vspace{-12pt}
+\end{figure*}
+
+
+
+\if 0
+
+
+\begin{figure}[t]
+
+\begin{tikzpicture}
+\begin{groupplot}[
+        group style={
+        group size=1 by 2,
+        xlabels at=edge bottom,
+        xticklabels at=edge bottom,
+        vertical sep=0pt,
+        },
+        xlabel=Number of rel doc from 10 doc,
+        %xmin=0, xmax=10,
+        xtick align=outside,xtick pos=left,
+        scale only axis,
+        %ytick align=outside,
+        %ytick pos=left,
+        %axis y line=left,
+        grid = both,
+        grid style=dashed,
+	    minor tick num=1,
+	    width=7cm,
+        height=7cm,
+        xtick = {0.1,0.2,..., 1.0},
+        ticklabel style = {font=\fontsize{6}{7}},
+        ]
+
+\nextgroupplot[
+        ymin=0, 
+        ymax=0.61, 
+        ylabel=JS-Divergence,
+        height=5.5cm, 
+        %ytick align=outside,
+        %ytick pos=left,
+        %axis y line=left, 
+        cycle list name=exotic, 
+       legend style={font=\fontsize{7}{8}\selectfont},
+        ]
+	\addplot table [x=relnum, y=RM3] {divergence_robust04.dat};
+	\addplot table [x=relnum, y=RM4] {divergence_robust04.dat};
+	\addplot table [x=relnum, y=DMM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=MEDMM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=SMM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=RMM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=SWLM] {divergence_robust04.dat};
+    \addplot table [x=relnum, y=RSWLM] {divergence_robust04.dat};
+    \legend{RM3,RM4,DMM,MEDMM,SMM,RMM,SWLM,RSWLM}
+
+\nextgroupplot[
+                ymin=0, 
+                ymax=45, 
+                ylabel=Number of Queries,
+                height=1.5cm,
+                ybar,
+                bar width= 5pt,
+            ]  
+\definecolor{b}{HTML}{4981CE}
+\addplot[fill=b, draw=b, pattern color = b, pattern = north east lines] table [x=relnum, y=qnum] {divergence_robust04.dat};
+\end{groupplot}
+\end{tikzpicture}
+\caption{Robust04 dataset}
+    \end{figure}
+
+
+\fi

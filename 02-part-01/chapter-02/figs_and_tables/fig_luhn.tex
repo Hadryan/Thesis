@@ -1,0 +1,64 @@
+
+\definecolor{sp}{HTML}{e92085}
+\definecolor{ge}{HTML}{20b7e9}
+\definecolor{re}{HTML}{b7e920}
+    
+\newcommand\gauss[2]{1/(#2*sqrt(20*pi))*exp(-((x-#1)^2)/(0.03*#2^0.5))} % Gauss function, parameters mu and sigma
+
+\begin{figure}[t!]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[every axis plot post/.append style={
+      mark=none,samples=50,smooth}, % All plots: from -2:2, 50 samples, smooth, no marks
+      %grid=both,
+    % xlabel style = {font=\fontsize{9}{10}\selectfont},
+    % ylabel style = {font=\fontsize{9}{10}\selectfont},
+    ylabel=Frequency,
+    xlabel=Terms,
+    xmax=0.8,
+    ymax=0.5,
+    width=11cm,%\textwidth,
+    height=6cm, %5cm,
+    xtick=\empty, 
+    ytick=\empty,
+    axis x line*=bottom, % no box around the plot, only x and y axis
+    axis y line*=left, % the * suppresses the arrow tips
+    enlargelimits=upper] % extend the axes a bit to the right and top
+    
+    %\addplot [fill=cyan!20, draw=none, domain=0.2:0.4] {(1/70)^x} \closedcycle;
+    \addplot[mark=none,domain=0.27:0.53,
+                white,
+                samples=100,%
+                fill = cyan!40!black!20,
+                %dashed,
+                pattern=north east lines,%
+                pattern color=re!70!black
+                ]%
+                {((1/30)^(x-0.001))/2}
+                 \closedcycle;
+    \addplot[thick,green!20!black,domain=0:1,dashed] {\gauss{0.4}{0.4}};
+    \addplot[very thick,cyan!20!black,domain=0:1]{((1/30)^(x-0.001))/2};
+    \addplot[dashed] coordinates{(0.27,0)(0.27,0.4)};
+    \addplot[dashed] coordinates{(0.53,0)(0.53,0.4)};
+    \node[black,below] at (axis 
+    cs:0.12,0.2){\small{\color{ge!60!black}{General}}};
+    \node[black,below] at (axis cs:0.4,0.42){\small{\color{re!60!black}{Significant Words}}};
+    \node[black,below] at (axis cs:0.7,0.2){\small{\color{sp!60!black}{Specific}}};
+    % \node (One) at (axis cs:0.286,0.23) [] {}; 
+    % \node (Two) at (axis cs:0.506,0.23) [] {};
+    %  \pgftransformreset
+    % \pgftransformyshift{.5cm}
+    % \draw[decoration={
+    %     text along path,
+    %     text format delimiters={|}{|},
+    %     text={|\fontsize{7}{8}\selectfont\color{re!50!black}|
+    %     Significant Words},
+    %     text align={center},
+    %     },decorate] (One) to [bend left=65] (Two);
+        
+    \end{axis}
+    % \vspace{-5pt}
+    \end{tikzpicture}
+    \caption{\label{fig:Luhn} Establishing a set of ``Significant Words'' based on~\citet{Luhn:1958}}
+% \vspace{-15pt}
+\end{figure}

@@ -1,0 +1,73 @@
+%% This is Mostafa Dehghani's
+%%
+%% Author: Mostafa Dehghani
+%%
+\documentclass[table]{style/illcdiss}
+
+%If you want to use MakeIndex, uncomment these lines
+%\usepackage{makeidx}     % only with Latex2e
+%\makeindex
+\usepackage[utf8]{inputenc}
+\typeout{Mostafa Dehghani's PhD Thesis.}
+
+
+% Mostafa's stuff
+\input{style/mostafa_stuff.tex}
+\input{thesis_resqs.tex}
+\usepackage{bookmark}
+\usepackage{lipsum}
+
+
+\begin{document}
+\newenvironment{resqbox}%
+{\begin{leftbar}{gray}\begin{quotation}\begin{noindent}}%
+{\end{noindent}\end{quotation}\end{leftbar}}
+
+\pagestyle{plain}
+\pagenumbering{roman}
+
+%%  \include the `front matter'
+\frontmatter
+\include{thesis_front}
+\include{thesis_dedication}
+\tableofcontents
+\include{thesis_acknowledgements}
+\tableofcontents
+
+%%  now we can start with the real thing
+
+% \cleardoublepage
+\pagestyle{headings}
+\pagenumbering{arabic}
+
+\pagenumbering{arabic}
+
+\mainmatter
+\input{01-introduction/main}
+\input{02-part-01/main}
+\input{03-part-02/main}
+% \input{04-part-03/main}
+
+% \bookmarksetup{startatroot} % Lift from parts
+% \addtocontents{toc}{\bigskip} % skip
+
+% \input{05-conclusions/main}
+
+
+% \appendix
+% \include{thesis_appendix}
+
+%%  \include the `end matter'
+\bibliographystyle{apalike}
+\bibliography{thesis_ref.bib}
+
+% \include{thesi_index}
+% \include{thesis_samenvatting}
+% \include{thesis_abstract}
+
+%%  finally, \include the list of previous ILLC dissertations
+
+\cleardoublepage % if you are so inclined
+\include{illcdissertations}
+
+\end{document}

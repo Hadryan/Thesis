@@ -1,0 +1,71 @@
+\chapter{Learning from Pseudo-Labels}
+\label{chap:4}
+
+\section{Introduction}
+Neural networks are making great progress in many tasks in computer vision~\citep{krizhevsky2012imagenet}, natural language processing~\citep{collobert2008unified}, and information retrieval~\citep{welling2005exponential}. However, these models are data hungry and their performance is strongly correlated with the amount of available labeled data, which is not always readily available and can be expensive to obtain. 
+
+Looking into the research works done in this area, most of them target stable benchmark tasks where standard large-enough datasets exist to train neural networks. However, the labeled data become the scarce commodity when we stray slightly from these standard benchmark tasks toward the realm of real world applications. In this chapter, we focus on one of our research questions:
+\begin{resqbox}
+\emph{\resq{c4}}
+\end{resqbox}
+
+We aim to study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand. Then, given a vast amount of pragmatically generated labeled data, we discuss how to design neural networks that can go beyond the imperfection in the weakly annotated data. We also study how ability of learning from noisy signals can lead to better performance when we have intentionally added noise to the training signals in a privacy preserving training setups.
+
+\medskip
+In this chapter, we mainly target the \emph{ranking task}, as one of the core IR problems, where despite the advances of neural network based methods in many other related tasks like reading comprehension, there has been a little progress, mainly due to the lack of a large scale public dataset with query-document pairs labeled by relevance. 
+
+We propose to use a heuristic based ranking method to generate pseudo-labels for a large set of unlabeled query-document pairs to train a neural ranking model given these pseudo-labels as sort of weak annotations.  We tried different architectures, in terms of different objectives and different input representations and study how they learn the ranking task in weak supervision setup.
+
+Interestingly, we observe that using just training data that are annotated by a weak annotator model as the weak annotator, we can outperform that weak annotator on the test data. Based on our analysis, the achieved performance is generally indebted to three main factors: 
+%
+First, defining an objective function that aims to learn the ranking instead of calibrated scoring to relax the network from fitting to the imperfections in the weakly supervised training data.
+%
+Second, letting the neural networks learn optimal query/document representations instead of feeding them with a representation based on predefined features. This is a key requirement to maximize the benefits from deep learning models with weak supervision as it enables them to generalize better.
+%
+Third and last, the weak supervision setting makes it possible to train the network on a massive amount of training data, which is crucial for learning representations.
+%
+
+We further thoroughly analyse the behavior of models to understand what they learn, what is the relationship among different models, and how much training data is needed to go beyond the weak supervision signal. We also study if employing deep neural networks may help in different situations.
+%
+We also examine the scenario of using the network trained on a weak supervision signal as a pre-training step. We demonstrate that, in the ranking problem, the performance of deep neural networks trained on a limited amount of supervised data significantly improves when they are initialized from a model pre-trained on weakly labeled data.
+
+Finally, we study how a neural ranking model that learns from weak/noisy signals can be effectively employed in a setup that noise is intentionally added to the training signal to preserve the privacy.
+
+
+\subsection{Detailed Research Questions}
+We break down our main research question in this chapter into three concrete research questions:
+\begin{resqbox}
+\begin{enumerate}
+\item[\textbf{RQ4.1}] \emph{\resq{c4.1}}
+\item[\textbf{RQ4.2}] \emph{\resq{c4.2}}
+\item[\textbf{RQ4.3}] \emph{\resq{c4.3}}
+\end{enumerate}
+\end{resqbox}
+In the following sections, we will address these research questions.
+\input{03-part-02/chapter-04/neural_ranking.tex}
+\input{03-part-02/chapter-04/privacy_preserving_neural_ranker.tex}
+\input{03-part-02/chapter-04/related_work.tex}
+
+
+\section{Conclusion}
+In this chapter, we proposed to use unsupervised methods in order to programmatically generate large amounts of training data, as weakly annotated data, to train effective neural ranking models.
+We focus on the task of assessing relevance, i.e. ranking documents given a query that suffers from a large-scale publicly available training set
+We examine various neural ranking models with different ranking architectures and objectives, and different input representations. 
+
+We used over six million queries to train our models and evaluated them on Robust04 and ClueWeb 09-Category B collections, in an ad-hoc retrieval setting.  The experiments showed that our best performing model significantly outperforms the BM25 model (our weak supervision signal) by over $13\%$ and $35\%$ MAP improvements in the Robust04 and ClueWeb collections, respectively. 
+We also demonstrated that in the case of having a small amount of training data, we can improve the performance of supervised learning by pre-training the network on weakly supervised data.
+
+Based on our results, there are three key ingredients in neural ranking models that lead to good performance with weak supervision:
+%
+The first is the proper input representation. Providing the network with raw data and letting the network to learn the features that matter, gives the network a chance of learning how to ignore imperfection in the training data.
+%
+The second ingredient is to target the right goal and define a proper objective function. In the case of having weakly annotated training data, by targeting some explicit labels from the data, we may end up with a model that learned to express the data very well, but is incapable of going beyond it. 
+This is especially the case with deep neural networks where there are many parameters and it is easy to learn a model that overfits the data.
+%
+The third ingredient is providing the network with a considerable amount of training examples. 
+As an example, during the experiments we noticed that using the \feedthree, the network needs a lot of examples to learn embeddings that are more effective for retrieval compared to pre-trained embeddings. 
+Thanks to weak supervision, we can generate as much training data as we need with almost no cost.
+
+
+We also study how learning from weak signals can benefit preserving privacy where some noise is intentionally added to the training signal to preserve the privacy. We employed Private Aggregation of Teacher Ensembles (PATE)~\citep{Papernot:2017}  to train a privacy preserving neural ranking model, in which we train several neural rankers on disjoint subsets of the training data and use the noisy aggregated signals from these models on an unlabeled set to train a neural ranker that in a setup that guarantees a certain level of differential privacy.
+These experiments lays the groundwork for the idea of sharing a privacy preserving model instead of sensitive data in IR applications. This suggests researchers from industry share the knowledge learned from actual users' data with the academic community that leads to a better collaboration of all researchers in the field. 
