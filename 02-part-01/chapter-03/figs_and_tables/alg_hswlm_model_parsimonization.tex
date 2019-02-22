@@ -4,16 +4,15 @@
  \begin{algorithmic}[1]
  \Procedure{Parsimonize}{$e$,$B$}
  \ForAll{term $t$ in the vocabulary}
-% 
- \State \begin{tiny}$P(t|\theta_B) \xleftarrow{normalized} \sum_{b_i\in B} \bigg(P(t|\theta_{b_i}) \prod_{\substack{b_j\in B \\ j \neq i}} (1-P(t|\theta_{b_j}))\bigg)$ \end{tiny}
- \Repeat
- \State \begin{tiny}E-Step: $P[t\in \mathcal{V}] \gets P(t|\theta_e).\frac{\alpha P(t|\tilde{\theta}_e)}{\alpha P(t|\tilde{\theta}_e) + (1-\alpha) P(t|\theta_B)}$ \end{tiny}
-  \State \begin{tiny}M-Step: $P(t|\tilde{\theta}_e) \gets \frac{ P[t \in \mathcal{V}]}{\sum_{t' \in \mathcal{V}} P[t' \in \mathcal{V}]}$ \end{tiny}
- \Until{$\tilde{\theta_t}$ becomes stable}
+     \State \begin{small}$P(t|\theta_B) \xleftarrow{normalized} \sum_{b_i\in B} \bigg(P(t|\theta_{b_i}) \prod_{\substack{b_j\in B \\ j \neq i}} (1-P(t|\theta_{b_j}))\bigg)$ \end{small}
+     \Repeat
+         \State \begin{small}E-Step: $P[t\in \mathcal{V}] \gets P(t|\theta_e).\frac{\alpha P(t|\tilde{\theta}_e)}{\alpha P(t|\tilde{\theta}_e) + (1-\alpha) P(t|\theta_B)}$ \end{small}
+          \State \begin{small}M-Step: $P(t|\tilde{\theta}_e) \gets \frac{ P[t \in \mathcal{V}]}{\sum_{t' \in \mathcal{V}} P[t' \in \mathcal{V}]}$ \end{small}
+     \Until{$\tilde{\theta_t}$ becomes stable}
  \EndFor
  \EndProcedure
  \end{algorithmic}
  \caption{Modified Model Parsimonization}
 \end{algorithm}
-\caption{\label{alg:model_parsimonization}Pseudo-code for procedure of modified model parsimonization.}
+\caption{Pseudo-code for procedure of modified model parsimonization.}
 \end{figure}

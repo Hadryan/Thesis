@@ -4,7 +4,6 @@
 \usepackage[palatino]{quotchap}
 \usepackage{array}
 \usepackage{todonotes}
-\usepackage{tikz-qtree}
 \usetikzlibrary{decorations.text}
 \usepackage{multirow}
 \usepackage{amsmath}
@@ -36,14 +35,23 @@
 %saves some space (stealing space very smoothly!):
 % \usepackage{setspace}
 % \setstretch{0.98}
+\usepackage{courier}
 
 \usetikzlibrary{arrows,decorations.pathmorphing,fit,positioning,patterns}
 \usepackage{xspace} % insert space when needed.
 \usepackage[square,comma,numbers,sort&compress,sectionbib]{natbib}
-\usepackage{algpseudocode}
+
+% \usepackage{algorithm}
+% \usepackage{algcompatible}
+% \usepackage{algpseudocode}
+
+\usepackage{algorithmicx}
 \usepackage{algorithm}
+\usepackage{algpascal}
+\usepackage{algc}
+\usepackage{algpseudocode}
 \usepackage{algcompatible}
-% \usepackage{algorithmic}
+
 
 \usetikzlibrary{arrows.meta}
 \usepackage{tkz-graph}
@@ -72,6 +80,7 @@
 % \captionsetup[subfigure]{font=\fontsize{7}{8}\selectfont}
 % \captionsetup[table]{font=small}
 % \captionsetup[subtable]{font=\fontsize{7}{8}\selectfont}
+
 \makeatletter
 \DeclareCaptionLabelFormat{numberless}{\ALG@name#1}
 \captionsetup[algorithm]{labelformat=numberless} 
@@ -354,6 +363,8 @@
 \makeatother
 
 \newcommand{\mypar}[1]{\medskip\noindent\textit{#1}~}
+
+\usepackage{tikz-qtree}
 
 %   \usepackage[utf8]{inputenc}
 %     \usepackage{microtype} 

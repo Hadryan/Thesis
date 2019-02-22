@@ -1,10 +1,9 @@
-\section{Applications and Setups}
+\section{Applying \cws and \fwl on Language Tasks}
 We apply \cws and \fwl, two approaches introduced in this chapter for learning from vast amount of weakly annotated data, while a small set of labeled data exist, to two different tasks: \emph{document ranking} and \emph{sentiment classification}. 
 Whilst these two applications differ considerably, as do the exact operationalization of the propose models to these cases, in both cases the human gold standard data is based on a cognitively complex, or subjective, judgments causing high interrater variation, increasing both the cost of obtaining labels as the need for larger sets of labels.
 
 \input{03-part-02/chapter-05/figs_and_tables/table_baselins.tex}
-For both tasks, we evaluate the performance of \cws as well as \fwl compared to some baselines that are described in Table~\ref{tbl_baselines}. 
-%We also conducted a series of ablation studies.
+For both tasks, we evaluate the performance of \cws as well as \fwl compared to some baselines that are described in Table~\ref{tbl_baselines}. In the rest of this chapter, we present results of different experiments and studies and we refer to these baselines using their id and name (first and second column in Table~\ref{tbl_baselines}).
 
 \subsection{Document Ranking}
 This task is the core information retrieval problem and is challenging as the ranking model needs to learn a representation for long documents and capture the notion of relevance between queries and documents. Furthermore, as it was discussed in Chapter~\ref{chap:4}, the size of publicly available datasets with query-document relevance judgments is unfortunately quite small ($\sim 250$ queries).

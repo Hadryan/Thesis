@@ -1,4 +1,4 @@
-\chapter{Fidelity Weighted Learning}
+\chapter{Learning from Samples of Variable Quality}
 \label{chap:5}
 \section{Introduction}
 The success of deep neural networks to date depends strongly on the availability of labeled data. The more neural networks become deep and complex, the more it is crucial for them to be trained on massive amounts of training data. However, in many applications, labeled data is costly to obtain and task-specific training data is now a critical bottleneck. 
@@ -7,38 +7,48 @@ Usually it is much easier to obtain small quantities of high-quality labeled dat
 However, for a large class of tasks it is also easy to define one or more so-called ``weak annotators'', additional (albeit noisy) sources of \emph{weak supervision} based on heuristics or ``weaker'', biased classifiers trained on e.g.\ non-expert crowd-sourced data or data from different domains that are related. 
 While easy and cheap to generate, it is not immediately clear if and how these additional weakly-labeled data can be used to train a stronger classifier for the task we care about.
 
-More generally, in almost all practical applications machine learning systems have to deal with data \emph{samples of variable quality}. For example, in a large dataset of images only a small fraction of samples may be labeled by experts and the rest may be crowd-sourced using e.g.\ Amazon Mechanical Turk~\citep{Veit:2017}. In addition, in some applications, labels are intentionally perturbed due to privacy issues~\citep{wainwright2012privacy,Papernot:2016, dehghani:2017:neuir}. 
+More generally, in almost all practical applications, machine learning systems have to deal with data \emph{samples of variable quality}. For example, in a large dataset of images only a small fraction of samples may be labeled by experts and the rest may be crowd-sourced using e.g.\ Amazon Mechanical Turk~\citep{Veit:2017}. In addition, in some applications, labels are intentionally perturbed due to privacy issues~\citep{wainwright2012privacy,Papernot:2016, dehghani:2017:neuir}. 
 
 Formally speaking, in our setup, we assume that we are given a large set of unlabeled data samples, a heuristic labeling function called the \emph{\wa}, and a small set of high-quality samples labeled by experts, called the \emph{strong dataset}, consisting of tuples of training samples $x_i$ and their true labels $y_i$, i.e. $\mathcal{D}_s=\{(x_i,y_i)\}$. We consider the latter to be observations from the true target function that we are trying to learn. 
 We use the \wa to generate labels for the unlabeled samples. Generated labels are noisy due to the limited accuracy of the \wa. This gives us the \emph{weak dataset} consisting of tuples of training samples $x_i$ and their weak labels $\tilde{y}_i$, i.e. $\mathcal{D}_w=\{(x_i, \tilde{y}_i)\}$.  Note that we can generate a large amount of weak training data $\mathcal{D}_w$ at almost no cost using the \wa. In contrast, we have only a limited amount of observations from the true function, i.e. $|\mathcal{D}_s| \ll |\mathcal{D}_w|$. 
 
-The simplest approach in this setup is to expand the strong training set, $\mathcal{D}_s$, by including the weakly-supervised samples, $\mathcal{D}_w$, which is in fact considering all samples are equally important. Alternatively, one may pretrain on the weak data and then fine-tune on observations from the true function or distribution (which we call strong data). Indeed, it has recently been shown that a small amount of expert-labeled data can be augmented in such a way by a large set of raw data, with labels coming from a heuristic function, to train a more accurate ranking model~\citep{Dehghani:2017:SIGIR, Severyn:2015:SIGIR}.
-
+The simplest approach in this setup is to expand the strong training set, $\mathcal{D}_s$, by including the weakly-supervised samples, $\mathcal{D}_w$, which is in fact considering all samples are equally important. Alternatively, one may pretrain on the weak data and then fine-tune on observations from the true function or distribution (which we call strong data). Indeed, it has been shown that a small amount of expert-labeled data can be augmented in such a way by a large set of raw data, with labels coming from a heuristic function, to train a more accurate ranking model~\citep{Dehghani:2017:SIGIR, Severyn:2015:SIGIR}.
 The downside is that such approaches are oblivious to the amount or source of noise in the labels. Simply speaking, they do not consider the cause of noise in the labels and only focus on the effect. 
 
-In this chapter, we focus on one of our research questions:
-% \begin{resqbox}
-% \emph{\resq{c5}}
-% \end{resqbox}
+In this chapter, we focus on this issue and try to address the following research question:
+\begin{resqbox}
+\emph{\resq{c5}}
+\end{resqbox}
 
 We argue that treating weakly-labeled samples uniformly (i.e.\ each weak sample contributes equally to the final classifier) ignores potentially valuable information of the label quality. 
 
-Instead, we propose two different approaches that directly model the inaccuracies introduced by the \wa, which can then be used to modulate the training process based on the fidelity (or quality) of each weak sample. In other words, we control the extent to which we make use of this additional source of weak supervision: more for confidently-labeled weak samples close to the true observed data, and less for uncertain samples further away from the observed data.
-
+Instead, we propose two different approaches that they directly model the inaccuracies introduced by the \wa, which can then be used to modulate the training process based on the fidelity (or quality) of each weak sample. 
+% In other words, we control the extent to which we make use of this additional source of weak supervision: more for confidently-labeled weak samples close to the true observed data, and less for uncertain samples further away from the observed data. 
 
 
 \subsection{Detailed Research Questions}
-We break down our main research question in this chapter into three concrete research questions:
-% \begin{resqbox}
-% \begin{enumerate}
-% \item[\textbf{RQ5.1}] \emph{\resq{c5.1}}
-% \item[\textbf{RQ5.2}] \emph{\resq{c5.2}}
-% \item[\textbf{RQ5.3}] \emph{\resq{c5.3}}
-% \end{enumerate}
-% \end{resqbox}
-In the following sections, we will address these research questions.
+We break down our main research question in this chapter into two concrete research questions:
+\begin{resqbox}
+\begin{enumerate}
+\item[\textbf{RQ5.1}] \emph{\resq{c5.1}}
+\item[\textbf{RQ5.2}] \emph{\resq{c5.2}}
+\end{enumerate}
+\end{resqbox}
+In the following sections, we will address these research questions, and support our ideas with experiments and analysis on different tasks.
 
 \input{03-part-02/chapter-05/meta_learning.tex}
 \input{03-part-02/chapter-05/fedility_weighted_learning.tex}
 \input{03-part-02/chapter-05/applications.tex}
+\input{03-part-02/chapter-05/analysis.tex}
+\input{03-part-02/chapter-05/related_work.tex}
+
 \section{Conclusion}
+Training neural networks using large amounts of weakly annotated data is an attractive approach in scenarios where an adequate amount of data with true labels is not available, a situation which often arises in practice.
+
+In this chapter, we introduced two semi-supervised learning approaches in the presence of weakly labeled data: Learning from Controlled Weak Supervision (\cws) and \fwlfulllc (\fwl).
+
+\cws is a  multi-task neural network architecture that unifies learning to estimate the confidence score of weak annotations and training neural networks to learn a target task with controlled weak supervision, i.e., using weak labels to updating the parameters but taking their estimated confidence scores into account. This helps to alleviate updates from instances with unreliable labels that may harm the performance.
+
+\fwl is a student-teacher framework in which the student network is in charge of learning a target task given a vast amount of samples with weak labels associated with fertility scores that are generated by the teacher network. In \fwl, we pretrain the student network on weak data to learn an initial task-dependent data representation, which we pass to the teacher along with the strong data. The teacher then learns to predict the strong data, but crucially, \emph{based on the student's learned representation}. This then allows the teacher to generate new labeled training data from unlabeled data as well as fidelity scores for each sample in the data. Using samples in the new dataset, we update the parameters of the student network taking the fidelity scores into account to modulate the learning rate. 
+
+We applied both \cws and \fwl to document ranking and sentiment classification, and empirically verified that they improve over state-of-the-art semi-supervised alternatives and speeds up the training process. We observed that the common approach of pre-training and fine-tuning is not as effective and found that explicitly modelling label quality is both possible and useful in this situation. 

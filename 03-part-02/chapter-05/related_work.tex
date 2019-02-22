@@ -1,0 +1,39 @@
+\section{Related Work}
+\label{sec:relatedwork}
+In this section, we position the introduced \cws and \fwl approaches relative to related work.
+
+\subsection{Learning from Imperfect Data}
+Learning from imperfect labels has been thoroughly studied in the literature~\citep{Frenay:2014}.  The imperfect (weak) signal can come from non-expert crowd workers,  be the output of other models that are weaker (for instance with low accuracy or coverage), biased, or models trained on data from different related domains. 
+%
+Among these forms, in the distant supervision setup, a heuristic labeling rule~\citep{Deriu2016:SemEval,Severyn:2015:SemEval} or function~\citep{Dehghani:2017:SIGIR} which can be relying on a knowledge base~\citep{Mintz2009:distant,  min2013distant, Han:2016} is employed to devise noisy labels.  
+
+Learning from weak data sometimes aims at encoding various forms of domain expertise or cheaper supervision from lay annotators. For instance, in the structured learning, the label space is pretty complex and obtaining a training set with strong labels is extremely expensive, hence this class of problems leads to a wide range of works on learning from weak labels~\citep{roth2017incidental}. 
+%
+Indirect supervision is considered as a form of learning from weak labels that is employed in particular in the structured learning, in which a companion binary task is defined for which obtaining training data is easier~\citep{Chang2010structured, Raghunathan:2016}. 
+
+In the response-based supervision, the model receives feedback from interacting with an environment in a
+task, and converts this feedback into a supervision
+signal to update its parameters~\citep{roth2017incidental,clarke2010driving,riezler2014response}.
+%
+Constraint-based supervision is another form of weak supervision in which constraints that are represented as weak label distributions are taken as signals for updating the model parameters. For instance, physics-based constraints on the output~\citep{stewart2017label} or output constraints on execution of logical forms~\citep{clarke2010driving}.
+
+In the proposed \cws and \fwl, we can employ these approaches as the weak annotator to provide imperfect labels for the unlabeled data, however, a small amount of data with strong labels is also needed, which put our model in the class of semi-supervised models. 
+
+Some noise cleansing methods have been proposed to remove or correct mislabeled samples~\citep{Brodley:1999}.
+There are some studies showing that weak or noisy labels can be leveraged by modifying the loss function~\citep{reed2014training, Patrini:2016, patrini2016loss, Vahdat:2017} or changing the update rule to avoid imperfections of the noisy data~\citep{malach2017decoupling, Dehghani:2017:nips_metalearn, Dehghani:2017avoiding}.  
+
+One direction of research focuses on modeling the pattern of the noise or weakness in the labels. For instance, methods that use a generative model to correct weak labels such that a discriminative model can be trained more effectively~\citep{Ratner:2016,Rekatsinas:2017,Varma:2017}.
+Furthermore, methods that aim at capturing the pattern of the noise by inserting an extra layer~\citep{goldberger2016training} or a separate module tries to infer better labels from noisy ones and use them to supervise the training of the network~\citep{Sukhbaatar:2014,Veit:2017, Dehghani:2017:nips_metalearn}. Our proposed \fwl can be categorized in this class as the \tch tries to infer better labels and provide certainty information which is incorporated as the update rule for the \std model.
+
+\subsection{Semi-\:supervised Learning}
+In the semi-supervised setup, some ideas were developed to utilize weakly or even unlabeled data. For instance, the idea of self(incremental)-training~\citep{Rosenberg:2005}, pseudo-labeling~\citep{Lee:2013,Hinton:2015}, and Co-training~\citep{Blum:1998} are introduced for augmenting the training set by unlabeled data with predicted labels.
+Some research used the idea of self-supervised (or unsupervised) feature learning~\citep{noroozi2016unsupervised,dosovitskiy2016discriminative,donahue2016adversarial} to exploit different labelings that are freely available besides or within the data, and to use them as intrinsic signals to learn general-purpose features. These features, that are learned using a proxy task, are then used in a supervised task like object classification/detection or description matching.
+
+As a common approach in semi-supervised learning, the unlabeled set can be used for learning the distribution of the data. In particular for neural networks, greedy layer-wise pre-training of weights using unlabeled data is followed by supervised fine-tuning~\citep{Hinton:2006,Deriu:2017,Severyn:2015:SemEval,Severyn:2015:SIGIR,Go:2009}. Other methods learn unsupervised encoding at multiple levels of the architecture jointly with a supervised signal~\citep{Ororbia:2015,Weston:2012}.
+
+
+\subsection{Sentiment Classification and Document Ranking}
+Sentiment classification is one of the key NLP tasks and SemEval provides standard benchmark datasets for this task~\citep{rosenthal:2015,Nakov:2016,rosenthal2017semeval}. There are many models proposed based on neural networks for sentiment classification task and in many datasets, the SOTA results are from convolutional-based models that learn multiple word vector representations~\citep{Kim:2014}. In our work, we adapt the CNN based architecture which is proposed to be trained with the help of weak (distance) supervising~\citep{Severyn:2015:SIGIR,Severyn:2015:SemEval,Deriu2016:SemEval} and has achieved SOTA results in some SemEval datasets~\citep{Deriu:2017}.
+%
+Document Ranking is also the core task of IR and some recent studies have applied neural networks on this task. Two main groups of models are those that learn representation for query and documents, independently,  and then use a matching function~\citep{Huang:2013,Mitra:2017,Shen:2014}, or models that try to capture interaction between query and document from the beginning~\citep{Lu:2013,Guo:2016,Dehghani:2017:SIGIR,Xiong:2017}. Here, we adapt a neural ranker with SOTA results that uses weak supervision~\citep{Dehghani:2017:SIGIR,dehghani:2018:ICLR}.
+

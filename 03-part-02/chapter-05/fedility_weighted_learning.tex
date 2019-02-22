@@ -1,12 +1,18 @@
 \newcommand{\tfunc}{T} %function name for the teacher
-\section{Learning from Samples of Variable Quality}
+\section{\fwlfull}
 \label{sec:fidelity_weighted_learning}
-Here in this section, we introduce \fwlfull (\fwl), a Bayesian semi-supervised approach that leverages a small amount of data with true labels to generate a larger training set with \emph{confidence-weighted weakly-labeled samples}, which can then be used to modulate the fine-tuning process based on the fidelity (or quality) of each weak sample. By directly modeling the inaccuracies introduced by the \wa in this way, we can control the extent to which we make use of this additional source of weak supervision: more for confidently-labeled weak samples close to the true observed data, and less for uncertain samples further away from the observed data. We use a non-parametric kernel-based method to measure the closeness.
+
+In this section, we address the second research question of this chapter:
+\begin{resqbox}
+\emph{\resq{c5.2}}
+\end{resqbox}
+
+We introduce \fwlfull (\fwl), a Bayesian semi-supervised approach that leverages a small amount of data with strong labels to generate a larger training set with \emph{confidence-weighted weakly-labeled samples}, which can then be used to modulate the fine-tuning process based on the fidelity (or quality) of each weak sample. By directly modeling the inaccuracies introduced by the \wa in this way, we can control the extent to which we make use of this additional source of weak supervision: more for confidently-labeled weak samples close to the true observed data, and less for uncertain samples further away from the observed data. We use a non-parametric kernel-based method to measure the closeness.
 
 We propose a setting consisting of two main modules. One is called the \std and is in charge of learning a suitable data representation and performing the main prediction task (similar to the \tnet in Section~\ref{sec:meta_learning}), the other is the \tch which modulates the learning process by modeling the inaccuracies in the labels. 
 
 \input{03-part-02/chapter-05/figs_and_tables/fig_fwl_model.tex}
-\subsection{\fwlfull (\fwl)}
+\subsection{Recipe of \fwlfull}
 \label{sec:proposed-method}
 In this section, we describe the \fwl approach for semi-supervised learning when we have access to weak supervision (e.g.\ heuristics or weak annotators). 
 
@@ -149,7 +155,7 @@ As can be seen in Figure~\ref{fig:toy_plot4}, \fwl by taking into account label 
 \end{enumerate}
 
 
-\section{Connection with Vapnik's learning using privileged information}
+\subsection{Connection with Vapnik's learning using privileged information}
 \label{sec:LUPI}
 In this section, we highlight the connections of our work with Vapnik's \emph{learning using privileged information} (LUPI)~\citep{vapnik2009new, vapnik2015learning}. \fwl makes use of information from a small set of correctly labeled data to improve the performance of a semi-supervised learning algorithm. The main idea behind LUPI comes from the fact that humans learn much faster than machines. This can be due to the role that an \emph{Intelligent Teacher} plays in human learning. In this framework, the training data is a collection of triplets
 \begin{equation}

@@ -2,11 +2,12 @@
 \caption{\label{tbl_baselines} Descriptions of baseline models.
 }
 \centering
-\fontsize{9}{11}\selectfont{
+\fontsize{10}{12}\selectfont{
 % \begin{adjustbox}
-\begin{tabular}{@{}l@{~~}p{0.15\textwidth}@{~~~~}p{0.9\textwidth}@{}}
+{\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}l@{~~}p{0.18\textwidth}@{~~~~}p{0.9\textwidth}@{}}
 \toprule
-\multicolumn{2}{c}{Basic Baselines}
+\multicolumn{3}{c}{\textbf{Basic Baselines}}
 \\\midrule
 1 & \textbf{WA} & The \wa, i.e. the unsupervised method used for annotating the unlabeled data.
 \\
@@ -22,7 +23,7 @@
 \\
 7 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Rep}}_{\text{S}}$} & Weak Supervision + Representation Learning Layer Fine Tuning, i.e. the \tnet (or the \std) trained only on on weak dataset $\mathcal{D}_w$ and the representation layer is fine-tuned on strong dataset $\mathcal{D}_s$, while the representation learning layer is kept fixed.
 \\\midrule
-\multicolumn{3}{c}{Controlled Weak Supervision}
+\multicolumn{3}{c}{\textbf{Controlled Weak Supervision baselines}}
 \\\midrule
 8 & \textbf{\cws} & Learning from Controlled Weak Supervision that is explained in Section~\ref{sec:meta_learning}.
 \\
@@ -34,7 +35,7 @@
 \\
 12 & \textbf{\cws$_\text{PT}$} & Progressive Training is the mixture of the two previous baselines. Inspired by \cite{Rusu:2016}, we transfer the learned information from the converged \tnet to the \cnet using progressive training. We then train the \tnet again on the controlled weak supervision signals.
 \\\midrule
-\multicolumn{3}{c}{Fidelity Weighted Learning}
+\multicolumn{3}{c}{\textbf{Fidelity Weighted Learning baselines}}
 \\\midrule
 13 & \textbf{\fwl} & Fidelity Weighted Learning that is explained in Section~\ref{sec:fidelity_weighted_learning}.
 \\
@@ -45,6 +46,7 @@
 16 & \textbf{\fwl$\backslash\Sigma$} & The \std trained on the weakly labeled data and fine-tuned on examples labeled by the \tch without taking the confidence into account. This baseline is similar to \citep{Veit:2017}.
 \\\bottomrule
 \end{tabular}
+}
 }
 %\end{adjustbox}
 \end{table}

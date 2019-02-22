@@ -3,7 +3,12 @@
 Using weak or noisy supervision is a straightforward approach to increase the size of the training data. This is usually done by pre-training the network on a large set of weakly labeled data and fine-tuning it with strong labels~\cite{Dehghani:2017:SIGIR,Severyn:2015:SIGIR}. 
 However, these two independent stages do not leverage the full capacity of information from the small set of strong labels.  In particular, in the pre-training stage, we have to learn from labels of variable quality without any control over how these labels contribute to the learning process.
 
-In this section, we introduce a semi-\:supervised method that leverages a small amount of data with strong labels to improve the learning from a large amount of data with weak labels. This model in fact, offers learning from \emph{Controlled Weak Supervision} and we refer to it by \emph{\cws} in the rest of this chapter.
+In this section, we address the first research question of this chapter:
+\begin{resqbox}
+\emph{\resq{c5.1}}
+\end{resqbox}
+
+We introduce a semi-\:supervised method that leverages a small amount of data with strong labels to improve the learning from a large amount of data with weak labels. This model in fact, offers learning from \emph{Controlled Weak Supervision} and we refer to it by \emph{\cws} in the rest of this chapter.
 %
 \cws has three main components:
 A \wa, which can be a heuristic model, a weak or biased classifier, or even a human via crowd-sourcing and it is employed to annotate a massive amount of unlabeled data, a \tnet, which uses a large set of weakly annotated instances by the \wa to learn the main task, and a \cnet, which is trained on a small set with strong labels to estimate confidence scores for instances annotated by the \wa. 
