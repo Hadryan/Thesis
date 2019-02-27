@@ -1,4 +1,4 @@
-\section{Applying \cws and \fwl on Language Tasks}
+\section{Applying \cws and \fwl on Language Understanding Tasks}
 We apply \cws and \fwl, two approaches introduced in this chapter for learning from vast amount of weakly annotated data, while a small set of labeled data exist, to two different tasks: \emph{document ranking} and \emph{sentiment classification}. 
 Whilst these two applications differ considerably, as do the exact operationalization of the propose models to these cases, in both cases the human gold standard data is based on a cognitively complex, or subjective, judgments causing high interrater variation, increasing both the cost of obtaining labels as the need for larger sets of labels.
 
@@ -97,7 +97,7 @@ At inference time, for each query, we take the top $2,000$ retrieved documents u
 \label{sec:res_and_disc_ranking}
 We conducted k-fold cross validation on $\mathcal{D}_s$ (the strong data) and report two standard evaluation metrics for ranking: mean average precision (MAP) of the top-ranked $1,000$
 documents and normalized discounted cumulative gain calculated for the top $20$ retrieved documents (nDCG@20). 
-Table~\ref{tbl_main} shows the performance on both datasets. As can be seen, \fwl and \cws both provide significant boost on the performance on top of the baseline methods over both datasets.
+Table~\ref{tbl_main_ranking} shows the performance on both datasets. As can be seen, \fwl and \cws both provide significant boost on the performance on top of the baseline methods over both datasets.
 
 
 \input{03-part-02/chapter-05/figs_and_tables/table_ranking_results.tex}
@@ -135,7 +135,7 @@ We can gain improvement by fine-tuning the NN$_\text{W}$ using labels generated 
 \subsection{Sentiment Classification}
 In sentiment classification, the goal is to predict the sentiment (e.g., positive, negative, or neutral) of a sentence. Each training sample $x$ consists of a sentence $s$ and its sentiment label $\tilde{y}$.
 
-\begin{figure}[t!]
+\begin{figure}[t]
     \centering
             \includegraphics[width=0.35\textwidth]{03-part-02/chapter-05/figs_and_tables/fig_sentiment.pdf}
     \caption{The sentiment classifier used as \tch in \cws and \std in \fwl.}

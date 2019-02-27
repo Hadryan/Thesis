@@ -1,7 +1,7 @@
-\begin{figure}[!t]
-\centering
-\begin{algorithm}[H]
-\captionsetup{labelformat=empty}
+% \begin{figure}[!t]
+% \centering
+\begin{algorithm}[t!]
+% \captionsetup{labelformat=empty}
 \begin{algorithmic}[1]
 \Procedure{Specification}{}
 \State Queue $\gets$ all entities in breadth first order
@@ -15,8 +15,11 @@
   \EndWhile
 \EndWhile
 \EndProcedure
+\algrule
+ \LineComment{Function \Call{getAncestor}{$l$} gives the ancestor of entity $e$ with $l$ edges distance from it. Function \textsc{Parsimonize}($e$,$B$)  parsimonizes $\theta_e$ given background models in $B$ (Algorithm~\ref{alg:model_parsimonization}).}
 \end{algorithmic}
-\captionof{algorithm}{Specification Stage}
+% \captionof{algorithm}{Specification Stage}
+\caption{\label{alg:specification_stage}Procedure of Specification.}
 \end{algorithm}
-\caption{\label{alg:specification_stage}Procedure of Specification. $e$. Function \Call{getAncestor}{$l$} gives the ancestor of entity $e$ with $l$ edges distance from it. Function \textsc{Parsimonize}($e$,$B$)  parsimonizes $\theta_e$ given background models in $B$}
-\end{figure}
+% \caption{\label{alg:specification_stage}Procedure of Specification. $e$. Function \Call{getAncestor}{$l$} gives the ancestor of entity $e$ with $l$ edges distance from it. Function \textsc{Parsimonize}($e$,$B$)  parsimonizes $\theta_e$ given background models in $B$}
+% \end{figure}

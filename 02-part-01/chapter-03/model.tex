@@ -13,8 +13,8 @@ The proposed approach for estimating \hswlm iteratively reestimates the standard
 In the original parsimonious language model~\citep{Hiemstra:2004}, the background model is explained by the estimation of the \emph{collection model}, i.e., the model representing all the entities, similar to Equation~\ref{eq:cmodel}.  
 However, with respect to the hierarchical structure, and our goal in \achswlm for making the models of entities separable from each other, we need to use the parsimonization technique in two different directions: 1) given ancestors of an entity, and 2) given its descendants. Hence, besides parsimonizing given a single parent entity in the upper layers, as the background model, we need to be able to do parsimonization given multiple descendants in the lower layers. 
 \input{02-part-01/chapter-03/figs_and_tables/alg_hswlm_model_parsimonization.tex}
-Figure~\ref{alg:model_parsimonization} presents pseudo-code of the Expectation-Maximization algorithm which is employed in the modified model parsimonization procedure. 
-In the equation in line 3 of the pseudo-code in Figure~\ref{alg:model_parsimonization}, $B$ is the set of background entities\:---\:either one or multiple, and $\theta_{b_i}$ demonstrates the model of each background entity, $b_i$, which is estimated using MLE. As can be seen, in case of having a single ancestor node as the background model,  this equation will be equal to Equation~\ref{eq:cmodel} and in case of having multiple descendants as the background models, it results same as Equation~\ref{eq:smodel}. 
+Algorithm~\ref{alg:model_parsimonization} presents pseudo-code of the Expectation-Maximization algorithm which is employed in the modified model parsimonization procedure. 
+In the equation in line 3 of the pseudo-code in Algorithm~\ref{alg:model_parsimonization}, $B$ is the set of background entities\:---\:either one or multiple, and $\theta_{b_i}$ demonstrates the model of each background entity, $b_i$, which is estimated using MLE. As can be seen, in case of having a single ancestor node as the background model,  this equation will be equal to Equation~\ref{eq:cmodel} and in case of having multiple descendants as the background models, it results same as Equation~\ref{eq:smodel}. 
 In this procedure, in general, in the E-step, the probabilities of terms are adjusted repeatedly, and in the M-step, adjusted probability of terms are normalized to form a distribution. 
 Another change in the modified version of model parsimonization, which practically makes no difference in the final estimation, is that in the E-step, instead of using $tf(t,e)$, we employ $p(t|\theta_e)$, where $\theta_e$ is the model represents entity $e$ and initially it is estimated using MLE. This is because in the multi-layer hierarchies, there is more than one parsimonization pass for a particular entity and after the first round, we need to use the probability of terms estimated from the previous pass, not the raw information of their frequency.
 
@@ -22,7 +22,7 @@ Another change in the modified version of model parsimonization, which practical
 Model parsimonization is an almost parameter free process. The only parameter is the standard smoothing parameter $\lambda$, which controls the level of parsimonization, so that the lower values of $\lambda$ result in more parsimonious models.
 The iteration is repeated a fixed number of times or until the estimates do not change significantly anymore. 
 
-The pseudo-code of the overall procedure of estimating \achswlm is presented in Figure~\ref{alg:hswlm}. 
+The pseudo-code of the overall procedure of estimating \achswlm is presented in Algorithm~\ref{alg:hswlm}. 
 Before the first round of the procedure, a standard estimation like maximum likelihood estimation is used to construct the initial model for each entity in the hierarchy. 
 Then, models will be updated in an iterative process until all the estimated models of entities become stable. 
 In each iteration, there are two main stages: a \emph{Specification stage} and a \emph{Generalization stage}. 
@@ -34,11 +34,11 @@ To do so, the parsimonization method is used to parsimonize the language model o
 %
 The order in the hierarchy is of crucial importance here. 
 When a language model of an ancestor is considered as the background language model, it should demonstrate the ``specific'' properties of that ancestor. Due to this fact, it is important that before considering the language model of an entity as the background estimation, it has already passed the specification stage, and we have to move top-down.
-Pseudo\:-\:code of the recursive procedure of specification of entities' models in the hierarchy is depicted in Figure \ref{alg:specification_stage}.
+Pseudo\:-\:code of the recursive procedure of specification of entities' models in the hierarchy is depicted in Algorithm~\ref{alg:specification_stage}.
 
 \input{02-part-01/chapter-03/figs_and_tables/alg_hswlm_generalization_step.tex}
 In the generalization stage, the goal is to refine language models by removing terms which do not address the concepts in the level of abstraction of the entity's layer.
 To do so, again parsimonization is exploited but given descendants, which leads to the elimination of specific terms. 
 Here also, before considering the model of an entity as the background estimation, it should be already passed the generalization stage, so generalization moves bottom up.
-Figure \ref{alg:generalization_stage} presents the pseudo\:-\:code for the recursive procedure of generalization of entities' language models in the hierarchy. 
-In the generalization step, the background models of descendants are supposed to be specific enough to show their extremely specific properties. Hence, generalization stages must be applied on the output models of specification stages: specification should precede generalization, as shown in Figure \ref{alg:hswlm} before.
+Algorithm~\ref{alg:generalization_stage} presents the pseudo\:-\:code for the recursive procedure of generalization of entities' language models in the hierarchy. 
+In the generalization step, the background models of descendants are supposed to be specific enough to show their extremely specific properties. Hence, generalization stages must be applied on the output models of specification stages: specification should precede generalization, as shown in Algorithm~\ref{alg:hswlm} before.

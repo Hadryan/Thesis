@@ -1,0 +1,97 @@
+\begin{lstlisting}[language=Python, caption=UT with dynamic halting.]
+# While-loop stops when this predicate is FALSE
+# i.e. all ((probability < threshold) & (counter < max_steps)) are false
+def should_continue(u0, u1, halting_probability, u2, n_updates, u3):
+return tf.reduce_any(
+            tf.logical_and(
+                tf.less(halting_probability, threshold),
+                tf.less(n_updates, max_steps)))
+# Do while loop iterations until predicate above is false
+(_, _, _, remainder, n_updates, new_state) = tf.while_loop(
+    should_continue, ut_with_dynamic_halting, (state, 
+    step, halting_probability, remainders, n_updates, previous_state))
+\end{lstlisting}
+
+
+% \begin{lstlisting}[language=Python, caption=]
+%  # initializing halting probabilities
+% halting_probability = tf.zeros(
+%   (
+%       batch_size,
+%       length,
+%   ), name="halting_probability")
+% # initializing remainders 
+% remainders = tf.zeros(
+%   (
+%       batch_size,
+%       length,
+%   ), name="remainder")
+% # initializing number of updates performed 
+% n_updates = tf.zeros(
+%   (
+%       batch_size,
+%       length,
+%   ), name="n_updates")
+
+% # initializing Previous cell states
+% previous_state = tf.zeros_like(state, name="previous_state")
+% step = tf.constant(0, dtype=tf.int32)
+
+% # While loop stops when this predicate is FALSE.
+% # Ie all (probability < 1-eps AND counter < N) are false.
+% def should_continue(u0, u1, halting_probability, u2, n_updates, u3):
+% return tf.reduce_any(
+%     tf.logical_and(
+%         tf.less(halting_probability, threshold),
+%         tf.less(n_updates, act_max_steps)))
+
+% # Do while loop iterations until predicate above is false.
+% (_, _, _, remainder, n_updates, new_state) = tf.while_loop(
+%   should_continue, ut_with_dynamic_halting,
+%   (state, step, halting_probability, remainders, n_updates, previous_state))
+% \end{lstlisting}
+
+
+The following shows the computations in each step:
+
+\begin{lstlisting}[language=Python, caption=Computations in each step of the UT with dynamic halting.]
+def ut_with_dynamic_halting(state, step, halting_probability, 
+                            remainders, n_updates, previous_state):
+    # Calculate the probabilities based on the state 
+    p = common_layers.dense(state, 1, activation=tf.nn.sigmoid, 
+        use_bias=True)
+    # Mask for inputs which have not halted yet
+    still_running = tf.cast(
+        tf.less(halting_probability,1.0), tf.float32)
+    # Mask of inputs which halted at this step
+    new_halted = tf.cast(
+        tf.greater(halting_probability + p * still_running, threshold), 
+            tf.float32) * still_running
+    # Mask of inputs which haven't halted, and didn't halt this step
+    still_running = tf.cast(
+        tf.less_equal(halting_probability + p * still_running, 
+            threshold), tf.float32) * still_running
+    # Add the halting probability for this step to the halting
+    # probabilities for those inputs which haven't halted yet
+    halting_probability += p * still_running
+    # Compute remainders for the inputs which halted at this step
+    remainders += new_halted * (1 - halting_probability)
+    # Add the remainders to those inputs which halted at this step
+    halting_probability += new_halted * remainders
+    # Increment n_updates for all inputs which are still running
+    n_updates += still_running + new_halted
+    # Compute the weight to be applied to the new state and output:
+    #   0 when the input has already halted,
+    #   p when the input hasn't halted yet,
+    #   the remainders when it halted this step.
+    update_weights = tf.expand_dims(p * still_running +
+                                    new_halted * remainders, -1)
+    # Apply transformation to the state
+    transformed_state = transition_function(self_attention(state))
+    # Interpolate transformed and previous states for non-halted inputs
+    new_state = ((transformed_state * update_weights) +
+                 (previous_state * (1 - update_weights)))
+    step += 1
+    return (transformed_state, step, halting_probability,
+            remainders, n_updates, new_state)
+\end{lstlisting}

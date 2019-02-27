@@ -1,7 +1,7 @@
-\begin{figure}[!t]
-\centering
-\begin{algorithm}[H]
-\captionsetup{labelformat=empty}
+% \begin{figure}[!t]
+% \centering
+\begin{algorithm}[t!]
+% \captionsetup{labelformat=empty}
 \begin{algorithmic}[1]
 \Procedure{Generalization}{}
 \State Stack $\gets$ all entities in breadth first order
@@ -15,9 +15,11 @@
   \EndWhile
 \EndWhile
 \EndProcedure
+\algrule
+ \LineComment{Function \Call{getDecedents}{$l$} gives all the decedents of entity $e$ with $l$ edges distance from it. Function \textsc{Parsimonize}($e$,$B$)  parsimonizes $\theta_e$ given background models in $B$ (Algorithm~\ref{alg:model_parsimonization}).}
 \end{algorithmic}
-\captionof{algorithm}{Generalization Stage}
+% \captionof{algorithm}{Generalization Stage}
+\caption{\label{alg:generalization_stage}Procedure of Generalization.}
 \end{algorithm}
-\vspace{-10pt}
-\caption{\label{alg:generalization_stage}Procedure of Generalization. $e$. Function \Call{getDecedents}{$l$} gives all the decedents of entity $e$ with $l$ edges distance from it. Function \textsc{Parsimonize}($e$,$B$)  parsimonizes $\theta_e$ given background models in $B$.}
-\end{figure}
+% \caption{\label{alg:generalization_stage}Procedure of Generalization. $e$. Function \Call{getDecedents}{$l$} gives all the decedents of entity $e$ with $l$ edges distance from it. Function \textsc{Parsimonize}($e$,$B$)  parsimonizes $\theta_e$ given background models in $B$.}
+% \end{figure}

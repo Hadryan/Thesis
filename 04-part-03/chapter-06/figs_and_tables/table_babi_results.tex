@@ -1,0 +1,21 @@
+\begin{table}[t!]
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lllll}
+& & & & \\ \toprule
+\multirow{2}{*}{ \bf Model } & \multicolumn{2}{c}{ \bf 10K examples } & \multicolumn{2}{c}{ \bf 1K examples } \\ \cmidrule{2-5}
+& train single & train joint & train single & train joint \\ \midrule
+\multicolumn{5}{c}{\bf Previous best results:} \\ \midrule
+QRNet~\citep{seo2016query} & 0.3 (0/20) & - & - & - \\
+Sparse DNC~\citep{rae2016scaling} & - & 2.9 (1/20) & - & - \\
+GA+MAGE~\cite{dhingra2017linguistic} & - & - & 8.7 (5/20) & - \\
+MemN2N~\cite{sukhbaatar2015} & - & - & -  & 12.4 (11/20) \\\midrule
+\multicolumn{5}{c}{\bf Our Results:} \\ \midrule
+Transformer~\citep{transformer} & 15.2 (10/20) & 22.1 (12/20) & 21.8 (5/20) & 26.8 (14/20) \\
+Universal Transformer (this work) & 0.23 (0/20) & 0.47 (0/20) & 5.31 (5/20) & 8.50 (8/20) \\
+UT w/ dynamic halting (this work) & {\bf 0.21 (0/20)} & {\bf 0.29 (0/20)} & {\bf 4.55 (3/20)} & {\bf 7.78 (5/20)} \\ \bottomrule
+\end{tabular}
+\end{adjustbox}
+\caption{Average error and number of failed tasks ($> 5\%$ error) out of 20 (in parentheses; lower is better in both cases) on the bAbI dataset under the different training/evaluation setups. We indicate state-of-the-art where available for each, or `-' otherwise.}
+\label{tab:babi-results}
+\end{table}

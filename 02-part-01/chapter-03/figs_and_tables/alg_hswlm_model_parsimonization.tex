@@ -1,7 +1,7 @@
-\begin{figure}[!t]
-\centering
-\begin{algorithm}[H]
- \begin{algorithmic}[1]
+% \begin{figure}[!t]
+% \centering
+\begin{algorithm}[t!]
+\begin{algorithmic}[1]
  \Procedure{Parsimonize}{$e$,$B$}
  \ForAll{term $t$ in the vocabulary}
      \State \begin{small}$P(t|\theta_B) \xleftarrow{normalized} \sum_{b_i\in B} \bigg(P(t|\theta_{b_i}) \prod_{\substack{b_j\in B \\ j \neq i}} (1-P(t|\theta_{b_j}))\bigg)$ \end{small}
@@ -12,7 +12,7 @@
  \EndFor
  \EndProcedure
  \end{algorithmic}
- \caption{Modified Model Parsimonization}
+ \caption{\label{alg:model_parsimonization}Modified Model Parsimonization}
 \end{algorithm}
-\caption{Pseudo-code for procedure of modified model parsimonization.}
-\end{figure}
+% \caption{Pseudo-code for procedure of modified model parsimonization.}
+% \end{figure}

@@ -1,37 +1,19 @@
 % !TEX root = ../thesis-main.tex
 \part{Learning with Weak Supervision}
 \label{part2}
-%
+Unprecedented success of data-driven approaches has turned data into a first-class citizen in machine learning. Most of the times, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting} and it is more crucial to provide massive amounts of training data when the models become more deep and complex.
+Collecting such training sets by hand is often infeasible due to the time and expense of labeling data. Besides, hand-labeled training sets are static and we might need complete relabeling for instance when the modeling goals changes. Thus moving beyond fully supervised learning, like adapting weak or incidental supervision, is a key direction in machine learning research.  
 
-Human learners often compensate effortlessly for imperfect data. Even animals can learn from conditioning in which they are rewarded inconsistently. However, it seems difficult to build such fault-tolerance into machine learning systems.
+Humans can learn effortlessly from weak and inconsistent signals. However, it seems difficult to build fault-tolerant machine learning systems that learn, while even imperfect signals can contain a great deal of valid information.
+Given the fact that only a tiny portion of real work applications operate on perfect condition, an essential aspect of any practical learning algorithm is the need to learn from inconsistent data provided by different sensors, noisy or weak supervision, and even when a crucial information is missing from the supervision signal.
 
-An essential aspect of any practical learning algorithm is the need to learn from imperfect data. Few real-world problems operate under perfect conditions. The ML systems may have to learn from inconsistent data provided by different sensors, or may be missing a crucial information.
-Nonetheless, even imperfect data can contain a great deal of valid information.
-
-
-data is a first-class citizen in so many real-world systems
-
-
-Collecting such training sets by hand is often infeasible due to the time and expense of labeling data; moreover, hand-labeled training sets are static and must be completely relabeled when real-world modeling goals change.
-
-Overview
-Modern representation learning techniques like deep neural networks have had a major impact on a wide range of tasks, achieving new state-of-the-art performances on benchmarks using little or no feature engineering. However, these gains are often difficult to translate into real-world settings because they usually require massive hand-labeled training sets. Collecting such training sets by hand is often infeasible due to the time and expense of labeling data; moreover, hand-labeled training sets are static and must be completely relabeled when real-world modeling goals change.
-
-Increasingly popular approaches for addressing this labeled data scarcity include using weak supervision---higher-level approaches to labeling training data that are cheaper and/or more efficient, such as distant or heuristic supervision, constraints, or noisy labels; multi-task learning, to effectively pool limited supervision signal; data augmentation strategies to express class invariances; and introduction of other forms of structured prior knowledge. An overarching goal of such approaches is to use domain knowledge and data resources provided by subject matter experts, but to solicit it in higher-level, lower-fidelity, or more opportunistic ways.
-
-
-In Part~\ref{part2} of this book, we address one of our research questions:
+In Part~\ref{part2} of this book, we address the following research question:
 \begin{resqbox}
-\emph{\resq{p1}}
+\emph{\resq{p2}}
 \end{resqbox}
 
-
-The more neural networks become deep and complex, the more it is crucial for them to be trained on massive amounts of training data.
-In many applications, rich annotations are costly to obtain and task-specific training data is now a critical bottleneck. 
-
-
-\subsection{what is weak supervision}
-We aim to study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand. Then, given a vast amount of pragmatically generated labeled data, we discuss how to design neural networks that can go beyond the imperfection in the weakly annotated data.
+The imperfect examples can come from labels provided by non-expert crowd workers, be the output of other models that are weaker (for instance with low accuracy or coverage), biased, or models trained on data from different related domains. 
+Here in this part, we aim to study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand. Then, given a vast amount of pragmatically generated labeled data, and maybe a small set of examples with true label,  we discuss how to design neural networks that leverage the full capacity of the information in the data and go beyond the imperfection in the weakly annotated data.
 
 
 In the first chapter of this part, Chapter~\ref{chap:4}, we address the following research question:
@@ -39,21 +21,22 @@ In the first chapter of this part, Chapter~\ref{chap:4}, we address the followin
 \emph{\resq{c2}}
 \end{resqbox}
 
-Then, in the second chapter of this part, Chapter~\ref{chap:5} we get down to the following research question:
+In this chapter, we propose to train a neural ranking model using weak labels that are obtained automatically without human annotators or any external resources (e.g., click data). We train a set of simple yet effective neural ranking models and study their effectiveness under various learning scenarios, i.e. point-wise and pair-wise, different objective functions, and using different input representations, from using a set of engineered features to encoding query/document using word embedding. We also discuss how  privacy preserving approaches can benefit from models that are capable of learning from weak signals, where instead of labels from the original sensitive training data a noisy version is provided.
+
+Then, in the second chapter of this part, Chapter~\ref{chap:5} we focus on the following research question:
 \begin{resqbox}
 \emph{\resq{c3}}
 \end{resqbox}
 
+In this chapter we introduce \emph{Learning with Controlled Weak Supervision (\cws)} and \emph{Fidelity Weighted Learning (\fwl)}, two semi-supervised approaches for training neural networks, where we have a large set of data with weak labels and a small amount of data with true labels. 
+%
+In \cws we train two neural networks in a meta learning setup: a \tnet, the learner and a \cnet, the meta-learner.  The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that are weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
+%
+\fwl is a student-teacher approach in which we modulate the parameter updates to a \emph{student} network (trained on the task we care about) on a per-sample basis according to the posterior confidence of its label-quality estimated by a \emph{teacher} (who has access to the high-quality labels).  
 
 
-In this paper, we propose a method for training neural networks when we have a large set of data with weak labels and a small amount of data with true labels. In our proposed model, we train two neural networks: a \tnet, the learner and a \cnet, the meta-learner. 
-The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that are weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
-
-To this end, we propose ``\fwlfulllc'' (\fwl), a semi-supervised student-teacher approach for training deep neural networks using weakly-labeled data. \fwl modulates the parameter updates to a \emph{student} network (trained on the task we care about) on a per-sample basis according to the posterior confidence of its label-quality estimated by a \emph{teacher} (who has access to the high-quality labels).  Both student and teacher are learned from the data. We evaluate \fwl on two tasks in information retrieval and natural language processing where we outperform state-of-the-art alternative semi-supervised methods, indicating that our approach makes better use of strong and weak labels, and leads to better task-dependent data representations.
-
-
-NO LABEL for chap 4
-SOME LABEL for chap 5
+We show that we can train a neural ranker using a heuristic labeling function as weak supervision signal and go beyond the performance of this weak annotator, merely by choosing right architecture and objective functions and discuss how this can benefit learning in a privacy preserving setup.
+Given a semi-supervised setup, we apply our introduced methods, \cws and \fwl, to a range of language understanding tasks and empirically verify that they improve over semi-supervised alternatives and speeds up the training process. 
 
 \medskip
 

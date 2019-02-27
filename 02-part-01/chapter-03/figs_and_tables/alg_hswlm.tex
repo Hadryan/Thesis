@@ -1,20 +1,20 @@
-\begin{figure}[!t]
-\centering
-\begin{algorithm}[H!]
+% \begin{figure}[!t]
+% \centering
+\begin{algorithm}[t!]
  \begin{algorithmic}[1]
  \Procedure{Estimate{\achswlm}s}{}
- \Statex ~~~~Initialization: \vspace{2pt}
+ \Statex ~~~~~~Initialization: \vspace{2pt}
  \ForAll{entity $e$ in the hierarchy}
- \State $\theta_e \gets$ standard estimation for $e$ using MLE
-% \Statex ~~~~~~~~~(using Maximum Likelihood Estimation)
+    \State $\theta_e \gets$ standard estimation for $e$ using MLE
  \EndFor
  \Repeat
- \State \Call{Specification}{}
- \State \Call{Generalization}{} 
+     \State \Call{Specification}{}
+     \State \Call{Generalization}{} 
  \Until{models do not change significantly anymore}
  \EndProcedure
  \end{algorithmic}
- \caption{Estimating \HSWLM}
+%  \caption{Estimating \HSWLM}
+\caption{\label{alg:hswlm}Procedure of estimating \achswlm.}
 \end{algorithm}
-\caption{\label{alg:hswlm}Pseudo-code for the overall procedure of estimating \achswlm.}
-\end{figure}
+% \caption{\label{alg:hswlm}Pseudo-code for the overall procedure of estimating \achswlm.}
+% \end{figure}

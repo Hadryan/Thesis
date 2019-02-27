@@ -1,0 +1,75 @@
+\begin{table}[t!]
+\centering
+\caption{Detailed results on the bAbI question answering tasks.}
+\label{tbl:babi_details}
+\begin{subtable}{0.6\textwidth}
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lcccc}
+\toprule
+\multicolumn{5}{c}{Best seed run for each task (out of 10 runs) } \\ \midrule
+\multirow{2}{*}{ Task id } & \multicolumn{2}{c}{ 10K } & \multicolumn{2}{c}{ 1K } \\  \cmidrule{2-5}
+& train single & train joint & train single & train joint \\ \midrule
+1 & 0.0 & 0.0 & 0.0 & 0.0 \\
+2 & 0.0 & 0.0 & 0.0 & 0.5 \\
+3 & 0.4 & 1.2 & 3.7 & 5.4 \\
+4 & 0.0 & 0.0 & 0.0 & 0.0 \\
+5 & 0.0 & 0.0 & 0.0 & 0.5 \\
+6 & 0.0 & 0.0 & 0.0 & 0.5 \\
+7 & 0.0 & 0.0 & 0.0 & 3.2 \\
+8 & 0.0 & 0.0 & 0.0 & 1.6 \\
+9 & 0.0 & 0.0 & 0.0 & 0.2 \\
+10 & 0.0 & 0.0 & 0.0 & 0.4 \\
+11 & 0.0 & 0.0 & 0.0 & 0.1 \\
+12 & 0.0 & 0.0 & 0.0 & 0.0 \\
+13 & 0.0 & 0.0 & 0.0 & 0.6 \\
+14 & 0.0 & 0.0 & 0.0 & 3.8 \\
+15 & 0.0 & 0.0 & 0.0 & 5.9 \\
+16 & 0.4 & 1.2 & 5.8 & 15.4 \\
+17 & 0.6 & 0.2 & 32.0 & 42.9 \\
+18 & 0.0 & 0.0 & 0.0 & 4.1 \\
+19 & 2.8 & 3.1 & 47.1 & 68.2 \\
+20 & 0.0 & 0.0 & 2.4 & 2.4 \\ \midrule
+avg err & 0.21 & 0.29 & 4.55 & 7.78 \\ \midrule
+failed & 0 & 0 & 3 & 5 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{subtable}
+\\
+\vspace{10pt}
+\begin{subtable}{0.6\textwidth}
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lcccc}
+\toprule
+\multicolumn{5}{c}{Average (\rpm var) over all seeds (for 10 runs)} \\ \midrule
+\multirow{2}{*}{ Task id } & \multicolumn{2}{c}{ 10K } & \multicolumn{2}{c}{ 1K } \\  \cmidrule{2-5}
+& train single & train joint & train single & train joint \\ \midrule
+1 & 0.0 \rpm 0.0 & 0.0 \rpm 0.0 & 0.2 \rpm 0.3 & 0.1 \rpm 0.2 \\ 
+2 & 0.2 \rpm 0.4 & 1.7 \rpm 2.6 & 3.2 \rpm 4.1 & 4.3 \rpm 11.6 \\ 
+3 & 1.8 \rpm 1.8 & 4.6 \rpm 7.3 & 9.1 \rpm 12.7 & 14.3 \rpm 18.1 \\ 
+4 & 0.1 \rpm 0.1 & 0.2 \rpm 0.1 & 0.3 \rpm 0.3 & 0.4 \rpm 0.6 \\ 
+5 & 0.2 \rpm 0.3 & 0.8 \rpm 0.5 & 1.1 \rpm 1.3 & 4.3 \rpm 5.6 \\ 
+6 & 0.1 \rpm 0.2 & 0.1 \rpm 0.2 & 1.2 \rpm 2.1 & 0.8 \rpm 0.4 \\ 
+7 & 0.3 \rpm 0.5 & 1.1 \rpm 1.5 & 0.0 \rpm 0.0 & 4.1 \rpm 2.9 \\ 
+8 & 0.3 \rpm 0.2 & 0.5 \rpm 1.1 & 0.1 \rpm 0.2 & 3.9 \rpm 4.2 \\ 
+9 & 0.0 \rpm 0.0 & 0.0 \rpm 0.0 & 0.1 \rpm 0.1 & 0.3 \rpm 0.3 \\ 
+10 & 0.1 \rpm 0.2 & 0.5 \rpm 0.4 & 0.7 \rpm 0.8 & 1.3 \rpm 1.6 \\ 
+11 & 0.0 \rpm 0.0 & 0.1 \rpm 0.1 & 0.4 \rpm 0.8 & 0.3 \rpm 0.9 \\ 
+12 & 0.2 \rpm 0.1 & 0.4 \rpm 0.4 & 0.6 \rpm 0.9 & 0.3 \rpm 0.4 \\ 
+13 & 0.2 \rpm 0.5 & 0.3 \rpm 0.4 & 0.8 \rpm 0.9 & 1.1 \rpm 0.9 \\ 
+14 & 1.8 \rpm 2.6 & 1.3 \rpm 1.6 & 0.1 \rpm 0.2 & 4.7 \rpm 5.2 \\ 
+15 & 2.1 \rpm 3.4 & 1.6 \rpm 2.8 & 0.3 \rpm 0.5 & 10.3 \rpm 8.6 \\ 
+16 & 1.9 \rpm 2.2 & 0.9 \rpm 1.3 & 9.1 \rpm 8.1 & 34.1 \rpm 22.8 \\ 
+17 & 1.6 \rpm 0.8 & 1.4 \rpm 3.4 & 43.7 \rpm 18.6 & 51.1 \rpm 12.9 \\ 
+18 & 0.3 \rpm 0.4 & 0.7 \rpm 1.4 & 2.3 \rpm 3.6 & 12.8 \rpm 9.0 \\ 
+19 & 3.4 \rpm 4.0 & 6.1 \rpm 7.3 & 50.2 \rpm 8.4 & 73.1 \rpm 23.9 \\ 
+20 & 0.0 \rpm 0.0 & 0.0 \rpm 0.0 & 3.2 \rpm 2.5 & 2.6 \rpm 2.8 \\ \midrule
+avg & 0.73 \rpm 0.89 & 1.12 \rpm 1.62 & 6.34 \rpm 3.32 & 11.21 \rpm 6.65 \\ 
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{subtable}
+\end{table}
+\afterpage{\clearpage}
