@@ -57,7 +57,7 @@
 \makeatother
 
 
-
+% \usepackage{siunitx}  % \num{1e-10} for exponential notation.
 
 
 \usetikzlibrary{arrows.meta}
@@ -204,6 +204,7 @@
 
 \newtheorem{mydef}{\textbf{Definition}}%[chapter]
 
+\newcommand{\tracrnet}{TraCRNet\xspace} 
 
 %\usepackage{mathabx}
 % instead of \usepackage{mathabx}
@@ -463,4 +464,6 @@
  
 \lstset{style=mystyle}
 
-
+\renewcommand{\texttt}[1]{{\fontsize{10}{11}\fontfamily{pcr}\selectfont{#1}}}
+% \renewcommand{\url}[1]{{\fontfamily{pcr}\selectfont{\url{#1}}}}
+\renewcommand{\todo}[1]{\textcolor{red}{{\bf [TODO: }{\em #1}{\bf ]}}}

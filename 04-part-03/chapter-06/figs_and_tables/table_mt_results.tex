@@ -1,0 +1,18 @@
+\begin{table}
+    \centering
+    \begin{tabular}{lc}
+        \toprule
+        \bf{Model} & \bf{BLEU} \\
+        \midrule
+        Universal Transformer \emph{small} & 26.8 \\
+        Transformer \emph{base}~\citep{transformer} & 28.0 \\
+        Weighted Transformer \emph{base}~\citep{ahmed2017weighted} & 28.4 \\
+        Universal Transformer \emph{base} & \bf{28.9} \\
+        % \midrule
+        % Transformer \emph{big}~\citep{transformer} & ??.? \\
+        % Universal Transformer \emph{big} & \bf{??.?} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Machine translation results on the WMT14 En-De translation task trained on 8xP100 GPUs in comparable training setups. All \emph{base} results have the same number of parameters.}
+    \label{tab:wmt}
+\end{table}

@@ -1,0 +1,23 @@
+\begin{table}
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{llllllll}
+\toprule
+\multirow{2}{*}{ \bf Model } & \multicolumn{6}{c}{ \bf Number of attractors } & \\ \cmidrule{2-7}
+& 0 & 1 & 2 & 3 & 4 & 5 & Total \\ \midrule
+\multicolumn{8}{c}{ \bf Previous best results~\citep{yogatama2018memory}: } \\ \midrule
+Best Stack-RNN & \emph{0.994} & 0.979 & 0.965 & 0.935 & 0.916 & 0.880 & 0.992 \\
+Best LSTM & 0.993 & 0.972 & 0.950 & 0.922 & 0.900 & 0.842 & 0.991 \\
+Best Attention & \textbf{0.994} & \textbf{0.977} & 0.959 & 0.929 & 0.907 & 0.842 & \textbf{0.992} \\ \midrule
+\multicolumn{8}{c}{ \bf Our results: } \\ \midrule
+Transformer & 0.973 & 0.941 & 0.932 & 0.917 & 0.901 & 0.883 & 0.962 \\
+Universal Transformer & 0.993 & 0.971 & \textbf{0.969} & 0.940 & 0.921 & 0.892 & \textbf{0.992} \\
+UT w/ ACT & \textbf{0.994}	& 0.969	& 0.967	& \textbf{0.944}	& \textbf{0.932}	& \textbf{0.907}	& \textbf{0.992} \\
+\midrule
+$\Delta$ (UT w/ ACT - Best) & 0 & -0.008 & 0.002 & 0.009 & 0.016 & 0.027 & - \\
+ \bottomrule
+\end{tabular}
+\end{adjustbox}
+\caption{Accuracy on the subject-verb agreement number prediction task (higher is better).}
+\label{tab:sva}
+\end{table}

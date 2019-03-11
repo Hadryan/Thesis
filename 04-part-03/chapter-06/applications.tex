@@ -1,5 +1,6 @@
-\section{Experiments and Analysis}
-We evaluated the Universal Transformer on a range of algorithmic and language understanding tasks, as well as on machine translation. We describe these tasks and datasets in more detail in Appendix~\ref{app:desc-tasks}. All code and datasets reproducing these results will be released as open source.
+\section{Universal Transformer for Sequence Modeling}
+\todo{add stuff}
+We evaluated the Universal Transformer on a range of algorithmic and language understanding tasks, as well as on machine translation. 
 
 \subsection{bAbI Question-Answering}
 The bAbi question answering dataset~\citep{weston2015towards} consists of 20 different synthetic tasks\footnote{\url{https://research.fb.com/downloads/babi}}. The aim is that each task tests a unique aspect of language understanding and reasoning, including the ability of: reasoning from supporting facts in a story, answering true/false type questions, counting, understanding negation and indefinite knowledge, understanding coreferences, time reasoning, positional and size reasoning, path-finding, and understanding motivations (to see examples for each of these tasks, please refer to Table 1 in \citep{weston2015towards}).
@@ -31,8 +32,397 @@ Finally, we observe that the histogram of ponder times at different positions is
 
 Similar to dynamic memory networks~\citep{kumar2016ask}, there is an iterative attention process in UTs that allows the model to condition its attention over memory on the result of previous iterations. 
 %
-Figures~\ref{fig:ex1}, \ref{fig:ex2}, \ref{fig:ex3}, and \ref{fig:ex4} present visualizations of the attention distributions on bAbI tasks for some examples from Task 1, 2, and 3. The visualization of attention weights is over different time steps based on different heads over all the facts in the story and a question. Different color bars on the left side indicate attention weights based on different heads (4 heads in total).
 
 \input{04-part-03/chapter-06/figs_and_tables/fig_babi_attention_examples.tex}
 
+Figures~\ref{fig:ex1}, \ref{fig:ex2}, \ref{fig:ex3}, and \ref{fig:ex4} present visualizations of the attention distributions on bAbI tasks for some examples from Task 1, 2, and 3. The visualization of attention weights is over different time steps based on different heads over all the facts in the story and a question. Different color bars on the left side indicate attention weights based on different heads (4 heads in total).
+
 The above examples illustrate that there is a notion of temporal states in UT, where the model updates its states (memory) in each step based on the output of previous steps, and this chain of updates can also be viewed as steps in a multi-hop reasoning process.
+
+\subsection{Algorithmic Tasks}
+The generic neural network architectures cannot generalize well in algorithmic and numerical tasks requiring arithmetic operations such as addition, multiplication etc., even when they may successfully fit any given training data in such tasks, and sometimes they cannot even achieve that~\citep{trask2018neural}. This can be even harder when the distribution of examples' length is different in train and test set.
+
+We trained UTs on three algorithmic tasks, namely Copy, Reverse, and (integer) Addition, all on strings composed of decimal symbols (`0'-`9'). In all the experiments, we train the models on sequences of length 40 and evaluated on sequences of length 400~\citep{neural_gpu} to assess the ability of the models on length generalization.
+
+As an additional inductive bias for UTs on this tasks, when calculating the positional embedding, we use  positions starting with randomized offsets per example. This way, we further encourage the model to learn position-relative transformations, which improves length generalization.
+Results are shown in Table~\ref{tab:algorithmic}. Both UT and UT with randomized position offset outperform LSTM and vanilla Transformer by a wide margin on all three tasks. 
+The Neural GPU reports perfect results on this task~\citep{neural_gpu}, however we note that this result required a special curriculum-based training protocol which was not used for other models.
+
+\input{04-part-03/chapter-06/figs_and_tables/table_alg_results.tex}
+
+\subsection{Learning to Execute (LTE)}
+As another class of sequence-to-sequence learning problems, we also evaluate UTs on Learning to Execute (LTE) tasks. 
+LTE is a set of tasks indicating the ability of a model to learn to execute computer programs and was proposed by~\citet{ZS14}. These tasks include two subsets: 1) program evaluation tasks (program, control, and addition) that are designed to assess the ability of models for understanding numerical operations, if-statements, variable assignments, the compositionality of operations, and more, as well as 2) memorization tasks (copy, double, and reverse). 
+
+The difficulty of the program evaluation tasks is parameterized by their \textit{length} and \textit{nesting}. The
+length parameter is the number of digits in the integers that appear in the programs (so the integers are chosen uniformly from [1, \emph{length}]), and the nesting parameter is the number of times we are allowed to combine the operations with each
+other. Higher values of nesting yield programs with deeper parse trees.
+For instance, here is a program that is generated with length = 4 and
+nesting = 3. 
+\begin{table}[h!]
+\fontsize{8}{8}\fontfamily{pcr}\selectfont
+\begin{tabular}{l l}
+\textbf{Input}: & \\
+& j=8584 \\
+& {\color{blue}{for}} x {\color{blue}{in}} range(8): \\
+& ~~j+=920 \\
+& b=(1500+j) \\
+& {\color{blue}{print}}((b+7567)) \\
+\textbf{Target}: & \\
+& 25011
+\end{tabular}
+\end{table}
+
+\input{04-part-03/chapter-06/figs_and_tables/table_lte_results.tex}
+
+We use the mix-strategy discussed in~\citep{ZS14} to generate the datasets. Unlike~\citep{ZS14}, we do not use any curriculum learning strategy during training and we make no use of target sequences at test time. Tables~\ref{tab:lte-mem} and \ref{tab:lte-prog} present the performance of an LSTM model, Transformer, and Universal Transformer on the program evaluation and memorization tasks, respectively. UT achieves perfect scores in all the memorization tasks and also outperforms both LSTMs and Transformers in all program evaluation tasks by a wide margin. 
+
+
+
+\subsection{Subject-Verb Agreement}
+Next, we consider the task of predicting number-agreement between subjects and verbs in English sentences~\citep{linzen2016assessing}. Succeeding in this task is a strong indicator that a model can learn to approximate syntactic structure and therefore it was proposed by~\citet{linzen2016assessing} as proxy for assessing the ability of different models to capture hierarchical structure in natural language. 
+
+Two experimental setups were proposed by ~\citet{linzen2016assessing} for training a model on this task: 1) training with a language modeling objective, i.e., next word prediction, and 2) as binary classification, i.e. predicting the number of the verb given the sentence. 
+We follow the experimental protocol of ~\citet{linzen2016assessing} for solving the task using a language modeling training setup, i.e.\ a next word prediction objective, followed by calculating the ranking accuracy of the target verb at test time. 
+
+In this task, in order to have different levels of difficulty, ``agreement attractors'' are used, i.e.\ one or more intervening nouns with the opposite number from the subject with the goal of confusing the model. In this case, the model needs to correctly identify the head of the syntactic subject that corresponds to a given verb and ignore the intervening attractors in order to predict the correct form of that verb.
+Here are some examples for this task in which subjects and the corresponding verbs are in boldface and agreement attractors are underlined:
+\begin{table}[h!]
+\fontsize{9}{10}\fontfamily{pcr}\selectfont
+\begin{tabular}{l l}
+\textbf{No attractor:} & The \textbf{boy} \textbf{smiles}. \\
+\textbf{One attractor:}  &  The \textbf{number} of \underline{men} \textbf{is} not clear. \\
+\textbf{Two attractors:}  &  The \textbf{ratio} of \underline{men} to \underline{women} \textbf{is} not clear. \\
+\textbf{Three attractors:} &  The \textbf{ratio} of \underline{men} to \underline{women} and \underline{children} \textbf{is} not clear. 
+\end{tabular}
+\end{table}
+
+\input{04-part-03/chapter-06/figs_and_tables/table_sva_results.tex}
+Our results are summarized in Table~\ref{tab:sva}. The best LSTM with attention from the literature achieves 99.18\% on this task~\citep{yogatama2018memory}, outperforming a vanilla Transformer~\citep{tran18}. UTs significantly outperform standard Transformers, and achieve an \emph{average} result comparable to the current state of the art (99.2\%). However, we see that UTs (and particularly with dynamic halting) perform progressively better than all other models as the number of attractors increases (see the last row, $\Delta$).
+
+
+\todo{why ut helps here?}
+
+
+\subsection{LAMBADA Language Modeling}
+The LAMBADA task~\citep{paperno2016lambada} is a language modeling task consisting of predicting a missing target word given a broader context of 4-5 preceding sentences. The dataset was specifically designed so that humans are able to accurately predict the target word when shown the full context, but not when only shown the target sentence in which it appears. It therefore goes beyond language modeling, and tests the ability of a model to incorporate broader discourse and longer term context when predicting the target word\footnote{\url{http://clic.cimec.unitn.it/lambada/appendix_onefile.pdf}}.
+Here is a sample from the dataset:
+
+\begin{table}[h!]
+\fontsize{8}{10}\fontfamily{pcr}\selectfont
+\begin{tabular}{l l}
+\textbf{Context}: & \\
+& ``Yes, I thought I was going to lose the baby.'' \\
+&  ``I was scared too,'' he stated, sincerity flooding his eyes. \\ 
+&  ``You were?'' ``Yes, of course. Why do you even ask?''  \\
+&  ``This baby wasn't exactly planned for.''
+\\
+\textbf{Target sentence}: & \\
+& ``Do you honestly think that I would want you to have a \_\_\_\_\_\_\_\_?'' 
+\\
+\textbf{Target word}:  & \\  
+& miscarriage
+\end{tabular}
+\end{table}
+
+The LAMBADA task consists in predicting the target word given the whole passage (i.e., the context plus the target sentence). A ``control set''  is also provided which was constructed by randomly sampling passages of the same shape and size as the ones used to build LAMBADA, but without filtering them in any way. The control set is used to evaluate the models at standard language modeling before testing on the LAMBADA task, and therefore to ensure that low performance on the latter cannot be attributed simply to poor language modeling.
+
+The task is evaluated in two settings: as \emph{language modeling} (the standard setup) and as \emph{reading comprehension}. In the former (more challenging) case, a model is simply trained for next-word prediction on the training data, and evaluated on the target words at test time (i.e.\ the model is trained to predict all words, not specifically challenging target words).  In the latter setting, introduced by Chu et al.~\cite{chu2017broad}, the target sentence (minus the last word) is used as query for selecting the target word from the context sentences. Note that the target word appears in the context 81\% of the time, making this setup much simpler. However the task is impossible in the remaining 19\% of the cases.
+
+\input{04-part-03/chapter-06/figs_and_tables/table_lambada_results.tex}
+
+The results are shown in Table~\ref{tab:lambada}. Universal Transformer achieves state-of-the-art results in both the language modeling and reading comprehension setup, outperforming both LSTMs and vanilla Transformers. Note that achieving good results on the control set only shows a model's strength in standard language modeling.
+
+Our best fixed UT results used 6 steps. However, the average number of steps that the best UT with dynamic halting took on the test data over all positions and examples was $8.2 \rpm 2.1$. In order to see if the dynamic model did better simply because it took more steps, we trained two fixed UT models with 8 and 9 steps respectively (see last two rows). Interestingly, these two models achieve better results compared to the model with 6 steps, but \emph{do not outperform the UT with dynamic halting}. This leads us to believe that dynamic halting may act as a useful regularizer for the model via incentivizing a smaller numbers of steps for some of the input symbols, while allowing more computation for others.
+
+\subsection{Machine Translation}
+We trained a UT on the WMT 2014 English-German translation task using the same setup as reported in \citep{transformer} in order to evaluate its performance on a large-scale sequence-to-sequence task. Results are summarized in Table~\ref{tab:wmt}. The UT with a fully-connected recurrent transition function (instead of separable convolution) and without ACT improves by 0.9 BLEU over a Transformer and 0.5 BLEU over a Weighted Transformer with approximately the same number of parameters \citep{ahmed2017weighted}.
+
+\input{04-part-03/chapter-06/figs_and_tables/table_mt_results.tex}
+
+\subsection{Open Domain Question Answering}
+Open-domain question answering aims to satisfy users who are looking for a direct answer to a complex information need. 
+This requires querying large open-domain knowledge sources like the Web. 
+Inferring the answer to a question given multiple documents that potentially contain the answer, is at the heart of the open-domain question answering task. 
+Most open-domain question answering systems described in the literature first retrieve relevant documents or passages, select one or a few of them as the context, and then feed the question and the context to a reading comprehension system to extract the answer~\citep{buck2017ask, chen2017reading, seo2016bidirectional, dhingra2016gated}. 
+However, information needed to answer complex questions is not always contained in a single, directly relevant document that is ranked high. In many cases, there is a need to read multiple documents, combine them, and reason over the facts from these documents to be able to give the correct answer to the question.
+
+For example, in Figure~\ref{fig:example}, in order to infer the correct answer to the question: ``\texttt{Who is the Spanish artist, sculptor and draughtsman famous for co-founding the Cubist movement?}'' given the top-ranked document, a reading comprehension system most likely will extract ``\texttt{Georges Braque}'' as the answer, which is not the correct answer. 
+In this example, in order to infer the correct answer, one has to go down the ranked list, gather and encode facts, even those that are not immediately relevant to the question, like ``\emph{Malaga is a city in Spain},'' which can be inferred from a document at rank 66, and then in a multi-step reasoning process, infer some new facts, including ``\emph{Picasso was a Spanish artist}'' given documents at ranks~12 and~66, and ``\emph{Picasso, who was a Spanish artist, co-founded the Cubist}'' given the previously inferred fact and the document ranked third. 
+
+\begin{figure}[!t]
+ \centering
+ \includegraphics[width=\textwidth]{04-part-03/chapter-06/figs_and_tables/fig_od_example.png}
+%  \vspace{1pt}
+ \caption{Example complex question answering that requires that information from multiple documents be combined and some amount of reasoning over the information extracted from those documents. (Best viewed in color.)}
+ \label{fig:example}
+\end{figure}
+
+In this example, and in general in many cases in open-domain question answering, a piece of information in a low-ranked document that is not immediately relevant to the question, may be useful to fill in the blanks and complete information extracted from the top relevant documents and eventually support inferring the correct answer.
+However, most open-domain question answering methods focus on only one or a few candidate documents by filtering out the less relevant documents to avoid dealing with noisy information and operate over the selected set of documents to extract the answer~\citep{wang2017r, wang2017evidence,lin2018denoising}. 
+
+We propose a new architecture, called \tracrnet (pronounced \emph{Tracker Net}, that combines Transformer and  Universal Transformer to improve open-domain question answering by explicitly operating on a larger set of candidate documents during the whole question answering process and learning how to aggregate and reason over information from these documents in an effective way while trying not to be distracted by noisy documents. 
+% 
+Given the candidate documents and the question, to generate the answer, \tracrnet first \underline{\textbf{Tra}}nsforms them into vectors by applying a stack of  Transformer blocks with self-attention over words in each document in a layer called \emph{Input Encoding}. 
+Then, it updates the learned representations from the first stage by \underline{\textbf{C}}ombining and enriching them through a multihop \underline{\textbf{R}}easoning process by applying multiple steps of the Universal Transformer in a layer called \emph{Multihop Reasoning}.  
+
+% paragraph might be too verbose
+Returning to the example in Figure~\ref{fig:example}, after learning representations for each top-ranked document and the question, \tracrnet updates them by applying multiple steps of the Universal Transformer. 
+Given the self-attention mechanism and inductive bias of the Universal Transformer, in the first step, \tracrnet can update the representation of document D\#12 by attending to D\#66 (as they are related by both mentioning Malaga) and augment the information in D\#12 with the fact that ``Malaga is city in Spain,'' so the updated vector of D\#12 has the fact that ``Picasso is a Spanish artist'' encoded in itself. 
+Then, in the next step of reasoning, \tracrnet can update the representation of D\#3 by attending over the vector representing D\#12 estimated in the previous step, and enrich the information in D\#3 with the fact that ``Picasso is a Spanish artist,'' and the updated vector of D\#3 has the fact that ``Picasso, who was a Spanish artist co-founded Cubism'' encoded in it. 
+After that, during answer generation, the decoder can attend to the final vector representing D\#3 and give the correct answer.
+
+% why \tracrnet rocks:
+% 1. fast
+\tracrnet has a number of desirable features.
+%
+First, all the building blocks of \tracrnet are based on self-attentive feed-forward neural networks, hence per-symbol hidden state transformations are fully parallelizable, which leads to an enormous speedup during training and a super fast input encoding during inference time compared to RNN based models. 
+% 3. It can reason
+Second, while there is no recurrence in time in our model, the recurrence in depth in the Universal Transformer used in the \emph{Multihop Reasoning} layer, adds the inductive bias to the model that is needed to go beyond understanding each document separately and combine their information in multiple steps.
+% 2. global receptive field -> long docs, a large set of docs
+Third, \tracrnet has the global receptive field of the Transformer based models~\citep{vaswani2017attention,dehghani2018universal}, which helps it to better encode a long document during \emph{Input Encoding} as well as perform better inference over a rather large set of documents during \emph{Multihop Reasoning}.
+% 4. robustness against noise
+And fourth, the hierarchical usage of a self-attention mechanism, first over words and then over documents, helps \tracrnet to control its attention both at word and document levels, making it less fragile to noisy input, which is of key importance while encoding many documents.
+%
+All these properties of \tracrnet come together and lead to an effective and efficient architecture for open-domain question answering. 
+
+We employ \tracrnet on two public open-domain question answering datasets, SearchQA and Quasar-T, and achieve results that meet or exceed the state-of-the-art. 
+
+\subsubsection{\tracrnet} % : Transform, Combine, and Reason}
+\label{sec:tra}
+In the setup we consider here, the model is given a question $q$ and a set of $n$ relevant documents $C_q=\{D^q_1, D^q_2, \ldots D^q_n\}$ retrieved from the web using a search engine as the input, and the goal is to ``generate'' the answer $a_q$ to the question $q$ based on the supporting document(s) in the set $C_q$.
+
+This is different from the standard Reading Comprehension (RC) tasks~\cite{hermann2015teaching,xiong2016dynamic}. 
+First of all, in RC a single document (passage) is given, from which the answer should be extracted. 
+Secondly, in RC a strong supervision on the positions of the answer spans is available during training.
+We also assume that the utilized information or techniques to retrieve relevant documents are not available to the model, therefore there is no leverage for getting better-supporting documents.
+
+\begin{figure}[!t]
+ \centering
+ \includegraphics[width=\textwidth]{04-part-03/chapter-06/figs_and_tables/fig_tracrnet.png}
+ \caption{An overview of the \tracrnet architecture.}
+ \label{fig:model}
+\end{figure}
+
+\tracrnet is based on the encoder-decoder architecture, where we have a hierarchy of transformer-based models in the encoder, where the model can attend first over words and then over documents~\citep{Dehghani2017:CIKM}. At the bottom, in the \emph{Input Encoding} layer, we encode each document in $C_q$ as well as the question with transformer blocks with tied parameters that are fed by word-level embeddings. 
+Then, we feed the encoded documents and the question from this layer to the \emph{Multihop Reasoning} layer which is, in fact, a universal transformer block where representations of all documents and the question get iteratively updated using multiple steps of self-attention.
+Then, we use a stack of transformer decoder blocks as the \emph{Output Decoder} layer to generate the answer. 
+%
+The general schema of \tracrnet is depicted in Figure~\ref{fig:model}. 
+Below, we explain the details of each of these layers in the model.
+
+\mypar{Input encoding} 
+The Input Encoding layer is in charge of encoding each of the documents and the question to single vectors given their words' embeddings. For this layer, we used a stack of $N$ Transformer Encoder blocks that is followed by a depth-wise separable convolution~\citep{kaiser2017depthwise,chollet2017xception} and then a pooling function to get a single vector representation for the whole document or the question  (see  the \texttt{Transformer Encoder} in Figure~\ref{fig:model}) . 
+Depth-wise separable convolution is defined by a convolution on each of the feature channels separately, followed by a point-wise convolution that is applied to project them to a feature vector with the desirable depth (see \citep{chollet2017xception} for more details).
+
+\mypar{Multihop reasoning} 
+Multihop Reasoning is the layer in which the Universal Transformer is employed to combine evidence from all documents with respect to the question within a multi-step process with the capacity of multihop reasoning.
+%
+In \tracrnet, the input of the Universal Transformer Encoder is the set of vectors each representing a document in $C_q$ or the question, that are computed by the \emph{Input Encoding} layer  (see  the \texttt{Universal Transformer Encoder} in Figure~\ref{fig:model}). 
+
+In each step of the Universal Transformer, given $H_{t} \in \mathbb{R}^{(|C_q|+1) \times d}$ and the dimension $d$ of the input vectors, we add two embeddings to $H^{t}$: a \emph{Rank Embedding} that encodes the rank of documents given by the retrieval system, also used to distinguish the question from documents (similar to the positional embedding in token level inputs) and the \emph{Step Embedding}. We use Equation\ref{eqn:coordinate-embeddings} to calculate these embeddings.
+In our experiments, we use depthwise separable convolution~\cite{chollet2017xception} as the Transition($\cdot$) function.
+
+In the multihop reasoning layer, the representations of all the documents and question learned from the previous layer get updated during $T$ steps of iterating over the Universal Transformer Encode block. 
+Self-attention in this layer allows the model to understand each of the documents based on the information in all the as well as the question.
+In addition, the depth-wise recurrency in the Universal Transformer establishes connections among documents at each step and lays the ground for performing multihop reasoning to solve cases similar to what we have shown in Example~\ref{fig:example}.
+
+\mypar{Output decoder} 
+After $T$ steps of refining the representations of documents and the question in the Universal Transformer Encoder, the final output is a matrix of $d$-dimensional vector representations $H \in \mathbb{R}^{(|C_q|+1) \times d}$ for all the documents in $C_q$ and the question $q$.
+
+Given this, we use a stack of $N$ Transformer Decoder blocks (see  the \texttt{Universal Transformer Encoder} in Figure~\ref{fig:model}) to decode the answer.
+To generate answer from the model at inference time, we run the model autoregresively~\citep{graves2013generating}, where the model consumes the previously generated symbols at each time step in order to generate the distribution over the vocabulary for the next symbol. From this distribution, we select the symbol with highest probability as the next symbol.   
+
+
+\subsubsection{Datasets}
+We have conducted experiments on two publicly available open-domain question answering datasets: SearchQA~\citep{dunn2017searchqa} and Quasar-T~\citep{dhingra2017quasar}. 
+In both of these datasets, candidate documents (passages) for each question have already been retrieved using a search engine and we do not add any extra documents to these result sets. 
+On both datasets, the human performance is evaluated in a setup where the human subjects try to find the answers to the given question from the same documents retrieved by the IR model.
+
+\mypar{SearchQA}
+SearchQA\footnote{\url{https://github.com/nyu-dl/SearchQA}} is a dataset of 140k question-answer pairs crawled from J!\ Archive, and augmented with text snippets retrieved using the Google search engine. 
+For each question-answer pair, on average, about 50 web page snippets have been collected. 
+In our experiments, we do not use the additional meta-data in the dataset like the snippet's URL.
+
+\mypar{Quasar-T}
+Quasar-T\footnote{\url{https://github.com/bdhingra/quasar}} consists of 43k open-domain trivia questions and their answers obtained from various internet sources. 
+The set of candidate documents for each question is retrieved using ``Lucene'' from the ClueWeb09 corpus as the background corpus. 
+In this dataset, for each question-answer pair, a set of 100 unique passages were collected as candidate documents.
+
+\subsubsection{Model configuration and experimental setup}
+We use WordPiece embeddings~\citep{wu:2016:google} with a $32k$ token vocabulary. 
+%
+In both \emph{Input Encoder} and \emph{Output Decoder} layers, we use 
+a stack of 6 Transformer blocks with hidden\_size $= 512$, num\_attention\_heads $=8$, and batch\_size $=2,048$. 
+The rest of the hyper-parameters are set to the default values of the Transformer model.
+%
+In the \emph{Multihop Reasoning} layer, we have a Universal Transformer Encoder with hidden\_size $=512$ and num\_attention\_heads $=4$. 
+We set the number of recurrent steps in depth to 12. The rest of the hyper-parameters are set to the default values of the Universal Transformer model.
+%
+We train with batch size of $4,096$ tokens. We use Adam with learning rate of $1e-9$, $\beta_1 = 0.9$, $\beta_2 = 0.98$, $L_2$ weight decay of $1e-04$, learning rate warmup over the first $16,000$ steps, and linear decay of the learning rate. 
+We use a dropout probability of $0.1$ on all layers.
+%
+Since in our model answers are generated using the decoder instead of extracting from the context (detecting spam), to improve the quality of generation, we pretrain all the parameters of the Transformer decoder downstream of the task of language modeling. The embeddings are shared between encoder and decoder, thus the \emph{Input Embedding} layer also enjoys the pretraining. This helps to improve the performance especially in terms of metrics that consider the exact match of the generated answer with the ground truth.
+%
+During the training of the model, we use teacher-forcing, i.e., the decoder input is the gold target, shifted to the right by one position which is the usual setup for training autoregressive models~\citep{williams1989learning}. 
+
+In our experiments, \tracrnet and its variants are trained on 8 P100 GPUs for $800k$ training steps.
+%
+For both datasets, a prepared version by \citet{wang2017r} is used in our experiments to train and evaluate the \tracrnet as well as all the baselines. As the $C_q$, we consider top-50 top documents for the SearchQA, and top-100 for the Quasar-T.
+%
+Following previous work on reading comprehension and open-domain question answering~\citep{shen2017reasonet,buck2017ask,wang2017r,wang2017evidence,lin2018denoising} as our evaluation metrics we adopt the F1 score, that loosely measures the average overlap between the predicted answer and the ground truth answer, and Exact Match (EM) that measures the percentage of predictions that match one of the ground truth answers exactly.\footnote{We use the tool from SQuAD~\citep{rajpurkar2016squad} for evaluation.} 
+
+\subsubsection{Results and Discussion}
+
+\mypar{Baselines} 
+We compare our results with the best reading comprehension and open-domain question answering models as well as research that achieves state-of-the-art on the SearchQA and Quasar-T datasets. 
+To have a true apples-to-apples comparison, we only consider baselines that use no additional resources to solve the task for these datasets. 
+We use the following methods as baselines:
+\begin{enumerate}[leftmargin=*]
+    \item BiDAF~\citep{seo2016bidirectional}, which is a reading comprehension model with bi-di\-rectional attention flow network that uses the concatenation of top-ranked candidate documents as the context.
+    \item R$^3$~\citep{wang2017r}, which is a reinforcement learning approach that uses a ranker for selecting the most confident paragraph to train the reading comprehension model.
+    \item \citet{wang2017evidence}'s model, which learns to re-rank the answers extracted by applying an R$^3$ model on multiple documents based on coverage and strength of each of the documents given the question.
+    \item \citet{lin2018denoising}'s model, which is the most recent paper achieving state-of-the-art performance on the datasets we use for evaluation. 
+    They propose to decompose the process into a document selection to filter out noisy paragraphs, and a paragraph reader to extract the correct answer from the filtered documents. 
+    Finally, they aggregate multiple answers to obtain the final answer.
+\end{enumerate}
+%
+Table~\ref{tab:main_results} presents the results of the baseline models, \tracrnet, and the human performance on both datasets.
+
+\begin{table}[!t]
+    \centering
+    \caption{Performance of \tracrnet compared to the baseline models}
+    \label{tab:main_results}
+    \begin{adjustbox}{max width=0.7\textwidth}
+    \begin{tabularx}{\linewidth}{Xccccc}
+        \toprule
+        \multirow{2}{*}{\textbf{model}} & \multicolumn{2}{c}{\textbf{SearchQA}} & & \multicolumn{2}{c}{\textbf{Quasar-T}}\\
+        \cmidrule{2-3}\cmidrule{5-6}
+         & \textbf{EM} & \textbf{F1}  & & \textbf{EM} & \textbf{F1} \\
+         \midrule
+         BiDAF~\citep{seo2016bidirectional}
+         &  28.6  & 34.6 & &  25.9 & 28.5\\
+         R$^3$~\citep{wang2017r}
+         &  49.0 & 55.3 &  & 35.3 & 41.7 \\
+         \citet{wang2017evidence} 
+         & 57.0 & 63.2 &  & 42.3 & 49.6  \\
+         \citet{lin2018denoising} 
+         &  \textbf{58.8}  & 64.5 &  & 42.2 & 49.3 \\
+         \tracrnet
+         & 52.9 & \textbf{65.1} &  & \textbf{43.2} & \textbf{54.0} \\ \midrule
+         Human Performance
+         & 43.9 & -- &  & 51.5 & 60.6 \\
+         \bottomrule
+    \end{tabularx}
+    \end{adjustbox}
+\end{table}
+
+
+\mypar{Main results} 
+\tracrnet outperforms all the baselines and achieves a new state-of-the-art  (to the best of our knowledge) on the Quasar-T dataset and performs as good as the best performing baseline on the SearchQA dataset.
+%
+The main advantage of \tracrnet over the baselines is that it makes ``full'' use of the information of ``all'' the candidate documents in $C_q$. 
+The models proposed by \citet{lin2018denoising} and \citet{wang2017evidence} are the strongest baselines on these datasets. 
+Although they try to capture evidence from multiple sources by reranking or aggregating answers extracted from different documents, they filter out documents that are less likely to help at the beginning of the process. 
+In this fashion, they lose the chance of using information from documents that are not directly relevant, like documents \#12 or/and \#66 in Example~\ref{fig:example}. 
+However, \tracrnet keeps operating on the full set of candidate documents during the whole process and learns to which extent each document contributes to infer the final answer. 
+
+In SearchQA, we notice that for most of the questions, the answer can be extracted given a single document and in many cases, no multi-document multihop reasoning is required. 
+Therefore, since \tracrnet \emph{generates} the answer, as opposed to the baseline models that \emph{extract} the answer from context, it gets a lower EM score. However, in terms of F1 score, \tracrnet slightly improves over the best baseline.
+
+\mypar{Effect of multihop reasoning}
+In order to investigate the effect of the \emph{Multihop Reasoning} layer, we handicap \tracrnet by removing this layer and evaluate it in two cases:
+\begin{enumerate}[leftmargin=*]
+    \item \tracrnet{$_\text{no-mhr}^\text{d}$}, in which the decoder has access to document-\:level representations from the encoder, and 
+    \item \tracrnet{$_\text{no-mhr}^\text{w}$} where pooling operation is removed and the decoder has access to word-level representations from the encoder.
+\end{enumerate}    
+Table~\ref{tab:no_mhr_results} presents the results of the model in these situations.
+
+\begin{table}[!t]
+    \centering
+    \caption{Performance of \tracrnet with and without the \emph{Multihop Reasoning} layer; numbers in parenthesis indicate percentage of performance loss}
+    \label{tab:no_mhr_results}
+    \begin{adjustbox}{max width=0.7\textwidth}
+    \begin{tabularx}{\linewidth}{@{}Xc@{~~}c@{~~}c@{~~}c@{~~}c@{}}
+        \toprule
+        \multirow{2}{*}{\textbf{model}} & \multicolumn{2}{c}{\textbf{SearchQA}} & & \multicolumn{2}{c}{\textbf{Quasar-T}}\\
+        \cmidrule{2-3}\cmidrule{5-6}
+         & \textbf{EM}  & \textbf{F1}  & & \textbf{EM} & \textbf{F1} \\
+         \midrule
+         \tracrnet
+         & 52.9 \phantom{($-8\%$)} & 65.1 \phantom{($-8\%$)}&  & 43.2 \phantom{($-16\%$)}& 54.0 \phantom{($-25\%$)} \\
+         \tracrnet{$_\text{no-mhr}^\text{d}$} 
+         & 48.6 ($-8\%$) & 61.7 ($-5\%$) &  & 36.4 ($-16\%$) &  43.6 ($-19\%$)\\
+         \tracrnet{$_\text{no-mhr}^\text{w}$}
+         & 50.2 ($-5\%$) & 59.3 ($-9\%$) &  & 38.1 ($-12\%$) &  40.2 ($-25\%$) \\
+         \bottomrule
+    \end{tabularx}
+    \end{adjustbox}
+\end{table}
+
+\begin{figure}[!t]
+    \centering
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04-part-03/chapter-06/figs_and_tables/fig_att_tracrnet_step3.png}
+        \caption{\label{fig:attention_vis_a}Attention distribution %over different documents and the question 
+        when transforming the document at rank 12, in step\#3 of multihop reasoning.}
+    \end{subfigure}%
+    \vfill
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04-part-03/chapter-06/figs_and_tables/fig_att_tracrnet_step7.png}
+        \caption{\label{fig:attention_vis_b}Attention distribution %over different documents and the question 
+        when transforming the question, in step\#7 of multihop reasoning.}
+    \end{subfigure}
+     \caption{Visualization  of multi-head self-attention on Multihop Reasoning layer of \tracrnet. 
+     (Best viewed in color.)}
+     \label{fig:attention_vis}
+\end{figure}
+
+On all measures and datasets, the performance drops when we remove the \emph{Multihop Reasoning} layer. 
+The drop in the performance is larger on the Quasar-T dataset than on the SearchQA dataset.
+We noticed that trivia questions in Quasar-T, in many cases, contain clauses that should be considered together with and/or operations to be able to give the correct answer. 
+For instance, to answer the question ``What Australian food was discovered by John McAdam,'' we should consider that ``the food is Australian'' \emph{and} ``the food is discovered by John McAdam.'' 
+In this situation, the chance of having multiple documents each containing one of these facts increases. 
+Thus, having multiple supporting documents and the need for reasoning (similar to Example~\ref{fig:example}) will be the exact point where the advantage of the \emph{Multihop Reasoning} layer kicks in.
+
+Another observation here is that when we remove the \emph{Multihop Reasoning} layer, passing word-level embeddings from the encoder to the decoder leads to better EM scores, but not to improved F1 scores. 
+The main reason is that, in this situation, access to the input words from the decoder is more explicit. 
+This helps the model to get closer to answer extraction than pure answer generation.
+
+For the test example that is presented in Figure~\ref{fig:example}, we observed that all baseline models output ``Georges Braque'' which is extracted from the document at rank~1. 
+However, unlike all the baselines, \tracrnet returns the correct answer. 
+We looked into the attention distributions in the \emph{Multihop Reasoning} layer of \tracrnet at different steps (of the employed Universal Transformer with 12 depth-wise recurrent steps). 
+We were able to find a relation between attention distributions and the reasoning steps that are needed to give the correct answer to this question. 
+We illustrate this in Figure~\ref{fig:attention_vis}.
+
+Figure~\ref{fig:attention_vis_a} presents the attention distribution over all documents and the question while encoding the document at rank~12 at step~3. 
+\tracrnet has a high level of attention for the document at rank~66 using heads~1 and~4 (blue and red) as well as for the question using head~3 (green) while transforming the document at rank~12. 
+This is in accordance with the fact that the model first needs to update the information encoded in the document at rank 12 with the fact that ``Malaga is a city in Spain'' from the document at rank~66. 
+Later, at step~7, while encoding the question (Figure~\ref{fig:attention_vis_b}), \tracrnet attends over document 12, which has information about ``Picasso who is a Spanish artist'' (updated in step~3) using heads~1 and~4 and document~3, which contains information about ``Picasso as a co-founder of Cubism'' using head~2 (green). 
+
+\subsubsection{Impact of the number of documents}
+As we explained before, unlike most of the previous work that filters candidate documents and narrows down the set of documents under consideration to either a single document or a small set of highly relevant documents before applying an answer extractor to them, \tracrnet uses the full set of candidate documents retrieved by the search engine during the entire process of generating the answer. 
+This is of great advantage as our analysis shows that, for some questions, the correct answer can only be extracted when considering information from low-ranked documents that are not immediately relevant to the question.
+However, this can potentially come at the cost of (1)~efficiency, as we need to process a larger input, and of (2)~performance, as there will be more noisy and non-relevant documents when we go down the ranked list of candidate documents. 
+%
+Making use of self-attentive feed-forward neural networks as building blocks of \tracrnet brings the ability of full per-symbol parallelization and leads to an enormous speedup on encoding the input documents. This lets the model encode a larger set of candidate documents efficiently. 
+
+\begin{figure}[!t]
+ \centering
+ \includegraphics[width=0.6\textwidth]{04-part-03/chapter-06/figs_and_tables/plot_different_num_docs.png}
+  %\vspace{5pt}
+ \caption{Performance in terms of F1 of \tracrnet and baselines (R$^3$~\citep{wang2017r} and \citet{lin2018denoising}'s model) with different numbers of candidate documents on Quasar-T dataset.}
+ \label{fig:diff_num_docs}
+\end{figure}
+
+To study how the performance of \tracrnet is affected by the number of candidate documents, we train and evaluate \tracrnet as well as R$^3$~\citep{wang2017r} and \citet{lin2018denoising}'s model on the Quasar-T dataset, using different numbers of candidate documents associated with each question.\footnote{In this experiment, we just change the initial number of candidates, but we train baseline models with their original setups and do not impose any assumption (e.g., fixing the candidate list) on them.}
+%
+Figure~\ref{fig:diff_num_docs} presents the performance of these models when they are fed with the top-5, top-10, \ldots, top-100 retrieved documents. 
+%
+As can be seen, although \citet{lin2018denoising}'s model is pretty good at staying robust when noise increases (it is designed to learn from distant supervision), increasing the number of candidate documents eventually leads to a small drop in performance of both baselines due to the noise in the low-ranked documents. 
+However, \tracrnet not only controls the effect of noisy low-ranked documents by calibrating their effect on inferring the final answer through self-attention, but it also keeps improving as we increase the number of documents as it can exploit any useful information contained in low-ranked documents which can help better understand the question or perform reasoning.
+
+
+

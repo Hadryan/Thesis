@@ -111,8 +111,12 @@ queries $Q$, the $RI$ measure is defined as: $RI(Q) = \nicefrac{N^+ - N^-}{|Q|}$
 In our experiments, as the baseline methods, we have used the most popular unsupervised state-of-the-arts for the feedback task that are proposed in the language modeling framework. 
 Our baseline methods are: the maximum likelihood estimation\:---\:without feedback (MLE)~\citep{Lafferty:2001}, the simple mixture model (SMM)~\citep{Zhai:SMM:2001},  the divergence minimization model (DMM)~\citep{Zhai:SMM:2001}, the relevance models (RM3 and RM4)~\citep{Abdul-jaleel:2004,Lavrenko:2001}, the regularized mixture model (RMM)~\citep{Tao:2006}, and maximum-entropy divergence minimization model (MEDMM)~\citep{Lv:2014}. 
 
+
+\subsection{\acswlm for Relevance Feedback}
+Now, we present the results of applying \acswlm on both true and pseudo relevance feedback tasks.
+
 %---------------------------------------
-\subsection{\acswlm for True Relevance Feedback}
+\subsubsection{\acswlm for True Relevance Feedback}
 \label{sec:RF}
 %---------------------------------------
 \input{02-part-01/chapter-02/figs_and_tables/table_trf.tex}
@@ -135,7 +139,7 @@ These results provide strong support for effectiveness of \swlms, and the genera
 
 
 %---------------------------------------
-\subsection{\acswlm for Pseudo Relevance Feedback}
+\subsubsection{\acswlm for Pseudo Relevance Feedback}
 \label{sec:PRF}
 %---------------------------------------
 Pseudo relevance feedback aims to expand the query to improve the performance of retrieval having no information about the judgments. In PRF, the underlying assumption is that the initial retrieval yields the relevant documents which can be used to refine the query. Thus, assuming the top-ranked documents $\mathcal{F} = \{d_1, \ldots ,d_{\mathcal{F}}\}$ from the initial run as relevant, the feedback model $\theta_{\mathcal{F}}$ is estimated and used for the query expansion.  
