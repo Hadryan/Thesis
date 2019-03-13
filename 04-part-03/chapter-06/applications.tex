@@ -1,6 +1,8 @@
 \section{Universal Transformer for Sequence Modeling}
 \todo{add stuff}
-We evaluated the Universal Transformer on a range of algorithmic and language understanding tasks, as well as on machine translation. 
+In this section, we address the following research question:
+\resq{c6.2}
+We evaluate Universal Transformers on a range of algorithmic and language understanding tasks and discuss the results.
 
 \subsection{bAbI Question-Answering}
 The bAbi question answering dataset~\citep{weston2015towards} consists of 20 different synthetic tasks\footnote{\url{https://research.fb.com/downloads/babi}}. The aim is that each task tests a unique aspect of language understanding and reasoning, including the ability of: reasoning from supporting facts in a story, answering true/false type questions, counting, understanding negation and indefinite knowledge, understanding coreferences, time reasoning, positional and size reasoning, path-finding, and understanding motivations (to see examples for each of these tasks, please refer to Table 1 in \citep{weston2015towards}).
@@ -180,7 +182,7 @@ First, all the building blocks of \tracrnet are based on self-attentive feed-for
 % 3. It can reason
 Second, while there is no recurrence in time in our model, the recurrence in depth in the Universal Transformer used in the \emph{Multihop Reasoning} layer, adds the inductive bias to the model that is needed to go beyond understanding each document separately and combine their information in multiple steps.
 % 2. global receptive field -> long docs, a large set of docs
-Third, \tracrnet has the global receptive field of the Transformer based models~\citep{vaswani2017attention,dehghani2018universal}, which helps it to better encode a long document during \emph{Input Encoding} as well as perform better inference over a rather large set of documents during \emph{Multihop Reasoning}.
+Third, \tracrnet has the global receptive field of the Transformer based models~\citep{vaswani2017attention,Dehghani:ICLR:2019}, which helps it to better encode a long document during \emph{Input Encoding} as well as perform better inference over a rather large set of documents during \emph{Multihop Reasoning}.
 % 4. robustness against noise
 And fourth, the hierarchical usage of a self-attention mechanism, first over words and then over documents, helps \tracrnet to control its attention both at word and document levels, making it less fragile to noisy input, which is of key importance while encoding many documents.
 %

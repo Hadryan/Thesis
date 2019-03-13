@@ -3,9 +3,7 @@
 \label{sec:fidelity_weighted_learning}
 
 In this section, we address the second research question of this chapter:
-\begin{resqbox}
-\emph{\resq{c5.2}}
-\end{resqbox}
+\resq{c5.2}
 
 We introduce \fwlfull (\fwl), a Bayesian semi-supervised approach that leverages a small amount of data with strong labels to generate a larger training set with \emph{confidence-weighted weakly-labeled samples}, which can then be used to modulate the fine-tuning process based on the fidelity (or quality) of each weak sample. By directly modeling the inaccuracies introduced by the \wa in this way, we can control the extent to which we make use of this additional source of weak supervision: more for confidently-labeled weak samples close to the true observed data, and less for uncertain samples further away from the observed data. We use a non-parametric kernel-based method to measure the closeness.
 

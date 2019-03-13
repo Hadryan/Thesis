@@ -4,9 +4,7 @@ Despite promising performance from neural networks on many language understandin
 
 Therefore, it is essential to come up with solutions that let us train neural ranking models, where there is no labeled data it is only available at a extremely limited size. 
 One the main idea to tackle this problem is to make use of weak human supervision or weakly labeled data, as it is much cheaper to collect or readily available at much larger scale. This section focuses addressing the following questions:
-\begin{resqbox}
-\emph{\resq{c4.1}}
-\end{resqbox}
+\resq{c4.1}
 
 We propose to pseudo-label a large set of unlabeled data using an unsupervised method and train a neural ranker using these ``weak'' or ``noisy'' labels. Given this setup, we examine various neural ranking models with different ranking architectures and objectives, i.e., point-wise and pair-wise, as well as different input representations, from encoding query-document pairs into dense\:/\:sparse vectors to learning query\:/\:document embedding representations. 
 
@@ -202,9 +200,8 @@ At inference time, for each query, we take the top $2000$ retrieved documents us
 
 \bigskip
 Given the setup we explained above, we train and evaluate our neural rankers to address our second research question in this chapter:
-\begin{resqbox}
-\emph{\resq{c4.2}}
-\end{resqbox}
+\resq{c4.2}
+
 We attempt to break down our experiments and analysis to different parts addressing several subquestions, and provide empirical answers along with the intuition and analysis behind each question:
 
 \input{03-part-02/chapter-04/figs_and_tables/table_main_results.tex} 

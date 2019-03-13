@@ -1,10 +1,12 @@
 \usepackage{xstring}
-\newcommand{\resq}[1]{%
+\newcommand{\resqcontent}[1]{%
     \IfEqCase{#1}{%
+    % -------------MAIN I-------------
+    {main}{How can we improve the learning process when the data and/or the supervision signal is noisy or limited, in the context of language understanding tasks?}
     % -------------PART I-------------
-    {p1}{How to use the structure of the data as prior knowledge to learn robust and effective representations?}
+    {p1}{How to use the structure of the data as prior knowledge to learn robust and effective representations when the data is noisy or highly variable?}
     % -------------chapter 2-------------
-    {c2}{How to learn robust representations that are affected by neither undiscerning general, nor noisy accidental features, given  the structural relations in the data?}%
+    {c2}{How to learn robust representations that are affected by neither undiscerning general, nor noisy accidental features, given the structural relations in the data?}%
     %
     {c2.1}{How to estimate a representation for a set of entities that captures all, and only, the essential shared commonalities of these entities?}
     %
@@ -46,3 +48,67 @@
     % -------------chapter 6-------------
     }[\PackageError{rq}{Undefined option to rq: #1}{}]%
 }%
+
+\newcommand{\resqname}[1]{%
+    \IfEqCase{#1}{%
+    % -------------MAIN I-------------
+    {main}{RQ-Main}
+    % -------------PART I-------------
+    {p1}{RQ-1}
+    % -------------chapter 2-------------
+    {c2}{RQ-1.1}
+    %
+    {c2.1}{RQ-1.1.1}
+    %
+    {c2.2}{RQ-1.1.2}
+    %
+    {c2.3}{RQ-1.1.3}
+    % -------------chapter 3-------------
+    {c3}{RQ-1.2}
+    %
+    {c3.1}{RQ-1.2.1}
+    %
+    {c3.2}{RQ-1.2.2}
+    %
+    {c3.3}{RQ-1.2.3}
+    % -------------PART II-------------
+    {p2}{RQ-2}
+    % -------------chapter 4-------------
+    {c4}{RQ-2.1}%
+    %
+    {c4.1}{RQ-2.1.1}
+    %
+    {c4.2}{RQ-2.1.2}
+    %
+    {c4.3}{RQ-2.1.3}
+    % -------------chapter 5-------------
+    {c5}{RQ-2.2}%
+    %
+    {c5.1}{RQ-2.2.1}
+    %
+    {c5.2}{RQ-2.2.2}
+    % -------------PART III-------------
+    {p3}{RQ-3}
+    % -------------chapter 4-------------
+    {c6}{RQ-3.1}%
+    %
+    {c6.1}{RQ-3.1.1}
+    %
+    {c6.2}{RQ-3.1.2}
+    % -------------chapter 6-------------
+    }[\PackageError{rq}{Undefined option to rq: #1}{}]%
+}%
+
+\newcommand{\resq}[1]{%
+    \begin{resqbox}
+        \begin{enumerate}
+            \item[\textbf{\resqname{#1}}] \emph{\resqcontent{#1}}
+        \end{enumerate}
+    \end{resqbox}
+}%
+
+
+
+
+
+

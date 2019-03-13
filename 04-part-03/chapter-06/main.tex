@@ -7,9 +7,7 @@ The Transformer model in particular relies entirely on a self-attention mechanis
 Notably, however, the Transformer with its fixed stack of distinct layers foregoes RNNs' inductive bias towards learning iterative or recursive transformations. Our experiments indicate that this inductive bias may be crucial for several algorithmic and language understanding tasks of varying complexity: in contrast to models such as the Neural Turing Machine~\citep{ntm14}, the Neural GPU~\citep{neural_gpu} or Stack RNNs~\citep{stack_rnn}, the Transformer does not generalize well to input lengths not encountered during training. 
 
 In this chapter, we address the following research question:
-\begin{resqbox}
-\emph{\resq{c6}}
-\end{resqbox}
+\resq{c6}
 
 \begin{figure}
  \centering
@@ -29,11 +27,14 @@ Our strong experimental results show that UTs outperform Transformers and LSTMs 
 We break down our main research question in this chapter into two concrete research questions:
 \begin{resqbox}
 \begin{enumerate}
-\item[\textbf{RQ6.1}] \emph{\resq{c6.1}}
-\item[\textbf{RQ6.2}] \emph{\resq{c6.2}}
+\item[\textbf{\resqname{c6.1}}] \emph{\resqcontent{c6.1}}
+\item[\textbf{\resqname{c6.2}}] \emph{\resqcontent{c6.2}}
 \end{enumerate}
 \end{resqbox}
+
 In the following sections, we will address these research questions.
+
+\todo{add stuff...}
 
 \input{04-part-03/chapter-06/universal_transformer.tex}
 \input{04-part-03/chapter-06/applications.tex}

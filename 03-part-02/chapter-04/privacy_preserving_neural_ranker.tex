@@ -10,9 +10,7 @@ Almost all deferentially private algorithms add noise to introduce ambiguity. He
 
 Search and retrieval is one of the applications that needs special attention on preserving privacy of users' data and many recent advances rely on sensitive and private data such as large-scale query logs, users’ search history, and location information~\citep{Yang:2017}. Following the previous section, we focus on the task of ranking and assessing the relevance.
 Here we seek the answer to the third research question of this chapter:
-\begin{resqbox}
-\emph{\resq{c4.3}}
-\end{resqbox}
+\resq{c4.3}
 
 We present the results of a set of preliminary experiments that examine the performance of one the neural ranking architectures proposed in Section~\ref{sec:weakly_supervised_neural_rankers} when it is employed in PATE, the privacy preserving framework proposed by~\citet{Papernot:2017}, where the neural ranker is supposed to learn from the signals with added noise. 
 Since PATE is based on knowledge distillation framework~\cite{Hinton:2015}, we first train a neural ranker in a mimic-learning setup where a student ranker is trained on the signals from a teacher ranker that is trained using labeled data. Then we use the full privacy preserving pipeline of PATE to train our neural ranker.

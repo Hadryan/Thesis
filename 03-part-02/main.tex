@@ -8,25 +8,19 @@ Humans can learn effortlessly from weak and inconsistent signals. However, it se
 Given the fact that only a tiny portion of real work applications operate on perfect condition, an essential aspect of any practical learning algorithm is the need to learn from inconsistent data provided by different sensors, noisy or weak supervision, and even when a crucial information is missing from the supervision signal.
 
 In Part~\ref{part2} of this book, we address the following research question:
-\begin{resqbox}
-\emph{\resq{p2}}
-\end{resqbox}
+\resq{p2}
 
 The imperfect examples can come from labels provided by non-expert crowd workers, be the output of other models that are weaker (for instance with low accuracy or coverage), biased, or models trained on data from different related domains. 
 Here in this part, we aim to study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand. Then, given a vast amount of pragmatically generated labeled data, and maybe a small set of examples with true label,  we discuss how to design neural networks that leverage the full capacity of the information in the data and go beyond the imperfection in the weakly annotated data.
 
 
 In the first chapter of this part, Chapter~\ref{chap:4}, we address the following research question:
-\begin{resqbox}
-\emph{\resq{c2}}
-\end{resqbox}
+\resq{c4}
 
 In this chapter, we propose to train a neural ranking model using weak labels that are obtained automatically without human annotators or any external resources (e.g., click data). We train a set of simple yet effective neural ranking models and study their effectiveness under various learning scenarios, i.e. point-wise and pair-wise, different objective functions, and using different input representations, from using a set of engineered features to encoding query/document using word embedding. We also discuss how  privacy preserving approaches can benefit from models that are capable of learning from weak signals, where instead of labels from the original sensitive training data a noisy version is provided.
 
 Then, in the second chapter of this part, Chapter~\ref{chap:5} we focus on the following research question:
-\begin{resqbox}
-\emph{\resq{c3}}
-\end{resqbox}
+\resq{c5}
 
 In this chapter we introduce \emph{Learning with Controlled Weak Supervision (\cws)} and \emph{Fidelity Weighted Learning (\fwl)}, two semi-supervised approaches for training neural networks, where we have a large set of data with weak labels and a small amount of data with true labels. 
 %
