@@ -10,7 +10,7 @@ https://medium.com/center-for-data-science/neural-networks-and-toddlers-how-lear
 
 \url{https://www.princeton.edu/~nivlab/papers/GershmanNiv_inpress.pdf}
 
-\section{Problem Description}
+\section{Problem Description and Research Questions}
 
 Strong prior knowledge (inductive bias). How does background knowledge guide learning from sparsely observed data?  What form does the knowledge take, across different domains and tasks?
 How is that knowledge itself learned? 
@@ -35,6 +35,11 @@ This general research problem leads to
 the following main research question of this PhD thesis (RQ-main) 
 
 \section{Thesis Overview}
+This thesis consists of the introductory matter, followed by five main
+chapters that are divited into three parts, each based on one of the three research questions described above.
+Finally, it closes off with the Conclusions, Appendices and Bibliography. 
+
+
 This thesis is about improving the learning procedure when the data and/or the supervision signal is noisy or limited, mainly in the context of language understanding tasks. The thises has 5 chapters (besides Introduction and conclusion), divided into 3 main parts. The following is a general outline of the thesis, a short summary of each part and the list of papers included in each chapter: 
 PART I: Structure of the Data as Prior Knowledge
 In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant. We break this into two chapters:
@@ -66,6 +71,36 @@ Mostafa Dehghani, H. Azarbonyad, J. Kamps, M. de Rijke. "Learning to Transform, 
 
 
 \section{Origins}
+Next, we present the origins of each chapter in terms of the scholarly papers they are
+based on.
+
+PART I: Structure of the Data as Prior Knowledge
+In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant. We break this into two chapters:
+Chapter 2: Learning neither General, nor Specific, but Significant Representations 
+Mostafa Dehghani, H. Azarbonyad, J. Kamps, D. Hiemstra, and M. Marx. "Luhn Revisited: Significant Words Language Models", CIKM'16.
+Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx "Generalized Group Profiling for Content Customization", CHIIR'16.
+Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx, "Significant Words Language Models for Contextual Suggestion", TREC  2016.
+Mostafa Dehghani, "Significant Words Representations of Entities", SIGIR-Doctoral Consortium'16 -- (SIGIR Doctoral Consortium Award).
+Chapter 3:  Representational Separability for Hierarchically Structured Data
+Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx, "On Horizontal and Vertical Separation in Hierarchical Text Classification", ICTIR'16 (Best Paper Award).
+Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx, "Two-Way Parsimonious Classification Models for Evolving Hierarchies", CLEF'16 (Best Paper Honorable Mention).
+
+PART II: Learning with Weak Supervision.
+In this part, we study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand and discuss how to design neural networks that learn to go beyond the imperfection in the weakly annotated data, for instance by meta learning the quality of the labels and modulating the learning process based on the label quality. We break this into two chapters:
+Chapter 4: Learning from Pseudo-Labels
+Mostafa Dehghani, H. Zamani, Al. Severyn, J. Kamps, and W. B. Croft. "Neural Ranking Models with Weak Supervision", SIGIR'17.
+Mostafa Dehghani, H. Azarbonyad, J. Kamps, M. de Rijke. "Share your Model instead of your Data: Privacy-Preserving Mimic Learning for Ranking'', Neu-IR'17.
+Mostafa Dehghani, S. Rothe, E. Alfonseca and P. Fleury. "Learning to Attend, Copy, and Generate for Session-Based Query Suggestion'', CIKM'17.
+Chapter 5: Learning from Samples of Variable Quality
+Mostafa Dehghani, A. Mehrjou, S. Gouws, J Kamps, B Schölkopf. "Fidelity-Weighted Learning", ICLR'18.
+Mostafa Dehghani, A. Severyn, S. Rothe, and J. Kamps. "Learning to Learn from Weak Supervision by Full Supervision", NIPS2017 workshop on Meta-Learning 2017.
+Mostafa Dehghani, A. Severyn, S. Rothe, and J. Kamps. "Avoiding Your Teacher’s Mistake: Training Neural Networks with Controlled Weak Supervision", arXiv preprint arXiv:1711.00313 (2017). 
+
+PART III: Injecting Inductive Biases for Data Efficiency
+In this part, we discuss injecting inductive biases into learning algorithms as a way to help them to come up with more generalizable solutions when they are provided with limited observations. We further discuss how we can improve the generalization of Transformers, the self-attentive feedforward networks for sequence modeling, by introducing a recurrent inductive bias into their architecture.
+Chapter 6: Recurrent Inductive Bias for Transformers
+Mostafa Dehghani, S. Gouws, O. Vinyals, J. Uszkoreit, and L. Kaiser. "Universal Transformers", ICLR'19.
+Mostafa Dehghani, H. Azarbonyad, J. Kamps, M. de Rijke. "Learning to Transform, Combine, and Reason in Open-Domain Question Answering'', WSDM'19.
 
 
 

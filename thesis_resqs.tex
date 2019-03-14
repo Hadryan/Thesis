@@ -1,4 +1,3 @@
-\usepackage{xstring}
 \newcommand{\resqcontent}[1]{%
     \IfEqCase{#1}{%
     % -------------MAIN I-------------
@@ -39,13 +38,12 @@
     {c5.2}{When learning from samples of variable quality, can we reannotate these samples and provide (hopefully) better labels, associated with a fidelity score to regulate the learning rate?}
     % -------------PART III-------------
     {p3}{How can inductive biases help improving the generalization of self-attentive feed-forward sequence models?}
-    % -------------chapter 4-------------
+    % -------------chapter 6-------------
     {c6}{How can we combine the recurrent inductive bias of RNNs with the parallelizability and global receptive field of Transformer?}%
     %
     {c6.1}{How do Universal Transformers implement both concurrency and recurrency for sequence modeling?}
     %
     {c6.2}{How effective are Universal Transformers at complex reasoning tasks with limited data, algorithmic tasks that need generalization over observed training samples, and finally real world language understanding tasks?}
-    % -------------chapter 6-------------
     }[\PackageError{rq}{Undefined option to rq: #1}{}]%
 }%
 
@@ -89,13 +87,12 @@
     {c5.2}{RQ-2.2.2}
     % -------------PART III-------------
     {p3}{RQ-3}
-    % -------------chapter 4-------------
+    % -------------chapter 6-------------
     {c6}{RQ-3.1}%
     %
     {c6.1}{RQ-3.1.1}
     %
     {c6.2}{RQ-3.1.2}
-    % -------------chapter 6-------------
     }[\PackageError{rq}{Undefined option to rq: #1}{}]%
 }%
 
