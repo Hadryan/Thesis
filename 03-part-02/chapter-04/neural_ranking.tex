@@ -117,7 +117,7 @@ Each hidden layer $z_i$ is a fully-connected layer that computes the following t
 where $W_i$ and $b_i$ respectively denote the weight matrix and the bias term corresponding to the $i^{th}$ hidden layer, and $\alpha(.)$ is the activation function. We use the rectifier linear unit $\textit{ReLU}(x) = \max(0, x)$ as the activation function, which is a common choice in the deep learning literature~\citep{Lecun:2015}. 
 The output layer $z_l$ is a fully-connected layer with a single continuous output. The activation function for the output layer depends on the ranking architecture that we use. For the \modelone architecture, we empirically found that a linear activation function works best, while $tanh$ and the sigmoid functions are used for the \modeltwo and \modelthree respectively.
 
-Furthermore, to prevent feature co-adaptation, we use \emph{dropout}~\citep{Srivastava:2014} as the regularization technique in all the models. Dropout sets a portion of hidden units to zero during the forward phase when computing the activations which prevents overfitting.
+Furthermore, to prevent feature co-adaptation, we use dropout as the regularization technique in all the models. Dropout sets a portion of hidden units to zero during the forward phase when computing the activations which prevents overfitting.
 
 
 \subsection{Representing Inputs}

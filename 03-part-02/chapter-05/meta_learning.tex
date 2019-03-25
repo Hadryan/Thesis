@@ -54,12 +54,12 @@ In the following, we describe our recipe for semi-\:supervised learning of neura
     \caption{Learning from controlled weak supervision: Our proposed multi-task network for learning a target task in a semi-supervised fashion, using a large amount of weakly labeled data and a small amount of data with strong labels.
     %
     Faded parts of the network are disabled during the training in the corresponding mode. Red-dotted arrows show gradient propagation. Parameters of the parts of the network in red frames get updated in the backward pass, while parameters of the network in blue frames are fixed during the training. (Best viewed in color.)}
-    \label{fig:model}
+    \label{fig:model_cws}
 \end{figure}
 
 In our proposed model we train a multi-task neural network that jointly learns the confidence score of weakly labeled instances and the main task using controlled supervised signals.
 %
-The high-level representation of the model is shown in Figure~\ref{fig:model}: it comprises a \wa and two neural networks: the \cnet and the \tnet. 
+The high-level representation of the model is shown in Figure~\ref{fig:model_cws}: it comprises a \wa and two neural networks: the \cnet and the \tnet. 
 
 The goal of the \wa is to \emph{provide weak labels} $\tilde{y}_i$ for all the instances $x_i \in U \cup V$. We have this assumption that $\tilde{y}_i$ provided by the \wa are imperfect estimates of strong labels $y_i$, where $y_i$ are available for set $\mathcal{D}_s$, but not for set $\mathcal{D}_w$.
 

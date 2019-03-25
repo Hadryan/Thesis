@@ -2,107 +2,161 @@
 \chapter{Introduction}
 
 
-This is considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to domains with limmited data.
-http://jmlr.org/papers/volume17/gulchere16a/gulchere16a.pdf.
-
-https://medium.com/center-for-data-science/neural-networks-and-toddlers-how-learning-biases-can-improve-word-learning-56e477dc1ee3
 
 
-\url{https://www.princeton.edu/~nivlab/papers/GershmanNiv_inpress.pdf}
+The real-world problems are mostly complex, while the observations are limited, highly variable, and noisy. Human learners routinely draw successful generalizations from very limited evidence. Even young children can infer the extensions of new words or concepts, the
+hidden properties of objects, or the existence of causal
+relations  from a handful of relevant observations. 
 
-\section{Problem Description and Research Questions}
 
-Strong prior knowledge (inductive bias). How does background knowledge guide learning from sparsely observed data?  What form does the knowledge take, across different domains and tasks?
-How is that knowledge itself learned? 
+This is considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to domains with limited data.
+
+Typically, successful models are learned from a training data set
+that contains a large amount of training examples.
+A training example consists of two parts: a feature vector (or instance) and a label. 
+
+Here in this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect instances or labels. For instance learning from \emph{incomplete supervision} where only a limited subset of data is labelled, or \emph{inexact supervision} where only coarse-grained annotations are provided, or \emph{inaccurate supervision} where the given labels are noisy and they are not always ground truth~\citep{zhou2018brief}. We also extend the imperfect supervision to situations where instead of labels, instance are noisy or variant.  
+
+
+\section{Problem Description and Main Research Questions}
+One of the most significant bottlenecks in developing machine
+learning applications is the need for vast amount of training data. 
+
+Thus, learning from weakly annotated examples is an increasingly popular approaches for addressing the labeled data scarcity in many tasks and applications. 
+
+
+This general research problem leads to the following main research question of this PhD thesis:
 \resq{main}
 
-Learning from weakly annotated examples is an increasingly popular approaches for addressing the labeled data scarcity in many tasks and applications. 
-Weak supervision is usually refers to higher-level approaches to labele training data that are cheaper and/or more efficient, such as:
-\begin{itemize}
-    \item distant or heuristic supervision,
-    \item incidental signals that  exist in the data and the environment, independently of the tasks and they are co-related to the target tasks.
-    \item supervising by specifying constraints that should hold over the output space,
-    \item using noisy labels, 
-    \item pool limited supervision signal by using multi-task learning,
-    \item data augmentation strategies to express class invariances,
-    \item introduction of other forms of structured prior knowledge.
-\end{itemize}
-An overarching goal of such approaches is to use domain knowledge and data resources provided by subject matter experts, but to solicit it in higher-level, lower-fidelity, or more opportunistic ways.
 
-can be exploited, along with appropriate algorithmic support, to provide sufficient supervision and facilitate learning
+We can use higher-level approaches to provide some sort of supervision signals. This can be done for instance by using distant or heuristic supervision, using incidental signals that exist in the data and the environment independently of the tasks and they are co-related to the target tasks, providing supervision by specifying constraints that should hold over the output space, augmenting data to express class invariances, introducing a forms of structured prior knowledge, using noisy and inaccurate labels, and injecting inductive biases into algorithms to generalize better on unobserved data.
 
-This general research problem leads to
-the following main research question of this PhD thesis (RQ-main) 
+\resq{p1}
+\resq{p2}
+\resq{p3}
 
 \section{Thesis Overview}
 This thesis consists of the introductory matter, followed by five main
-chapters that are divited into three parts, each based on one of the three research questions described above.
-Finally, it closes off with the Conclusions, Appendices and Bibliography. 
+chapters that are divided into three parts, each based on one of the three research questions described above. Finally, it closes off with the Conclusions and Bibliography. The following summarizes each cahpter 
 
-
-This thesis is about improving the learning procedure when the data and/or the supervision signal is noisy or limited, mainly in the context of language understanding tasks. The thises has 5 chapters (besides Introduction and conclusion), divided into 3 main parts. The following is a general outline of the thesis, a short summary of each part and the list of papers included in each chapter: 
-PART I: Structure of the Data as Prior Knowledge
+\subsection*{PART I: \titleof{p1}}
 In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant. We break this into two chapters:
-Chapter 2: Learning neither General, nor Specific, but Significant Representations 
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, D. Hiemstra, and M. Marx. "Luhn Revisited: Significant Words Language Models", CIKM'16.
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx "Generalized Group Profiling for Content Customization", CHIIR'16.
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx, "Significant Words Language Models for Contextual Suggestion", TREC  2016.
-Mostafa Dehghani, "Significant Words Representations of Entities", SIGIR-Doctoral Consortium'16 -- (SIGIR Doctoral Consortium Award).
-Chapter 3:  Representational Separability for Hierarchically Structured Data
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx, "On Horizontal and Vertical Separation in Hierarchical Text Classification", ICTIR'16 (Best Paper Award).
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx, "Two-Way Parsimonious Classification Models for Evolving Hierarchies", CLEF'16 (Best Paper Honorable Mention).
 
-PART II: Learning with Weak Supervision.
-In this part, we study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand and discuss how to design neural networks that learn to go beyond the imperfection in the weakly annotated data, for instance by meta learning the quality of the labels and modulating the learning process based on the label quality. We break this into two chapters:
-Chapter 4: Learning from Pseudo-Labels
-Mostafa Dehghani, H. Zamani, Al. Severyn, J. Kamps, and W. B. Croft. "Neural Ranking Models with Weak Supervision", SIGIR'17.
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, M. de Rijke. "Share your Model instead of your Data: Privacy-Preserving Mimic Learning for Ranking'', Neu-IR'17.
-Mostafa Dehghani, S. Rothe, E. Alfonseca and P. Fleury. "Learning to Attend, Copy, and Generate for Session-Based Query Suggestion'', CIKM'17.
-Chapter 5: Learning from Samples of Variable Quality
-Mostafa Dehghani, A. Mehrjou, S. Gouws, J Kamps, B Schölkopf. "Fidelity-Weighted Learning", ICLR'18.
-Mostafa Dehghani, A. Severyn, S. Rothe, and J. Kamps. "Learning to Learn from Weak Supervision by Full Supervision", NIPS2017 workshop on Meta-Learning 2017.
-Mostafa Dehghani, A. Severyn, S. Rothe, and J. Kamps. "Avoiding Your Teacher’s Mistake: Training Neural Networks with Controlled Weak Supervision", arXiv preprint arXiv:1711.00313 (2017). 
+\subsubsection*{Chapter 2: \titleof{c2}}
+In this chapter, we address the following research question:
+\resq{c2}
+We introduce \emph{\swlm} (\acswlm)~\citep{Dehghani:2016:SIGIR} to learn a representation for a set of textual documents, where this representation captures all, and only, the \textit{significant} shared terms from these documents.  \acswlm adjusts the weights of terms to decrease the weight of noisy terms that are either well explained by the document collection (generic) or  only explained by specific documents (specific), which eventually results in having the significant terms left in the model.  
+We employ \acswlm in two main language understanding tasks: feedback problem in information retrieval~\citep{Dehghani:CIKM2016:long, Dehghani:CIKM2016:short}, and group profiling in content personalization and recommendation tasks~\citep{Dehghani:2016:CHIIR,Dehghani2016:trec}. We show how \acswlm is remarkably robust against noisy terms like non-relevant terms in relevant documents in the feedback task. 
 
-PART III: Injecting Inductive Biases for Data Efficiency
+\subsubsection*{Chapter 3: \titleof{c3}}
+In this chapter, we get down to the following research question:
+\resq{c3}
+We extend \emph{\swlms} to the hierarchical structure and introduce \emph{\hswlms} (\achswlm)~\citep{Dehghani:2016:ICTIR, Dehghani:2016:CLEF} which is an iterative approach that learns representations for hierarchical entities that are highly separable as \acswlm removes the features that are well explained by either the ancestors (general features) or individual descendants (specific features). In this chapter, we discuss what makes separability a desirable property for classifiers and show how obtaining this property increases the robustness of representations against the structural changes in the data during the time.
+
+\subsection*{PART II: \titleof{p2}}
+In this part, we study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand and discuss how to design neural networks that learn to go beyond the imperfection in the weakly annotated data. We break this into two chapters:
+
+\subsubsection*{Chapter 4: \titleof{c4}}
+In this chapter, we address the following research question:
+\resq{c4}
+In this chapter, we propose to train a neural ranking model using weak labels that are obtained automatically without human annotators or any external resources (e.g., click data). We train a set of simple yet effective neural ranking models and study their effectiveness under various learning scenarios, i.e. point-wise and pair-wise, different objective functions, and using different input representations, from using a set of engineered features to encoding query/document using word embedding~\citep{Dehghani:2017:SIGIR}. We also discuss how privacy preserving approaches can benefit from models that are capable of learning from weak signals, where instead of labels from the original sensitive training data a noisy version is provided~\citep{dehghani:2017:neuir}.
+
+\subsubsection*{Chapter 5: \titleof{c5}}
+In this chapter, we focus on the following research question:
+\resq{c5}
+
+In this chapter we introduce \emph{Learning with Controlled Weak Supervision (\cws)} and \emph{Fidelity Weighted Learning (\fwl)}, two semi-supervised approaches for training neural networks, where we have a large set of data with weak labels and a small amount of data with true labels. 
+%
+In \cws we train two neural networks in a meta learning setup: a \tnet, the learner and a \cnet, the meta-learner.  The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that are weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
+%
+\fwl is a student-teacher approach in which we modulate the parameter updates to a \emph{student} network (trained on the task we care about) on a per-sample basis according to the posterior confidence of its label-quality estimated by a \emph{teacher} (who has access to the high-quality labels).  
+
+\subsection*{PART II: \titleof{p3}}
 In this part, we discuss injecting inductive biases into learning algorithms as a way to help them to come up with more generalizable solutions when they are provided with limited observations. We further discuss how we can improve the generalization of Transformers, the self-attentive feedforward networks for sequence modeling, by introducing a recurrent inductive bias into their architecture.
-Chapter 6: Recurrent Inductive Bias for Transformers
-Mostafa Dehghani, S. Gouws, O. Vinyals, J. Uszkoreit, and L. Kaiser. "Universal Transformers", ICLR'19.
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, M. de Rijke. "Learning to Transform, Combine, and Reason in Open-Domain Question Answering'', WSDM'19.
+
+\subsubsection*{Chapter 6: \titleof{c6}}
+In this chapter, we address the following research question:
+\resq{c6}
+We introduced Universal Transformer~\cite{Dehghani:ICLR:2019}, a self-attentive concurrent-recurrent sequence model, which is an extension of Transformer model~\citep{vaswani2017attention}. The Universal Transformer introduces recurrence in depth by repeatedly refines a series of vector representations for each position of the sequence in parallel, by combining information from different positions using self-attention and applying a recurrent transition function across all time steps. 
+In the simplest form, Universal Transformer with fixed number of iterations is almost equivalent to a multi-layer Transformer with tied parameters across all its layers. By sharing weight, we can save massively on the number of parameters that we are training and less parameters means learn faster with fewer data points.  We show that the elegant idea of introducing recurrent in depth enables Transformer to extrapolate from training data much better on a range of algorithmic and language underestimating tasks~\citep{Dehghani:ICLR:2019, Dehghani:2019:WSDM}.
 
 
 \section{Origins}
-Next, we present the origins of each chapter in terms of the scholarly papers they are
-based on.
+Next, we present the origins of each chapter in terms of the scholarly papers they are based on.
+\begin{itemize}
+    \item[\textbf{Part I}]: \emph{\titleof{p1}}
+%  
+    \begin{itemize}
+        \item[\textbf{Chapter 2}]: \emph{\titleof{c2}}
+        \begin{itemize}
+            \item \bibentry{Dehghani:CIKM2016:long}
+            \item \bibentry{Dehghani:2016:CHIIR}
+            \item \bibentry{Dehghani2016:trec}
+            \item \bibentry{Dehghani:2016:SIGIR} (SIGIR Doctoral Consortium Award).
+        \end{itemize}
+    \end{itemize}
+%
+    \begin{itemize}
+        \item[\textbf{Chapter 3}]: \emph{\titleof{c3}}
+        \begin{itemize}
+            \item \bibentry{Dehghani:ICTIR2017} (Best Paper Award).
+            \item \bibentry{Dehghani:CLEF2016} (Best Paper Honorable Mention).
+        \end{itemize}
+    \end{itemize}
+%  
+    \item[\textbf{Part II}]: \emph{\titleof{p2}}
+%  
+    \begin{itemize}
+        \item[\textbf{Chapter 4}]: \emph{\titleof{c4}}
+        \begin{itemize}
+            \item \bibentry{Dehghani:2017:SIGIR}
+            \item \bibentry{dehghani:2017:neuir}
+            \item \bibentry{Dehghani2017:CIKM}
+        \end{itemize}
+    \end{itemize}
+%
+    \begin{itemize}
+        \item[\textbf{Chapter 5}]: \emph{\titleof{c5}}
+        \begin{itemize}
+            \item \bibentry{dehghani:2018:ICLR}
+            \item \bibentry{Dehghani:2017:nips_metalearn}
+            \item \bibentry{Dehghani:2017avoiding}
+        \end{itemize}
+    \end{itemize}
+%   
+    \item[\textbf{Part III}]: \emph{\titleof{p3}}
+%  
+    \begin{itemize}
+        \item[\textbf{Chapter 4}]: \emph{\titleof{c6}}
+        \begin{itemize}
+            \item \bibentry{Dehghani:ICLR:2019}
+            \item \bibentry{Dehghani:2019:WSDM}
+        \end{itemize}
+    \end{itemize}
+%
+\end{itemize}
 
-PART I: Structure of the Data as Prior Knowledge
-In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant. We break this into two chapters:
-Chapter 2: Learning neither General, nor Specific, but Significant Representations 
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, D. Hiemstra, and M. Marx. "Luhn Revisited: Significant Words Language Models", CIKM'16.
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx "Generalized Group Profiling for Content Customization", CHIIR'16.
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx, "Significant Words Language Models for Contextual Suggestion", TREC  2016.
-Mostafa Dehghani, "Significant Words Representations of Entities", SIGIR-Doctoral Consortium'16 -- (SIGIR Doctoral Consortium Award).
-Chapter 3:  Representational Separability for Hierarchically Structured Data
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx, "On Horizontal and Vertical Separation in Hierarchical Text Classification", ICTIR'16 (Best Paper Award).
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, and M. Marx, "Two-Way Parsimonious Classification Models for Evolving Hierarchies", CLEF'16 (Best Paper Honorable Mention).
-
-PART II: Learning with Weak Supervision.
-In this part, we study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand and discuss how to design neural networks that learn to go beyond the imperfection in the weakly annotated data, for instance by meta learning the quality of the labels and modulating the learning process based on the label quality. We break this into two chapters:
-Chapter 4: Learning from Pseudo-Labels
-Mostafa Dehghani, H. Zamani, Al. Severyn, J. Kamps, and W. B. Croft. "Neural Ranking Models with Weak Supervision", SIGIR'17.
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, M. de Rijke. "Share your Model instead of your Data: Privacy-Preserving Mimic Learning for Ranking'', Neu-IR'17.
-Mostafa Dehghani, S. Rothe, E. Alfonseca and P. Fleury. "Learning to Attend, Copy, and Generate for Session-Based Query Suggestion'', CIKM'17.
-Chapter 5: Learning from Samples of Variable Quality
-Mostafa Dehghani, A. Mehrjou, S. Gouws, J Kamps, B Schölkopf. "Fidelity-Weighted Learning", ICLR'18.
-Mostafa Dehghani, A. Severyn, S. Rothe, and J. Kamps. "Learning to Learn from Weak Supervision by Full Supervision", NIPS2017 workshop on Meta-Learning 2017.
-Mostafa Dehghani, A. Severyn, S. Rothe, and J. Kamps. "Avoiding Your Teacher’s Mistake: Training Neural Networks with Controlled Weak Supervision", arXiv preprint arXiv:1711.00313 (2017). 
-
-PART III: Injecting Inductive Biases for Data Efficiency
-In this part, we discuss injecting inductive biases into learning algorithms as a way to help them to come up with more generalizable solutions when they are provided with limited observations. We further discuss how we can improve the generalization of Transformers, the self-attentive feedforward networks for sequence modeling, by introducing a recurrent inductive bias into their architecture.
-Chapter 6: Recurrent Inductive Bias for Transformers
-Mostafa Dehghani, S. Gouws, O. Vinyals, J. Uszkoreit, and L. Kaiser. "Universal Transformers", ICLR'19.
-Mostafa Dehghani, H. Azarbonyad, J. Kamps, M. de Rijke. "Learning to Transform, Combine, and Reason in Open-Domain Question Answering'', WSDM'19.
-
-
-
-% \resq{C2.1}
-
+The thesis also indirectly builds on the following papers (listed in reverse chronological order):
+%  
+\begin{itemize}
+    \item \bibentry{Dehghani:2018:SIGIRForum}
+    \item \bibentry{Zamani:2018:CIKM}
+    \item \bibentry{Azarbonyad:2018:TKDE}
+    \item \bibentry{Dehghani:2018:LND4IR}
+    \item \bibentry{Zamani:2018:LND4IR}
+    \item \bibentry{Azarbonyad:2017:CIKM}
+    \item \bibentry{Kenter:2017:NN4IR}
+    \item \bibentry{Dehghani:2017:ICTIR}
+    \item \bibentry{Dehghani:2017:CHIIR}
+    \item \bibentry{Dehghani:2017:CHIIR}
+    \item \bibentry{Azarbonyad:2017:ECIR}
+    \item \bibentry{Dehghani:2016:DIR}
+    \item \bibentry{Dehghani:CIKM2016:short}
+    \item \bibentry{Quiroz:2016:CLEF}
+    \item \bibentry{Hashemi:2015:TREC}
+    \item \bibentry{Dehghani:2015:DIR}
+    \item \bibentry{Tabrizi:2015:ICTIR}
+    \item \bibentry{Azarbonyad:2015:CLEF}
+    \item \bibentry{Azarbonyad:2015:SIGIR}
+    \item \bibentry{Dehghani:2015:ECIR}
+\end{itemize}
