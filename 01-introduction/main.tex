@@ -1,43 +1,80 @@
 % !TEX root = ../thesis_main.tex
 \chapter{Introduction}
+Human can effortlessly learn to solve complex real-world problems from only limited or noisy observations and routinely draw successful generalization on them, while it is not easy for machines to learn from imperfect supervision.
+Most of the success of today's machine learning systems, e.g. deep learning,  depend on the availability of massive amount of labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
+
+However, in many real-world applications, such training data is not available, like tasks that are applied medical imaging data where detailed labeling is very expensive. In order to deal with data scarcity in many tasks and applications, we can use higher-level approaches and provide supervision signals for training machine learning models. This can be done for instance by
+% \begin{itemize}
+% \renewcommand\labelitemi{--}
+% \item
+using distant or heuristic supervision~\citep{Deriu2016:SemEval,Severyn:2015:SemEval, Dehghani:2016:SIGIR, dehghani:2018:ICLR, Dehghani:2017:nips_metalearn, Ratner:2016,Rekatsinas:2017,Varma:2017}, 
+%
+% \item
+using incidental signals that exist in the data and the environment independently of the tasks and they are co-related to the target tasks~\citep{roth2017incidental}, 
+%
+% \item
+providing supervision by specifying constraints that should hold over the output space~\citep{stewart2017label, clarke2010driving}, 
+%
+% \item
+applying bootstrapping, self-supervised feature learning, and data augmentation to make statistically efficient reuse of available data~\citep{cubuk2018autoaugment, dosovitskiy2016discriminative,donahue2016adversarial},
+%
+% \item
+using transfer learning to generalize knowledge across domains~\citep{Ruder:2019},
+%
+% \item
+using active learning and response-based supervision in which the model receives feedback from interacting with an environment~\citep{clarke2010driving,riezler2014response},
+%
+% \item
+introducing a form of structured prior knowledge\citep{Dehghani:CIKM2016:long,Dehghani:2016:ICTIR}, 
+%
+% \item
+zero/one/few-shot learning~\citep{vinyals2016matching,finn2017model,snell2017prototypical,socher2013zero},
+%
+% \item
+exploiting noisy and inaccurate labels~\citep{Vahdat:2017, Lee:2013,Hinton:2015,Brodley:1999,reed2014training, Patrini:2016, patrini2016loss,malach2017decoupling}, 
+%
+% \item
+and injecting inductive biases into algorithms to generalize better on unobserved data~\citep{cohen2016group, cohen2016steerable, Dehghani:ICLR:2019}.
+% \end{itemize}
+
+All these approaches lead to labels or supervision signals that are perfect. This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision.} 
+%
+Here in this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples. This imperfection can be in the number or coverage of training examples like learning from \emph{incomplete supervision} where only a limited subset of data is labeled or no labeled data is available. The imperfection can refer to the labeling process like in \emph{inexact supervision} where only coarse-grained annotations are provided or \emph{inaccurate supervision} where the given labels are noisy and they are not always ground truth~\citep{zhou2018brief}. We also extend the imperfect supervision to situations where instead of labels, data, i.e. feature vectors, are noisy or subject to change during time.
+
+Building machine learning systems that are able to learn from imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to domains with limited or noisy data.
 
 
-
-
-The real-world problems are mostly complex, while the observations are limited, highly variable, and noisy. Human learners routinely draw successful generalizations from very limited evidence. Even young children can infer the extensions of new words or concepts, the
-hidden properties of objects, or the existence of causal
-relations  from a handful of relevant observations. 
-
-
-This is considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to domains with limited data.
-
-Typically, successful models are learned from a training data set
-that contains a large amount of training examples.
-A training example consists of two parts: a feature vector (or instance) and a label. 
-
-Here in this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect instances or labels. For instance learning from \emph{incomplete supervision} where only a limited subset of data is labelled, or \emph{inexact supervision} where only coarse-grained annotations are provided, or \emph{inaccurate supervision} where the given labels are noisy and they are not always ground truth~\citep{zhou2018brief}. We also extend the imperfect supervision to situations where instead of labels, instance are noisy or variant.  
-
-
-\section{Problem Description and Main Research Questions}
-One of the most significant bottlenecks in developing machine
-learning applications is the need for vast amount of training data. 
-
-Thus, learning from weakly annotated examples is an increasingly popular approaches for addressing the labeled data scarcity in many tasks and applications. 
-
-
-This general research problem leads to the following main research question of this PhD thesis:
+\section{Problem Description and Research Questions}
+Curating labeled training data has become the primary bottleneck in developing new methods and applications in machine learning. In many cases, there is either a limited training data available or sometimes the training data is noisy. Hence developing models that are able to learn from such training examples become an important path to extend the benefit of machine learning to all domains and applications. In this thesis, pursuing this goal, we have the following as our main research question:
 \resq{main}
 
+There are many approaches and ideas that can be applied to overcome the lack of a large set of high-quality training examples in different applications. However, here in this thesis, we focus on three main general approaches and introduce some models and frameworks that are capable of learning from noisy or limited training data. 
 
-We can use higher-level approaches to provide some sort of supervision signals. This can be done for instance by using distant or heuristic supervision, using incidental signals that exist in the data and the environment independently of the tasks and they are co-related to the target tasks, providing supervision by specifying constraints that should hold over the output space, augmenting data to express class invariances, introducing a forms of structured prior knowledge, using noisy and inaccurate labels, and injecting inductive biases into algorithms to generalize better on unobserved data.
+We first explore how the structure of the data can be incorporated as prior knowledge to learn representations that are more robust against noise and some structural changes in the data during the time. 
+%
+Then we study how we can develop neural networks that can learn from weakly annotated training examples whit the ability to go beyond the imperfection of the weak labels. We introduce some ideas that can be exploited to meta-learn the quality of labels and modulate the learning process based on the quality of the labels.  
+%
+Finally, we investigate the idea of injecting some inductive biases into models in order to encoding modeling assumptions which helps the models to be more data efficient. We propose the idea of introducing recurrent inductive bias to self-attentive feed-forward sequence models which helps them to generalize better for complex tasks.  
+%
+Based on these, we break down our main research question into three research questions:
 
-\resq{p1}
-\resq{p2}
-\resq{p3}
+\begin{resqbox}
+\begin{enumerate}
+\item[\textbf{\resqname{p1}}] \emph{\resqcontent{p1}}
+\item[\textbf{\resqname{p2}}] \emph{\resqcontent{p2}}
+\item[\textbf{\resqname{p3}}] \emph{\resqcontent{p3}}
+\end{enumerate}
+\end{resqbox}
+% \resq{p1}
+% \resq{p2}
+% \resq{p3}
+
+In the next section, we go over the thesis structure and summarize different parts of the thesis.
 
 \section{Thesis Overview}
 This thesis consists of the introductory matter, followed by five main
-chapters that are divided into three parts, each based on one of the three research questions described above. Finally, it closes off with the Conclusions and Bibliography. The following summarizes each cahpter 
+chapters that are divided into three parts. Each part is based on one of the three research questions described in the previous section. Finally, it closes off with the Conclusions and Bibliography. 
+The following gives a short description of each part and summarizes each chapter: 
 
 \subsection*{PART I: \titleof{p1}}
 In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant. We break this into two chapters:
@@ -45,7 +82,7 @@ In this part, we explore how taking the general structured of the data into acco
 \subsubsection*{Chapter 2: \titleof{c2}}
 In this chapter, we address the following research question:
 \resq{c2}
-We introduce \emph{\swlm} (\acswlm)~\citep{Dehghani:2016:SIGIR} to learn a representation for a set of textual documents, where this representation captures all, and only, the \textit{significant} shared terms from these documents.  \acswlm adjusts the weights of terms to decrease the weight of noisy terms that are either well explained by the document collection (generic) or  only explained by specific documents (specific), which eventually results in having the significant terms left in the model.  
+We introduce \emph{\swlm} (\acswlm)~\citep{Dehghani:2016:SIGIR} to learn a representation for a set of textual documents, where this representation captures all, and only, the \textit{significant} shared terms from these documents.  \acswlm adjusts the weights of terms to decrease the weight of noisy terms that are either well explained by the document collection (generic) or only explained by specific documents (specific), which eventually results in having the significant terms left in the model.  
 We employ \acswlm in two main language understanding tasks: feedback problem in information retrieval~\citep{Dehghani:CIKM2016:long, Dehghani:CIKM2016:short}, and group profiling in content personalization and recommendation tasks~\citep{Dehghani:2016:CHIIR,Dehghani2016:trec}. We show how \acswlm is remarkably robust against noisy terms like non-relevant terms in relevant documents in the feedback task. 
 
 \subsubsection*{Chapter 3: \titleof{c3}}
@@ -67,7 +104,7 @@ In this chapter, we focus on the following research question:
 
 In this chapter we introduce \emph{Learning with Controlled Weak Supervision (\cws)} and \emph{Fidelity Weighted Learning (\fwl)}, two semi-supervised approaches for training neural networks, where we have a large set of data with weak labels and a small amount of data with true labels. 
 %
-In \cws we train two neural networks in a meta learning setup: a \tnet, the learner and a \cnet, the meta-learner.  The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that are weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
+In \cws we train two neural networks in a meta-learning setup: a \tnet, the learner and a \cnet, the meta-learner.  The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that are weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
 %
 \fwl is a student-teacher approach in which we modulate the parameter updates to a \emph{student} network (trained on the task we care about) on a per-sample basis according to the posterior confidence of its label-quality estimated by a \emph{teacher} (who has access to the high-quality labels).  
 
@@ -78,7 +115,7 @@ In this part, we discuss injecting inductive biases into learning algorithms as 
 In this chapter, we address the following research question:
 \resq{c6}
 We introduced Universal Transformer~\cite{Dehghani:ICLR:2019}, a self-attentive concurrent-recurrent sequence model, which is an extension of Transformer model~\citep{vaswani2017attention}. The Universal Transformer introduces recurrence in depth by repeatedly refines a series of vector representations for each position of the sequence in parallel, by combining information from different positions using self-attention and applying a recurrent transition function across all time steps. 
-In the simplest form, Universal Transformer with fixed number of iterations is almost equivalent to a multi-layer Transformer with tied parameters across all its layers. By sharing weight, we can save massively on the number of parameters that we are training and less parameters means learn faster with fewer data points.  We show that the elegant idea of introducing recurrent in depth enables Transformer to extrapolate from training data much better on a range of algorithmic and language underestimating tasks~\citep{Dehghani:ICLR:2019, Dehghani:2019:WSDM}.
+In the simplest form, Universal Transformer with a fixed number of iterations is almost equivalent to a multi-layer Transformer with tied parameters across all its layers. By sharing weight, we can save massively on the number of parameters that we are training and fewer parameters means learn faster with fewer data points.  We show that the elegant idea of introducing recurrent in depth enables Transformer to extrapolate from training data much better on a range of algorithmic and language underestimating tasks~\citep{Dehghani:ICLR:2019, Dehghani:2019:WSDM}.
 
 
 \section{Origins}
@@ -99,7 +136,7 @@ Next, we present the origins of each chapter in terms of the scholarly papers th
     \begin{itemize}
         \item[\textbf{Chapter 3}]: \emph{\titleof{c3}}
         \begin{itemize}
-            \item \bibentry{Dehghani:ICTIR2017} (Best Paper Award).
+            \item \bibentry{Dehghani:2016:ICTIR} (Best Paper Award).
             \item \bibentry{Dehghani:CLEF2016} (Best Paper Honorable Mention).
         \end{itemize}
     \end{itemize}

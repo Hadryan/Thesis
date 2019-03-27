@@ -55,13 +55,11 @@ We argued that how separability in feature space leads to the separability in sc
 
 \begin{displayquote}
 \emph{For a given set of items presented to a classification system, for each class there exists at least one feature $\delta$ in the representation of items, and a threshold $\tau$, such that for any set of items, if all and only those items with $\delta > \tau$ are assigned to the class, the classification will have the optimal possible performance for that set of items in terms of a given effectiveness measure.}
-\sshrink
 \end{displayquote}
 
 \acssp, in general, is a stronger version of PTP. In strict binary classification, if you have PTP, which holds on the whole feature space, \acssp will be satisfied, however in the multi-class case, \acssp is stronger and it implies PTP, but not the other way around.
 Based on PTP, there is always an underlying probabilistic scoring function on the set of \emph{whole} features, which generates membership probabilities as the scores of items and these scores make items separable with regards to a threshold. So, the scoring function can be deemed as a mapping function which maps items to a new feature space in which the score of each item is a single feature representation of that item (membership probabilities (or scores) in PTP would be equivalent to $\delta$ in \acssp). Thus, when the \acssp holds, the PTP and PRP will also hold.  One could envision a stronger version of the \acssp in which ``all'' the features in the representations need to be non-overlapping, but the \acssp is sufficient for optimizing the effectiveness of the classifier.  The separation principle can be formally extended to hierarchical classification in a straightforward way.  In the rest of this section, we will discuss the separation property in the hierarchical classification and explain how to estimate separable representations with the aim of satisfying \acssp in order to improve the classification effectiveness.
 
-\sshrink
 \subsection{Horizontal and Vertical Separability}
 \label{subsec:vhs}
 
@@ -153,9 +151,7 @@ Considering the above process, a vertically separable model is a model which is 
 \subsection{Two\:-\:Dimensional Separability}
 In order to have fully separable models in hierarchical classification, they should own two\:-\:dimensional separation property. We define two\:-\:dimensional separability as follows:
 \begin{mydef}
-\sshrink
 The model of an entity in the hierarchy is ``two\:-\:dimensionally separable'' if, and only if, it is both horizontally and vertically separable at the same time.
-\sshrink
 \end{mydef}
 
 Intuitively, if a model of an entity is two\:-\:dimensionally separable, it should capture \emph{all}, and \emph{only}, the essential features of the entity taking its relative position in the hierarchy into consideration.  In the next section, we will discuss how to estimate two\:-\:dimensional separable models for entities in the hierarchies with more than three layers.

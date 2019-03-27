@@ -1,5 +1,3 @@
-%% now change the chapter style
-%% load up the quotchap package
 \input{data/data.tex}
 \usepackage[palatino]{quotchap}
 \usepackage{array}
@@ -24,32 +22,53 @@
 \usepackage{soul}
 \usepackage{afterpage}
 \usepackage{bibentry}
-
 \usepackage{dirtytalk}
 \usepackage{wrapfig}
 \usepackage{enumitem}
 \usepackage{colortbl}
+\usepackage{listings}
+\usepackage{color}
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage{multicol}
+\usepackage{courier}
+\usepackage{xstring} %switch-case
+\usetikzlibrary{arrows,decorations.pathmorphing,fit,positioning,patterns}
+\usepackage{xspace} % insert space when needed.
+\usepackage[square,comma,numbers,sort&compress,sectionbib]{natbib}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tkz-graph}
+\usepackage{tabularx} % Tables spanning the \linewidth or \textwidth
+\usepackage{tikz-qtree}
+\usepackage{xargs} 
+\usepackage{caption}
+\usepackage{subcaption}
+
+% \captionsetup{font=footnotesize}
+% \newcommand{\floatfontsize}{\fontsize{10}{8}\selectfovnt}
+% \newcommand{\subfloatfontsize}{\fontsize{7}{5}\selectfovnt}
+\newcommand{\floatfontsize}{footnotesize}
+\newcommand{\subfloatfontsize}{scriptsize}
+
+\captionsetup[figure]{font=\floatfontsize, labelfont=\floatfontsize,textfont=\floatfontsize}
+
+\captionsetup[subfigure]{font=\subfloatfontsize, labelfont=\subfloatfontsize,textfont=\subfloatfontsize}
+
+\captionsetup[table]{font=\floatfontsize, labelfont=\floatfontsize,textfont=\floatfontsize}
+
+\captionsetup[subtable]{font=\subfloatfontsize, labelfont=\subfloatfontsize,textfont=\subfloatfontsize}
+ 
+% \makeatletter
+% \DeclareCaptionLabelFormat{numberless}{\ALG@name#1}
+% \captionsetup[algorithm]{labelformat=numberless} 
+% \makeatother
+
+
 % \usepackage[subtle]{savetrees}
 %saves some space (stealing space very smoothly!):
 % \usepackage{setspace}
 % \setstretch{0.98}
-\usepackage{courier}
-\usepackage{xstring} %switch-case
-
-\usetikzlibrary{arrows,decorations.pathmorphing,fit,positioning,patterns}
-\usepackage{xspace} % insert space when needed.
-\usepackage[square,comma,numbers,sort&compress,sectionbib]{natbib}
-
-% \usepackage{float}
-% \usepackage{algorithmicx}
-\usepackage{algorithm}
-% \usepackage{algpascal}
-% \usepackage{algc}
-\usepackage{algpseudocode}
-% \usepackage{algcompatible}
 
 \newcommand{\algrule}[1][.2pt]{\par\vskip.5\baselineskip\hrule height #1\par\vskip.5\baselineskip}
 \makeatother
@@ -58,12 +77,7 @@
 \algnewcommand{\LineComment}[1]{\Statex \hskip\ALG@thistlm $\blacktriangleright$ #1}
 \makeatother
 
-
-% \usepackage{siunitx}  % \num{1e-10} for exponential notation.
-
-
 \usetikzlibrary{arrows.meta}
-\usepackage{tkz-graph}
 \usetikzlibrary{positioning,automata}
 \usetikzlibrary{calc,spy,shapes}
 \usetikzlibrary{arrows,decorations.pathmorphing,fit,positioning,patterns}
@@ -73,34 +87,21 @@
 \newcommand{\subsup}[3]{{#1}_{\mkern-4mu #2}^{\mkern-4mu #3}}
 
 
-\usepackage{tabularx} % Tables spanning the \linewidth or \textwidth
-
 \renewcommand*\Call[2]{\textproc{#1}(#2)}
 \newcommand{\tc}{\cellcolor{lightgray}}
-
 \newcommand{\shrink}{\vspace{-1.5ex}}
 \newcommand{\sshrink}{\vspace{-.75ex}}
 \renewcommand{\shrink}{}
 \renewcommand{\sshrink}{}
 
-\usepackage{caption}
-\usepackage{subcaption}
-% \captionsetup[figure]{font=small}
-% \captionsetup[subfigure]{font=\fontsize{7}{8}\selectfont}
-% \captionsetup[table]{font=small}
-% \captionsetup[subtable]{font=\fontsize{7}{8}\selectfont}
-
-% \makeatletter
-% \DeclareCaptionLabelFormat{numberless}{\ALG@name#1}
-% \captionsetup[algorithm]{labelformat=numberless} 
-% \makeatother
 
 
-\usepackage{amsmath}
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
-\usepackage{xargs} 
+
+
 \usepackage{framed} 
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+
 
 \renewenvironment{leftbar}[2][\hsize]
 {
@@ -112,6 +113,114 @@
     \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}
 }
 {\endMakeFramed}
+
+% TeX Gyre Pagella Math
+\usepackage{mathpazo}
+
+\setlength{\parskip}{5pt}%
+\setlength{\parindent}{0pt}%
+
+% \usepackage{setspace}
+% \setstretch{1.1}
+
+\newtheorem{mydef}{\textbf{Definition}}%[chapter]
+
+\newcommand{\tracrnet}{TraCRNet\xspace} 
+
+%\usepackage{mathabx}
+% instead of \usepackage{mathabx}
+% Setup the mathb font (from mathabx.sty)
+\DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathb}{m}{n}{
+<-6> mathb5 <6-7> mathb6 <7-8> mathb7
+<8-9> mathb8 <9-10> mathb9
+<10-12> mathb10 <12-> mathb12
+}{}
+\DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
+
+\DeclareMathSymbol{\smalltriangleup} {2}{mathb}{"98}% name to be checked
+\DeclareMathSymbol{\smalltriangledown} {2}{mathb}{"99}% name to be checked
+\DeclareMathSymbol{\smalltriangleleft} {2}{mathb}{"9A}% name to be checked
+\DeclareMathSymbol{\smalltriangleright}{2}{mathb}{"9B}% name to be checked
+\DeclareMathSymbol{\blacktriangleup} {2}{mathb}{"9C}% name to be checked
+\DeclareMathSymbol{\blacktriangledown} {2}{mathb}{"9D}% name to be checked
+\DeclareMathSymbol{\blacktriangleleft} {2}{mathb}{"9E}% name to be checked
+\DeclareMathSymbol{\blacktriangleright}{2}{mathb}{"9F}% name to be checked
+
+
+\makeatletter
+\def\@part[#1]#2{%
+    \ifnum \c@secnumdepth >-2\relax
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
+    \else
+      \addcontentsline{toc}{part}{#1}%
+    \fi
+    \markboth{}{}%
+  \reset@font
+  \parindent \z@ 
+  \vspace*{10\p@}%
+  \hbox{%
+    \vbox{%
+      \hsize=7mm%
+      \begin{tabular}{@{}p{7mm}@{}}
+        \makebox[7mm]{\scshape\strut\small\partname}\\
+        \makebox[7mm]{\cellcolor{gray}\Huge\color{white}\bfseries\strut\thepart\rule[-4cm]{0pt}{4cm}}%
+      \end{tabular}%
+      \makebox(0,0){\put(-10,-100){\fbox{\phantom{\rule[-4cm]{7mm}{4cm}}}}}
+      }%
+    \kern-2pt
+    \vbox to 0pt{%
+       \tabular[t]{@{}p{1cm}p{\dimexpr\hsize-2.1cm}@{}}\hline
+        %   & \fontsize{25}{25}\selectfovnt\itshape\bfseries\rule{0pt}{1.5\ht\strutbox}#1\endtabular}%
+        %   & \Huge\itshape\rule{0pt}{1.5\ht\strutbox}#1\endtabular}%
+         & \Huge\rule{0pt}{1.5\ht\strutbox}#1\endtabular}%
+    }%
+  \cleardoublepage
+%  \vskip 100\p@
+}
+% \renewcommand*\thepart{\arabic{part}}
+\renewcommand\thepart{\Roman{part}}
+\makeatother
+
+\makeatletter
+\let\size@chapter\LARGE
+\makeatother
+
+\newcommand{\mypar}[1]{\medskip\noindent\textit{#1}~}
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+\newcommand{\rpm}{\raisebox{.2ex}{$\scriptstyle\pm$}}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+
+\renewcommand{\texttt}[1]{{\fontsize{10}{11}\fontfamily{pcr}\selectfont{#1}}}
+% \renewcommand{\url}[1]{{\fontfamily{pcr}\selectfont{\url{#1}}}}
+\renewcommand{\todo}[1]{\textcolor{red}{{\bf [TODO: }{\em #1}{\bf ]}}}
 
 
 % Part one's stuff
@@ -195,278 +304,5 @@
 \newcommand{\fs}{\phantom{$^\blacktriangleup$}}
 
 
-% TeX Gyre Pagella Math
-\usepackage{mathpazo}
-
-\setlength{\parskip}{5pt}%
-\setlength{\parindent}{0pt}%
-
-% \usepackage{setspace}
-% \setstretch{1.1}
-
-\newtheorem{mydef}{\textbf{Definition}}%[chapter]
-
-\newcommand{\tracrnet}{TraCRNet\xspace} 
-
-%\usepackage{mathabx}
-% instead of \usepackage{mathabx}
-% Setup the mathb font (from mathabx.sty)
-\DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
-\DeclareFontShape{U}{mathb}{m}{n}{
-<-6> mathb5 <6-7> mathb6 <7-8> mathb7
-<8-9> mathb8 <9-10> mathb9
-<10-12> mathb10 <12-> mathb12
-}{}
-\DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
-
-\DeclareMathSymbol{\smalltriangleup} {2}{mathb}{"98}% name to be checked
-\DeclareMathSymbol{\smalltriangledown} {2}{mathb}{"99}% name to be checked
-\DeclareMathSymbol{\smalltriangleleft} {2}{mathb}{"9A}% name to be checked
-\DeclareMathSymbol{\smalltriangleright}{2}{mathb}{"9B}% name to be checked
-\DeclareMathSymbol{\blacktriangleup} {2}{mathb}{"9C}% name to be checked
-\DeclareMathSymbol{\blacktriangledown} {2}{mathb}{"9D}% name to be checked
-\DeclareMathSymbol{\blacktriangleleft} {2}{mathb}{"9E}% name to be checked
-\DeclareMathSymbol{\blacktriangleright}{2}{mathb}{"9F}% name to be checked
-
-
-
-
-
-% %% Load up fancy headers and footers package
-% \usepackage{fancyhdr}
-
- 
-% %% now reset the headers and footers
-% \fancyhead{}
-% \fancyfoot{}
-% %% make the odd pages have the section name on the top right
-% \fancyhead[RO]{\sffamily \rightmark}
-% %% make the even pages have the chapter name on the top left
-% \fancyhead[LE]{\sffamily \leftmark}
-
-% %% put the page numbers on the bottom in a nice box
-% %% even side pages
-% \fancyfoot[LE]{\thepage}
-% %% odd side pages
-% \fancyfoot[RO]{\thepage}
-
-% %% make the bottom line above the page number box
-% \renewcommand{\footrulewidth}{0.4pt}
-% \renewcommand{\footruleskip}{0mm}
-
-% %% bring the style into effect
-% \pagestyle{fancy}
-
-% \renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
-% \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}{}}
-
-% %% now redefine the plain style pages (chapter pages, contents pages)
-% %% to have the same page number stuff on the bottom
-% \fancypagestyle{plain}{
-% \fancyhf{}
-% \fancyfoot[RO]{\thepage}
-% \renewcommand{\headrulewidth}{0pt}
-% \renewcommand{\footrulewidth}{0.5pt}
-% }
-
-% %% this next section (till \makeatother) makes sure that blank pages
-% %% are actually completely blank, cause they're not usually
-% \makeatletter
-% \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
-% 	\hbox{}
-% 	\vspace*{\fill}
-% 	\thispagestyle{empty}
-% 	\newpage
-% 	\if@twocolumn\hbox{}\newpage\fi\fi\fi}
-% \makeatother
-
-
-% %% make the quotation appear next to the chapter number
-% \renewcommand\chapterheadstartvskip{\vspace*{-5\baselineskip}}
-
-% %% now change the section heading to have a line beneath it
-% %% load up the fancy title-style package
-% \usepackage[calcwidth]{titlesec}
-
-% \titleformat{\section}[hang]{\fontfamily{ccr}}
-% {\Large\thesection}{12pt}{\Large}[{\titlerule[0.5pt]}]
-
-% \titleformat{\subsection}[hang]{\fontfamily{ccr}}
-% {\large\thesubsection}{12pt}{\large }
-
-% \titleformat{\subsubsection}[hang]{\fontfamily{ccr}}
-% {}{12pt}{\bfseries}
-
-
-
-% % % Family                 Font Name
-% % % pag                    Avant Garde
-% % % fvs                    Bitstream Vera Sans
-% % % pbk                    Bookman
-% % % bch                    Charter
-% % % ccr                    Computer Concrete
-% % % cmr                    Computer Modern
-% % % pcr                    Courier
-% % % mdugm                  Garamond
-% % % phv                    Helvetica
-% % % fi4                    Inconsolata
-% % % lmr                    Latin Modern
-% % % lmss                   Latin Modern Sans
-% % % lmtt                   Latin Modern Typewriter
-% % % LinuxBiolinumT-OsF     Linux Biolinum (formerly 'fxb' in older package versions)
-% % % LinuxLibertineT-OsF    Linux Libertine (formerly 'fxl' in older package versions)
-% % % pnc                    New Century Schoolbook
-% % % ppl                    Palatino
-% % % qag                    TeX Gyre Adventor 
-% % % qbk                    TeX Gyre Bonum 
-% % % qzc                    TeX Gyre Chorus
-% % % qcr                    TeX Gyre Cursor
-% % % qhv                    TeX Gyre Heros
-% % % qpl                    TeX Gyre Pagella 
-% % % qcs                    TeX Gyre Schola
-% % % qtm                    TeX Gyre Termes
-% % % ptm                    Times
-% % % uncl                   Uncial
-% % % put                    Utopia
-% % % pzc                    Zapf Chancery
-
-\usepackage[T1]{fontenc}
-\usepackage{libertine}
-
-\makeatletter
-\def\@part[#1]#2{%
-    \ifnum \c@secnumdepth >-2\relax
-      \refstepcounter{part}%
-      \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
-    \else
-      \addcontentsline{toc}{part}{#1}%
-    \fi
-    \markboth{}{}%
-  \reset@font
-  \parindent \z@ 
-  \vspace*{10\p@}%
-  \hbox{%
-    \vbox{%
-      \hsize=7mm%
-      \begin{tabular}{@{}p{7mm}@{}}
-        \makebox[7mm]{\scshape\strut\small\partname}\\
-        \makebox[7mm]{\cellcolor{gray}\Huge\color{white}\bfseries\strut\thepart\rule[-4cm]{0pt}{4cm}}%
-      \end{tabular}%
-      \makebox(0,0){\put(-10,-100){\fbox{\phantom{\rule[-4cm]{7mm}{4cm}}}}}
-      }%
-    \kern-2pt
-    \vbox to 0pt{%
-       \tabular[t]{@{}p{1cm}p{\dimexpr\hsize-2.1cm}@{}}\hline
-        %   & \fontsize{25}{25}\selectfovnt\itshape\bfseries\rule{0pt}{1.5\ht\strutbox}#1\endtabular}%
-        %   & \Huge\itshape\rule{0pt}{1.5\ht\strutbox}#1\endtabular}%
-         & \Huge\rule{0pt}{1.5\ht\strutbox}#1\endtabular}%
-    }%
-  \cleardoublepage
-%  \vskip 100\p@
-}
-% \renewcommand*\thepart{\arabic{part}}
-\renewcommand\thepart{\Roman{part}}
-\makeatother
-
-\makeatletter
-\let\size@chapter\LARGE
-\makeatother
-
-\newcommand{\mypar}[1]{\medskip\noindent\textit{#1}~}
-
-\usepackage{tikz-qtree}
-
-%   \usepackage[utf8]{inputenc}
-%     \usepackage{microtype} 
-%     \usepackage[garamond]{mathdesign}
-%     \usepackage{garamondx}%%
-%     \usepackage[x11names]{xcolor}
-%     \usepackage{graphicx}
-%     \usepackage{etoolbox}
-%     \usepackage{epigraph}
-%     \usepackage{environ} 
-
-%     \setlength\epigraphwidth{0.5\linewidth}
-%     \newbool{withepi}
-%     \NewEnviron{PartEpigraph}
-%     {\global\let\mypartepigraph\BODY}%
-%     \newcommand\thispartepigraph[2]{%
-%     \setbool{withepi}{true}%
-%     \begin{PartEpigraph}
-%       \epigraph{#1}{#2}
-%     \end{PartEpigraph}}%
-
-%     \usepackage{geometry}
-%     \usepackage{titlesec}%[newparttoc]
-%     \usepackage{lettrine}
-%     \renewcommand\LettrineFontHook{\fontfamily{EBGaramondInitials-TLF}\color{titlecolour}}
-%     %
-
-%     \setlength\fboxrule{0.6pt}
-%     \colorlet{titlecolour}{DarkSeaGreen4!80}
-%     \newlength\labelframewd
-%     \settowidth{\labelframewd}{~\footnotesize\textsc{part}~}
-
-%     \newsavebox\partlabelbox%
-
-%     \newcommand\partlabel{%
-%     \makebox[0pt]{\fcolorbox{titlecolour}{titlecolour}{%
-%     \raisebox{8.4ex}[0pt]{\rlap{\hspace{-\fboxsep}\resizebox*{\dimexpr\labelframewd+2\fboxsep\relax}{!}{\color{titlecolour}\lsstyle\scshape\scriptsize{part}}}}%
-%     \usebox{\partlabelbox}}}
-%     \hskip-\fboxsep\color{titlecolour}{\raisebox{-9ex}{\fbox{\phantom{\usebox{\partlabelbox}}}}}
-%     }%
-
-%     \titleformat{\part}[display]{}
-%     {%
-%     \sbox{\partlabelbox}{\raisebox{0pt}[7ex][27ex]{\resizebox{\labelframewd}{!}{\hfill\color{white}{\arabic{part}}\hfill}}}
-%     \smash{\partlabel}}%
-%     {6ex}
-%     {\thispagestyle{empty}{\color{titlecolour}\titlerule[\fboxrule]}\vskip2.5ex\hspace*{3\labelframewd}\fontsize{32}{40}\itshape}%
-%     [\ifbool{withepi}{\vspace{4\baselineskip}\mypartepigraph\global\setbool{withepi}{false}}{}]
-
-%     \titlespacing{\part}{0pt}{1.25\baselineskip}{10\baselineskip}
-%     \renewcommand*\thepart{\arabic{part}}
-
-    % \begin{document} 
-
-    % \thispartepigraph{For the Snark \emph{was} a Boojum,  you see.}{Lewis Carroll     --- \emph{The Hunting of the Snark}}
-
-
-
-\newcommand{\fix}{\marginpar{FIX}}
-\newcommand{\new}{\marginpar{NEW}}
-\newcommand{\rpm}{\raisebox{.2ex}{$\scriptstyle\pm$}}
-
-\usepackage{listings}
-\usepackage{color}
- 
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
-}
- 
-\lstset{style=mystyle}
-
-\renewcommand{\texttt}[1]{{\fontsize{10}{11}\fontfamily{pcr}\selectfont{#1}}}
-% \renewcommand{\url}[1]{{\fontfamily{pcr}\selectfont{\url{#1}}}}
-\renewcommand{\todo}[1]{\textcolor{red}{{\bf [TODO: }{\em #1}{\bf ]}}}
-
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}

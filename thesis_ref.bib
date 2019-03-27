@@ -83,12 +83,14 @@
  year = {2003},
  pages = {95--145},
 } 
-@incollection{cirillo:1969,
+
+@article{cirillo:1969,
   title={Evaluation of feedback retrieval using modified freezing, residual collection, and test and control groups},
-  author={Cirillo, C and Chang, YK and Razon, J},
-  booktitle={Scientific Report No. ISR-16 to the National Science Foundation},
+  author={Cirillo, C and Chang, Y and Razon, J},
+  journal={Scientific Report No. ISR-16 to the National Science Foundation},
   year={1969},
 }
+
 @inproceedings{Lafferty:2001,
  author = {Lafferty, John and Zhai, Chengxiang},
  title = {Document Language Models, Query Models, and Risk Minimization for Information Retrieval},
@@ -216,14 +218,13 @@ pages={611--619},
  numpages = {10},
  } 
 
-@incollection{Harman:1992,
+@inbook{Harman:1992,
  author = {Harman, Donna},
  chapter = {Relevance Feedback and Other Query Modification Techniques},
  title = {Information Retrieval},
- editor = {Frakes, William B. and Baeza-Yates, Ricardo},
  year = {1992},
  pages = {241--263},
- publisher = {Prentice-Hall, Inc.},
+ publisher = {Prentice-Hall, Inc.}
  } 
  
  @article{Salton:1985,
@@ -245,8 +246,10 @@ pages={611--619},
     priority = {2},
     title = {Relevance Feedback in Information Retrieval},
     year = {1971},
-    note = {reprinted from Scientific Report ISR-9, Computation Laboratory, Harvard University, August 1965}
+    note = {reprinted from Scientific Report ISR-9, Computation Laboratory, Harvard University, August 1965},
+    publisher = {Prentice-Hall, Inc.},
 }
+
 @article{Rijsbergen:1981,
   title={The selection of good search terms},
   author={Van Rijsbergen, CJ and Harper, D and Porter, M},
@@ -517,14 +520,6 @@ pages={253--264},
     booktitle = {Proceedings of CIKM'16},
  year = {2016},
 }
- 
- @inproceedings{Dehghani:ICTIR2017,
- author = {Dehghani, Mostafa and Azarbonyad, Hosein  and Kamps, Jaap and Marx, Maarten},
- title = {On Horizontal and Vertical Separation in Hierarchical Text Classification},
- booktitle = {Proceedings of ICTIR'17},
- year = {2017},
- }
-
 
 @article{Bengio:2013,
 author = {Y. Bengio and A. Courville and P. Vincent},
@@ -802,7 +797,8 @@ COMMENTED_location = {Boston, MA, USA},
 COMMENTED_publisher = {ACM},
 COMMENTED_address = {New York, NY, USA},
 }
-@article{marx:2010,
+
+@inproceedings{marx:2010,
   title={DutchParl 1.0 A Corpus of Parliamentary Documents in Dutch},
   author={Marx, Maarten and Schuth, Anne},
   year={2010},
@@ -1157,7 +1153,9 @@ year         = {2003},
  year = {1992},
  publisher = {University of Massachusetts},
  address = {Amherst, MA, USA},
+ school = {UMass Amherst}
 }
+
 
 @inproceedings{Rendell:1988,
   title={Learning Hard Concepts.},
@@ -1189,10 +1187,9 @@ COMMENTED_publisher={Springer}
   }
   
   
-@incollection{Sparck:2003,
+@inproceedings{Sparck:2003,
 year={2003},
 booktitle={Language Modeling for Information Retrieval},
-COMMENTED_editor={Croft, W.Bruce and Lafferty, John},
 title={Language modeling and relevance},
 author={Sparck Jones, Karen and Robertson, Stephen, Hiemstra, Djoerd and Zaragoza Hugo},
 pages={57-71},
@@ -1223,16 +1220,17 @@ COMMENTED_address = {New York, NY, USA},
  COMMENTED_publisher = {AAAI Press},
 } 
 
-@incollection{SIGIR-Workshop-2010,
+@inproceedings{SIGIR-Workshop-2010,
+  author = {Gabrilovich, Evgeniy and Smola, Alex and Tishby, Tali},
   title = {Feature Generation and Selection for Information Retrieval},
-  note = {Workshop of SIGIR, 2010},
+  booktitle = {Workshop of SIGIR, 2010},
+  year = {2010}
 }
 
-@incollection{Chen:2011,
+@inproceedings{Chen:2011,
 title = {Co-Training for Domain Adaptation},
 author = {Minmin Chen and Weinberger, Kilian Q and John Blitzer},
-booktitle = {NIPS '24},
-COMMENTED_booktitle = {Advances in Neural Information Processing Systems 24},
+booktitle = {Advances in Neural Information Processing Systems 24},
 pages = {2456--2464},
 year = {2011},
 }
@@ -1413,14 +1411,20 @@ COMMENTED_publisher = {VLDB Endowment},
 
 @incollection{Jameson:2007,
  author = {Jameson, Anthony and Smyth, Barry},
- chapter = {Recommendation to Groups},
+ booktitle = {Recommendation to Groups},
  title = {The Adaptive Web},
  editor = {Brusilovsky, Peter and Kobsa, Alfred and Nejdl, Wolfgang},
  year = {2007},
+ isbn = {978-3-540-72078-2},
  pages = {596--627},
-COMMENTED_publisher = {Springer-Verlag},
-COMMENTED_address = {Berlin, Heidelberg},
+ numpages = {32},
+ url = {http://dl.acm.org/citation.cfm?id=1768197.1768221},
+ acmid = {1768221},
+ publisher = {Springer-Verlag},
+ address = {Berlin, Heidelberg},
 } 
+
+
 
 @article{Yu:2006,
  author = {Yu, Zhiwen and Zhou, Xingshe and Hao, Yanbin and Gu, Jianhua},
@@ -1643,33 +1647,6 @@ number = {7553}
     pages = {97--102}
 }
 
-@ARTICLE{Rumelhart:1986,
-   author = {Rumelhart, D.~E. and Hinton, G.~E. and Williams, R.~J.},
-    title = {Learning representations by back-propagating errors},
-  journal = {Nature},
-     year = {1986},
-    month = oct,
-   volume = {323},
-    pages = {533-536}
-}
-
-@article{DeBoom:2016,
- author = {De Boom, Cedric and Van Canneyt, Steven and Demeester, Thomas and Dhoedt, Bart},
- title = {Representation Learning for Very Short Texts Using Weighted Word Embedding Aggregation},
- journal = {Pattern Recogn. Lett.},
- volume = {80},
- number = {C},
- year = {2016},
- pages = {150--156},
-} 
-
-@inproceedings{Kenter:2015,
- author = {Kenter, Tom and de Rijke, Maarten},
- title = {Short Text Similarity with Word Embeddings},
- booktitle = {CIKM '15},
- year = {2015},
- pages = {1411--1420}
-}
 
 @inproceedings{Mikolov:2013,
 title = {{Distributed Representations of Words and Phrases and their Compositionality}},
@@ -1869,35 +1846,6 @@ year = {2013}
   institute={Stanford InfoLab}
 }
 
-@ARTICLE{Rumelhart:1986,
-   author = {Rumelhart, D.~E. and Hinton, G.~E. and Williams, R.~J.},
-    title = {Learning representations by back-propagating errors},
-  journal = {Nature},
-     year = {1986},
-    month = oct,
-   volume = {323},
-    pages = {533-536}
-}
-
-@article{DeBoom:2016,
- author = {De Boom, Cedric and Van Canneyt, Steven and Demeester, Thomas and Dhoedt, Bart},
- title = {Representation Learning for Very Short Texts Using Weighted Word Embedding Aggregation},
- journal = {Pattern Recogn. Lett.},
- volume = {80},
- number = {C},
- year = {2016},
- pages = {150--156},
-} 
-
-@inproceedings{Kenter:2015,
- author = {Kenter, Tom and de Rijke, Maarten},
- title = {Short Text Similarity with Word Embeddings},
- booktitle = {CIKM '15},
- year = {2015},
- pages = {1411--1420}
-}
-
-
 @InProceedings{Diaz:2016,
   author    = {Diaz, Fernando and Mitra, Bhaskar and Craswell, Nick},
   title     = {{Query Expansion with Locally-Trained Word Embeddings}},
@@ -2087,14 +2035,6 @@ year = {2013}
  year = {2016},
  pages = {150--156},
 } 
-
-@inproceedings{Kenter:2015,
- author = {Kenter, Tom and de Rijke, Maarten},
- title = {Short Text Similarity with Word Embeddings},
- booktitle = {CIKM '15},
- year = {2015},
- pages = {1411--1420}
-}
 
 @inproceedings{Zuccon:2015,
  author = {Zuccon, Guido and Koopman, Bevan and Bruza, Peter and Azzopardi, Leif},
@@ -2732,7 +2672,8 @@ publisher={Secker and Warburg, London, England}
 @article{halevy2009unreasonable,
   title={The unreasonable effectiveness of data},
   author={Halevy, Alon and Norvig, Peter and Pereira, Fernando},
-  year={2009}
+  year={2009},
+  journal={IEEE Intelligent Systems }
 }
 
 @inproceedings{Shokri:2015,
@@ -2859,26 +2800,6 @@ publisher={Secker and Warburg, London, England}
   year={1999},
   institute={Stanford InfoLab}
 }
-
-@ARTICLE{Rumelhart:1986,
-   author = {Rumelhart, D.~E. and Hinton, G.~E. and Williams, R.~J.},
-    title = {Learning representations by back-propagating errors},
-  journal = {Nature},
-     year = {1986},
-    month = oct,
-   volume = {323},
-    pages = {533-536}
-}
-
-@article{DeBoom:2016,
- author = {De Boom, Cedric and Van Canneyt, Steven and Demeester, Thomas and Dhoedt, Bart},
- title = {Representation Learning for Very Short Texts Using Weighted Word Embedding Aggregation},
- journal = {Pattern Recogn. Lett.},
- volume = {80},
- number = {C},
- year = {2016},
- pages = {150--156},
-} 
 
 @inproceedings{Kenter:2015,
  author = {Kenter, Tom and de Rijke, Maarten},
@@ -4934,6 +4855,7 @@ Year = {2017}}
  booktitle = {Proceedings of the 27th ACM International Conference on Information and Knowledge Management},
  series = {CIKM '18},
  pages = {497--506},
+ year = {2018}
 } 
 
 @inproceedings{Zamani:2018:LND4IR,
@@ -4952,10 +4874,10 @@ Year = {2017}}
   year={2018}
 }
 
-@inproceedings{Dehghani:2018:SIGIRForum,
+@article{Dehghani:2018:SIGIRForum,
   title={Toward Document Understanding for Information Retrieval},
   author={Dehghani, Mostafa},
-  booktitle={ACM SIGIR Forum},
+  journal={ACM SIGIR Forum},
   volume={51},
   number={3},
   pages={27--31},
@@ -5098,4 +5020,67 @@ year="2015",
   pages={44--53},
   year={2018},
   publisher={Oxford University Press}
+}
+
+@inproceedings{cohen2016group,
+  title={Group equivariant convolutional networks},
+  author={Cohen, Taco and Welling, Max},
+  booktitle={International conference on machine learning},
+  pages={2990--2999},
+  year={2016}
+}
+
+@inproceedings{cohen2016steerable,
+  title={Steerable cnns},
+  author={Cohen, Taco S and Welling, Max},
+  booktitle={International Conference on Learning Representations},
+  year={2017}
+}
+
+
+@phdthesis{Ruder:2019,
+ author = {Sebastian Ruder},
+ title = {Neural Transfer Learning for Natural Language Processing},
+ year = {2019},
+ school = {National University of Ireland Galway}
+}
+
+@inproceedings{vinyals2016matching,
+  title={Matching networks for one shot learning},
+  author={Vinyals, Oriol and Blundell, Charles and Lillicrap, Timothy and Wierstra, Daan and others},
+  booktitle={Advances in neural information processing systems},
+  pages={3630--3638},
+  year={2016}
+}
+
+@inproceedings{snell2017prototypical,
+  title={Prototypical networks for few-shot learning},
+  author={Snell, Jake and Swersky, Kevin and Zemel, Richard},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={4077--4087},
+  year={2017}
+}
+
+@inproceedings{finn2017model,
+  title={Model-agnostic meta-learning for fast adaptation of deep networks},
+  author={Finn, Chelsea and Abbeel, Pieter and Levine, Sergey},
+  booktitle={Proceedings of the 34th International Conference on Machine Learning-Volume 70},
+  pages={1126--1135},
+  year={2017},
+  organization={JMLR. org}
+}
+
+@inproceedings{socher2013zero,
+  title={Zero-shot learning through cross-modal transfer},
+  author={Socher, Richard and Ganjoo, Milind and Manning, Christopher D and Ng, Andrew},
+  booktitle={Advances in neural information processing systems},
+  pages={935--943},
+  year={2013}
+}
+
+@article{cubuk2018autoaugment,
+  title={Autoaugment: Learning augmentation policies from data},
+  author={Cubuk, Ekin D and Zoph, Barret and Mane, Dandelion and Vasudevan, Vijay and Le, Quoc V},
+  journal={arXiv preprint arXiv:1805.09501},
+  year={2018}
 }
