@@ -1,9 +1,11 @@
 % !TEX root = ../thesis_main.tex
 \chapter{Introduction}
 Human can effortlessly learn to solve complex real-world problems from only limited or noisy observations and routinely draw successful generalization on them, while it is not easy for machines to learn from imperfect supervision.
-Most of the success of today's machine learning systems, e.g. deep learning,  depend on the availability of massive amount of labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
+Most of the success of today's machine learning systems depend on the availability of massive amount of labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
 
-However, in many real-world applications, such training data is not available, like tasks that are applied medical imaging data where detailed labeling is very expensive. In order to deal with data scarcity in many tasks and applications, we can use higher-level approaches and provide supervision signals for training machine learning models. This can be done for instance by
+However, in many real-world applications, such training data is not available, like tasks that are applied medical imaging data where detailed labeling is very expensive. In order to deal with data scarcity in many tasks and applications, we can use higher-level approaches and provide supervision signals for training machine learning models. 
+
+This can be done for instance by
 % \begin{itemize}
 % \renewcommand\labelitemi{--}
 % \item
@@ -69,7 +71,7 @@ Based on these, we break down our main research question into three research que
 % \resq{p2}
 % \resq{p3}
 
-In the next section, we go over the thesis structure and summarize different parts of the thesis.
+In the next section, we present an overview of the thesis and introduce the structure of the content as well as summarize different parts of the thesis.
 
 \section{Thesis Overview}
 This thesis consists of the introductory matter, followed by five main
@@ -77,13 +79,13 @@ chapters that are divided into three parts. Each part is based on one of the thr
 The following gives a short description of each part and summarizes each chapter: 
 
 \subsection*{PART I: \titleof{p1}}
-In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant. We break this into two chapters:
+In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant over time. We break our discussions into two chapters:
 
 \subsubsection*{Chapter 2: \titleof{c2}}
 In this chapter, we address the following research question:
 \resq{c2}
-We introduce \emph{\swlm} (\acswlm)~\citep{Dehghani:2016:SIGIR} to learn a representation for a set of textual documents, where this representation captures all, and only, the \textit{significant} shared terms from these documents.  \acswlm adjusts the weights of terms to decrease the weight of noisy terms that are either well explained by the document collection (generic) or only explained by specific documents (specific), which eventually results in having the significant terms left in the model.  
-We employ \acswlm in two main language understanding tasks: feedback problem in information retrieval~\citep{Dehghani:CIKM2016:long, Dehghani:CIKM2016:short}, and group profiling in content personalization and recommendation tasks~\citep{Dehghani:2016:CHIIR,Dehghani2016:trec}. We show how \acswlm is remarkably robust against noisy terms like non-relevant terms in relevant documents in the feedback task. 
+We introduce \emph{\swlm} (\acswlm)~\citep{Dehghani:2016:SIGIR} to learn a representation for a set of textual entities, where this representation captures all, and only, the \textit{significant} shared features from these entities.  \acswlm adjusts the weights of features to decrease the weight of noisy terms that are either well explained by all the entities, i.e. too general or only explained by specific entity in the set, i.e. too specific, which eventually results in having the significant features left in the model.  
+We employ \acswlm in two main language understanding tasks: feedback problem in information retrieval~\citep{Dehghani:CIKM2016:long, Dehghani:CIKM2016:short}, and group profiling in content personalization and recommendation tasks~\citep{Dehghani:2016:CHIIR,Dehghani2016:trec}. We show how \acswlm is remarkably robust against noisy features like non-relevant terms in relevant documents in the feedback task. 
 
 \subsubsection*{Chapter 3: \titleof{c3}}
 In this chapter, we get down to the following research question:

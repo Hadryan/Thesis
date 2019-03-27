@@ -1,16 +1,18 @@
 \begin{table}
 \centering
-    \begin{tabular}{lllllll}
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{lcccccc}
         & & & & & & \\ \toprule
         \multirow{2}{*}{ \bf Model } & \multicolumn{2}{c}{ \textbf{Copy} } & \multicolumn{2}{c}{ \textbf{Reverse} } & \multicolumn{2}{c}{ \textbf{Addition} } \\ \cmidrule(l{2pt}r{2pt}){2-3} \cmidrule(l{2pt}r{2pt}){4-5} \cmidrule(l{2pt}r{2pt}){6-7}
-        & char-acc & seq-acc & char-acc & seq-acc & char-acc & seq-acc \\ \midrule
-        LSTM & 0.45 & 0.09 & 0.66 & 0.11 & 0.08 & 0.0 \\
-        Transformer & 0.53 & 0.03 & 0.13 & 0.06 & 0.07 & 0.0 \\
-        Universal Transformer & 0.76 & 0.29 & 0.83 & 0.41 & 0.32 & 0.02 \\
-        UT w/ randomized offset & 0.91 & 0.35 & 0.96 & 0.46 & 0.34 & 0.02 \\
-        Neural GPU$^*$ & \textbf{1.0} & \textbf{1.0} & \textbf{1.0} & \textbf{1.0} & \textbf{1.0} &
-        \textbf{1.0} \\ \bottomrule
+        & \textit{char-acc} & \textit{seq-acc} & \textit{char-acc} & \textit{seq-acc} & \textit{char-acc} & \textit{seq-acc} \\ \midrule
+        \bf LSTM & 0.45 & 0.09 & 0.66 & 0.11 & 0.08 & 0.0 \\
+        \bf Transformer & 0.53 & 0.03 & 0.13 & 0.06 & 0.07 & 0.0 \\
+        \bf Universal Transformer & 0.76 & 0.29 & 0.83 & 0.41 & 0.32 & 0.02 \\
+        \bf UT w/ randomized offset & 0.91 & 0.35 & 0.96 & 0.46 & 0.34 & 0.02 \\
+        \bf Neural GPU$^*$ & \textbf{1.00} & \textbf{1.00} & \textbf{1.00} & \textbf{1.00} & \textbf{1.00} &
+        \textbf{1.00} \\ \bottomrule
     \end{tabular}
+    \end{adjustbox}
     \caption{Accuracy (higher better) on the algorithmic tasks. $^*$Note that the Neural GPU was trained with a special curriculum to obtain the perfect result, while other models are trained without any curriculum.}
     \label{tab:algorithmic}
 \end{table}

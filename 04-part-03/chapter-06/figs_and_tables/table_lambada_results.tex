@@ -1,19 +1,19 @@
 \begin{table}
 \centering
     \begin{adjustbox}{max width=\textwidth}
-    \begin{tabular}{lllllll}
+    \begin{tabular}{lcccccc}
     \toprule
     \multirow{2}{*}{ \bf Model } & \multicolumn{3}{c}{\bf LM Perplexity \& (Accuracy) } & \multicolumn{3}{c}{\bf RC Accuracy } \\ \cmidrule(l{2pt}r{2pt}){2-4} \cmidrule(l{2pt}r{2pt}){5-7}
-    & control & dev & test & control & dev & test \\ \midrule
-    Neural Cache~\citep{grave2016improving} & {\bf 129} & 139 & - & - & - & - \\ 
-    Dhingra et al.~\cite{dhingra2018neural} & - & - & - & - & - & 0.5569 \\ \midrule
-    Transformer & 142 (0.19) & 5122 (0.0) & 7321 (0.0) & 
+    & \textit{control} & \textit{dev} & \textit{test} & \textit{control} & \textit{dev} & \textit{test} \\ \midrule
+    \bf Neural Cache~\citep{grave2016improving} & {\bf 129} & 139 & - & - & - & - \\ 
+    \bf Dhingra et al.~\cite{dhingra2018neural} & - & - & - & - & - & 0.5569 \\ \midrule
+    \bf Transformer & 142 (0.19) & 5122 (0.0) & 7321 (0.0) & 
     0.4102 & 0.4401 & 0.3988 \\
-    LSTM & 138 (0.23) & 4966 (0.0) & 5174 (0.0) & 0.1103 & 0.2316 & 0.2007 \\
-    UT \emph{base}, 6 steps (fixed) & 131 (0.32) & 279 (0.18) & 319 (0.17) & {\bf 0.4801} & 0.5422 & 0.5216 \\
-    UT w/ dynamic halting & 130 (0.32) & {\bf 134} (0.22) & {\bf 142} (0.19) & 0.4603 & {\bf 0.5831} & {\bf 0.5625} \\ \midrule
-    UT \emph{base}, 8 steps (fixed) & 129(0.32) & 192 (0.21) & 202 (0.18) & - & - & - \\
-    UT \emph{base}, 9 steps (fixed) & \textbf{129(0.33)} & 214 (0.21) & 239 (0.17) & - & - & - \\
+    \bf LSTM & 138 (0.23) & 4966 (0.0) & 5174 (0.0) & 0.1103 & 0.2316 & 0.2007 \\
+    \bf UT \emph{base}, 6 steps (fixed) & 131 (0.32) & 279 (0.18) & 319 (0.17) & {\bf 0.4801} & 0.5422 & 0.5216 \\
+    \bf UT w/ dynamic halting & 130 (0.32) & {\bf 134} (0.22) & {\bf 142} (0.19) & 0.4603 & {\bf 0.5831} & {\bf 0.5625} \\ \midrule
+    \bf UT \emph{base}, 8 steps (fixed) & 129(0.32) & 192 (0.21) & 202 (0.18) & - & - & - \\
+    \bf UT \emph{base}, 9 steps (fixed) & \textbf{129(0.33)} & 214 (0.21) & 239 (0.17) & - & - & - \\
  \bottomrule
     \end{tabular}
     \end{adjustbox}

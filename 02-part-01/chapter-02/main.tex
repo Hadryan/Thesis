@@ -1,12 +1,15 @@
 \chapter{\titleof{c2}}
 \label{chap:2}
 
+\begin{quote}
+When learning representations from the data, there are general features that are not discriminating enough and specific features that are not essential in all the cases. Taking the structure and the relations in the data into account can help learning representations that capture significant features and are less affected by these noisy factors.
+\end{quote}
+
 \section{Introduction}
 Humans instinctively know how to efficiently ``select details'' that are useful for recognition and at the same time ``abstract away'' unnecessary or noisy details.~\cite{tenenbaum2011grow, gentner1997structure, battaglia2018relational} 
 This is, in fact, a survival trait, since we cannot possibly save all the detail around us in our brain. Hence, to define objects and actions, we can extract a subset from an extensive but finite set of existing features that are neither \emph{too specific}, nor \emph{too general}, but \emph{significant}. In many cases, this is done by analyzing inheritance (is-a) and composition (has-a) relationships between concepts, entities, and actions~\citep{goodwin2005reasoning, botvinick2008hierarchical}. 
 Inspired by that, in this chapter, we explore ideas to address one of our research questions:
 \resq{c2}
-
 
 We presents our ideas and discussions in the context of language understanding tasks, in particular modeling textual entities for information retrieval applications. As the modeling approach, we estimate unigram language model, or so-called  ``bag of words'' model, to represent an entity, like a person, organization, category, etc, given a set of texts connected to the entity.  In fact, we assume that the textual documents associated with an entity are samples drawn from the distribution of a model that represents the entity, and then estimate the model given these samples.
 

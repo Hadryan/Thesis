@@ -3,28 +3,28 @@
 \caption{\label{tbl_variants_rank_fwl}Performance of the \fwl against some of the baselines on different datasets for document ranking task. Baselines are described in Table~\ref{tbl_baselines}.}
 \centering
 \begin{adjustbox}{max width=\textwidth}
-\begin{tabular}{r l l l l l}
+\begin{tabular}{r l c c c c}
 \toprule
-& \multirow{2}{*}{Method} &
-\multicolumn{2}{c}{Robust04} & \multicolumn{2}{c}{ClueWeb}
+& \multirow{2}{*}{\textbf{Method}} &
+\multicolumn{2}{c}{\textbf{Robust04}} & \multicolumn{2}{c}{\textbf{ClueWeb}}
 \\ 
 \cmidrule(lr){3-4} \cmidrule(lr){5-6}
-& & \small{MAP} & \small{nDCG@20}
-& \small{MAP} & \small{nDCG@20}
+& & \small{\textit{MAP}} & \bf \small{\textit{nDCG@20}}
+&  \small{\textit{MAP}} & \bf \small{\textit{nDCG@20}}
 \\ \midrule
-13 & \small{\fwl}
+\bf 13 & \bf \small{\fwl}
 & \textbf{0.3124}  & \textbf{0.4607}
 & \textbf{0.1472} & \textbf{0.2453}
 \\
-14 & \small{$\text{NN}_{\text{W}^\omega \to \text{NN}_\text{S}}$}
+\bf 14 & \bf  \small{$\text{NN}_{\text{W}^\omega \to \text{NN}_\text{S}}$}
 &  0.2899 & 0.4431
 &  0.1320 & 0.2309
 \\ 
-15 & \small{\fwl$_{unsuprep}$} 
+\bf 15 & \bf \small{\fwl$_{unsuprep}$} 
 &  0.2211 & 0.3700
 &  0.0831 & 0.1964
 \\
-16 & \small{\fwl$\backslash\Sigma$} 
+\bf 16 & \bf \small{\fwl$\backslash\Sigma$} 
 &  0.2980 & 0.4516
 &  0.1386 & 0.2340
 \\\bottomrule

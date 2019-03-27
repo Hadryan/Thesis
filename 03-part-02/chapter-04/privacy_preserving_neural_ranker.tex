@@ -27,7 +27,8 @@ We follow the knowledge distillation approach~\cite{Hinton:2015} for training a 
 In the second set of experiments, the set of queries with judgments is only used for evaluation and we train the teacher model using the weak supervision setup, i.e pseudo labels as it is explained in~\ref{sec:pseudo_labeling}. 
 As the test collection, we use Robust04 which is introduced in Section~\ref{sec:collections}. In all experiments, we use a separate set of $3$ million queries from the AOL query log, preprocessed as it is explained in Section~\ref{sec:query_set}.
 
-In all experiments, as the neural rankers we use \modeltwo, which has been described in Section~\ref{sec:modeltwo}, with \Feedthree as the input representation, which has been explained in Section~\ref{sec:feedthree}.  The configuration of teacher and student networks is presented in Table~\ref{tbl:cfg}.
+In all experiments, as the neural rankers we use \modeltwo, which has been described in Section~\ref{sec:modeltwo}, with \Feedthree as the input representation, which has been explained in Section~\ref{sec:feedthree}.
+The configuration of teacher and student networks is presented in Table~\ref{tbl:cfg}.
 \begin{table}[t]
 \centering
 \caption{Teacher and student neural networks configurations.}
@@ -35,12 +36,12 @@ In all experiments, as the neural rankers we use \modeltwo, which has been descr
 \toprule
 \bf Parameter & \bf Teacher & \bf Student  \\
 \midrule
- Number of hidden layers & 3 & 3  \\
- Size of hidden layers & 512 & 128 \\
- Initial learning rate & 1E-3 & 1E-3 \\
- Dropout & 0.2 & 0.1 \\
- Embedding size & 500 & 300 \\
- Batch size & 512 & 512  \\
+\textbf{Number of hidden layers} & 3 & 3  \\
+\textbf{Size of hidden layers} & 512 & 128 \\
+\textbf{Initial learning rate} & 1E-3 & 1E-3 \\
+\textbf{Dropout} & 0.2 & 0.1 \\
+\textbf{Embedding size} & 500 & 300 \\
+\textbf{Batch size} & 512 & 512  \\
 \bottomrule
 \end{tabular}
 \label{tbl:cfg}
@@ -55,16 +56,16 @@ In all experiments, as the neural rankers we use \modeltwo, which has been descr
 \toprule
 \bf Training strategy & \bf model & \textbf{MAP} & \textbf{P@20} & \textbf{nDCG@20} 
 \\ \midrule
-\multirow{2}{*}{{Full supervision}} & {Teacher} 
+\multirow{2}{*}{{\textbf{Full supervision}}} & {\textit{Teacher}} 
 & 0.1814 & 0.2888 & 0.3419 
 \\
-& {Student} 
+& {\textit{Student}} 
 & 0.2256 & 0.3111 & 0.3891 
 \\ \midrule
-\multirow{2}{*}{{Weak supervision}} & {Teacher} 
+\multirow{2}{*}{{\textbf{Weak supervision}}} & {\textit{Teacher}} 
 & 0.2716 & 0.3664 & 0.4109 
 \\ 
-& {Student} 
+& {\textit{Student}} 
 & 0.2701 & 0.3562 & 0.4145 
 \\ \bottomrule
 \end{tabular}
@@ -107,21 +108,21 @@ We report the average performance of the teachers before noise, the performance 
 \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{l c c c}
 \toprule
- \bf Model & \textbf{MAP} & \textbf{P@20} & \textbf{nDCG@20} 
+ \textbf{Model} & \textbf{MAP} & \textbf{P@20} & \textbf{nDCG@20} 
 \\ \midrule
-{Teachers (avg)} 
+{\textbf{Teachers (avg)}}
 & 0.2566 & 0.3300 & 0.3836
 \\ \midrule
-{Non-noisy aggregated teacher} 
+\textbf{Non-noisy aggregated teacher} 
 & 0.2380 & 0.3055 & 0.3702 
 \\
-{Student \small{(non-noisy aggregation)}} 
+\textbf{Student \small{(non-noisy aggregation)}} 
 & 0.2337 & 0.3192 & 0.3717
 \\ \midrule 
-{Noisy aggregated teacher} 
+\textbf{Noisy aggregated teacher} 
 & 0.2110 & 0.2868 & 0.3407 
 \\
-{Student \small{(noisy aggregation)}} 
+\textbf{Student \small{(noisy aggregation)}} 
 & 0.2255 & 0.2984 & 0.3559 
 \\ \bottomrule
 \end{tabular}

@@ -1,30 +1,34 @@
 \begin{table}
     \centering
-    \begin{tabular}{lllllll}
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{lcccccc}
         \toprule
         %& \multicolumn{7}{c}{Memorization Tasks} \\
         & \multicolumn{2}{c}{ \bf Copy } & \multicolumn{2}{c}{ \bf Double } & \multicolumn{2}{c}{ \bf Reverse } \\
         \cmidrule(l{2pt}r{2pt}){2-3} \cmidrule(l{2pt}r{2pt}){4-5} \cmidrule(l{2pt}r{2pt}){6-7}
-        \bf Model & char-acc & seq-acc & char-acc & seq-acc & char-acc & seq-acc \\ \midrule
-        LSTM & 0.78 & 0.11 & 0.51 & 0.047 & 0.91 & 0.32 \\
-        Transformer & 0.98 & 0.63 & 0.94 & 0.55 & 0.81 & 0.26 \\
-        Universal Transformer & \textbf{1.0} & \textbf{1.0} & \textbf{1.0} & \textbf{1.0} & \textbf{1.0} & \textbf{1.0} \\ \bottomrule
+        \bf Model & \textit{char-acc} & \textit{seq-acc} & \textit{char-acc} & \textit{seq-acc} & \textit{char-acc} & \textit{seq-acc} \\ \midrule
+        \bf LSTM & 0.78 & 0.11 & 0.51 & 0.05 & 0.91 & 0.32 \\
+        \bf Transformer & 0.98 & 0.63 & 0.94 & 0.55 & 0.81 & 0.26 \\
+        \bf Universal Transformer & \textbf{1.00} & \textbf{1.00} & \textbf{1.00} & \textbf{1.00} & \textbf{1.00} & \textbf{1.00} \\ \bottomrule
     \end{tabular}
+    \end{adjustbox}
     \caption{Character-level (\emph{char-acc}) and sequence-level accuracy (\emph{seq-acc}) results on the Memorization LTE tasks, with maximum length of 55.}
     \label{tab:lte-mem}
 \end{table}
 
 \begin{table}
     \centering
-    \begin{tabular}{lllllll}
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{lcccccc}
     \toprule
         & \multicolumn{2}{c}{ \bf Program } & \multicolumn{2}{c}{ \bf Control } & \multicolumn{2}{c}{ \bf Addition } \\ \cmidrule(l{2pt}r{2pt}){2-3} \cmidrule(l{2pt}r{2pt}){4-5} \cmidrule(l{2pt}r{2pt}){6-7}
-        \bf{Model} & char-acc & seq-acc & char-acc & seq-acc & char-acc & seq-acc \\ \midrule
-        LSTM & 0.53 & 0.12 & 0.68 & 0.21 & 0.83 & 0.11 \\
-        Transformer & 0.71 & 0.29 & 0.93 & 0.66 & \textbf{1.0} & \textbf{1.0} \\
-        Universal Transformer & \textbf{0.89} & \textbf{0.63} & \textbf{1.0} & \textbf{1.0} & \textbf{1.0} & \textbf{1.0} \\
+        \bf Model & \textit{char-acc} & \textit{seq-acc} & \textit{char-acc} & \textit{seq-acc} & \textit{char-acc} & \textit{seq-acc} \\ \midrule
+        \bf LSTM & 0.53 & 0.12 & 0.68 & 0.21 & 0.83 & 0.11 \\
+        \bf Transformer & 0.71 & 0.29 & 0.93 & 0.66 & \textbf{1.00} & \textbf{1.00} \\
+        \bf Universal Transformer & \textbf{0.89} & \textbf{0.63} & \textbf{1.00} & \textbf{1.00} & \textbf{1.00} & \textbf{1.00} \\
     \bottomrule
     \end{tabular}
+    \end{adjustbox}
     \caption{Character-level (\emph{char-acc}) and sequence-level accuracy (\emph{seq-acc}) results on the Program Evaluation LTE tasks with maximum nesting of 2 and length of 5.}
     \label{tab:lte-prog}
 \end{table}

@@ -2,48 +2,48 @@
 \caption{\label{tbl_baselines} Descriptions of baseline models.
 }
 \centering
-\fontsize{10}{12}\selectfont{
+\fontsize{9}{11}\selectfont{
 % \begin{adjustbox}
-{\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{@{}l@{~~}p{0.18\textwidth}@{~~~~}p{0.9\textwidth}@{}}
+{\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}l@{~~}p{0.16\textwidth}@{~~~}p{0.76\textwidth}@{}}
 \toprule
 \multicolumn{3}{c}{\textbf{Basic Baselines}}
 \\\midrule
-1 & \textbf{WA} & The \wa, i.e. the unsupervised method used for annotating the unlabeled data.
+\bf 1 & \textbf{WA} & The \wa, i.e. the unsupervised method used for annotating the unlabeled data.
 \\
-2 & \textbf{$\text{NN}_{\text{S}}$} & Full Supervision Only, i.e. the \tnet (or the \std) trained only on strong labeled data ($\mathcal{D}_s$).
+\bf 2 & \textbf{$\text{NN}_{\text{S}}$} & Full Supervision Only, i.e. the \tnet (or the \std) trained only on strong labeled data ($\mathcal{D}_s$).
 \\
-3 & \textbf{$\text{NN}_{\text{W}}$} &  Weak Supervision Only, i.e. the \tnet (or the \std)  trained only on weakly labeled data ($\mathcal{D}_w$).
+\bf 3 & \textbf{$\text{NN}_{\text{W}}$} &  Weak Supervision Only, i.e. the \tnet (or the \std)  trained only on weakly labeled data ($\mathcal{D}_w$).
 \\ \midrule
-4 & \textbf{$\text{NN}_{\text{W}\text{/S}^+}$}  & Weak Supervision + Oversampled Strong Supervision, i.e. the \tnet (or the \std) trained on samples that are alternately drawn from $\mathcal{D}_w$ without replacement, and $\mathcal{D}_s$ with replacement. Since $|\mathcal{D}_s| \ll |\mathcal{D}_w|$, it oversamples the strong data.
+\bf 4 & \textbf{$\text{NN}_{\text{W}\text{/S}^+}$}  & Weak Supervision + Oversampled Strong Supervision, i.e. the \tnet (or the \std) trained on samples that are alternately drawn from $\mathcal{D}_w$ without replacement, and $\mathcal{D}_s$ with replacement. Since $|\mathcal{D}_s| \ll |\mathcal{D}_w|$, it oversamples the strong data.
 \\
-5 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$}  & Weak Supervision + Fine Tuning, i.e. the \tnet (or the \std) trained on weak dataset $\mathcal{D}_w$ and fine-tuned on strong dataset $\mathcal{D}_s$.
+\bf 5 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$}  & Weak Supervision + Fine Tuning, i.e. the \tnet (or the \std) trained on weak dataset $\mathcal{D}_w$ and fine-tuned on strong dataset $\mathcal{D}_s$.
 \\
-6 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Sup}}_{\text{S}}$} & Weak Supervision + Supervision Layer Fine-Tuning, i.e. the \tnet (or the \std) trained only on on weak dataset $\mathcal{D}_w$ and the supervision layer is fine-tuned on strong dataset $\mathcal{D}_s$, while the representation learning layer is kept fixed.
+\bf 6 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Sup}}_{\text{S}}$} & Weak Supervision + Supervision Layer Fine-Tuning, i.e. the \tnet (or the \std) trained only on on weak dataset $\mathcal{D}_w$ and the supervision layer is fine-tuned on strong dataset $\mathcal{D}_s$, while the representation learning layer is kept fixed.
 \\
-7 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Rep}}_{\text{S}}$} & Weak Supervision + Representation Learning Layer Fine Tuning, i.e. the \tnet (or the \std) trained only on on weak dataset $\mathcal{D}_w$ and the representation layer is fine-tuned on strong dataset $\mathcal{D}_s$, while the representation learning layer is kept fixed.
+\bf 7 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Rep}}_{\text{S}}$} & Weak Supervision + Representation Learning Layer Fine Tuning, i.e. the \tnet (or the \std) trained only on on weak dataset $\mathcal{D}_w$ and the representation layer is fine-tuned on strong dataset $\mathcal{D}_s$, while the representation learning layer is kept fixed.
 \\\midrule
 \multicolumn{3}{c}{\textbf{Controlled Weak Supervision baselines}}
 \\\midrule
-8 & \textbf{\cws} & Learning from Controlled Weak Supervision that is explained in Section~\ref{sec:meta_learning}.
+\bf 8 & \textbf{\cws} & Learning from Controlled Weak Supervision that is explained in Section~\ref{sec:meta_learning}.
 \\
-9 & \textbf{\cws$_\text{JT+}$} & Controlled Weak Supervision with Joint Training is the same as \cws (explained in Section~\ref{sec:modeltraining}), except that parameters of the supervision layer in \tnet are also updated using batches from $V$, with regards to the strong labels.
+\bf 9 & \textbf{\cws$_\text{JT+}$} & Controlled Weak Supervision with Joint Training is the same as \cws (explained in Section~\ref{sec:modeltraining}), except that parameters of the supervision layer in \tnet are also updated using batches from $V$, with regards to the strong labels.
 \\
-10 & \textbf{\cws$_\text{ST}$} & Separate Training, i.e. we consider the \cnet as a separate network, without sharing the representation learning layer, and train it on set $V$. We then train the \tnet on the controlled weak supervision signals.
+\bf 10 & \textbf{\cws$_\text{ST}$} & Separate Training, i.e. we consider the \cnet as a separate network, without sharing the representation learning layer, and train it on set $V$. We then train the \tnet on the controlled weak supervision signals.
 \\
-11 & \textbf{\cws$_\text{CT}$} & Circular Training, i.e. we train the \tnet on set $U$. Then the \cnet is trained on data with strong labels, and the \tnet is trained again but on controlled weak supervision signals.
+\bf 11 & \textbf{\cws$_\text{CT}$} & Circular Training, i.e. we train the \tnet on set $U$. Then the \cnet is trained on data with strong labels, and the \tnet is trained again but on controlled weak supervision signals.
 \\
-12 & \textbf{\cws$_\text{PT}$} & Progressive Training is the mixture of the two previous baselines. Inspired by \cite{Rusu:2016}, we transfer the learned information from the converged \tnet to the \cnet using progressive training. We then train the \tnet again on the controlled weak supervision signals.
+\bf 12 & \textbf{\cws$_\text{PT}$} & Progressive Training is the mixture of the two previous baselines. Inspired by \cite{Rusu:2016}, we transfer the learned information from the converged \tnet to the \cnet using progressive training. We then train the \tnet again on the controlled weak supervision signals.
 \\\midrule
 \multicolumn{3}{c}{\textbf{Fidelity Weighted Learning baselines}}
 \\\midrule
-13 & \textbf{\fwl} & Fidelity Weighted Learning that is explained in Section~\ref{sec:fidelity_weighted_learning}.
+\bf 13 & \textbf{\fwl} & Fidelity Weighted Learning that is explained in Section~\ref{sec:fidelity_weighted_learning}.
 \\
-14 & \textbf{$\text{NN}_{\text{W}^\omega \to \text{NN}_\text{S}}$} & The \std trained on the weak data, but the step-size of each weak sample is weighted by a fixed value $0 \leq \omega \leq 1$, and fine-tuned on strong data. As an approximation for the optimal value for $\omega$, we have used the mean of $\eta_2$ of our model (below).
+\bf 14 & \textbf{$\text{NN}_{\text{W}^\omega \to \text{NN}_\text{S}}$} & The \std trained on the weak data, but the step-size of each weak sample is weighted by a fixed value $0 \leq \omega \leq 1$, and fine-tuned on strong data. As an approximation for the optimal value for $\omega$, we have used the mean of $\eta_2$ of our model (below).
 \\
-15 & \textbf{\fwl$_{unsuprep}$} & The representation in the first step is trained in an unsupervised way\footnote{In the document ranking task, as the representation of documents and queries, we use weighted averaging over pretrained embeddings of their words based on their inverse document frequency~\citep{Dehghani:2017:SIGIR}. In the sentiment analysis task, we use skip-thoughts vectors\citep{kiros2015skip}} and the student is trained on examples labeled by the \tch using the confidence scores.
+\bf 15 & \textbf{\fwl$_{unsuprep}$} & The representation in the first step is trained in an unsupervised way\footnote{In the document ranking task, as the representation of documents and queries, we use weighted averaging over pretrained embeddings of their words based on their inverse document frequency~\citep{Dehghani:2017:SIGIR}. In the sentiment analysis task, we use skip-thoughts vectors\citep{kiros2015skip}} and the student is trained on examples labeled by the \tch using the confidence scores.
 \\
-16 & \textbf{\fwl$\backslash\Sigma$} & The \std trained on the weakly labeled data and fine-tuned on examples labeled by the \tch without taking the confidence into account. This baseline is similar to \citep{Veit:2017}.
+\bf 16 & \textbf{\fwl$\backslash\Sigma$} & The \std trained on the weakly labeled data and fine-tuned on examples labeled by the \tch without taking the confidence into account. This baseline is similar to \citep{Veit:2017}.
 \\\bottomrule
 \end{tabular}
 }
