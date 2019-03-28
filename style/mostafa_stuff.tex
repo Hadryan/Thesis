@@ -307,3 +307,31 @@
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+
+%% this next section (till \makeatother) makes sure that blank pages	
+%% are actually completely blank, cause they're not usually	
+\makeatletter	
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else	
+	\hbox{}	
+	\vspace*{\fill}	
+	\thispagestyle{empty}	
+	\newpage	
+	\if@twocolumn\hbox{}\newpage\fi\fi\fi}	
+\makeatother	
+
+
+%% make the quotation appear next to the chapter number	
+% \renewcommand\chapterheadstartvskip{\vspace*{-5\baselineskip}}	
+
+% %% now change the section heading to have a line beneath it	
+% %% load up the fancy title-style package	
+% \usepackage[calcwidth]{titlesec}	
+% \titleformat{\section}[hang]{}	
+% {\bf\fontsize{18}{16}\selectfovnt\thesection}{12pt}{\bf\fontsize{18}{16}\selectfovnt}	
+
+% \titleformat{\subsection}[hang]{}	
+% {\bf\no\thesubsection}{12pt}{\bf\fontsize{12}{10}\selectfovnt }	
+
+% \titleformat{\subsubsection}[hang]{}	
+% {}{12pt}{\bfseries}
+

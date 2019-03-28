@@ -1,5 +1,10 @@
-\chapter{\titleof{c3}}
+\chapter[]{\titleof{c3}}
 \label{chap:3}
+%
+\begin{quote}
+Hierarchies are powerful structures to model different levels of associations in the data. They can evolve over time in term of the relations between entities in the hierarchy and learning representations that are agnostic to these changes are not trivial. We can, however, take the horizontal and vertical dependencies in a hierarchy into account and learn highly separable representations for entities that are less variant to structural changes and more transferable over time. 
+\end{quote}
+%
 \section{Introduction}
 Hierarchy is an effective and common way of representing information, and many domains are naturally organized in a hierarchy. Organizing data in a hierarchical structure is valuable since it determines relationships in the data at different levels of resolution and picks out different categories relevant to each of the various layers of memberships.  
 Besides that, using hierarchies is an effective way of representing the information as it eases the task of \emph{comparison}, which is a critical factor in analogical reasoning. For example, the problem of deciding whether two entities are analogous can be formalized as the problem of checking the level of abstraction at which these entities are instances of the same node in a hierarchy.
@@ -53,10 +58,11 @@ In the following sections, we will address these research questions.
 
 
 \section{Conclusion}
-Building conceptually accurate models of data with a structure consisting of multiple layers, or a hierarchy, prompts us to analyse them at different abstraction levels.  However, this requires the ability to estimate separable models for hierarchical entities which capture their essential features taking into account their relative position in the hierarchy. 
+Building conceptually accurate models of data with a structure consisting of multiple layers, or a hierarchy, prompts us to analyze them at different abstraction levels.  However, this requires the ability to estimate separable models for hierarchical entities which capture their essential features taking into account their relative position in the hierarchy. 
 
 In this chapter, we demonstrated that based on the ranking and classification principles, the \emph{separation property} in the data representation is a desirable foundational property which leads to separability of scores and consequently improves the accuracy of classifiers' decisions.  We stated this as the ``\ssp'' for optimizing expected effectiveness of classifiers.
 
-We showed that in order to have horizontally and vertically separable models, they should capture all, and only, the essential terms of the entities taking their position in the hierarchy into account. Based on this, we introduced \hswlms for estimating separable models for hierarchical entities. We studied \achswlm and demonstrated that it offers separable distributions over terms for different entities both in case of being in the same layer or in different layers. 
+We showed that in order to have horizontally and vertically separable models, they should capture all, and only, the essential terms of the entities taking their position in the hierarchy into account. Based on this, we introduced \hswlms for estimating separable models for hierarchical entities. We studied \achswlm and demonstrated that it offers separable distributions over terms for different entities both in case of being in the same layer or in different layers.  We evaluated the performance of classification over time using separable representations of data and showed that separability makes the model more robust and transferable over time by filtering out non-essential non-stable terms.
 
-We evaluated the performance of classification over time using separable representation of data and showed that separability makes the model more robust and transferable over time by filtering out non-essential non-stable terms.
+%connection to part 2
+In this part of the thesis, we studied how taking the structure of the data into account can help learning more robust representations against noisy and variant factors of the data. In Part~\ref{part3}, we investigate how we can change the learning process to make it more robust against the noise in the weakly annotated labels.

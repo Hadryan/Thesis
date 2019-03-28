@@ -1,13 +1,17 @@
-\chapter{\titleof{c4}}
+\chapter[]{\titleof{c4}}
 \label{chap:4}
-
+%
+\begin{quote}
+In many applications, to overcome the training data scarcity, we can provide supervision signals for learning algorithms not by hand-labeling the data, but by pseudo-labeling the data programmatically. This way, we can generate a much larger training set with a fairly low cost. However, we need to design algorithms that are capable of learning from weakly annotated labels and going beyond the imperfection in pseudo-labels. 
+\end{quote}
+%
 \section{Introduction}
 Neural networks are making great progress in many tasks in computer vision~\citep{krizhevsky2012imagenet}, natural language processing~\citep{collobert2008unified}, and information retrieval~\citep{welling2005exponential}. However, these models are data hungry and their performance is strongly correlated with the amount of available labeled data, which is not always readily available and can be expensive to obtain. 
 
-Looking into the research works done in this area, most of them target stable benchmark tasks where standard large-enough datasets exist to train neural networks. However, the labeled data become the scarce commodity when we stray slightly from these standard benchmark tasks toward the realm of real world applications. In this chapter, we focus on one of our research questions:
+Looking into the research works done in this area, most of them target stable benchmark tasks where standard large-enough datasets exist to train neural networks. However, the labeled data become the scarce commodity when we stray slightly from these standard benchmark tasks toward the realm of real-world applications. In this chapter, we focus on one of our research questions:
 \resq{c4}
 
-We aim to study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand. Then, given a vast amount of pragmatically generated labeled data, we discuss how to design neural networks that can go beyond the imperfection in the weakly annotated data. We also study how ability of learning from noisy signals can lead to better performance when we have intentionally added noise to the training signals in a privacy preserving training setups.
+We aim to study how human can supervise machine learning systems, by labeling training data programmatically instead of labeling by hand. Then, given a vast amount of pragmatically generated labeled data, we discuss how to design neural networks that can go beyond the imperfection in the weakly annotated data. We also study how the ability to learn from noisy signals can lead to better performance when we have intentionally added noise to the training signals in a privacy-preserving training setup.
 
 \medskip
 In this chapter, we mainly target the \emph{ranking task}, as one of the core IR problems, where despite the advances of neural network based methods in many other related tasks like reading comprehension, there has been a little progress, mainly due to the lack of a large scale public dataset with query-document pairs labeled by relevance. 
@@ -23,11 +27,11 @@ Second, letting the neural networks learn optimal query/document representations
 Third and last, the weak supervision setting makes it possible to train the network on a massive amount of training data, which is crucial for learning representations.
 %
 
-We further thoroughly analyse the behavior of models to understand what they learn, what is the relationship among different models, and how much training data is needed to go beyond the weak supervision signal. We also study if employing deep neural networks may help in different situations.
+We further thoroughly analyze the behavior of models to understand what they learn, what is the relationship among different models, and how much training data is needed to go beyond the weak supervision signal. We also study if employing deep neural networks may help in different situations.
 %
 We also examine the scenario of using the network trained on a weak supervision signal as a pre-training step. We demonstrate that, in the ranking problem, the performance of deep neural networks trained on a limited amount of supervised data significantly improves when they are initialized from a model pre-trained on weakly labeled data.
 
-Finally, we study how a neural ranking model that learns from weak/noisy signals can be effectively employed in a setup that noise is intentionally added to the training signal to preserve the privacy.
+Finally, we study how a neural ranking model that learns from weak/noisy signals can be effectively employed in a setup that noise is intentionally added to the training signal to preserve privacy.
 
 
 \subsection{Detailed Research Questions}
@@ -47,7 +51,7 @@ In the following sections, we will address these research questions.
 
 \section{Conclusion}
 In this chapter, we proposed to use unsupervised methods in order to programmatically generate large amounts of training data, as weakly annotated data, to train effective neural ranking models.
-We focus on the task of assessing relevance, i.e. ranking documents given a query that suffers from a large-scale publicly available training set
+We focus on the task of assessing the relevance, i.e. ranking documents given a query that suffers from a large-scale publicly available training set
 We examine various neural ranking models with different ranking architectures and objectives, and different input representations. 
 
 We used over six million queries to train our models and evaluated them on Robust04 and ClueWeb 09-Category B collections, in an ad-hoc retrieval setting.  The experiments showed that our best performing model significantly outperforms the BM25 model (our weak supervision signal) by over $13\%$ and $35\%$ MAP improvements in the Robust04 and ClueWeb collections, respectively. 
@@ -64,6 +68,9 @@ The third ingredient is providing the network with a considerable amount of trai
 As an example, during the experiments we noticed that using the \feedthree, the network needs a lot of examples to learn embeddings that are more effective for retrieval compared to pre-trained embeddings. 
 Thanks to weak supervision, we can generate as much training data as we need with almost no cost.
 
+We also study how learning from weak signals can benefit preserving privacy where some noise is intentionally added to the training signal to preserve privacy. We employed Private Aggregation of Teacher Ensembles (PATE)~\citep{Papernot:2017}  to train a privacy-preserving neural ranking model, in which we train several neural rankers on disjoint subsets of the training data and use the noisy aggregated signals from these models on an unlabeled set to train a neural ranker that in a setup that guarantees a certain level of differential privacy.
+These experiments lay the groundwork for the idea of sharing a privacy-preserving model instead of sensitive data in IR applications. This suggests researchers from industry share the knowledge learned from actual users' data with the academic community that leads to a better collaboration of all researchers in the field. 
 
-We also study how learning from weak signals can benefit preserving privacy where some noise is intentionally added to the training signal to preserve the privacy. We employed Private Aggregation of Teacher Ensembles (PATE)~\citep{Papernot:2017}  to train a privacy preserving neural ranking model, in which we train several neural rankers on disjoint subsets of the training data and use the noisy aggregated signals from these models on an unlabeled set to train a neural ranker that in a setup that guarantees a certain level of differential privacy.
-These experiments lays the groundwork for the idea of sharing a privacy preserving model instead of sensitive data in IR applications. This suggests researchers from industry share the knowledge learned from actual users' data with the academic community that leads to a better collaboration of all researchers in the field. 
+% connection to chapter 5
+In this chapter, we mainly focused on the ranking tasks and explored architectural ideas that can implicitly help to have neural networks that are less sensitive to the label noise. 
+In the next chapter, we propose more systematic approaches that are tasks and architecture independent and can learn to estimate the quality of the labels and explicitly control the learning process with respect to the estimated qualities.

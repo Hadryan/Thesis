@@ -1,7 +1,12 @@
-\chapter{\titleof{c6}}
+\chapter[]{\titleof{c6}}
 \label{chap:6}
+%
+\begin{quote}
+Inductive biases are great ways for encoding modeling assumptions and improve data efficiency. For many sequence modeling tasks, the recurrent inductive bias plays a crucial role for generalizing beyond the observed data, while self-attentive feed-forward sequence models forego the recurrence toward parallelizability. We can, however, introduce a form of recurrent inductive bias to these models to improve their generalization while keeping the parallelization in the computations. 
+\end{quote}
+%
 \section{Introduction}
-Convolutional and fully-attentional feed-forward architectures like the Transformer have recently emerged as viable alternatives to recurrent neural networks (RNNs) for a range of sequence modeling tasks, notably machine translation~\citep{JonasFaceNet2017,transformer}. These parallel-in-time architectures address a significant shortcoming of RNNs, namely their inherently sequential computation which prevents parallelization across elements of the input sequence, whilst still addressing the vanishing gradients problem as the sequence length gets longer~\citep{vanishing-exploding-gradient}.
+Convolutional and fully-intentional feed-forward architectures like the Transformer have recently emerged as viable alternatives to recurrent neural networks (RNNs) for a range of sequence modeling tasks, notably machine translation~\citep{JonasFaceNet2017,transformer}. These parallel-in-time architectures address a significant shortcoming of RNNs, namely their inherently sequential computation which prevents parallelization across elements of the input sequence, whilst still addressing the vanishing gradients problem as the sequence length gets longer~\citep{vanishing-exploding-gradient}.
 The Transformer model in particular relies entirely on a self-attention mechanism \citep{decomposableAttnModel,lin2017structured} to compute a series of context-informed vector-space representations of the symbols in its input and output, which are then used to predict distributions over subsequent symbols as the model predicts the output sequence symbol-by-symbol. Not only is this mechanism straightforward to parallelize, but as each symbol's representation is also directly informed by all other symbols' representations, this results in an effectively global receptive field across the whole sequence. This stands in contrast to e.g.\ convolutional architectures which typically only have a limited receptive field.
 
 Notably, however, the Transformer with its fixed stack of distinct layers foregoes RNNs' inductive bias towards learning iterative or recursive transformations. Our experiments indicate that this inductive bias may be crucial for several algorithmic and language understanding tasks of varying complexity: in contrast to models such as the Neural Turing Machine~\citep{ntm14}, the Neural GPU~\citep{neural_gpu} or Stack RNNs~\citep{stack_rnn}, the Transformer does not generalize well to input lengths not encountered during training. 
@@ -33,8 +38,6 @@ We break down our main research question in this chapter into two concrete resea
 \end{resqbox}
 
 In the following sections, we will address these research questions.
-
-\todo{add stuff...}
 
 \input{04-part-03/chapter-06/universal_transformer.tex}
 \input{04-part-03/chapter-06/applications.tex}

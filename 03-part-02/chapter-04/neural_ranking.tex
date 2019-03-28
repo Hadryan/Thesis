@@ -1,18 +1,18 @@
 \section{Weakly Supervised Neural Rankers}
 \label{sec:weakly_supervised_neural_rankers}
-Despite promising performance from neural networks on many language understanding tasks, ranking has remained a challenging problem. Besides the inherent difficulty of ``assessing relevance'', the lack of availability of public large scaled datasets that consist query-document pairs annotated by relevance labels, makes it difficult to advance data hungry models for this task.
+Despite the promising performance from neural networks on many language understanding tasks, ranking has remained a challenging problem. Besides the inherent difficulty of ``assessing relevance'', the lack of availability of public large scaled datasets that consist query-document pairs annotated by relevance labels, makes it difficult to advance data hungry models for this task.
 
-Therefore, it is essential to come up with solutions that let us train neural ranking models, where there is no labeled data it is only available at a extremely limited size. 
-One the main idea to tackle this problem is to make use of weak human supervision or weakly labeled data, as it is much cheaper to collect or readily available at much larger scale. This section focuses addressing the following questions:
+Therefore, it is essential to come up with solutions that let us train neural ranking models, where there is no labeled data it is only available at an extremely limited size. 
+One the main idea to tackle this problem is to make use of weak human supervision or weakly labeled data, as it is much cheaper to collect or readily available at much larger scale. This section focuses on addressing the following questions:
 \resq{c4.1}
 
 We propose to pseudo-label a large set of unlabeled data using an unsupervised method and train a neural ranker using these ``weak'' or ``noisy'' labels. Given this setup, we examine various neural ranking models with different ranking architectures and objectives, i.e., point-wise and pair-wise, as well as different input representations, from encoding query-document pairs into dense\:/\:sparse vectors to learning query\:/\:document embedding representations. 
 
-Our results have broad impact as the proposal to use unsupervised traditional methods as weak supervision signals is applicable to variety of IR tasks, such as filtering or classification, without the need for supervised data.  More generally, our approach unifies the classic IR models with currently emerging data-driven approaches in an elegant way.
+Our results have broad impact as the proposal to use unsupervised traditional methods as weak supervision signals and is applicable to a variety of IR tasks, such as filtering or classification, without the need for supervised data.  More generally, our approach unifies the classic IR models with currently emerging data-driven approaches in an elegant way.
 
 \subsection{Pseudo-Labeling Unlabeled Data}
 \label{sec:pseudo_labeling}
-We use the idea of ``Pseudo-Labeling'' and propose to leverage a classic unsupervised IR model to annotate a large amounts of unlabeled data and infer weak labels and use this signal to train supervised models as if we had the ground truth labels.
+We use the idea of ``Pseudo-Labeling'' and propose to leverage a classic unsupervised IR model to annotate a large amount of unlabeled data and infer weak labels and use this signal to train supervised models as if we had the ground truth labels.
 Since the data is generated programmatically, we can generate billions of training instances with almost no cost. 
 \footnote{Weak supervision for training a ranker may refer to using click-through data. Here, we assume that no external information, e.g. search logs, is available.}
 
@@ -22,7 +22,7 @@ In the followings, we describe different neural architectures in details and fin
 
 \subsection{Neural Ranking Architectures}
 \label{sec:neural_ranking_arch}
-In this section, we introduce three different neural ranking models that are trained based on different ``objectives''. We describe the architecture of the base neural network shared by these models. We further discuss the three different ``input layers'' used in our neural rankers to encode information of a given query-document pairs.
+In this section, we introduce three different neural ranking models that are trained based on different ``objectives''. We describe the architecture of the base neural network shared by these models. We further discuss the three different ``input layers'' used in our neural rankers to encode information of given query-document pairs.
 \medskip
 
 \label{sec:models}
@@ -149,7 +149,7 @@ For the network in \modelthree, we have a similar input vector with both $tfv_{d
 %In this paradigm, we have no document-level statistic, e.g., document frequency, although collection term frequency would be considered as a clue for term weighting. 
 
 \subsubsection{\label{sec:feedthree}\Feedthree (\fthree)}:
-The major weakness of the previous input representation is that words are treated as discrete units, hence prohibiting the network from  performing soft matching between semantically similar words in queries and documents. In this input representation paradigm, we rely on word embeddings to obtain more powerful representation of queries and documents that could bridge the lexical chasm. % of \fthree.
+The major weakness of the previous input representation is that words are treated as discrete units, hence prohibiting the network from performing soft matching between semantically similar words in queries and documents. In this input representation paradigm, we rely on word embeddings to obtain more powerful representations of queries and documents that could bridge the lexical chasm. % of \fthree.
 The representation function $\psi$ consists of three components: an embedding function $\mathcal{E}: \mathcal{V} \rightarrow \mathbb{R}^{m}$ (where $\mathcal{V}$ denotes the vocabulary set and $m$ is the embedding dimension), a weighting function $\mathcal{W}: \mathcal{V} \rightarrow \mathbb{R}$, and a compositionality function $\odot: (\mathbb{R}^{m}, \mathbb{R})^n \rightarrow \mathbb{R}^{m}$. More formally, the function $\psi$ for the point-wise setting is defined as:
 \begin{equation}
 \psi(q, d) = [\odot_{i=1}^{|q|}(\mathcal{E}(t_i^q), \mathcal{W}(t_i^q)) || \odot_{i=1}^{|d|} (\mathcal{E}(t_i^d), \mathcal{W}(t_i^d))],
@@ -180,10 +180,10 @@ In our experiments, we used two standard TREC collections: The first collection 
 \subsubsection{Training query set}
 \label{sec:query_set}
 To train our neural ranking models, we used the unique queries (only the query string) appearing in the AOL query logs~\citep{Pass:2006}. This query set contains web queries initiated by real users in the AOL search engine that were sampled from a three-month period from March 1, 2006 to May 31, 2006. We filtered out a large volume of navigational queries containing URL substrings (``http'', ``www.'', ``.com'', ``.net'', ``.org'', ``.edu''). We also removed all non-alphanumeric characters from the queries. We made sure that no queries from the training set appear in our evaluation sets. For each dataset, we took queries that have at least ten hits in the target corpus using the pseudo-labeler method. Applying all these processes, we ended up with 6.15 million queries for the Robust04 dataset and 6.87 million queries for the ClueWeb dataset. 
-In our experiments, we randomly selected $80\%$ of the training queries as training set and the remaining $20\%$ of the queries were chosen as validation set for hyper-parameter tuning. As the ``pseudo-labeler'' in our training data, we have used BM25 to score/rank documents in the collections given the queries in the training query set.
+In our experiments, we randomly selected $80\%$ of the training queries as training set and the remaining $20\%$ of the queries were chosen as the validation set for hyper-parameter tuning. As the ``pseudo-labeler'' in our training data, we have used BM25 to score/rank documents in the collections given the queries in the training query set.
 
 \subsubsection{Evaluation query sets} 
-We use the following query sets for evaluation that contain human-labeled judgements: a set of 250 queries (TREC topics 301--450 and 601--700) for the Robust04 collection that were previously used in TREC Robust Track 2004. A set of 200 queries (topics 1-200) were used for the experiments on the ClueWeb collection. These queries were used in TREC Web Track 2009--2012. We only used the title of topics as queries.
+We use the following query sets for evaluation that contain human-labeled judgments: a set of 250 queries (TREC topics 301--450 and 601--700) for the Robust04 collection that were previously used in TREC Robust Track 2004. A set of 200 queries (topics 1-200) were used for the experiments on the ClueWeb collection. These queries were used in TREC Web Track 2009--2012. We only used the title of topics as queries.
 
 \subsubsection{Evaluation Metrics}
 To evaluate retrieval effectiveness, we report three standard evaluation metrics: mean average precision (MAP) of the top-ranked $1000$ documents, precision of the top $20$ retrieved documents (P@20), and normalized discounted cumulative gain (nDCG)~\citep{Jarvelin:2002} calculated for the top $20$ retrieved documents (nDCG@20). Statistically significant differences of MAP, P@20, and nDCG@20 values are determined using the two-tailed paired t-test with $p\_value<0.05$, with Bonferroni correction.
@@ -212,10 +212,10 @@ Interestingly, combinations of the \modeltwo and the \modelthree with \feedthree
 
 Regarding the modeling architecture, in the \modeltwo and the \modelthree, compared to the \modelone, we define objective functions that target to learn ranking instead of scoring. This is particularly important in weak supervision, as the scores are imperfect values\:---\:using the ranking objective alleviates this issue by forcing the model to learn a preference function rather than reproduce absolute scores.
 %
-In other words, using the ranking objective instead of learning to predict calibrated scores allows the \modeltwo and the \modelthree to learn to distinguish between examples whose scores are close. This way, some small amount of noise, which is a common problem in weak supervision, would not perturb the ranking as easily.
+In other words, using the ranking objective instead of learning to predict calibrated scores allows the \modeltwo and the \modelthree to learn to distinguish between examples whose scores are close. This way, some small amount of noise, which is a common problem in weak supervision, would not perturb the ranking as easily~\citep{Zamani:2018:ictir}.
 
 Regarding the input representations, \feedthree leads to better performance compared to the other ones in all models.
-Using \feedthree not only provides the network with more information, but also lets the network to learn proper representation capturing the needed elements for the next layers with better understanding of the interactions between query and documents. 
+Using \feedthree not only provides the network with more information, but also lets the network to learn proper representation capturing the needed elements for the next layers with a better understanding of the interactions between query and documents. 
 Providing the network with already engineered features would block it from going beyond the weak supervision signal and limit the ability of the models to learn latent features that are unattainable through feature engineering. 
 
 Note that although the \modelthree is more precise in terms of MAP, the \modeltwo is much faster in the inference time ($O(n)$ compared to $O(n^2)$), which is a desirable property in real-life applications.
@@ -234,9 +234,9 @@ This phenomenon is also the case for models with the \feedtwo, but with less imp
 \subsubsection{How are the models related?}
 %
 To better understand the relationship of different neural models described above, we compare their performance across the query dimension following the approach in~\citep{Mitra:2016}. 
-We assume that similar models should perform similarly for the same queries. Hence, we represent each model by a vector, called the performance vector, whose elements correspond to per query performance of the model, in terms of nDCG@20. The closer the performance vectors are, the more similar the models are in terms of query by query performance. For the sake of visualization, we reduce the vectors dimension by projecting them to a two-dimensional space, using t-Distributed Stochastic Neighbor Embedding (t-SNE)\footnote{\url{https://lvdmaaten.github.io/tsne/}}.
+We assume that similar models should perform similarly for the same queries. Hence, we represent each model by a vector, called the performance vector, whose elements correspond to per query performance of the model, in terms of nDCG@20. The closer the performance vectors are, the more similar the models are in terms of the query by query performance. For the sake of visualization, we reduce the vectors dimension by projecting them to a two-dimensional space, using t-Distributed Stochastic Neighbor Embedding (t-SNE)\footnote{\url{https://lvdmaaten.github.io/tsne/}}.
 
-Figure~\ref{fig:modelproximity} illustrates the proximity of different models in the Robust04 collection. Based on this plot, models with similar input representations (same color) have quite close performance vectors, which means that they perform similarly for same queries. This is not necessarily the case for models with similar architecture (same shape). 
+Figure~\ref{fig:modelproximity} illustrates the proximity of different models in the Robust04 collection. Based on this plot, models with similar input representations (same color) have quite close performance vectors, which means that they perform similarly for the same queries. This is not necessarily the case for models with similar architecture (same shape). 
 This suggests that the amount and the way that we provide information to the networks are the key factors in the ranking performance. 
 
 We also observe that the \modelone with \feedone is the closest to BM25 which is expected. 
@@ -264,10 +264,9 @@ In this experiment, we focus on the best performing combination, i.e., the \mode
 \end{figure}
 %
 Figure~\ref{fig:scatter} illustrates the scatter plots of the learned weight for each vocabulary term and its IDF, in both collections.
-This is an interesting observation as we do not provide any global corpus information to the network in training and the network is able to infer such a global information by only observing individual training instances.
+This is an interesting observation as we do not provide any global corpus information to the network in training and the network is able to infer such global information by only observing individual training instances.
 % This demonstrates the ability of neural networks to automatically extract meaningful features for the task.
 
-frequency of terms. 
 \input{03-part-02/chapter-04/figs_and_tables/table_diff_embeddings_results.tex}
 \subsubsection{How well do other alternatives for the embedding and weighting functions in the \feedthree perform?}
 Considering \feedthree as the input representation, we have examined different alternatives for the embedding function $\mathcal{E}$: (1) employing pre-trained word embeddings learned from an external corpus (we used Google News), (2) employing pre-trained word embeddings learned from the target corpus (using the skip-gram model \cite{Mikolov:2013}), and (3) learning embeddings during the network training as it is explained in Section~\ref{sec:feedthree}. 
@@ -310,13 +309,13 @@ When enough training data is fed to the network, initializing with pre-trained e
 An interesting observation here is that in both collections, these two initializations converge when the models exceed the performance of the weak supervision source, which is BM25 in our experiments. 
 This suggests that the convergence occurs when accurate representations are learned by the networks, regardless of the initialization.
 
-%In other words, after network sees enough amount of train data to go beyond the supervision signal, it does not matter that with which initialization the model has started to train.
+%In other words, after the network sees enough amount of train data to go beyond the supervision signal, it does not matter that with which initialization the model has started to train.
 \input{03-part-02/chapter-04/figs_and_tables/table_svm_results.tex}
 \subsubsection{Are deep neural networks a good choice for learning to rank with weak supervision?}
 %
-To see if there is a real benefit from using a non-linear neural network in different settings, we examined RankSVM~\citep{Joachims:2002} as a strong-performing pair-wise learning to rank method with linear kernel that is fed with different inputs: \feedone, \feedtwo, and \feedthree. Considering that off-the-shelf RankSVM is not able to learn embedding representations during training, for \feedthree, instead of learning embeddings we use a pre-trained embedding matrix trained on Google News and fixed IDF weights. 
+To see if there is a real benefit from using a non-linear neural network in different settings, we examined RankSVM~\citep{Joachims:2002} as a strong-performing pair-wise learning to rank method with the linear kernel that is fed with different inputs: \feedone, \feedtwo, and \feedthree. Considering that off-the-shelf RankSVM is not able to learn embedding representations during training, for \feedthree, instead of learning embeddings we use a pre-trained embedding matrix trained on Google News and fixed IDF weights. 
 
-The results are reported in Table~\ref{tbl_svm}. As BM25 is not a linear function, RankSVM with linear kernel is not able to completely approximate it. However, surprisingly, for both \feedone and \feedtwo, RankSVM works as well as neural networks (see Table~\ref{tbl_main}). 
+The results are reported in Table~\ref{tbl_svm}. As BM25 is not a linear function, RankSVM with the linear kernel is not able to completely approximate it. However, surprisingly, for both \feedone and \feedtwo, RankSVM works as well as neural networks (see Table~\ref{tbl_main}). 
 %
 Also, compared to the corresponding experiment in Table~\ref{tbl_res_m3f3_em}, the performance of the neural network with an external pre-trained embedding and IDF weighting is not considerably better than RankSVM. 
 This shows that having non-linearity in neural networks does not help that much when we do not have representation learning as part of the model.
@@ -330,17 +329,17 @@ Comparing the results of this experiment with \mone-\fthree in Table~\ref{tbl_ma
 This shows that the most important superiority of deep neural networks over other machine learning methods is their ability to learn an effective representation and take all the interactions between query and document(s) into consideration for approximating an effective ranking/scoring function. 
 This can be achieved when we have a deep enough network with non-\:linear activations.
 
-%\alexi{Mosi@: we should also include supervised learning experiments on smaller subsets of human judgements, if possible. The idea is that in these scenarios where labeled data is scarce, weak supervision is really useful. Having plots, where we use various percentages of labeled examples and observing how weak supervision is increasingly important as the number of labeled examples becomes smaller.}
+%\alexi{Mosi@: we should also include supervised learning experiments on smaller subsets of human judgments, if possible. The idea is that in these scenarios where labeled data is scarce, weak supervision is really useful. Having plots, where we use various percentages of labeled examples and observing how weak supervision is increasingly important as the number of labeled examples becomes smaller.}
 \input{03-part-02/chapter-04/figs_and_tables/table_semisup_results.tex}
 \subsubsection{How useful is learning with weak supervision for supervised ranking?}
 %
-In this set of experiments, we investigate whether employing weak supervision as a pre-training step helps to improve the performance of supervised ranking, when a small amount of training data is available. Table~\ref{tbl_semisup} shows the performance of the \modelthree with the \feedthree in three situations: (1) when it is only trained on weakly supervised data (similar to the previous experiments), (2) when it is only trained on supervised data, i.e., relevance judgments, and (3) when the parameters of the network is pre-trained using the weakly supervised data and then fine tuned using relevance judgments.
+In this set of experiments, we investigate whether employing weak supervision as a pre-training step helps to improve the performance of supervised ranking, when a small amount of training data is available. Table~\ref{tbl_semisup} shows the performance of the \modelthree with the \feedthree in three situations: (1) when it is only trained on weakly supervised data (similar to the previous experiments), (2) when it is only trained on supervised data, i.e., relevance judgments, and (3) when the parameters of the network is pre-trained using the weakly supervised data and then fine-tuned using relevance judgments.
 %
-In all the supervised scenarios, we performed 5-fold cross-\:validation over the queries of each collection and in each step, we used the TREC relevance judgments of the training set as supervised signal. For each query with $m$ relevant documents, we also randomly sampled $m$ non-relevant documents as negative instances. Binary labels are used in the experiments: $1$ for relevant documents and $0$ for non-relevant ones.
+In all the supervised scenarios, we performed 5-fold cross-\:validation over the queries of each collection and in each step, we used the TREC relevance judgments of the training set as a supervised signal. For each query with $m$ relevant documents, we also randomly sampled $m$ non-relevant documents as negative instances. Binary labels are used in the experiments: $1$ for relevant documents and $0$ for non-relevant ones.
 
 The results in Table~\ref{tbl_semisup} suggest that pre-training the network with a weak supervision signal, significantly improves the performance of supervised ranking.
 %
-The reason for the poor performance of the supervised model compared to the conventional learning to rank models is that the number of parameters are much larger, hence it needs much more data for training.
+The reason for the poor performance of the supervised model compared to the conventional learning to rank models is that the number of parameters is much larger, hence it needs much more data for training.
 
 In situations when little supervised data is available, it is especially helpful to use unsupervised pre-training which acts as a network pre-conditioning that puts the parameter values in the appropriate range that renders the optimization process more effective for further supervised training~\citep{Rrhan:2010}.
 

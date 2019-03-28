@@ -1,13 +1,13 @@
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 \begin{table}[!t]
-\fontsize{7}{8}\selectfont
 %\newcolumntype{Y}{>{\centering\arraybackslash}X}
 \caption{Results on the task of status classification.}
 \makebox[\linewidth][c]{
 \centering
-\begin{subtable}[b]{0.5\textwidth}
+\begin{subtable}[b]{0.48\textwidth}
 \captionof{table}{\label{tbl:SVM-status}Accuracy of the $SVM$ classifier}
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{ c l l l l l } 
 \toprule
 \multicolumn{2}{ c }{\multirow{2}{*}{\textbf{Period}}} & \multicolumn{4}{ c }{\textbf{Test}}
@@ -23,13 +23,14 @@
 & \textit{All} & - & - & - & \tc 79.87
 \\\bottomrule
 \end{tabular}
-\shrink
+\end{adjustbox}
 \end{subtable}
 %
-~~~
+~~
 %
-\begin{subtable}[b]{0.5\textwidth}
+\begin{subtable}[b]{0.48\textwidth}
 \captionof{table}{\label{tbl:swlm-status}Accuracy of the $SVM_{\achswlm}$ classifier}
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{ c l l l l l } \toprule
 \multicolumn{2}{ c }{\multirow{2}{*}{\textbf{Period}}} & \multicolumn{4}{ c }{\textbf{Test}}
 \\  \cmidrule{3-6}
@@ -44,6 +45,7 @@
 & All & - & - & - & \tc 86.98
 \\\bottomrule
 \end{tabular}
+\end{adjustbox}
 \end{subtable}
 }
 \end{table}

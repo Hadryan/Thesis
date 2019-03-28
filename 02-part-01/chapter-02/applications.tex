@@ -95,7 +95,7 @@ In this section, we describe the test collections used in our experiments as wel
 We use the Robust04, WT10G, and GOV2 test collections, which are different in terms of both size and genre of documents. 
 Information about each collection is summarized in Table~\ref{tbl_dataset}.
 
-We have employed the Lemur toolkit and Indri\footnote{http://www.lemurproject.org/} search engine to carry out our experiments. We have implemented \acswlm and \acrswlm in Lemur project framework. 
+We have employed the Lemur toolkit and Indri\footnote{\url{http://www.lemurproject.org/}} search engine to carry out our experiments. We have implemented \acswlm and \acrswlm in Lemur project framework. 
 In all our experiments, we only use the ``title'' field of the TREC topics as queries. 
 We have used the Porter stemmer for stemming all queries and document's terms and removed stopwords using the standard InQuery stopword list. 
 We have used the KL-Divergence model~\citep{Lafferty:2001}, with Dirichlet smoothing~\citep{Zhai:2001} as the retrieval model in all of the experiments, including initial retrievals as well as feedback runs.
@@ -137,6 +137,7 @@ Recall that our approach takes a considerable risk by removing specific terms th
 These results provide strong support for effectiveness of \swlms, and the general intuitions on the importance of building accurate models of relevance underlying them.
 
 
+\input{02-part-01/chapter-02/figs_and_tables/table_prf.tex}
 %---------------------------------------
 \subsubsection{\acswlm for Pseudo Relevance Feedback}
 \label{sec:PRF}
@@ -145,7 +146,6 @@ Pseudo relevance feedback aims to expand the query to improve the performance of
 Table~\ref{tbl_prf} presents the results of employing \swlms, \rswlms as the feedback model as well as baseline methods on the task of PRF\@. 
 As can be seen, \acrswlm significantly outperforms \emph{all} the baselines in terms of MAP, in WT10G and GOV2 collections, that are noisy Web collections.\footnote{Note that we only indicate when (R)\acswlm is significantly better than all baseline methods, they are always significantly better than the non-expansion MLE baseline.} Furthermore, it has the highest reliability of improvements in terms of Robustness Index in all the collections.
 In the PRF task, \acrswlm works better than \acswlm as it guides the estimator of the feedback model toward the query model and prevents it to be distracted by the noises of non-relevant documents.
-\input{02-part-01/chapter-02/figs_and_tables/table_prf.tex}
 
 Although it has been shown that PRF always improves the average performance of retrieval \citep{Harman:2009}, under some parameter settings, for some topics it decreases the average precision.  This is due to the fact that there might be some non-relevant documents in the feedback set containing non-relevant terms resulting to the topic drift in the extracted feedback model~\cite{He:2009:ECIR,He:2009:CIKM,Carpineto:2012}. Thus, as one of the main challenging problems in PRF, it is necessary to control the contribution of different feedback documents for inclusion in the feedback model based on their merit~\citep{He:2009:ECIR} for a specific query. 
 

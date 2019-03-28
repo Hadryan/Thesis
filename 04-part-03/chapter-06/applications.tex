@@ -1,5 +1,4 @@
 \section{Universal Transformer for Sequence Modeling}
-\todo{add stuff}
 In this section, we address the following research question:
 \resq{c6.2}
 We evaluate Universal Transformers on a range of algorithmic and language understanding tasks and discuss the results.
@@ -9,7 +8,9 @@ The bAbi question answering dataset~\citep{weston2015towards} consists of 20 dif
 
 There are two versions of the dataset, one with 1k training examples and the other with 10k examples. It is important for a model to be data-efficient to achieve good results using only the 1k training examples. Moreover, the original idea is that a single model should be evaluated across all the tasks (not tuning per task), which is the \emph{train joint} setup in Tables~\ref{tab:babi-results} and ~\ref{tbl:babi_details}.
 
-A standard Transformer does not achieve good results on this task\footnote{We experimented with different hyper-parameters and different network sizes, but it always overfits.}. However, we have designed a model based on the Universal Transformer which achieves state-of-the-art results on this task.
+Solving all the bAbI tasks by training a model on the 1k training dataset is pretty challenging as some of the tasks are rather complex and with only 1k examples for each task, its hard for most models to generalize well. So data efficiency should be a key property to be considered here. 
+We tried a standard Transformer and observed that it does not achieve good results on bAbI tasks\footnote{We experimented with different hyper-parameters and different network sizes, but it always overfits.}. However, we have designed a model based on the Universal Transformer which achieves state-of-the-art results bAbI task. 
+This is mainly due to recurrent inductive bias in the Universal Transformer as well as the fact that sharing parameters across depth decreases the number of parameters which helps the model generalize better.
 
 To encode the input, similar to~\cite{henaff2016tracking}, we first encode each fact in the story by applying a learned multiplicative positional mask to each word's embedding, and summing up all embeddings.
 We embed the question in the same way, and then feed the (Universal) Transformer with these embeddings of the facts and questions. 
@@ -46,9 +47,9 @@ The generic neural network architectures cannot generalize well in algorithmic a
 
 We trained UTs on three algorithmic tasks, namely Copy, Reverse, and (integer) Addition, all on strings composed of decimal symbols (`0'-`9'). In all the experiments, we train the models on sequences of length 40 and evaluated on sequences of length 400~\citep{neural_gpu} to assess the ability of the models on length generalization.
 
-As an additional inductive bias for UTs on this tasks, when calculating the positional embedding, we use  positions starting with randomized offsets per example. This way, we further encourage the model to learn position-relative transformations, which improves length generalization.
+As an additional inductive bias for UTs on these tasks, when calculating the positional embedding, we use positions starting with randomized offsets per example. This way, we further encourage the model to learn position-relative transformations, which improves length generalization.
 Results are shown in Table~\ref{tab:algorithmic}. Both UT and UT with randomized position offset outperform LSTM and vanilla Transformer by a wide margin on all three tasks. 
-The Neural GPU reports perfect results on this task~\citep{neural_gpu}, however we note that this result required a special curriculum-based training protocol which was not used for other models.
+The Neural GPU reports perfect results on this task~\citep{neural_gpu}, however, we note that this result required a special curriculum-based training protocol which was not used for other models.
 
 \input{04-part-03/chapter-06/figs_and_tables/table_alg_results.tex}
 
@@ -80,9 +81,8 @@ nesting = 3.
 We use the mix-strategy discussed in~\citep{ZS14} to generate the datasets. Unlike~\citep{ZS14}, we do not use any curriculum learning strategy during training and we make no use of target sequences at test time. Tables~\ref{tab:lte-mem} and \ref{tab:lte-prog} present the performance of an LSTM model, Transformer, and Universal Transformer on the program evaluation and memorization tasks, respectively. UT achieves perfect scores in all the memorization tasks and also outperforms both LSTMs and Transformers in all program evaluation tasks by a wide margin. 
 
 
-
 \subsection{Subject-Verb Agreement}
-Next, we consider the task of predicting number-agreement between subjects and verbs in English sentences~\citep{linzen2016assessing}. Succeeding in this task is a strong indicator that a model can learn to approximate syntactic structure and therefore it was proposed by~\citet{linzen2016assessing} as proxy for assessing the ability of different models to capture hierarchical structure in natural language. 
+Next, we consider the task of predicting number-agreement between subjects and verbs in English sentences~\citep{linzen2016assessing}. Succeeding in this task is a strong indicator that a model can learn to approximate syntactic structure and therefore it was proposed by~\citet{linzen2016assessing} as a proxy for assessing the ability of different models to capture hierarchical structure in natural language. 
 
 Two experimental setups were proposed by ~\citet{linzen2016assessing} for training a model on this task: 1) training with a language modeling objective, i.e., next word prediction, and 2) as binary classification, i.e. predicting the number of the verb given the sentence. 
 We follow the experimental protocol of ~\citet{linzen2016assessing} for solving the task using a language modeling training setup, i.e.\ a next word prediction objective, followed by calculating the ranking accuracy of the target verb at test time. 
@@ -102,12 +102,10 @@ Here are some examples for this task in which subjects and the corresponding ver
 \input{04-part-03/chapter-06/figs_and_tables/table_sva_results.tex}
 Our results are summarized in Table~\ref{tab:sva}. The best LSTM with attention from the literature achieves 99.18\% on this task~\citep{yogatama2018memory}, outperforming a vanilla Transformer~\citep{tran18}. UTs significantly outperform standard Transformers, and achieve an \emph{average} result comparable to the current state of the art (99.2\%). However, we see that UTs (and particularly with dynamic halting) perform progressively better than all other models as the number of attractors increases (see the last row, $\Delta$).
 
-
-\todo{why ut helps here?}
-
+The the recurrent inductive bias helps the Universal Transformer to better model the structured data as capture the relations \todo{fix.}
 
 \subsection{LAMBADA Language Modeling}
-The LAMBADA task~\citep{paperno2016lambada} is a language modeling task consisting of predicting a missing target word given a broader context of 4-5 preceding sentences. The dataset was specifically designed so that humans are able to accurately predict the target word when shown the full context, but not when only shown the target sentence in which it appears. It therefore goes beyond language modeling, and tests the ability of a model to incorporate broader discourse and longer term context when predicting the target word\footnote{\url{http://clic.cimec.unitn.it/lambada/appendix_onefile.pdf}}.
+The LAMBADA task~\citep{paperno2016lambada} is a language modeling task consisting of predicting a missing target word given a broader context of 4-5 preceding sentences. The dataset was specifically designed so that humans are able to accurately predict the target word when shown the full context, but not when only shown the target sentence in which it appears. It, therefore, goes beyond language modeling, and tests the ability of a model to incorporate broader discourse and longer term context when predicting the target word\footnote{\url{http://clic.cimec.unitn.it/lambada/appendix_onefile.pdf}}.
 Here is a sample from the dataset:
 
 \begin{table}[h!]
@@ -129,13 +127,13 @@ Here is a sample from the dataset:
 
 The LAMBADA task consists in predicting the target word given the whole passage (i.e., the context plus the target sentence). A ``control set''  is also provided which was constructed by randomly sampling passages of the same shape and size as the ones used to build LAMBADA, but without filtering them in any way. The control set is used to evaluate the models at standard language modeling before testing on the LAMBADA task, and therefore to ensure that low performance on the latter cannot be attributed simply to poor language modeling.
 
-The task is evaluated in two settings: as \emph{language modeling} (the standard setup) and as \emph{reading comprehension}. In the former (more challenging) case, a model is simply trained for next-word prediction on the training data, and evaluated on the target words at test time (i.e.\ the model is trained to predict all words, not specifically challenging target words).  In the latter setting, introduced by Chu et al.~\cite{chu2017broad}, the target sentence (minus the last word) is used as query for selecting the target word from the context sentences. Note that the target word appears in the context 81\% of the time, making this setup much simpler. However the task is impossible in the remaining 19\% of the cases.
+The task is evaluated in two settings: as \emph{language modeling} (the standard setup) and as \emph{reading comprehension}. In the former (more challenging) case, a model is simply trained for the next-word prediction on the training data, and evaluated on the target words at test time (i.e.\ the model is trained to predict all words, not specifically challenging target words).  In the latter setting, introduced by Chu et al.~\cite{chu2017broad}, the target sentence (minus the last word) is used as the query for selecting the target word from the context sentences. Note that the target word appears in the context 81\% of the time, making this setup much simpler. However, the task is impossible in the remaining 19\% of the cases.
 
 \input{04-part-03/chapter-06/figs_and_tables/table_lambada_results.tex}
 
 The results are shown in Table~\ref{tab:lambada}. Universal Transformer achieves state-of-the-art results in both the language modeling and reading comprehension setup, outperforming both LSTMs and vanilla Transformers. Note that achieving good results on the control set only shows a model's strength in standard language modeling.
 
-Our best fixed UT results used 6 steps. However, the average number of steps that the best UT with dynamic halting took on the test data over all positions and examples was $8.2 \rpm 2.1$. In order to see if the dynamic model did better simply because it took more steps, we trained two fixed UT models with 8 and 9 steps respectively (see last two rows). Interestingly, these two models achieve better results compared to the model with 6 steps, but \emph{do not outperform the UT with dynamic halting}. This leads us to believe that dynamic halting may act as a useful regularizer for the model via incentivizing a smaller numbers of steps for some of the input symbols, while allowing more computation for others.
+Our best fixed UT results used 6 steps. However, the average number of steps that the best UT with dynamic halting took on the test data over all positions and examples was $8.2 \rpm 2.1$. In order to see if the dynamic model did better simply because it took more steps, we trained two fixed UT models with 8 and 9 steps respectively (see last two rows). Interestingly, these two models achieve better results compared to the model with 6 steps, but \emph{do not outperform the UT with dynamic halting}. This leads us to believe that dynamic halting may act as a useful regularizer for the model via incentivizing smaller numbers of steps for some of the input symbols, while allowing more computation for others.
 
 \subsection{Machine Translation}
 We trained a UT on the WMT 2014 English-German translation task using the same setup as reported in \citep{transformer} in order to evaluate its performance on a large-scale sequence-to-sequence task. Results are summarized in Table~\ref{tab:wmt}. The UT with a fully-connected recurrent transition function (instead of separable convolution) and without ACT improves by 0.9 BLEU over a Transformer and 0.5 BLEU over a Weighted Transformer with approximately the same number of parameters \citep{ahmed2017weighted}.
@@ -147,7 +145,7 @@ Open-domain question answering aims to satisfy users who are looking for a direc
 This requires querying large open-domain knowledge sources like the Web. 
 Inferring the answer to a question given multiple documents that potentially contain the answer, is at the heart of the open-domain question answering task. 
 Most open-domain question answering systems described in the literature first retrieve relevant documents or passages, select one or a few of them as the context, and then feed the question and the context to a reading comprehension system to extract the answer~\citep{buck2017ask, chen2017reading, seo2016bidirectional, dhingra2016gated}. 
-However, information needed to answer complex questions is not always contained in a single, directly relevant document that is ranked high. In many cases, there is a need to read multiple documents, combine them, and reason over the facts from these documents to be able to give the correct answer to the question.
+However, the information needed to answer complex questions is not always contained in a single, directly relevant document that is ranked high. In many cases, there is a need to read multiple documents, combine them, and reason over the facts from these documents to be able to give the correct answer to the question.
 
 For example, in Figure~\ref{fig:example}, in order to infer the correct answer to the question: ``\texttt{Who is the Spanish artist, sculptor and draughtsman famous for co-founding the Cubist movement?}'' given the top-ranked document, a reading comprehension system most likely will extract ``\texttt{Georges Braque}'' as the answer, which is not the correct answer. 
 In this example, in order to infer the correct answer, one has to go down the ranked list, gather and encode facts, even those that are not immediately relevant to the question, like ``\emph{Malaga is a city in Spain},'' which can be inferred from a document at rank 66, and then in a multi-step reasoning process, infer some new facts, including ``\emph{Picasso was a Spanish artist}'' given documents at ranks~12 and~66, and ``\emph{Picasso, who was a Spanish artist, co-founded the Cubist}'' given the previously inferred fact and the document ranked third. 
@@ -196,7 +194,7 @@ In the setup we consider here, the model is given a question $q$ and a set of $n
 
 This is different from the standard Reading Comprehension (RC) tasks~\cite{hermann2015teaching,xiong2016dynamic}. 
 First of all, in RC a single document (passage) is given, from which the answer should be extracted. 
-Secondly, in RC a strong supervision on the positions of the answer spans is available during training.
+Secondly, in RC, a strong supervision on the positions of the answer spans is available during training.
 We also assume that the utilized information or techniques to retrieve relevant documents are not available to the model, therefore there is no leverage for getting better-supporting documents.
 
 \begin{figure}[!t]
@@ -214,7 +212,7 @@ The general schema of \tracrnet is depicted in Figure~\ref{fig:model_tracrnet}.
 Below, we explain the details of each of these layers in the model.
 
 \mypar{Input encoding} 
-The Input Encoding layer is in charge of encoding each of the documents and the question to single vectors given their words' embeddings. For this layer, we used a stack of $N$ Transformer Encoder blocks that is followed by a depth-wise separable convolution~\citep{kaiser2017depthwise,chollet2017xception} and then a pooling function to get a single vector representation for the whole document or the question  (see  the \texttt{Transformer Encoder} in Figure~\ref{fig:model_tracrnet}) . 
+The Input Encoding layer is in charge of encoding each of the documents and the question to single vectors given their words' embeddings. For this layer, we used a stack of $N$ Transformer Encoder blocks that is followed by a depth-wise separable convolution~\citep{kaiser2017depthwise,chollet2017xception} and then a pooling function to get a single vector representation for the whole document or the question  (see the \texttt{Transformer Encoder} in Figure~\ref{fig:model_tracrnet}). 
 Depth-wise separable convolution is defined by a convolution on each of the feature channels separately, followed by a point-wise convolution that is applied to project them to a feature vector with the desirable depth (see \citep{chollet2017xception} for more details).
 
 \mypar{Multihop reasoning} 
@@ -233,13 +231,13 @@ In addition, the depth-wise recurrency in the Universal Transformer establishes 
 After $T$ steps of refining the representations of documents and the question in the Universal Transformer Encoder, the final output is a matrix of $d$-dimensional vector representations $H \in \mathbb{R}^{(|C_q|+1) \times d}$ for all the documents in $C_q$ and the question $q$.
 
 Given this, we use a stack of $N$ Transformer Decoder blocks (see  the \texttt{Universal Transformer Encoder} in Figure~\ref{fig:model_tracrnet}) to decode the answer.
-To generate answer from the model at inference time, we run the model autoregresively~\citep{graves2013generating}, where the model consumes the previously generated symbols at each time step in order to generate the distribution over the vocabulary for the next symbol. From this distribution, we select the symbol with highest probability as the next symbol.   
+To generate answers from the model at inference time, we run the model autoregresively~\citep{graves2013generating}, where the model consumes the previously generated symbols at each time step in order to generate the distribution over the vocabulary for the next symbol. From this distribution, we select the symbol with the highest probability as the next symbol.   
 
 
 \subsubsection{Datasets}
 We have conducted experiments on two publicly available open-domain question answering datasets: SearchQA~\citep{dunn2017searchqa} and Quasar-T~\citep{dhingra2017quasar}. 
 In both of these datasets, candidate documents (passages) for each question have already been retrieved using a search engine and we do not add any extra documents to these result sets. 
-On both datasets, the human performance is evaluated in a setup where the human subjects try to find the answers to the given question from the same documents retrieved by the IR model.
+On both datasets, human performance is evaluated in a setup where the human subjects try to find the answers to the given question from the same documents retrieved by the IR model.
 
 \mypar{SearchQA}
 SearchQA\footnote{\url{https://github.com/nyu-dl/SearchQA}} is a dataset of 140k question-answer pairs crawled from J!\ Archive, and augmented with text snippets retrieved using the Google search engine. 
@@ -261,10 +259,10 @@ The rest of the hyper-parameters are set to the default values of the Transforme
 In the \emph{Multihop Reasoning} layer, we have a Universal Transformer Encoder with hidden\_size $=512$ and num\_attention\_heads $=4$. 
 We set the number of recurrent steps in depth to 12. The rest of the hyper-parameters are set to the default values of the Universal Transformer model.
 %
-We train with batch size of $4,096$ tokens. We use Adam with learning rate of $1e-9$, $\beta_1 = 0.9$, $\beta_2 = 0.98$, $L_2$ weight decay of $1e-04$, learning rate warmup over the first $16,000$ steps, and linear decay of the learning rate. 
+We train with the batch size of $4,096$ tokens. We use Adam with learning rate of $1e-9$, $\beta_1 = 0.9$, $\beta_2 = 0.98$, $L_2$ weight decay of $1e-04$, learning rate warmup over the first $16,000$ steps, and linear decay of the learning rate. 
 We use a dropout probability of $0.1$ on all layers.
 %
-Since in our model answers are generated using the decoder instead of extracting from the context (detecting spam), to improve the quality of generation, we pretrain all the parameters of the Transformer decoder downstream of the task of language modeling. The embeddings are shared between encoder and decoder, thus the \emph{Input Embedding} layer also enjoys the pretraining. This helps to improve the performance especially in terms of metrics that consider the exact match of the generated answer with the ground truth.
+Since in our model answers are generated using the decoder instead of extracting from the context, to improve the quality of generation, we pretrain all the parameters of the Transformer decoder downstream of the task of language modeling. The embeddings are shared between encoder and decoder, thus the \emph{Input Embedding} layer also enjoys the pretraining. This helps to improve the performance especially in terms of metrics that consider the exact match of the generated answer with the ground truth.
 %
 During the training of the model, we use teacher-forcing, i.e., the decoder input is the gold target, shifted to the right by one position which is the usual setup for training autoregressive models~\citep{williams1989learning}. 
 
@@ -281,9 +279,9 @@ We compare our results with the best reading comprehension and open-domain quest
 To have a true apples-to-apples comparison, we only consider baselines that use no additional resources to solve the task for these datasets. 
 We use the following methods as baselines:
 \begin{enumerate}[leftmargin=*]
-    \item BiDAF~\citep{seo2016bidirectional}, which is a reading comprehension model with bi-di\-rectional attention flow network that uses the concatenation of top-ranked candidate documents as the context.
+    \item BiDAF~\citep{seo2016bidirectional}, which is a reading comprehension model with bi-directional attention flow network that uses the concatenation of top-ranked candidate documents as the context.
     \item R$^3$~\citep{wang2017r}, which is a reinforcement learning approach that uses a ranker for selecting the most confident paragraph to train the reading comprehension model.
-    \item \citet{wang2017evidence}'s model, which learns to re-rank the answers extracted by applying an R$^3$ model on multiple documents based on coverage and strength of each of the documents given the question.
+    \item \citet{wang2017evidence}'s model, which learns to re-rank the answers extracted by applying the R$^3$ model on multiple documents based on coverage and strength of each of the documents given the question.
     \item \citet{lin2018denoising}'s model, which is the most recent paper achieving state-of-the-art performance on the datasets we use for evaluation. 
     They propose to decompose the process into a document selection to filter out noisy paragraphs, and a paragraph reader to extract the correct answer from the filtered documents. 
     Finally, they aggregate multiple answers to obtain the final answer.
@@ -327,7 +325,7 @@ The main advantage of \tracrnet over the baselines is that it makes ``full'' use
 The models proposed by \citet{lin2018denoising} and \citet{wang2017evidence} are the strongest baselines on these datasets. 
 Although they try to capture evidence from multiple sources by reranking or aggregating answers extracted from different documents, they filter out documents that are less likely to help at the beginning of the process. 
 In this fashion, they lose the chance of using information from documents that are not directly relevant, like documents \#12 or/and \#66 in Example~\ref{fig:example}. 
-However, \tracrnet keeps operating on the full set of candidate documents during the whole process and learns to which extent each document contributes to infer the final answer. 
+However, \tracrnet keeps operating on the full set of candidate documents during the whole process and learns to what extent each document contributes to infer the final answer. 
 
 In SearchQA, we notice that for most of the questions, the answer can be extracted given a single document and in many cases, no multi-document multihop reasoning is required. 
 Therefore, since \tracrnet \emph{generates} the answer, as opposed to the baseline models that \emph{extract} the answer from context, it gets a lower EM score. However, in terms of F1 score, \tracrnet slightly improves over the best baseline.

@@ -1,9 +1,9 @@
 \section{Applying \cws and \fwl on Language Understanding Tasks}
-We apply \cws and \fwl, two approaches introduced in this chapter for learning from vast amount of weakly annotated data, while a small set of labeled data exist, to two different tasks: \emph{document ranking} and \emph{sentiment classification}. 
-Whilst these two applications differ considerably, as do the exact operationalization of the propose models to these cases, in both cases the human gold standard data is based on a cognitively complex, or subjective, judgments causing high interrater variation, increasing both the cost of obtaining labels as the need for larger sets of labels.
+We apply \cws and \fwl, two approaches introduced in this chapter for learning from a vast amount of weakly annotated data, while a small set of labeled data exist, to two different tasks: \emph{document ranking} and \emph{sentiment classification}. 
+Whilst these two applications differ considerably, as do the exact operationalization of the proposed models to these cases, in both cases the human gold standard data is based on a cognitively complex, or subjective, judgments causing high interrater variation, increasing both the cost of obtaining labels as the need for larger sets of labels.
 
 \input{03-part-02/chapter-05/figs_and_tables/table_baselins.tex}
-For both tasks, we evaluate the performance of \cws as well as \fwl compared to some baselines that are described in Table~\ref{tbl_baselines}. In the rest of this chapter, we present results of different experiments and studies and we refer to these baselines using their id and name (first and second column in Table~\ref{tbl_baselines}).
+For both tasks, we evaluate the performance of \cws as well as \fwl compared to some baselines that are described in Table~\ref{tbl_baselines}. In the rest of this chapter, we present results of different experiments and studies and we refer to these baselines using their id and name (first and the second column in Table~\ref{tbl_baselines}).
 
 \subsection{Document Ranking}
 This task is the core information retrieval problem and is challenging as the ranking model needs to learn a representation for long documents and capture the notion of relevance between queries and documents. Furthermore, as it was discussed in Chapter~\ref{chap:4}, the size of publicly available datasets with query-document relevance judgments is unfortunately quite small ($\sim 250$ queries).
@@ -87,7 +87,7 @@ We collect 6.15 million queries to train on in Robust04 and 6.87 million queries
 To prepare the weakly labeled training set $\mathcal{D}_w$, we take the top $1,000$ retrieved documents using BM25 for each query from training query set $Q$, which in total leads to $\sim|Q|\times 10^6$ training samples. 
 
 \subsubsection{Experimental Setup.}
-For the evaluation of the whole model, we conducted a 3-fold cross-validation. However, for each dataset, we first tuned all the hyper-parameters of the \tnet in \cws (and \std in the first step of \fwl) in the first step on the set with strong labels using batched GP bandits with an expected improvement acquisition function~\citep{Desautels:2014} and kept the optimal parameters of the \tnet (and \std) fixed for all the other experiments.
+For the evaluation of the whole model, we conducted 3-fold cross-validation. However, for each dataset, we first tuned all the hyper-parameters of the \tnet in \cws (and \std in the first step of \fwl) in the first step on the set with strong labels using batched GP bandits with an expected improvement acquisition function~\citep{Desautels:2014} and kept the optimal parameters of the \tnet (and \std) fixed for all the other experiments.
 The size and number of hidden layers for the \tnet (and \std) is selected from $\{64, 128, 256, 512\}$. The initial learning rate and the dropout parameter were selected from $\{10^{-3}, 10^{-5}\}$ and $\{0.0, 0.2, 0.5\}$, respectively. We considered embedding sizes of $\{300, 500\}$. The batch size in our experiments was set to $128$.  We use ReLU~\citep{Nair:2010} as a non-linear activation function $\alpha$ in \tnet (and \std).  We use the Adam optimizer~\citep{Kingma:2014} for training, and dropout as a regularization technique.
 
 %
@@ -97,7 +97,7 @@ At inference time, for each query, we take the top $2,000$ retrieved documents u
 \label{sec:res_and_disc_ranking}
 We conducted k-fold cross validation on $\mathcal{D}_s$ (the strong data) and report two standard evaluation metrics for ranking: mean average precision (MAP) of the top-ranked $1,000$
 documents and normalized discounted cumulative gain calculated for the top $20$ retrieved documents (nDCG@20). 
-Table~\ref{tbl_main_ranking} shows the performance on both datasets. As can be seen, \fwl and \cws both provide significant boost on the performance on top of the baseline methods over both datasets.
+Table~\ref{tbl_main_ranking} shows the performance on both datasets. As can be seen, \fwl and \cws both provide significant boosts on the performance on top of the baseline methods over both datasets.
 
 
 \input{03-part-02/chapter-05/figs_and_tables/table_ranking_results.tex}
@@ -127,7 +127,7 @@ Table~\ref{tbl_variants_rank_fwl} presents the results of some experiments we ha
 
 Weighting the gradient updates from weak labels during pretraining and fine-tuning the network with strong labels, i.e. NN$_{\text{W}^\omega \to \text{S}}$ seems to work quite well.
 %
-Comparing the performance of \fwlnospace$_{unsuprep}$ to \fwl indicates that, first of all learning the representation of the input data downstream of the main task leads to better results compared to a task-independent unsupervised or self-supervised way. Also the dramatic drop in the performance compared to the \fwl, emphasizes the importance of the preretraining the \std on weakly labeled data.
+Comparing the performance of \fwlnospace$_{unsuprep}$ to \fwl indicates that, first of all, learning the representation of the input data downstream of the main task leads to better results compared to a task-independent unsupervised or self-supervised way. Also, the dramatic drop in the performance compared to the \fwl, emphasizes the importance of the preretraining the \std on weakly labeled data.
 
 %
 We can gain improvement by fine-tuning the NN$_\text{W}$ using labels generated by the \tch without considering their confidence score, i.e. \fwl$\backslash\Sigma$. This means we just augmented the fine-tuning process by generating a fine-tuning set using \tch which is better than $\mathcal{D}_s$ in terms of quantity and $\mathcal{D}_w$ in terms of quality. This baseline is equivalent to setting $\beta = 0$ in Equation~\ref{eqn:eta2}. However, we see a big jump in performance when we use \fwl to include the estimated label quality from the \tch, leading to the best overall results.
@@ -216,7 +216,7 @@ In the rest of the chapter, we will present the main results of the introduced b
 \input{03-part-02/chapter-05/figs_and_tables/table_sentiment_results.tex}
 We report Macro-F1, the official SemEval metric, in Table~\ref{tbl_main_sent}. 
 
-Among all the baselines, \fwl is the best performing approach. \cws is also outperforms all the baselines. 
+Among all the baselines, \fwl is the best performing approach. \cws also outperforms all the baselines. 
 
 For this task, since the amount of data with strong labels are larger compared to the ranking task, the performance of $\text{NN}_{\text{S}}$ is acceptable. Alternately sampling from weak and strong data, i.e.  $\text{NN}_{\text{W}\text{/S}^+}$ gives better results than either of learning from just weak or just strong labels. However, pretraining on weak labels then fine-tuning both the supervision layer and the representation learning layer on strong labels, further improves the performance.  
 

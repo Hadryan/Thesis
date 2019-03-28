@@ -27,7 +27,6 @@ Then, models will be updated in an iterative process until all the estimated mod
 In each iteration, there are two main stages: a \emph{Specification stage} and a \emph{Generalization stage}. 
 In these stages, language models of entities in the hierarchy are iteratively made ``specific,'' by taking out terms explained at higher levels, and ``general,'' by eliminating specific terms of lower layers, which results in models that are both \emph{horizontally} and \emph{vertically} separable as it is described in Section~\ref{subsec:vhs}.
 
-\input{02-part-01/chapter-03/figs_and_tables/alg_hswlm_specification_step.tex}
 In the specification stage, the goal is to eliminate the general terms of the language model of each entity so that the resulted language model demonstrates the entity's specific properties.  
 To do so, the parsimonization method is used to parsimonize the language model of an entity given its ancestors, from the root of the hierarchy to its direct parent, as the background estimations. 
 %
@@ -35,9 +34,11 @@ The order in the hierarchy is of crucial importance here.
 When a language model of an ancestor is considered as the background language model, it should demonstrate the ``specific'' properties of that ancestor. Due to this fact, it is important that before considering the language model of an entity as the background estimation, it has already passed the specification stage, and we have to move top-down.
 Pseudo\:-\:code of the recursive procedure of specification of entities' models in the hierarchy is depicted in Algorithm~\ref{alg:specification_stage}.
 
+\input{02-part-01/chapter-03/figs_and_tables/alg_hswlm_specification_step.tex}
 \input{02-part-01/chapter-03/figs_and_tables/alg_hswlm_generalization_step.tex}
+
 In the generalization stage, the goal is to refine language models by removing terms which do not address the concepts in the level of abstraction of the entity's layer.
 To do so, again parsimonization is exploited but given descendants, which leads to the elimination of specific terms. 
 Here also, before considering the model of an entity as the background estimation, it should be already passed the generalization stage, so generalization moves bottom up.
 Algorithm~\ref{alg:generalization_stage} presents the pseudo\:-\:code for the recursive procedure of generalization of entities' language models in the hierarchy. 
-In the generalization step, the background models of descendants are supposed to be specific enough to show their extremely specific properties. Hence, generalization stages must be applied on the output models of specification stages: specification should precede generalization, as shown in Algorithm~\ref{alg:hswlm} before.
+In the generalization step, the background models of descendants are supposed to be specific enough to show their extremely specific properties. Hence, generalization stages must be applied to the output models of specification stages: specification should precede generalization, as shown in Algorithm~\ref{alg:hswlm} before.
