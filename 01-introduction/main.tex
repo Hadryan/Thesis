@@ -1,85 +1,119 @@
 % !TEX root = ../thesis_main.tex
 \chapter{Introduction}
-Human can effortlessly learn to solve complex real-world problems from only limited or noisy observations and routinely draw successful generalization on them, while it is not easy for machines to learn from imperfect supervision.
-Most of the success of today's machine learning systems depend on the availability of massive amount of labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
+%
+\begin{quote}
+\todo{find a nice quote related to the whole thesis! this is not for every chapter, it's just for intro.}
+\end{quote}
+%
+\todo{instance --> sample, all over the thesis}
+\todo{example --> sample, all over the thesis}
+\todo{book --> thesis, all over the thesis}
 
+Human can effortlessly learn to solve complex real-world problems and learn new concept from only limited or noisy or variant observations and routinely draw successful generalization on them, – e.g. a child can generalize the concept of ``penguin'' from a single picture in a book~\cite{vinyals2016matching}, while it is not easy for best machine learning systems to learn from imperfect supervision.
+
+Most of the success of today's machine learning systems depend on the availability of massive amount of labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
 However, in many real-world applications, such training data is not available, like tasks that are applied medical imaging data where detailed labeling is very expensive. In order to deal with data scarcity in many tasks and applications, we can use higher-level approaches and provide supervision signals for training machine learning models. 
 
 This can be done for instance by
-% \begin{itemize}
-% \renewcommand\labelitemi{--}
-% \item
 using distant or heuristic supervision~\citep{Deriu2016:SemEval,Severyn:2015:SemEval, Dehghani:2016:SIGIR, dehghani:2018:ICLR, Dehghani:2017:nips_metalearn, Ratner:2016,Rekatsinas:2017,Varma:2017}, 
 %
-% \item
 using incidental signals that exist in the data and the environment independently of the tasks and they are co-related to the target tasks~\citep{roth2017incidental}, 
 %
-% \item
 providing supervision by specifying constraints that should hold over the output space~\citep{stewart2017label, clarke2010driving}, 
 %
-% \item
 applying bootstrapping, self-supervised feature learning, and data augmentation to make statistically efficient reuse of available data~\citep{cubuk2018autoaugment, dosovitskiy2016discriminative,donahue2016adversarial},
 %
-% \item
 using transfer learning to generalize knowledge across domains~\citep{Ruder:2019},
 %
-% \item
 using active learning and response-based supervision in which the model receives feedback from interacting with an environment~\citep{clarke2010driving,riezler2014response},
 %
-% \item
 introducing a form of structured prior knowledge\citep{Dehghani:CIKM2016:long,Dehghani:2016:ICTIR}, 
 %
-% \item
 zero/one/few-shot learning~\citep{vinyals2016matching,finn2017model,snell2017prototypical,socher2013zero},
 %
-% \item
 exploiting noisy and inaccurate labels~\citep{Vahdat:2017, Lee:2013,Hinton:2015,Brodley:1999,reed2014training, Patrini:2016, patrini2016loss,malach2017decoupling}, 
 %
-% \item
 and injecting inductive biases into algorithms to generalize better on unobserved data~\citep{cohen2016group, cohen2016steerable, Dehghani:ICLR:2019}.
-% \end{itemize}
 
-All these approaches lead to labels or supervision signals that are perfect. This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision.} 
-%
-Here in this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples. This imperfection can be in the number or coverage of training examples like learning from \emph{incomplete supervision} where only a limited subset of data is labeled or no labeled data is available. The imperfection can refer to the labeling process like in \emph{inexact supervision} where only coarse-grained annotations are provided or \emph{inaccurate supervision} where the given labels are noisy and they are not always ground truth~\citep{zhou2018brief}. We also extend the imperfect supervision to situations where instead of labels, data, i.e. feature vectors, are noisy or subject to change during time.
 
-Building machine learning systems that are able to learn from imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to domains with limited or noisy data.
+All these approaches lead to supervision signals that are not perfect. This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision}. Here in this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples~\citep{zhou2018brief}.
+
+The reason that we focus on language understanding is that  understanding language is an extraordinary cognitive ability of human.
+
+individual's thoughts and actions are determined by the language
+
+
+\todo{talking about tasks: language understanding (as a main cognitive ability): Chomsky stuff, sapphire whorf hypothesis, concrete examples on what we can learn actually which is in fact language understanding. complex questions to abstract concepts. memorizing vs actually modeling relation. Ray Jackendoff stuff.}
+
+Although we mainly focus on language-related tasks and evaluate our proposed ideas on these tasks, some of our propose models have no strong tie to language and can be easily extended to other domains like computer vision.
+
+
+%maybe move this paragraph to conclusion?
+There are many domains and applications that suffer from lack of large amount of high quality labeled data. We believe building machine learning systems that can learn with imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to those domains with limited or noisy data.
+
+
 
 
 \section{Problem Description and Research Questions}
-Curating labeled training data has become the primary bottleneck in developing new methods and applications in machine learning. In many cases, there is either a limited training data available or sometimes the training data is noisy. Hence developing models that are able to learn from such training examples become an important path to extend the benefit of machine learning to all domains and applications. In this thesis, pursuing this goal, we have the following as our main research question:
+Curating large amount of high quality labeled training data has become the primary bottleneck in developing new methods and applications in machine learning. 
+In general supervised learning scenario, each training example, which is used as the supervision signal, consist of a \emph{feature vector} (also called data instance) and a \emph{label}. However, in many domains and application, there is an imperfection in the supervision signal. Here in this thesis, we focus on two main problems: dealing with \emph{noisy} training data or/and \emph{limited} training data. 
+We formulate the main research question that is addressed in this thesis as following:
 \resq{main}
 
-There are many approaches and ideas that can be applied to overcome the lack of a large set of high-quality training examples in different applications. However, here in this thesis, we focus on three main general approaches and introduce some models and frameworks that are capable of learning from noisy or limited training data. 
+Based on the above terminology, i.e. features versus label and noisy versus limited, we can presume different types of imperfections in the supervision signal. In each part of this thesis, we target one or some of these types and proposed ideas that can improve learning process with whit that type of imperfection in supervision. 
 
-We first explore how the structure of the data can be incorporated as prior knowledge to learn representations that are more robust against noise and some structural changes in the data during the time. 
-%
-Then we study how we can develop neural networks that can learn from weakly annotated training examples whit the ability to go beyond the imperfection of the weak labels. We introduce some ideas that can be exploited to meta-learn the quality of labels and modulate the learning process based on the quality of the labels.  
-%
-Finally, we investigate the idea of injecting some inductive biases into models in order to encoding modeling assumptions which helps the models to be more data efficient. We propose the idea of introducing recurrent inductive bias to self-attentive feed-forward sequence models which helps them to generalize better for complex tasks.  
-%
-Based on these, we break down our main research question into three research questions:
+Figure~\ref{fig:thesis_parts} summarizes the different types of supervision we consider in each part of these thesis.
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+        \includegraphics[width=0.55\linewidth]{01-introduction/figs_and_tables/fig_p1.png}
+        \caption{\label{fig:p1}Part I}
+    \end{subfigure}
+        ~ 
+    \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+        \includegraphics[width=0.55\linewidth]{01-introduction/figs_and_tables/fig_p2.png}
+        \caption{\label{fig:p1}Part II}
+    \end{subfigure}
+        ~ 
+    \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+        \includegraphics[width=0.55\linewidth]{01-introduction/figs_and_tables/fig_p3.png}
+        \caption{\label{fig:p1}Part III}
+    \end{subfigure}
+\caption{\label{fig:thesis_parts}Type of imperfections in the supervision that we deal with in each art of this thesis.}
+\end{figure}
 
-\begin{resqbox}
-\begin{enumerate}
-\item[\textbf{\resqname{p1}}] \emph{\resqcontent{p1}}
-\item[\textbf{\resqname{p2}}] \emph{\resqcontent{p2}}
-\item[\textbf{\resqname{p3}}] \emph{\resqcontent{p3}}
-\end{enumerate}
-\end{resqbox}
-% \resq{p1}
-% \resq{p2}
-% \resq{p3}
+In Part~\ref{part1} of the thesis, we mainly study ideas that address the problem of noisy features. We propose robust models that can deal with non-relevant terms in relevant documents when modeling the notion of relevance in the context of relevance feedback tasks for document ranking. We also propose models that are capable of detecting and ignoring the unstable noisy features that change over time when learning representations from data that evolves over time. We also partly address the problems of noisy labels by modeling the relevance in pseudo-relevance feedback tasks for document ranking, where top-k ranked documents in a retrieval run are assumed as relevant documents, while this assumption does not hold for all cases.
 
-In the next section, we present an overview of the thesis and introduce the structure of the content as well as summarize different parts of the thesis.
+The general approach in the proposed models in Part~\ref{part1} is around the idea of exploring how the structure of the data can be incorporated as prior knowledge to learn representations that are more robust against noise and changes in the data during the time. 
+The following research question is the main question that is addressed in Part~\ref{part1} of the thesis:
+\resq{p1}
+%
+In part~\ref{part2} of the thesis, we target the problem of noisy or weak labels. We study how we can develop neural networks that can learn from weakly annotated training examples with the ability to go beyond the imperfection of the weak labels. We study diffident architectural choices and objective functions for neural ranking models to find a more noise tolerant model when learning from pseudo-labels.  We also introduce some ideas that  meta-learn the fidelity of weakly annotated labels and modulate the learning process based on the fidelity scores of weakly labeled examples.
+In this part, we address the following research question:
+\resq{p2}
+%
+In part~\ref{part3}, we deal with the problem of limited labeled data, for instance the context of bAbI reasoning tasks with 1k training examples where the tasks are complex and data is limited in terms of number of training examples. We also study the cases that the we have a lot of labeled examples, but with limited coverage, which can be seen as limitation in the diversity of feature vectors. For instance in the context of algorithmic tasks, with the intention of assessing the ability of models on length generalization, we have plenty of training data but the distribution of sample's length in training is totally different from test set. 
+In this part, we investigate the idea of injecting some inductive biases~\footnote{Inductive biases are ``any biases for choosing one generalization over another, other than strict consistency with the observed training samples." as defined by~\citet{Mitchell80theneed}. We elaborate on this at the beginning of Part~\ref{part3}.} into models in order to encode modeling assumptions that help the models to be more data efficient and generalize better.
+The main research question that is addressed in Part~\ref{part3} is:
+\resq{p3}
+
+There are many approaches and ideas that can be applied to overcome the lack of a large set of high-quality training examples in different applications. However, as we explained above, here in this thesis, we focus on employing the prior knowledge, using data to meta-learn its properties, and introducing inductive biases to learning algorithms, all to improve the learning process. We believe these approaches are great ways to move toward better machine learning systems that are able to generalize over observed imperfect training signals and as ~\citet{Mitchell80theneed} states in his paper:
+\begin{quote}
+``\emph{If biases and initial knowledge are at the heart of the ability to generalize beyond observed data, then efforts to study machine learning must focus on the combined use of prior knowledge, biases and observation in guiding the learning process. It would be wise to make the biases and their use in controlling learning just as explicit as past research has made their observations and use.}''
+\end{quote}
+
+In the next section, we present an overview of the thesis and introduce the structure of the content and summarize different chapters in each part of the thesis.
 
 \section{Thesis Overview}
 This thesis consists of the introductory matter, followed by five main
-chapters that are divided into three parts. Each part is based on one of the three research questions described in the previous section. Finally, it closes off with the Conclusions and Bibliography. 
+chapters that are divided into three parts that are described in the previous section. Finally, it closes off with the Conclusions and Bibliography. 
 The following gives a short description of each part and summarizes each chapter: 
 
 \subsection*{PART I: \titleof{p1}}
-In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant over time. We break our discussions into two chapters:
+In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant over time. We break our discussions in this part of the thesis into two chapters:
 
 \subsubsection*{Chapter 2: \titleof{c2}}
 In this chapter, we address the following research question:
@@ -110,8 +144,9 @@ In \cws we train two neural networks in a meta-learning setup: a \tnet, the lear
 %
 \fwl is a student-teacher approach in which we modulate the parameter updates to a \emph{student} network (trained on the task we care about) on a per-sample basis according to the posterior confidence of its label-quality estimated by a \emph{teacher} (who has access to the high-quality labels).  
 
-\subsection*{PART II: \titleof{p3}}
-In this part, we discuss injecting inductive biases into learning algorithms as a way to help them to come up with more generalizable solutions when they are provided with limited observations. We further discuss how we can improve the generalization of Transformers, the self-attentive feedforward networks for sequence modeling, by introducing a recurrent inductive bias into their architecture.
+\subsection*{PART III: \titleof{p3}}
+\todo{fix rq c3}
+In this part, we discuss injecting inductive biases into learning algorithms as a way to help them to come up with more generalizable solutions when they are provided with limited observations. We further discuss how we can improve the generalization of Transformers, the self-attentive feed-forward networks for sequence modeling, by introducing a recurrent inductive bias into their architecture.
 
 \subsubsection*{Chapter 6: \titleof{c6}}
 In this chapter, we address the following research question:

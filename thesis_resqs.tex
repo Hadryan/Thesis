@@ -1,7 +1,7 @@
 \newcommand{\resqcontent}[1]{%
     \IfEqCase{#1}{%
     % -------------MAIN I-------------
-    {main}{How can we improve the learning process when the data and/or the supervision signal is noisy or limited, in the context of language understanding tasks?}
+    {main}{How can we improve the learning process when the supervision signal, i.e. data and/or labels, is noisy or limited, in the context of language understanding tasks?}
     % -------------PART I-------------
     {p1}{How to use the structure of the data as prior knowledge to learn robust and effective representations when the data is noisy or highly variable?}
     % -------------chapter 2-------------
@@ -21,7 +21,7 @@
     %
     {c3.3}{How separability of representations can improve their transferability?}%
     % -------------PART II-------------
-    {p2}{How to design models that can learn from weakly annotated examples?}
+    {p2}{How to design learning algorithms that can learn from weakly annotated samples, while generalize over the imperfection in their labels?}
     % -------------chapter 4-------------
     {c4}{How to train neural networks using pragmatically generated labels, as the weak supervision signal, that will exhibit superior generalization capabilities?}%
     %
@@ -37,11 +37,11 @@
     %
     {c5.2}{When learning from samples of variable quality, can we reannotate these samples and provide (hopefully) better labels, associated with a fidelity score to regulate the learning rate?}
     % -------------PART III-------------
-    {p3}{How can inductive biases help improving the generalization of self-attentive feed-forward sequence models?}
+    {p3}{How can inductive biases help improving the data-efficiency and generalization of learning algorithms?}
     % -------------chapter 6-------------
-    {c6}{How can we combine the recurrent inductive bias of RNNs with the parallelizability and global receptive field of Transformer?}%
+    {c6}{How can inductive biases improve the generalization of self-attentive feed-forward sequence models?}
     %
-    {c6.1}{How do Universal Transformers implement both concurrency and recurrency for sequence modeling?}
+    {c6.1}{How do Universal Transformers combine the recurrent inductive bias of RNNs with the parallelizability and global receptive field of Transformer?}
     %
     {c6.2}{How effective are Universal Transformers at complex reasoning tasks with limited data, algorithmic tasks that need generalization over observed training samples, and finally real world language understanding tasks?}
     }[\PackageError{rq}{Undefined option to rq: #1}{}]%

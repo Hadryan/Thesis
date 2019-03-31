@@ -1,14 +1,14 @@
 \section{Universal Transformer for Sequence Modeling}
 In this section, we address the following research question:
 \resq{c6.2}
-We evaluate Universal Transformers on a range of algorithmic and language understanding tasks and discuss the results.
+We evaluate Universal Transformers on a range of algorithmic and language understanding tasks and discuss the results. In the tasks that are chosen, we include some with limited number of training examples, or some with incomplete training set (lack of converge), but also tasks that do not suffer severely from imperfect supervision, to evaluate the performance of our model in both situations. 
 
 \subsection{bAbI Question-Answering}
 The bAbi question answering dataset~\citep{weston2015towards} consists of 20 different synthetic tasks\footnote{\url{https://research.fb.com/downloads/babi}}. The aim is that each task tests a unique aspect of language understanding and reasoning, including the ability of: reasoning from supporting facts in a story, answering true/false type questions, counting, understanding negation and indefinite knowledge, understanding coreferences, time reasoning, positional and size reasoning, path-finding, and understanding motivations (to see examples for each of these tasks, please refer to Table 1 in \citep{weston2015towards}).
 
 There are two versions of the dataset, one with 1k training examples and the other with 10k examples. It is important for a model to be data-efficient to achieve good results using only the 1k training examples. Moreover, the original idea is that a single model should be evaluated across all the tasks (not tuning per task), which is the \emph{train joint} setup in Tables~\ref{tab:babi-results} and ~\ref{tbl:babi_details}.
 
-Solving all the bAbI tasks by training a model on the 1k training dataset is pretty challenging as some of the tasks are rather complex and with only 1k examples for each task, its hard for most models to generalize well. So data efficiency should be a key property to be considered here. 
+Solving all the bAbI tasks by training a model on the 1k training dataset is pretty challenging as some of the tasks are rather complex and with only 1k examples for each task, its hard for most of models to generalize well. So data efficiency should be a key property to be considered here. 
 We tried a standard Transformer and observed that it does not achieve good results on bAbI tasks\footnote{We experimented with different hyper-parameters and different network sizes, but it always overfits.}. However, we have designed a model based on the Universal Transformer which achieves state-of-the-art results bAbI task. 
 This is mainly due to recurrent inductive bias in the Universal Transformer as well as the fact that sharing parameters across depth decreases the number of parameters which helps the model generalize better.
 
@@ -45,7 +45,7 @@ The above examples illustrate that there is a notion of temporal states in UT, w
 \subsection{Algorithmic Tasks}
 The generic neural network architectures cannot generalize well in algorithmic and numerical tasks requiring arithmetic operations such as addition, multiplication etc., even when they may successfully fit any given training data in such tasks, and sometimes they cannot even achieve that~\citep{trask2018neural}. This can be even harder when the distribution of examples' length is different in train and test set.
 
-We trained UTs on three algorithmic tasks, namely Copy, Reverse, and (integer) Addition, all on strings composed of decimal symbols (`0'-`9'). In all the experiments, we train the models on sequences of length 40 and evaluated on sequences of length 400~\citep{neural_gpu} to assess the ability of the models on length generalization.
+We trained UTs on three algorithmic tasks, namely Copy, Reverse, and (integer) Addition, all on strings composed of decimal symbols (`0'-`9'). In all the experiments, we train the models on sequences with maximum length of 40 and evaluated on sequences with maximum length of 400~\citep{neural_gpu} to assess the ability of the models on \emph{length generalization}. In fact, the limitation in training data in this task is the lack of coverage over all possible examples (all possible length), not the number of training examples.
 
 As an additional inductive bias for UTs on these tasks, when calculating the positional embedding, we use positions starting with randomized offsets per example. This way, we further encourage the model to learn position-relative transformations, which improves length generalization.
 Results are shown in Table~\ref{tab:algorithmic}. Both UT and UT with randomized position offset outperform LSTM and vanilla Transformer by a wide margin on all three tasks. 
