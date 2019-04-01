@@ -5,11 +5,10 @@
 \todo{find a nice quote related to the whole thesis! this is not for every chapter, it's just for intro.}
 \end{quote}
 %
-\todo{instance --> sample, all over the thesis}
-\todo{example --> sample, all over the thesis}
-\todo{book --> thesis, all over the thesis}
+Humans can effortlessly learn to solve complex real-world problems and learn new concepts from only limited or noisy or variant observations and routinely draw successful generalization on them. They are capable of uncovering the underlying concepts, relations, and structure of sparsely observed events and use that knowledge to go far beyond the paucity of the data.
+For instance, human has the ability to produce an infinite number of new sentences by composing sparely observed words~\citep{lake2017building} or a child can generalize the concept of ``penguin'' from a single picture in a book~\citep{vinyals2016matching}. 
+However, capturing such human-level learning abilities, given imperfect supervisions, in machines remains a fundamental challenge~\citep{lake2017building} in machine learning.
 
-Human can effortlessly learn to solve complex real-world problems and learn new concept from only limited or noisy or variant observations and routinely draw successful generalization on them, – e.g. a child can generalize the concept of ``penguin'' from a single picture in a book~\cite{vinyals2016matching}, while it is not easy for best machine learning systems to learn from imperfect supervision.
 
 Most of the success of today's machine learning systems depend on the availability of massive amount of labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
 However, in many real-world applications, such training data is not available, like tasks that are applied medical imaging data where detailed labeling is very expensive. In order to deal with data scarcity in many tasks and applications, we can use higher-level approaches and provide supervision signals for training machine learning models. 
@@ -38,29 +37,52 @@ and injecting inductive biases into algorithms to generalize better on unobserve
 
 All these approaches lead to supervision signals that are not perfect. This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision}. Here in this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples~\citep{zhou2018brief}.
 
-The reason that we focus on language understanding is that  understanding language is an extraordinary cognitive ability of human.
+The reason that we focus on language understanding is that understanding language is an extraordinary cognitive ability of human. Improving machines on understanding language and studying how to solve language tasks can help moving toward detecting core cognitive ingredients of human-level intelligence and get closer to the bigger goal of creating artificial general intelligence. 
+Here, in this thesis, we study the effectiveness of our proposed learning algorithms on a wide range of sequence modeling and language understanding tasks, including:
+% 
+assessing relevance for ranking (Chapter~\ref{chap:2}, \ref{chap:4}, and \ref{chap:5}), 
+%
+(pseudo)-relevance feedback for document ranking(Chapter~\ref{chap2}), 
+%
+Machine Translation (Chapter~\ref{chap:5}), 
+%
+natural language reasoning -- bAbI tasks~\citep{weston2015towards} (Chapter~\ref{chap:5}), 
+%
+broad context language modeling~\citep{paperno2016lambada} (Chapter~\ref{chap:5}), 
+%
+contextual suggestion~\citep{hashemioverview} (Chapter~\ref{chap:3}), 
+%
+open-domain question answering (Chapter~\ref{chap:5}), 
+%
+modeling hierarchical structure in natural language -- subject-verb agreement task~\citep{linzen2016assessing} (Chapter~\ref{chap:3}), 
+%
+text classification (Chapter~\ref{chap:3}), 
+%
+sentiment analysis (Chapter~\ref{chap:5}), 
+%
+learning to execute computer programs~\citep{ZS14}(Chapter~\ref{chap:5}), 
+%
+a set of algorithmic tasks~\citep{neural_gpu}).
 
-individual's thoughts and actions are determined by the language
+Besides the challenges of learning from imperfect supervision in many of these tasks, some of them are difficult tasks that, for instance, require learning rich representations, or capturing complex underlying relations, or detecting and understanding abstract concepts and reasoning about them.
+%
+Although we mainly focus on sequence modeling and language-related tasks and evaluate our proposed ideas on these tasks, some of the proposed models in this thesis have no strong tie to language and can be easily extended to other domains like computer vision.
 
 
-\todo{talking about tasks: language understanding (as a main cognitive ability): Chomsky stuff, sapphire whorf hypothesis, concrete examples on what we can learn actually which is in fact language understanding. complex questions to abstract concepts. memorizing vs actually modeling relation. Ray Jackendoff stuff.}
-
-Although we mainly focus on language-related tasks and evaluate our proposed ideas on these tasks, some of our propose models have no strong tie to language and can be easily extended to other domains like computer vision.
-
-
-%maybe move this paragraph to conclusion?
-There are many domains and applications that suffer from lack of large amount of high quality labeled data. We believe building machine learning systems that can learn with imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to those domains with limited or noisy data.
+\medskip
+%maybe move this paragraph to the conclusion?
+There are many domains and applications that suffer from the lack of a large amount of high quality labeled data. We believe building machine learning systems that can learn with imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to those domains with limited or noisy data.
 
 
 
 
 \section{Problem Description and Research Questions}
-Curating large amount of high quality labeled training data has become the primary bottleneck in developing new methods and applications in machine learning. 
+Curating a large amount of high quality labeled training data has become the primary bottleneck in developing new methods and applications in machine learning. 
 In general supervised learning scenario, each training example, which is used as the supervision signal, consist of a \emph{feature vector} (also called data instance) and a \emph{label}. However, in many domains and application, there is an imperfection in the supervision signal. Here in this thesis, we focus on two main problems: dealing with \emph{noisy} training data or/and \emph{limited} training data. 
-We formulate the main research question that is addressed in this thesis as following:
+We formulate the main research question that is addressed in this thesis as follows:
 \resq{main}
 
-Based on the above terminology, i.e. features versus label and noisy versus limited, we can presume different types of imperfections in the supervision signal. In each part of this thesis, we target one or some of these types and proposed ideas that can improve learning process with whit that type of imperfection in supervision. 
+Based on the above terminology, i.e. features versus label and noisy versus limited, we can presume different types of imperfections in the supervision signal. In each part of this thesis, we target one or some of these types and proposed ideas that can improve the learning process with whit that type of imperfection in supervision. 
 
 Figure~\ref{fig:thesis_parts} summarizes the different types of supervision we consider in each part of these thesis.
 \begin{figure}[t]
@@ -91,18 +113,18 @@ The general approach in the proposed models in Part~\ref{part1} is around the id
 The following research question is the main question that is addressed in Part~\ref{part1} of the thesis:
 \resq{p1}
 %
-In part~\ref{part2} of the thesis, we target the problem of noisy or weak labels. We study how we can develop neural networks that can learn from weakly annotated training examples with the ability to go beyond the imperfection of the weak labels. We study diffident architectural choices and objective functions for neural ranking models to find a more noise tolerant model when learning from pseudo-labels.  We also introduce some ideas that  meta-learn the fidelity of weakly annotated labels and modulate the learning process based on the fidelity scores of weakly labeled examples.
+In part~\ref{part2} of the thesis, we target the problem of noisy or weak labels. We study how we can develop neural networks that can learn from weakly annotated training examples with the ability to go beyond the imperfection of the weak labels. We study diffident architectural choices and objective functions for neural ranking models to find a more noise tolerant model when learning from pseudo-labels.  We also introduce some ideas that meta-learn the fidelity of weakly annotated labels and modulate the learning process based on the fidelity scores of weakly labeled examples.
 In this part, we address the following research question:
 \resq{p2}
 %
-In part~\ref{part3}, we deal with the problem of limited labeled data, for instance the context of bAbI reasoning tasks with 1k training examples where the tasks are complex and data is limited in terms of number of training examples. We also study the cases that the we have a lot of labeled examples, but with limited coverage, which can be seen as limitation in the diversity of feature vectors. For instance in the context of algorithmic tasks, with the intention of assessing the ability of models on length generalization, we have plenty of training data but the distribution of sample's length in training is totally different from test set. 
+In part~\ref{part3}, we deal with the problem of limited labeled data, for instance, the context of bAbI reasoning tasks with 1k training examples where the tasks are complex and data is limited in terms of the number of training examples. We also study the cases that we have a lot of labeled examples, but with limited coverage, which can be seen as the limitation in the diversity of feature vectors. For instance in the context of algorithmic tasks, with the intention of assessing the ability of models on length generalization, we have plenty of training data but the distribution of sample's length in training is totally different from the test set. 
 In this part, we investigate the idea of injecting some inductive biases~\footnote{Inductive biases are ``any biases for choosing one generalization over another, other than strict consistency with the observed training samples." as defined by~\citet{Mitchell80theneed}. We elaborate on this at the beginning of Part~\ref{part3}.} into models in order to encode modeling assumptions that help the models to be more data efficient and generalize better.
 The main research question that is addressed in Part~\ref{part3} is:
 \resq{p3}
 
 There are many approaches and ideas that can be applied to overcome the lack of a large set of high-quality training examples in different applications. However, as we explained above, here in this thesis, we focus on employing the prior knowledge, using data to meta-learn its properties, and introducing inductive biases to learning algorithms, all to improve the learning process. We believe these approaches are great ways to move toward better machine learning systems that are able to generalize over observed imperfect training signals and as ~\citet{Mitchell80theneed} states in his paper:
 \begin{quote}
-``\emph{If biases and initial knowledge are at the heart of the ability to generalize beyond observed data, then efforts to study machine learning must focus on the combined use of prior knowledge, biases and observation in guiding the learning process. It would be wise to make the biases and their use in controlling learning just as explicit as past research has made their observations and use.}''
+``\emph{If biases and initial knowledge are at the heart of the ability to generalize beyond observed data, then efforts to study machine learning must focus on the combined use of prior knowledge, biases, and observation in guiding the learning process. It would be wise to make the biases and their use in controlling learning just as explicit as past research has made their observations and use.}''
 \end{quote}
 
 In the next section, we present an overview of the thesis and introduce the structure of the content and summarize different chapters in each part of the thesis.
@@ -118,7 +140,7 @@ In this part, we explore how taking the general structured of the data into acco
 \subsubsection*{Chapter 2: \titleof{c2}}
 In this chapter, we address the following research question:
 \resq{c2}
-We introduce \emph{\swlm} (\acswlm)~\citep{Dehghani:2016:SIGIR} to learn a representation for a set of textual entities, where this representation captures all, and only, the \textit{significant} shared features from these entities.  \acswlm adjusts the weights of features to decrease the weight of noisy terms that are either well explained by all the entities, i.e. too general or only explained by specific entity in the set, i.e. too specific, which eventually results in having the significant features left in the model.  
+We introduce \emph{\swlm} (\acswlm)~\citep{Dehghani:2016:SIGIR} to learn a representation for a set of textual entities, where this representation captures all, and only, the \textit{significant} shared features from these entities.  \acswlm adjusts the weights of features to decrease the weight of noisy terms that are either well explained by all the entities, i.e. too general or only explained by a specific entity in the set, i.e. too specific, which eventually results in having the significant features left in the model.  
 We employ \acswlm in two main language understanding tasks: feedback problem in information retrieval~\citep{Dehghani:CIKM2016:long, Dehghani:CIKM2016:short}, and group profiling in content personalization and recommendation tasks~\citep{Dehghani:2016:CHIIR,Dehghani2016:trec}. We show how \acswlm is remarkably robust against noisy features like non-relevant terms in relevant documents in the feedback task. 
 
 \subsubsection*{Chapter 3: \titleof{c3}}
@@ -145,13 +167,12 @@ In \cws we train two neural networks in a meta-learning setup: a \tnet, the lear
 \fwl is a student-teacher approach in which we modulate the parameter updates to a \emph{student} network (trained on the task we care about) on a per-sample basis according to the posterior confidence of its label-quality estimated by a \emph{teacher} (who has access to the high-quality labels).  
 
 \subsection*{PART III: \titleof{p3}}
-\todo{fix rq c3}
 In this part, we discuss injecting inductive biases into learning algorithms as a way to help them to come up with more generalizable solutions when they are provided with limited observations. We further discuss how we can improve the generalization of Transformers, the self-attentive feed-forward networks for sequence modeling, by introducing a recurrent inductive bias into their architecture.
 
 \subsubsection*{Chapter 6: \titleof{c6}}
 In this chapter, we address the following research question:
 \resq{c6}
-We introduced Universal Transformer~\cite{Dehghani:ICLR:2019}, a self-attentive concurrent-recurrent sequence model, which is an extension of Transformer model~\citep{vaswani2017attention}. The Universal Transformer introduces recurrence in depth by repeatedly refines a series of vector representations for each position of the sequence in parallel, by combining information from different positions using self-attention and applying a recurrent transition function across all time steps. 
+We introduced Universal Transformer~\citep{Dehghani:ICLR:2019}, a self-attentive concurrent-recurrent sequence model, which is an extension of Transformer model~\citep{vaswani2017attention}. The Universal Transformer introduces recurrence in depth by repeatedly refines a series of vector representations for each position of the sequence in parallel, by combining information from different positions using self-attention and applying a recurrent transition function across all time steps. 
 In the simplest form, Universal Transformer with a fixed number of iterations is almost equivalent to a multi-layer Transformer with tied parameters across all its layers. By sharing weight, we can save massively on the number of parameters that we are training and fewer parameters means learn faster with fewer data points.  We show that the elegant idea of introducing recurrent in depth enables Transformer to extrapolate from training data much better on a range of algorithmic and language underestimating tasks~\citep{Dehghani:ICLR:2019, Dehghani:2019:WSDM}.
 
 
