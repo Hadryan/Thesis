@@ -2,7 +2,7 @@
 \chapter{Introduction}
 %
 \begin{quote}
-\todo{find a nice quote related to the whole thesis! this is not for every chapter, it's just for intro.}
+\todo{find a nice quote related to the whole thesis! this is not for every chapter, just for the intro.}
 \end{quote}
 %
 Humans can effortlessly learn to solve complex real-world problems and learn new concepts from only limited or noisy or variant observations and routinely draw successful generalization on them. They are capable of uncovering the underlying concepts, relations, and structure of sparsely observed events and use that knowledge to go far beyond the paucity of the data.
@@ -35,14 +35,15 @@ exploiting noisy and inaccurate labels~\citep{Vahdat:2017, Lee:2013,Hinton:2015,
 and injecting inductive biases into algorithms to generalize better on unobserved data~\citep{cohen2016group, cohen2016steerable, Dehghani:ICLR:2019}.
 
 
-All these approaches lead to supervision signals that are not perfect. This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision}. Here in this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples~\citep{zhou2018brief}.
+All these approaches lead to supervision signals that are not perfect. This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision}. In this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples~\citep{zhou2018brief}.
 
-The reason that we focus on language understanding is that understanding language is an extraordinary cognitive ability of human. Improving machines on understanding language and studying how to solve language tasks can help moving toward detecting core cognitive ingredients of human-level intelligence and get closer to the bigger goal of creating artificial general intelligence. 
+The reason that we focus on language understanding is that understanding language is an extraordinary cognitive ability of human. Improving machines on understanding language and studying how to solve language tasks can help moving toward detecting core cognitive ingredients of human-level intelligence and get closer to the bigger goal of creating artificial general intelligence.
+
 Here, in this thesis, we study the effectiveness of our proposed learning algorithms on a wide range of sequence modeling and language understanding tasks, including:
 % 
 assessing relevance for ranking (Chapter~\ref{chap:2}, \ref{chap:4}, and \ref{chap:5}), 
 %
-(pseudo)-relevance feedback for document ranking(Chapter~\ref{chap2}), 
+(pseudo)-relevance feedback for document ranking(Chapter~\ref{chap:2}), 
 %
 Machine Translation (Chapter~\ref{chap:5}), 
 %
@@ -78,7 +79,7 @@ There are many domains and applications that suffer from the lack of a large amo
 
 \section{Problem Description and Research Questions}
 Curating a large amount of high quality labeled training data has become the primary bottleneck in developing new methods and applications in machine learning. 
-In general supervised learning scenario, each training example, which is used as the supervision signal, consist of a \emph{feature vector} (also called data instance) and a \emph{label}. However, in many domains and application, there is an imperfection in the supervision signal. Here in this thesis, we focus on two main problems: dealing with \emph{noisy} training data or/and \emph{limited} training data. 
+In general supervised learning scenario, each training example, which is used as the supervision signal, consist of a \emph{feature vector} (also called data instance) and a \emph{label}. However, in many domains and application, there is an imperfection in the supervision signal. Here, in this thesis, we focus on two main problems: dealing with \emph{noisy} training data or/and \emph{limited} training data. 
 We formulate the main research question that is addressed in this thesis as follows:
 \resq{main}
 
@@ -96,13 +97,13 @@ Figure~\ref{fig:thesis_parts} summarizes the different types of supervision we c
     \begin{subfigure}[b]{0.32\textwidth}
     \centering
         \includegraphics[width=0.55\linewidth]{01-introduction/figs_and_tables/fig_p2.png}
-        \caption{\label{fig:p1}Part II}
+        \caption{\label{fig:p2}Part II}
     \end{subfigure}
         ~ 
     \begin{subfigure}[b]{0.32\textwidth}
     \centering
         \includegraphics[width=0.55\linewidth]{01-introduction/figs_and_tables/fig_p3.png}
-        \caption{\label{fig:p1}Part III}
+        \caption{\label{fig:p3}Part III}
     \end{subfigure}
 \caption{\label{fig:thesis_parts}Type of imperfections in the supervision that we deal with in each art of this thesis.}
 \end{figure}
@@ -122,7 +123,7 @@ In this part, we investigate the idea of injecting some inductive biases~\footno
 The main research question that is addressed in Part~\ref{part3} is:
 \resq{p3}
 
-There are many approaches and ideas that can be applied to overcome the lack of a large set of high-quality training examples in different applications. However, as we explained above, here in this thesis, we focus on employing the prior knowledge, using data to meta-learn its properties, and introducing inductive biases to learning algorithms, all to improve the learning process. We believe these approaches are great ways to move toward better machine learning systems that are able to generalize over observed imperfect training signals and as ~\citet{Mitchell80theneed} states in his paper:
+There are many approaches and ideas that can be applied to overcome the lack of a large set of high-quality training examples in different applications. However, as we explained above, in this thesis, we focus on employing the prior knowledge, using data to meta-learn its properties, and introducing inductive biases to learning algorithms, all to improve the learning process. We believe these approaches are great ways to move toward better machine learning systems that are able to generalize over observed imperfect training signals and as ~\citet{Mitchell80theneed} states in his paper:
 \begin{quote}
 ``\emph{If biases and initial knowledge are at the heart of the ability to generalize beyond observed data, then efforts to study machine learning must focus on the combined use of prior knowledge, biases, and observation in guiding the learning process. It would be wise to make the biases and their use in controlling learning just as explicit as past research has made their observations and use.}''
 \end{quote}

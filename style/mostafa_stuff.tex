@@ -327,10 +327,14 @@
 % %% load up the fancy title-style package	
 % \usepackage[calcwidth]{titlesec}	
 % \titleformat{\section}[hang]{}	
-% {\bf\fontsize{18}{16}\selectfovnt\thesection}{12pt}{\bf\fontsize{18}{16}\selectfovnt}	
+% {\bf\fontsize{18}{16}\selectfont\thesection}{12pt}{\bf\fontsize{18}{16}\selectfont}	
 
 % \titleformat{\subsection}[hang]{}	
-% {\bf\no\thesubsection}{12pt}{\bf\fontsize{12}{10}\selectfovnt }	
+% {\bf\no\thesubsection}{12pt}{\bf\fontsize{12}{10}\selectfont }	
 
 % \titleformat{\subsubsection}[hang]{}	
 % {}{12pt}{\bfseries}
+
+% smaller font size for citation marks
+\let\realcitep\citep
+\renewcommand*{\citep}[1]{{\small\realcitep{#1}}}
