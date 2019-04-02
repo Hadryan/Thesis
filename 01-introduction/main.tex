@@ -2,16 +2,18 @@
 \chapter{Introduction}
 %
 \begin{quote}
-\todo{find a nice quote related to the whole thesis! this is not for every chapter, just for the intro.}
+\todo{maybe a nice quote?}
 \end{quote}
 %
-Humans can effortlessly learn to solve complex real-world problems and learn new concepts from only limited or noisy or variant observations and routinely draw successful generalization on them. They are capable of uncovering the underlying concepts, relations, and structure of sparsely observed events and use that knowledge to go far beyond the paucity of the data.
+Human can effortlessly learn to solve complex real-world problems and learn new concepts from only limited, noisy or variant observations and routinely draw successful generalization on them. 
+Even a human child is capable of uncovering the underlying concepts, relations, and structure of sparsely observed events and use that knowledge to go far beyond the paucity of the data.
 For instance, human has the ability to produce an infinite number of new sentences by composing sparely observed words~\citep{lake2017building} or a child can generalize the concept of ``penguin'' from a single picture in a book~\citep{vinyals2016matching}. 
-However, capturing such human-level learning abilities, given imperfect supervisions, in machines remains a fundamental challenge~\citep{lake2017building} in machine learning.
+%
+However, capturing such human-level learning abilities, given imperfect supervisions, in machines remains a fundamental challenge~\citep{lake2017building} in many domains.
 
 
-Most of the success of today's machine learning systems depend on the availability of massive amount of labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
-However, in many real-world applications, such training data is not available, like tasks that are applied medical imaging data where detailed labeling is very expensive. In order to deal with data scarcity in many tasks and applications, we can use higher-level approaches and provide supervision signals for training machine learning models. 
+Most of the success of today's machine learning systems depend on the availability of massive amount of high-quality labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
+However, in many real-world applications, such training data is not available, like tasks that are applied to medical imaging data where detailed labeling is very expensive. In order to deal with data scarcity in many tasks and applications, we can use higher-level approaches and provide supervision signals for training learning algorithms. 
 
 This can be done for instance by
 using distant or heuristic supervision~\citep{Deriu2016:SemEval,Severyn:2015:SemEval, Dehghani:2016:SIGIR, dehghani:2018:ICLR, Dehghani:2017:nips_metalearn, Ratner:2016,Rekatsinas:2017,Varma:2017}, 

@@ -223,13 +223,13 @@ In each step of the Universal Transformer, given $H_{t} \in \mathbb{R}^{(|C_q|+1
 In our experiments, we use depthwise separable convolution~\cite{chollet2017xception} as the Transition($\cdot$) function.
 
 In the multihop reasoning layer, the representations of all the documents and question learned from the previous layer get updated during $T$ steps of iterating over the Universal Transformer Encode block. 
-Self-attention in this layer allows the model to understand each of the documents based on the information in all the as well as the question.
+Self-attention in this layer allows the model to understand each of the documents based on the information in all the documents as well as the question.
 In addition, the depth-wise recurrency in the Universal Transformer establishes connections among documents at each step and lays the ground for performing multihop reasoning to solve cases similar to what we have shown in Example~\ref{fig:example}.
 
 \mypar{Output decoder} 
 After $T$ steps of refining the representations of documents and the question in the Universal Transformer Encoder, the final output is a matrix of $d$-dimensional vector representations $H \in \mathbb{R}^{(|C_q|+1) \times d}$ for all the documents in $C_q$ and the question $q$.
 
-Given this, we use a stack of $N$ Transformer Decoder blocks (see  the \texttt{Universal Transformer Encoder} in Figure~\ref{fig:model_tracrnet}) to decode the answer.
+Given this, we use a stack of $N$ Transformer Decoder blocks (see  the \texttt{Transformer Decoder} in Figure~\ref{fig:model_tracrnet}) to decode the answer.
 To generate answers from the model at inference time, we run the model autoregresively~\citep{graves2013generating}, where the model consumes the previously generated symbols at each time step in order to generate the distribution over the vocabulary for the next symbol. From this distribution, we select the symbol with the highest probability as the next symbol.   
 
 

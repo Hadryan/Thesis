@@ -8,7 +8,7 @@
  
  - use \small for all ALG environments
  
- - Unify the ALG numberings
+ - Unify the ALG numbering
  
  - Unify the enumerate / itemize spacings
  
@@ -20,15 +20,7 @@
  
  - add '.' at the end of captions
  
- - algorithms numberings
- 
- - connection between chapters and parts
- 
- - differentialabiliy of AUT
- 
- - Fig. vs Figure
- 
- - batch weights in fwl
+ - Unify Fig. vs Figure
  
  - \url{} make them nice
  
@@ -40,8 +32,8 @@
  
  - reference to my papers at the intro of parts/chapters
  
- - add my papers to the intro of parts and intro of chapters.
- 
  - instance --> sample, all over the thesis
  - example --> sample, all over the thesis
  - book --> thesis, all over the thesis
+ 
+ - analysis ---> plural: analyses 
