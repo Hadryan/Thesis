@@ -1,4 +1,4 @@
- - equal number of parameters for all baselines (equal capacity).
+ - mention equal number of parameters for all baselines (equal capacity).
 
  - unify font size and font family for plots (axis and ticks labels)
  
@@ -22,11 +22,11 @@
  
  - Unify Fig. vs Figure
  
- - \url{} make them nice
+ - \url{} make them nicer (the current \texttt{} is pretty ugly)
  
- - search for "paper" and change it to book
+ - search for "paper" and change it to "thesis" 
  
- - check the all RQs to be first in the text and second placed correctly
+ - check  all the RQs to be first in the text and second placed correctly
  
  - fix bib entries (specially the origins)
  
@@ -37,3 +37,9 @@
  - book --> thesis, all over the thesis
  
  - analysis ---> plural: analyses 
+
+ - change " to '' quote
+
+ - fix long chapter title fancyhdr
+
+ - fix \:-\:

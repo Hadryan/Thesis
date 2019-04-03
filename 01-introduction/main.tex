@@ -1,20 +1,21 @@
 % !TEX root = ../thesis_main.tex
 \chapter{Introduction}
-%
+
+% why learning from imperfect supervising? motivation based on human ability to do so...
+Humans can effortlessly learn new complex concepts and solve complex problems from limited, noisy or variant observations and routinely draw successful generalization on them.  This general argument have been advanced under the name ``\emph{poverty of the stimulus}'', proposed by ~\citet{chomsky1980rules}.  Poverty of the stimulus suggest that human children can learn something as complex as a natural language from the limited inputs of variable quality and need no evidence for much of the knowledge they bring to the learning process. 
+
+Chomsky noted:
 \begin{quote}
-\todo{maybe a nice quote?}
+    ``\emph{My own suspicion is that a central part of what we call “learning” is actually better understood as the growth of cognitive structures along an internally directed course under the triggering and partially shaping effect of the environment.}''~\citep{chomsky1980rules}
 \end{quote}
-%
-Human can effortlessly learn to solve complex real-world problems and learn new concepts from only limited, noisy or variant observations and routinely draw successful generalization on them. 
-Even a human child is capable of uncovering the underlying concepts, relations, and structure of sparsely observed events and use that knowledge to go far beyond the paucity of the data.
-For instance, human has the ability to produce an infinite number of new sentences by composing sparely observed words~\citep{lake2017building} or a child can generalize the concept of ``penguin'' from a single picture in a book~\citep{vinyals2016matching}. 
-%
-However, capturing such human-level learning abilities, given imperfect supervisions, in machines remains a fundamental challenge~\citep{lake2017building} in many domains.
 
+Similar to human, machines are confronted with the intriguing problem of the poverty of stimulus, but capturing such human-level learning abilities, given imperfect supervisions, in machines remains a fundamental challenge~\citep{lake2017building} in many domains.
 
+% successfull ML models are data-hungry
 Most of the success of today's machine learning systems depend on the availability of massive amount of high-quality labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
-However, in many real-world applications, such training data is not available, like tasks that are applied to medical imaging data where detailed labeling is very expensive. In order to deal with data scarcity in many tasks and applications, we can use higher-level approaches and provide supervision signals for training learning algorithms. 
+However, in many real-world applications such training data is not available, like in tasks that are applied to medical imaging data where detailed labeling is very expensive. In order to deal with data scarcity in many tasks and applications, we can use higher-level approaches and provide supervision signals for training learning algorithms. 
 
+% a list of alternative approaches
 This can be done for instance by
 using distant or heuristic supervision~\citep{Deriu2016:SemEval,Severyn:2015:SemEval, Dehghani:2016:SIGIR, dehghani:2018:ICLR, Dehghani:2017:nips_metalearn, Ratner:2016,Rekatsinas:2017,Varma:2017}, 
 %
@@ -28,7 +29,7 @@ using transfer learning to generalize knowledge across domains~\citep{Ruder:2019
 %
 using active learning and response-based supervision in which the model receives feedback from interacting with an environment~\citep{clarke2010driving,riezler2014response},
 %
-introducing a form of structured prior knowledge\citep{Dehghani:CIKM2016:long,Dehghani:2016:ICTIR}, 
+introducing a form of structured prior knowledge~\citep{Dehghani:CIKM2016:long,Dehghani:2016:ICTIR}, 
 %
 zero/one/few-shot learning~\citep{vinyals2016matching,finn2017model,snell2017prototypical,socher2013zero},
 %
@@ -36,11 +37,13 @@ exploiting noisy and inaccurate labels~\citep{Vahdat:2017, Lee:2013,Hinton:2015,
 %
 and injecting inductive biases into algorithms to generalize better on unobserved data~\citep{cohen2016group, cohen2016steerable, Dehghani:ICLR:2019}.
 
-
+% what we mean by imperfect supervision
 All these approaches lead to supervision signals that are not perfect. This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision}. In this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples~\citep{zhou2018brief}.
 
+% why language understanding?
 The reason that we focus on language understanding is that understanding language is an extraordinary cognitive ability of human. Improving machines on understanding language and studying how to solve language tasks can help moving toward detecting core cognitive ingredients of human-level intelligence and get closer to the bigger goal of creating artificial general intelligence.
 
+% a list of language understanding tasks that we have in this thesis
 Here, in this thesis, we study the effectiveness of our proposed learning algorithms on a wide range of sequence modeling and language understanding tasks, including:
 % 
 assessing relevance for ranking (Chapter~\ref{chap:2}, \ref{chap:4}, and \ref{chap:5}), 
@@ -63,20 +66,21 @@ text classification (Chapter~\ref{chap:3}),
 %
 sentiment analysis (Chapter~\ref{chap:5}), 
 %
-learning to execute computer programs~\citep{ZS14}(Chapter~\ref{chap:5}), 
+learning to execute computer programs~\citep{ZS14} (Chapter~\ref{chap:5}), 
 %
-a set of algorithmic tasks~\citep{neural_gpu}).
+and a set of algorithmic tasks~\citep{neural_gpu} (Chapter~\ref{chap:5}).
 
 Besides the challenges of learning from imperfect supervision in many of these tasks, some of them are difficult tasks that, for instance, require learning rich representations, or capturing complex underlying relations, or detecting and understanding abstract concepts and reasoning about them.
 %
 Although we mainly focus on sequence modeling and language-related tasks and evaluate our proposed ideas on these tasks, some of the proposed models in this thesis have no strong tie to language and can be easily extended to other domains like computer vision.
 
-
+% closing of the intro section of the introduction chapter!
 \medskip
-%maybe move this paragraph to the conclusion?
+In this thesis, to overcome the problem of poverty of stimulus for learning algorithms, we focus on employing the prior knowledge, using data to meta-learn its properties, and introducing inductive biases to learning algorithms, all to improve the learning process. We believe these approaches are great ways to move toward better machine learning systems that are able to generalize over observed imperfect training signals and as ~\citet{Mitchell80theneed} states in his paper:
+\begin{quote}
+``\emph{If biases and initial knowledge are at the heart of the ability to generalize beyond observed data, then efforts to study machine learning must focus on the combined use of prior knowledge, biases, and observation in guiding the learning process. It would be wise to make the biases and their use in controlling learning just as explicit as past research has made their observations and use.}''
+\end{quote}
 There are many domains and applications that suffer from the lack of a large amount of high quality labeled data. We believe building machine learning systems that can learn with imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to those domains with limited or noisy data.
-
-
 
 
 \section{Problem Description and Research Questions}
@@ -124,11 +128,6 @@ In part~\ref{part3}, we deal with the problem of limited labeled data, for insta
 In this part, we investigate the idea of injecting some inductive biases~\footnote{Inductive biases are ``any biases for choosing one generalization over another, other than strict consistency with the observed training samples." as defined by~\citet{Mitchell80theneed}. We elaborate on this at the beginning of Part~\ref{part3}.} into models in order to encode modeling assumptions that help the models to be more data efficient and generalize better.
 The main research question that is addressed in Part~\ref{part3} is:
 \resq{p3}
-
-There are many approaches and ideas that can be applied to overcome the lack of a large set of high-quality training examples in different applications. However, as we explained above, in this thesis, we focus on employing the prior knowledge, using data to meta-learn its properties, and introducing inductive biases to learning algorithms, all to improve the learning process. We believe these approaches are great ways to move toward better machine learning systems that are able to generalize over observed imperfect training signals and as ~\citet{Mitchell80theneed} states in his paper:
-\begin{quote}
-``\emph{If biases and initial knowledge are at the heart of the ability to generalize beyond observed data, then efforts to study machine learning must focus on the combined use of prior knowledge, biases, and observation in guiding the learning process. It would be wise to make the biases and their use in controlling learning just as explicit as past research has made their observations and use.}''
-\end{quote}
 
 In the next section, we present an overview of the thesis and introduce the structure of the content and summarize different chapters in each part of the thesis.
 
@@ -225,7 +224,7 @@ Next, we present the origins of each chapter in terms of the scholarly papers th
     \item[\textbf{Part III}]: \emph{\titleof{p3}}
 %  
     \begin{itemize}
-        \item[\textbf{Chapter 4}]: \emph{\titleof{c6}}
+        \item[\textbf{Chapter 6}]: \emph{\titleof{c6}}
         \begin{itemize}
             \item \bibentry{Dehghani:ICLR:2019}
             \item \bibentry{Dehghani:2019:WSDM}

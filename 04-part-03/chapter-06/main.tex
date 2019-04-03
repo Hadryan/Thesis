@@ -5,8 +5,11 @@
 Inductive biases are great ways for encoding modeling assumptions and improve data efficiency. For many sequence modeling tasks, the recurrent inductive bias plays a crucial role for generalizing beyond the observed data, while self-attentive feed-forward sequence models forego the recurrence toward parallelizability. We can, however, introduce a form of recurrent inductive bias to these models to improve their generalization while keeping the parallelization in the computations. 
 \end{quote}
 %
+
 \section{Introduction}
-Convolutional and fully-intentional feed-forward architectures like the Transformer have recently emerged as viable alternatives to recurrent neural networks (RNNs) for a range of sequence modeling tasks, notably machine translation~\citep{JonasFaceNet2017,transformer}. These parallel-in-time architectures address a significant shortcoming of RNNs, namely their inherently sequential computation which prevents parallelization across elements of the input sequence, whilst still addressing the vanishing gradients problem as the sequence length gets longer~\citep{vanishing-exploding-gradient}.
+Human child achieves the needed complex linguistic knowledge within a short time, with very limited observation. This cannot be explained easily and relying on the \emph{poverty of stimulus}~\citep{chomsky1980rules} argument, a powerful task-specific bias is required for learning to understand and generate language. In the context of learning algorithms, it has been discussed that without a certain complexity to the learning bias, the training data is insufficient to permit learning a model that generalizes properly to the full range of unseen instances for a specif task~\cite{Mitchell80theneed}.
+
+Different neural network based models have been proposed for sequence modeling and and employed for language understanding and generation tasks. Among them, convolutional and fully-intentional feed-forward architectures like the Transformer have recently emerged as viable alternatives to recurrent neural networks (RNNs) for a range of sequence modeling tasks, notably machine translation~\citep{JonasFaceNet2017,transformer}. These parallel-in-time architectures address a significant shortcoming of RNNs, namely their inherently sequential computation which prevents parallelization across elements of the input sequence, whilst still addressing the vanishing gradients problem as the sequence length gets longer~\citep{vanishing-exploding-gradient}.
 The Transformer model in particular relies entirely on a self-attention mechanism \citep{decomposableAttnModel,lin2017structured} to compute a series of context-informed vector-space representations of the symbols in its input and output, which are then used to predict distributions over subsequent symbols as the model predicts the output sequence symbol-by-symbol. Not only is this mechanism straightforward to parallelize, but as each symbol's representation is also directly informed by all other symbols' representations, this results in an effectively global receptive field across the whole sequence. This stands in contrast to e.g.\ convolutional architectures which typically only have a limited receptive field.
 
 Notably, however, the Transformer with its fixed stack of distinct layers foregoes RNNs' inductive bias towards learning iterative or recursive transformations. Our experiments indicate that this inductive bias may be crucial for several algorithmic and language understanding tasks of varying complexity: in contrast to models such as the Neural Turing Machine~\citep{ntm14}, the Neural GPU~\citep{neural_gpu} or Stack RNNs~\citep{stack_rnn}, the Transformer does not generalize well to input lengths not encountered during training. 
@@ -39,14 +42,17 @@ We break down our main research question in this chapter into two concrete resea
 
 In the following sections, we will address these research questions.
 
-\input{04-part-03/chapter-06/universal_transformer.tex}
-\input{04-part-03/chapter-06/applications.tex}
+% \input{04-part-03/chapter-06/universal_transformer.tex}
+% \input{04-part-03/chapter-06/applications.tex}
 
 \section{Conclusion}
-In this chapter we introduced the Universal Transformer, a generalization of the Transformer model that extends its theoretical capabilities and produces state-of-the-art results on a wide range of challenging sequence modeling tasks, such as language understanding but also a variety of algorithmic tasks, thereby addressing a key shortcoming of the standard Transformer. The Universal Transformer combines the following key properties into one model:
+In this chapter we focused on addressing \textbf{\resqname{c6}}.
+We introduced the Universal Transformer to address \textbf{\resqname{c6.1}}, a generalization of the Transformer model that extends its theoretical capabilities. We have employed the Universal Transformer in on a wide range of challenging sequence modeling tasks, such as language understanding but also a variety of algorithmic tasks, to address \textbf{\resqname{c6.2}} and showed that it produces state-of-the-art results by addressing a key shortcoming of the standard Transformer. The Universal Transformer combines the following key properties into one model:
 
 \textbf{Weight sharing}: Following intuitions behind weight sharing found in CNNs and RNNs, we extend the Transformer with a simple form of weight sharing that strikes an effective balance between inductive bias and model expressivity, which we show extensively on both small and large-scale experiments.
 
 \textbf{Conditional computation}: In our goal to build a computationally universal machine, we equipped the Universal Transformer with the ability to halt or continue computation through a recently introduced mechanism, which shows stronger results compared to the fixed-depth Universal Transformer.
 
-We are enthusiastic about the recent developments on parallel-in-time sequence models. By adding computational capacity and recurrence in processing depth, we hope that further improvements beyond the basic Universal Transformer presented here will help us build learning algorithms that are both more powerful, data efficient, and generalize beyond the current state-of-the-art.
+By adding computational capacity and recurrence in processing depth, we hope that further improvements beyond the basic Universal Transformer presented here will help us build learning algorithms that are both more powerful, data efficient, and generalize beyond the current state-of-the-art.
+
+In Part~\ref{part3} of the thesis, we explored the idea of injecting inductive biases into learning algorithms to improve their data-efficiency and generalization. This in fact is defining an innate prior knowledge for the learning algorithms that can eventually help overcoming the challenging problem of poverty of stimulus.

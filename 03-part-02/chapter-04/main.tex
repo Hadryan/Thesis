@@ -50,14 +50,13 @@ In the following sections, we will address these research questions.
 
 
 \section{Conclusion}
-In this chapter, we proposed to use unsupervised methods in order to programmatically generate large amounts of training data, as weakly annotated data, to train effective neural ranking models.
-We focus on the task of assessing the relevance, i.e. ranking documents given a query that suffers from a large-scale publicly available training set
-We examine various neural ranking models with different ranking architectures and objectives, and different input representations. 
+In this chapter, we focused on addressing \textbf{\resqname{c4}}. 
+We proposed to use unsupervised methods in order to programmatically generate large amounts of training data, as weakly annotated data, to train effective neural ranking models. We focus on the task of assessing the relevance, i.e. ranking documents given a query that suffers from a large-scale publicly available training set. We examine various neural ranking models with different ranking architectures and objectives, and different input representations. 
 
-We used over six million queries to train our models and evaluated them on Robust04 and ClueWeb 09-Category B collections, in an ad-hoc retrieval setting.  The experiments showed that our best performing model significantly outperforms the BM25 model (our weak supervision signal) by over $13\%$ and $35\%$ MAP improvements in the Robust04 and ClueWeb collections, respectively. 
+To investigate \textbf{\resqname{c4.1}}, We used over six million queries to train our models and evaluated them on Robust04 and ClueWeb 09-Category B collections, in an ad-hoc retrieval setting.  The experiments showed that our best performing model significantly outperforms the BM25 model (our weak supervision signal) by over $13\%$ and $35\%$ MAP improvements in the Robust04 and ClueWeb collections, respectively. 
 We also demonstrated that in the case of having a small amount of training data, we can improve the performance of supervised learning by pre-training the network on weakly supervised data.
 
-Based on our results, there are three key ingredients in neural ranking models that lead to good performance with weak supervision:
+To address \textbf{\resqname{c4.2}}, we showed that based on our results, there are three key ingredients in neural ranking models that lead to good performance with weak supervision:
 %
 The first is the proper input representation. Providing the network with raw data and letting the network to learn the features that matter, gives the network a chance of learning how to ignore imperfection in the training data.
 %
@@ -68,9 +67,9 @@ The third ingredient is providing the network with a considerable amount of trai
 As an example, during the experiments we noticed that using the \feedthree, the network needs a lot of examples to learn embeddings that are more effective for retrieval compared to pre-trained embeddings. 
 Thanks to weak supervision, we can generate as much training data as we need with almost no cost.
 
-We also study how learning from weak signals can benefit preserving privacy where some noise is intentionally added to the training signal to preserve privacy. We employed Private Aggregation of Teacher Ensembles (PATE)~\citep{Papernot:2017}  to train a privacy-preserving neural ranking model, in which we train several neural rankers on disjoint subsets of the training data and use the noisy aggregated signals from these models on an unlabeled set to train a neural ranker that in a setup that guarantees a certain level of differential privacy.
+To address \textbf{\resqname{c4.3}}, we also study how learning from weak signals can benefit preserving privacy where some noise is intentionally added to the training signal to preserve privacy. We employed Private Aggregation of Teacher Ensembles (PATE)~\citep{Papernot:2017}  to train a privacy-preserving neural ranking model, in which we train several neural rankers on disjoint subsets of the training data and use the noisy aggregated signals from these models on an unlabeled set to train a neural ranker that in a setup that guarantees a certain level of differential privacy.
 These experiments lay the groundwork for the idea of sharing a privacy-preserving model instead of sensitive data in IR applications. This suggests researchers from industry share the knowledge learned from actual users' data with the academic community that leads to a better collaboration of all researchers in the field. 
 
 % connection to chapter 5
-In this chapter, we mainly focused on the ranking task and explored architectural ideas that can implicitly help to have neural networks that are less sensitive to the label noise. 
+In this chapter, we mainly focused on the ranking task and explored architectural ideas that can implicitly help to have neural networks that are less sensitive to the label noise.  
 In the next chapter, we propose more systematic approaches that are tasks and architecture independent and can learn to estimate the quality of the labels and explicitly control the learning process with respect to the estimated qualities.
