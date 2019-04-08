@@ -1,6 +1,58 @@
 \chapter{Conclusion}
 \todo{write the Conclusion after the introduction is finalized.}
 
+
+There are invariant properties of human languages that reflect ``the innate schematism of mind that is applied to the data of experience'' and that ``might reasonably be attributed to the organism itself as its contribution to the task of the acquisition of knowledge'' (Chomsky, 1971).
+
+While in many situations like language understanding and reasoning , human is capable of uncovering the underlying concepts, relations, and structure of the sparsely observed data with variable quality and use that knowledge to go far beyond the paucity of the data and routinely draw successful generalization on them.
+
+% When designing algorithms, we can also consider \emph{data-driven} learning which relies on generalization from previous experience, and \emph{innately primed} learning which is based on having the significant part of the knowledge encoded into the model in the form of strong and weak biases. ~\footnote{There has been a long discussion in linguistics between rationalists and empiricists. Here, we just want to draw a connection between discussions in learning process in human and machine.}
+
+Here in this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples. This imperfection can be in the number or coverage of training examples like learning from \emph{incomplete supervision} where only a limited subset of data is labeled or no labeled data is available. The imperfection can refer to the labeling process like in \emph{inexact supervision} where only coarse-grained annotations are provided or \emph{inaccurate supervision} where the given labels are noisy and they are not always ground truth~\citep{zhou2018brief}. We also extend the imperfect supervision to situations where instead of labels, data, i.e. feature vectors, are noisy or subject to change during time.
+
+While human can effortlessly learn about new concepts and solve complex problems from limited, noisy or inconsistent observations and routinely draw successful generalization on them.
+
 Human are capable of uncovering the underlying concepts, relations, and structure of sparsely observed data with variable quality and use that knowledge to go far beyond the paucity of the data.
 
 For instance, a child has the ability to produce an infinite number of new sentences by composing sparely observed words~\citep{lake2017building} or generalize the concept of ``penguin'' from a single picture in a book~\citep{vinyals2016matching}. 
+
+
+
+
+
+
+
+% 
+Some researchers believe that the intrinsic complexity of the world means we should not build prior knowledge into our systems:
+\begin{quote}
+``\emph{Seeking an improvement that makes a difference in the shorter term, researchers seek to leverage their human knowledge of the domain, but the only thing that matters in the long run is the leveraging of computation.}
+\end{quote}
+
+
+ The bitter lesson is based on the historical observations that 1) AI researchers have often tried to build knowledge into their agents, 2) this always helps in the short term, and is personally satisfying to the researcher, but 3) in the long run it plateaus and even inhibits further progress, and 4) breakthrough progress eventually arrives by an opposing approach based on scaling 
+
+
+These two need not run counter to each other, but in practice they tend to. Time spent on one is time not spent on the other.
+
+
+We want AI agents that can discover like we can, not which contain what we have discovered. 
+
+\footnote{``The Bitter Lesson'' by Rich Sutton: http://www.incompleteideas.net/IncIdeas/BitterLesson.html}.  
+
+While some believe that the complexity leads to crippling intractability for the search and learning approaches on which empiricists proposes to rely and only with the right prior knowledge, the right inductive biases, can we ever get a handle on that complexity.
+
+Incorporate human knowledge when designing algorithms  but what that knowledge should be and when and how to use it is the main question.
+
+% our position
+We believe that for injecting human knowledge into models, ad-hoc and domain specific tricks do not hold up and deeper and more principled ways, like abstract and general inductive biases are needed for intelligent systems.
+
+
+\begin{quote}
+``\emph{We are agnostic at this point, perfectly prepared to accept that
+perhaps at some time in the future data-driven algorithmic techniques for language learning will hit a serious roadblock, or that credible evidence for innate
+task-specific language acquisition mechanisms will turn up. We are also willing to accept it as a possibility that once linguists and philosophers get straight
+on what is required to establish an instance of the APS [argument on poverty of stimulus], the distinction between data-driven and innately-primed learning will be less absolute.}''~\citep{pullum2002empirical}
+\end{quote}
+
+
+\section{Research Questions and General Conclusion}

@@ -3,33 +3,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  OPENING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Human can effortlessly learn about new concepts and solve complex problems from limited, noisy or inconsistent observations and routinely draw successful generalization on them, yet it remains a key challenge for our best machines to learn from such an imperfect supervision. Most of the today's success of data-driven machine learning systems depend on the availability of massive amount of high-quality labeled data and in many cases.
+% why learning from imperfect supervising? motivation based on the human ability. We talk about both HUMAN and MACHINE (to immediately show that we are not going to merely talk about human learning in the reset of the thesis.)
+~\todo{fix conflict with Chomsky}
+Humans can effortlessly learn about new concepts and solve complex problems from limited, noisy or inconsistent observations and routinely draw successful generalization on them, yet it remains a key challenge for our best machines to learn from imperfect supervision.
 
-% detour to human learning
-In the context of human learning, this argument has been advanced under the name ``\emph{poverty of the stimulus}'', proposed by ~\citet{chomsky1980rules}. It suggests that human children can learn something as complex as a natural language from the limited inputs of variable quality and need no evidence for much of the knowledge they bring to the learning process. 
+This general argument has been advanced under the name ``\emph{poverty of the stimulus}'', proposed by ~\citet{chomsky1980rules}. It suggests that human children can learn something as complex as a natural language from the limited inputs of variable quality and need no evidence for much of the knowledge they bring to the learning process. 
 % how to explain human learning considering POS?
 To explain this, some researchers postulate the innateness of some knowledge.
+%
+% since this the very first page of the thesis and this quote is relevant to the general discussion, but not directly to the whole thesis, we can remove this part.
 Along with this line, Chomsky noted~\citep{chomsky1980rules}:
 \begin{quote}
-    ``\emph{My own suspicion is that a central part of what we call “learning” is actually better understood as the growth of cognitive structures along an internally directed course under the triggering and partially shaping effect of the environment.}''
+    ``\emph{My own suspicion is that a central part of what we call “learning” is actually better understood as the growth of cognitive structures along an internally directed course under the triggering and partially shaping effect of the environment.}''\footnote{There has been a long discussion between rationalists and empiricists. Here, we just want to draw a connection between the problem of \emph{poverty of stimulus} in both human and machine learning process.}
 \end{quote}
 
 % back to machine learning
-Like human, machines are confronted with the intriguing problem of the poverty of stimulus in learning and knowledge acquisition, although capturing such human-level learning abilities, given imperfect supervision, in machines remains a fundamental challenge in many domains~\citep{lake2017building}. 
+Like human, machines are confronted with the intriguing problem of the poverty of stimulus, although capturing such human-level learning abilities, given imperfect supervisions, in machines remains a fundamental challenge~\citep{lake2017building} in many domains. 
 %
 % pos in machines and the necessity of {data-driven + innately primed} learning 
-Similar arguments have been put forward in machine learning to deal with the problem of \emph{poverty of stimulus} and more generally the \emph{generalization} of learning algorithms, that a learner that makes no prior assumptions has no rational basis for generalizing over unseen instances~\citep{Mitchell:1997:ML}, which implies ``the futility of unbiased learning''.\footnote{There has been a long discussion between rationalists and empiricists. Here, we just want to draw a connection between the process of learning in human and machine in terms of \emph{poverty of stimulus}.}
+Similar arguments have been put forward in machine learning to deal with the problem of \emph{poverty of stimulus} and more generally the \emph{generalization} of learning algorithms, that a learner that makes no prior assumptions has no rational basis for generalizing over unseen instances~\citep{Mitchell:1997:ML}, which implies the futility of unbiased learning. %~\footnote{In fact, learner with no bias does not exist~\todo{cite}~\citep{}}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  FIRST PART OF THE TITLE: "LEARNING WITH IMPERFECT SUPERVISION [...]"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % What is important supervising and why learning with imperfect supervision?
-
-The performance of machine learning models is often strongly correlated with the amount of available labeled data,
-the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}.  
+Most of the today's success of data-driven machine learning systems depend on the availability of massive amount of high-quality labeled data and in many cases, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}. 
 However, in many real-world applications, such training data is not available.
-This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision}. 
-In this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples~\citep{zhou2018brief}.
+This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision}. In this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples~\citep{zhou2018brief}.
 
 % high level ideas to deal with lack of data
 In practice, to deal with data scarcity in many tasks and applications, we can use higher-level approaches to either provide supervision signals for training learning algorithms. 
@@ -59,17 +59,17 @@ and injecting inductive biases into algorithms to generalize better on unobserve
 %  SECOND PART OF THE TITLE: "[...] FOR LANGUAGE UNDERSTANDING"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % why language understanding?
-We focus on language understanding and reasoning as a pivotal problem in artificial intelligence.  Understanding language is one the extraordinary cognitive abilities of human. 
-There have been several attempts to study if nonhuman animals can acquire human language~\citep{pepperberg2017animal}, like Project Nim\footnote{\url{https://nl.wikipedia.org/wiki/Project_Nim}}, a research project that was mounted in the 1970s to determine whether a chimpanzee, named Nim Chimpsky, raised in close contact with humans could develop a limited language. 
-
-Regardless of the fact that at the end Nim was using language to communicate or simply going through a bag of tricks to get things, it was much more limited compared to what human child can develop in the early years. 
+The reason that we focus on language understanding is that understanding language is an extraordinary cognitive ability of human. 
 %
-This indicates that achieving human-level understanding and generating of language, would not be an easy goal for machines either and despite good performance on benchmark datasets, machines are nowhere near the skill of humans at language understanding and reasoning.
+There have been several attempts to check if nonhuman animals can acquire language~\citep{pepperberg2017animal}, like Project Nim\footnote{\url{https://nl.wikipedia.org/wiki/Project_Nim}}, a research project that was mounted in the 1970s to determine whether a chimpanzee, named Nim Chimpsky, raised in close contact with humans could develop a limited language. Regardless of the fact that at the end Nim was using language to communicate or simply going through a bag of tricks to get things, it was much more limited compared to what human child can develop in the early years. 
+%
+This indicates that achieving human-level understanding and generating of language, would not be an easy goal for machines either.
 
-Improving machines on language understanding can help moving toward detecting core cognitive ingredients of human-level intelligence and get closer to the bigger goal of creating artificial general intelligence.
+Improving machines on understanding of language and studying how to solve language tasks can help moving toward detecting core cognitive ingredients of human-level intelligence and get closer to the bigger goal of creating artificial general intelligence.
 
+Minsky? ~\todo{improving the learning not tasks --> abstract biases}
 % a list of language understanding tasks that we have in this thesis
-Here, in this thesis, we concentrate on language understanding and reasoning in more principled ways to improve the learning process, than ad-hoc and domain or task specific tricks and investigate our ideas on a wide range of sequence modeling and language understanding tasks, including:
+Here, in this thesis, we study the effectiveness of our proposed learning algorithms on a wide range of sequence modeling and language understanding tasks, including:
 % 
 assessing relevance for ranking (Chapter~\ref{chap:2}, \ref{chap:4}, and \ref{chap:5}), 
 %
@@ -97,19 +97,18 @@ and a set of algorithmic tasks~\citep{neural_gpu} (Chapter~\ref{chap:5}).
 
 Besides the challenges of learning from imperfect supervision in many of these tasks, some of them are difficult tasks that, for instance, require learning rich representations, or capturing complex underlying relations, or detecting and understanding abstract concepts and reasoning about them.
 %
-Although we mainly focus on sequence modeling and language-related tasks and evaluate our proposed ideas on these tasks, many of the proposed algorithems in this thesis have no strong tie to language and can be easily extended to other domains like computer vision.
+Although we mainly focus on sequence modeling and language-related tasks and evaluate our proposed ideas on these tasks, some of the proposed models in this thesis have no strong tie to language and can be easily extended to other domains like computer vision.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  CLOSING THE INTRO SECTION IF THE INTRODUCTION CHAPTER!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \medskip
-Although machine learning has made a lot of progress on mastering its practical shortcomings, e.g. modern neural networks overcoming the limitations of the early perceptrons~\citep{minsky69perceptrons}, some of the fundamental limitations, e.g., Chomsky's Poverty of Stimulus, remain.
-
-The main problem we study in this thesis is the poverty of stimulus for learning algorithms and to overcome this problem, we focus on  i) \emph{employing the prior knowledge}, ii) \emph{augmenting data and meta-learning how to better use the data}, and iii) \emph{introducing inductive biases to learning algorithms}, all to improve the learning process. We believe these approaches are great ways to move toward better machine learning systems that are able to generalize over observed imperfect supervision signals and as ~\citet{Mitchell80theneed} states in his paper:
+In this thesis, to overcome the problem of poverty of stimulus for learning algorithms, we focus on  i) \emph{employing the prior knowledge}, ii) \emph{augmenting data and meta-learning how to better use the data}, and iii) \emph{introducing inductive biases to learning algorithms}, all to improve the learning process. We believe these approaches are great ways to move toward better machine learning systems that are able to generalize over observed imperfect training signals and as ~\citet{Mitchell80theneed} states in his paper:
 \begin{quote}
 ``\emph{If biases and initial knowledge are at the heart of the ability to generalize beyond observed data, then efforts to study machine learning must focus on the combined use of prior knowledge, biases, and observation in guiding the learning process. It would be wise to make the biases and their use in controlling learning just as explicit as past research has made their observations and use.}''
 \end{quote}
 There are many domains and applications that suffer from the lack of a large amount of high quality labeled data. We believe building machine learning systems that can learn with imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to those domains with limited or noisy data.
+
 
 
 \section{Problem Description and Research Questions}

@@ -32,7 +32,7 @@ Among the sequence processing neural networks, recurrent neural networks have lo
 
 However, the recurrence in time dictates the inherently sequential computation which makes RNNs slow to train. Feed-forward and convolutional architectures have recently been shown to achieve superior results on some sequence modeling tasks such as machine translation~\citep{vaswani2017attention, NalBytenet2017}, with the added advantage that they concurrently process all inputs in the sequence, leading to easy parallelization and faster training times. Despite these successes, however, popular feed-forward sequence models like the Transformer~\citep{vaswani2017attention} fail to generalize in many simple tasks e.g. copying strings or even simple logical inference when the string or formula lengths exceed those observed at training time, while recurrent models handle these tasks with ease because of the inductive recurrent bias.
 
-In Part~\ref{part3} of this book, we address the following research question:
+In Part~\ref{part3} of this thesis, we address the following research question:
 \resq{p3}
 
 Here, as a model with no recurrence in time, we focus on Transformer~\citep{vaswani2017attention} as a successful sequence model on many language understanding and generation tasks. In Chapter~\ref{chap:6}, we study how lack of recurrent inductive bias in Transformer may lead to the failure of the model on complex reasoning tasks with limited data, algorithmic tasks where length generalization over training samples is needed, and structured language understanding tasks, and address the following research question:
