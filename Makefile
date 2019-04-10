@@ -19,3 +19,4 @@ $(PROJECT_NAME).pdf: clean
 	bibtex $(PROJECT_NAME)
 	pdflatex --recorder $(PROJECT_NAME)
 	pdflatex --recorder $(PROJECT_NAME)
+	rm -f *.dat
