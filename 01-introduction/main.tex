@@ -212,7 +212,7 @@ In this part, we study how we can supervise machine learning systems by labeling
 \subsubsection*{Chapter 4: \titleof{c4}}
 In this chapter, we address the following research question:
 \resq{c4}
-In this chapter, we propose to train a neural ranking model using weak labels that are obtained automatically without human annotators or any external resources (e.g., click data). We train a set of simple yet effective neural ranking models and study their effectiveness under various learning scenarios, i.e., point-wise and pair-wise, different objective functions, and using different input representations, from using a set of engineered features to encoding query/document using word embedding~\citep{Dehghani:2017:SIGIR}. We also discuss how privacy preserving approaches can benefit from models that are capable of learning from weak signals, where instead of labels from the original sensitive training data a noisy version is provided~\citep{dehghani:2017:neuir}.
+In this chapter, we propose to train a neural ranking model using weak labels that are obtained automatically without human annotators or any external resources (e.g., click data). We train a set of simple yet effective neural ranking models and study their effectiveness under various learning scenarios, i.e., point-wise and pair-wise, different objective functions, and using different input representations~\citep{Dehghani:2017:SIGIR}. We also discuss how privacy preserving approaches can benefit from models that are capable of learning from weak signals, where instead of labels from the original sensitive training data a noisy version is provided~\citep{dehghani:2017:neuir}.
 
 \subsubsection*{Chapter 5: \titleof{c5}}
 In this chapter, we focus on the following research question:
@@ -220,8 +220,8 @@ In this chapter, we focus on the following research question:
 
 In this chapter we introduce \emph{Learning with Controlled Weak Supervision (\cws)} and \emph{Fidelity Weighted Learning (\fwl)}, two semi-supervised approaches for training neural networks, where we have a large set of data with weak labels and a small amount of data with true labels. 
 %
-In \cws we train two neural networks in a meta-learning setup: a \tnet, the learner and a \cnet, the meta-learner.  The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that are weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
-%
+In \cws we train two neural networks in a meta-learning setup: a \tnet, the learner, and a \cnet, the meta-learner.  The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that are weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
+
 \fwl is a student-teacher approach in which we modulate the parameter updates to a \emph{student} network (trained on the task we care about) on a per-sample basis according to the posterior confidence of its label-quality estimated by a \emph{teacher} (who has access to the high-quality labels).  
 
 \subsection*{PART III: \titleof{p3}}
@@ -230,86 +230,93 @@ In this part, we discuss injecting inductive biases into learning algorithms as 
 \subsubsection*{Chapter 6: \titleof{c6}}
 In this chapter, we address the following research question:
 \resq{c6}
-We introduced Universal Transformer~\citep{Dehghani:ICLR:2019}, a self-attentive concurrent-recurrent sequence model, which is an extension of Transformer model~\citep{vaswani2017attention}. The Universal Transformer introduces recurrence in depth by repeatedly refines a series of vector representations for each position of the sequence in parallel, by combining information from different positions using self-attention and applying a recurrent transition function across all time steps. 
-In the simplest form, Universal Transformer with a fixed number of iterations is almost equivalent to a multi-layer Transformer with tied parameters across all its layers. By sharing weight, we can save massively on the number of parameters that we are training and fewer parameters means learn faster with fewer data points.  We show that the elegant idea of introducing recurrent in depth enables Transformer to extrapolate from training data much better on a range of algorithmic and language understanding tasks~\citep{Dehghani:ICLR:2019, Dehghani:2019:WSDM}.
+We introduced Universal Transformer~\citep{Dehghani:ICLR:2019}, a self-attentive concurrent-recurrent sequence model, which is an extension of the Transformer model~\citep{vaswani2017attention}. The Universal Transformer introduces recurrence in depth by repeatedly modifying a series of vector representations for each position of the sequence in parallel, by combining information from different positions using self-attention and applying a recurrent transition function across all time steps. 
+In the simplest form, a Universal Transformer with a fixed number of iterations is almost equivalent to a multi-layer Transformer with tied parameters across all its layers. By sharing weights, we can save massively on the number of parameters that we are training and fewer parameters means that we learn faster with fewer data points.  We show that the elegant idea of introducing recurrence in depth enables the Universal Transformer to extrapolate from training data much better on a range of algorithmic and language understanding tasks~\citep{Dehghani:ICLR:2019, Dehghani:2019:WSDM}.
 
 
 \section{Origins}
-Next, we present the origins of each chapter in terms of the scholarly papers they are based on.
+Next, we present the origins of each chapter in terms of the papers they are based on.
 \begin{itemize}
-    \item[\textbf{Part I}]: \emph{\titleof{p1}}
+    \setlength{\itemindent}{10pt}
+    \item[\textbf{Part I:}] \emph{\titleof{p1}}
 %  
-    \begin{itemize}
-        \item[\textbf{Chapter 2}]: \emph{\titleof{c2}}
         \begin{itemize}
-            \item \bibentry{Dehghani:CIKM2016:long}
-            \item \bibentry{Dehghani:2016:CHIIR}
-            \item \bibentry{Dehghani2016:trec}
-            \item \bibentry{Dehghani:2016:SIGIR} (SIGIR Doctoral Consortium Award).
+            \setlength{\itemindent}{15pt}
+            \item[\textbf{Chapter 2:}] \emph{\titleof{c2}}
+            \begin{itemize}[label=\textbullet] 
+                \item \bibentry{Dehghani:CIKM2016:long}.
+                \item \bibentry{Dehghani:2016:CHIIR}.
+                \item \bibentry{Dehghani2016:trec}.
+                \item \bibentry{Dehghani:2016:SIGIR} (SIGIR Doctoral Consortium Award).
+            \end{itemize}
+    
+            \item[\textbf{Chapter 3:}] \emph{\titleof{c3}}
+            \begin{itemize}[label=\textbullet] 
+                \item \bibentry{Dehghani:2016:ICTIR} (Best Paper Award).
+                \item \bibentry{Dehghani:2016:CLEF} (Best Paper Honorable Mention).
+            \end{itemize}
         \end{itemize}
-    \end{itemize}
+%  
+\end{itemize}
 %
-    \begin{itemize}
-        \item[\textbf{Chapter 3}]: \emph{\titleof{c3}}
-        \begin{itemize}
-            \item \bibentry{Dehghani:2016:ICTIR} (Best Paper Award).
-            \item \bibentry{Dehghani:2016:CLEF} (Best Paper Honorable Mention).
-        \end{itemize}
-    \end{itemize}
+\begin{itemize}
+\setlength{\itemindent}{10pt}
+    \item[\textbf{Part II:}] \emph{\titleof{p2}}
 %  
-    \item[\textbf{Part II}]: \emph{\titleof{p2}}
-%  
-    \begin{itemize}
-        \item[\textbf{Chapter 4}]: \emph{\titleof{c4}}
         \begin{itemize}
-            \item \bibentry{Dehghani:2017:SIGIR}
-            \item \bibentry{dehghani:2017:neuir}
-            \item \bibentry{Dehghani2017:CIKM}
+            \setlength{\itemindent}{15pt}
+            \item[\textbf{Chapter 4:}] \emph{\titleof{c4}}
+            \begin{itemize}[label=\textbullet] 
+                \item \bibentry{Dehghani:2017:SIGIR}.
+                \item \bibentry{dehghani:2017:neuir}.
+                \item \bibentry{Dehghani2017:CIKM}.
+            \end{itemize}
+    
+            \item[\textbf{Chapter 5:}] \emph{\titleof{c5}}
+            \begin{itemize}[label=\textbullet] 
+                \item \bibentry{dehghani:2018:ICLR}.
+                \item \bibentry{Dehghani:2017:nips_metalearn}.
+                \item \bibentry{Dehghani:2017avoiding}.
+            \end{itemize}
         \end{itemize}
-    \end{itemize}
-%
-    \begin{itemize}
-        \item[\textbf{Chapter 5}]: \emph{\titleof{c5}}
-        \begin{itemize}
-            \item \bibentry{dehghani:2018:ICLR}
-            \item \bibentry{Dehghani:2017:nips_metalearn}
-            \item \bibentry{Dehghani:2017avoiding}
-        \end{itemize}
-    \end{itemize}
 %   
-    \item[\textbf{Part III}]: \emph{\titleof{p3}}
+\end{itemize}
+\begin{itemize}
+\setlength{\itemindent}{10pt}
+    \item[\textbf{Part III:}] \emph{\titleof{p3}}
 %  
-    \begin{itemize}
-        \item[\textbf{Chapter 6}]: \emph{\titleof{c6}}
         \begin{itemize}
-            \item \bibentry{Dehghani:ICLR:2019}
-            \item \bibentry{Dehghani:2019:WSDM}
+            \setlength{\itemindent}{15pt}
+            \item[\textbf{Chapter 6:}] \emph{\titleof{c6}}
+            \begin{itemize}[label=\textbullet] 
+                \item \bibentry{Dehghani:ICLR:2019}.
+                \item \bibentry{Dehghani:2019:WSDM}.
+            \end{itemize}
         \end{itemize}
-    \end{itemize}
 %
 \end{itemize}
 
 The thesis also indirectly builds on the following papers (listed in reverse chronological order):
 %  
 \begin{itemize}
-    \item \bibentry{Dehghani:2018:SIGIRForum}
-    \item \bibentry{Zamani:2018:CIKM}
-    \item \bibentry{Azarbonyad:2018:TKDE}
-    \item \bibentry{Dehghani:2018:LND4IR}
-    \item \bibentry{Zamani:2018:LND4IR}
-    \item \bibentry{Azarbonyad:2017:CIKM}
-    \item \bibentry{Kenter:2017:NN4IR}
-    \item \bibentry{Dehghani:2017:ICTIR}
-    \item \bibentry{Dehghani:2017:CHIIR}
-    \item \bibentry{Dehghani:2017:CHIIR}
-    \item \bibentry{Azarbonyad:2017:ECIR}
-    \item \bibentry{Dehghani:2016:DIR}
-    \item \bibentry{Dehghani:CIKM2016:short}
-    \item \bibentry{Quiroz:2016:CLEF}
-    \item \bibentry{Hashemi:2015:TREC}
-    \item \bibentry{Dehghani:2015:DIR}
-    \item \bibentry{Tabrizi:2015:ICTIR}
-    \item \bibentry{Azarbonyad:2015:CLEF}
-    \item \bibentry{Azarbonyad:2015:SIGIR}
-    \item \bibentry{Dehghani:2015:ECIR}
+    \item \bibentry{Dehghani:2018:SIGIRForum}.
+    \item \bibentry{Zamani:2018:CIKM}.
+    \item \bibentry{Azarbonyad:2018:TKDE}.
+    \item \bibentry{Dehghani:2018:LND4IR}.
+    \item \bibentry{Zamani:2018:LND4IR}.
+    \item \bibentry{Azarbonyad:2017:CIKM}.
+    \item \bibentry{Kenter:2017:NN4IR}.
+    \item \bibentry{Dehghani:2017:ICTIR}.
+    \item \bibentry{Dehghani:2017:CHIIR}.
+    \item \bibentry{Dehghani:2017:CHIIR}.
+    \item \bibentry{Azarbonyad:2017:ECIR}.
+    \item \bibentry{Dehghani:2016:DIR}.
+    \item \bibentry{Dehghani:CIKM2016:short}.
+    \item \bibentry{Quiroz:2016:CLEF}.
+    \item \bibentry{Hashemi:2015:TREC}.
+    \item \bibentry{Dehghani:2015:DIR}.
+    \item \bibentry{Tabrizi:2015:ICTIR}.
+    \item \bibentry{Azarbonyad:2015:CLEF}.
+    \item \bibentry{Azarbonyad:2015:SIGIR}.
+    \item \bibentry{Dehghani:2015:ECIR}.
 \end{itemize}

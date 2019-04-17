@@ -15,7 +15,7 @@ p(t|d) =  \lambda_{d,sw} p(t|\theta_{sw}) + \lambda_{d,g} p(t|\theta_g) + \lambd
 where $\lambda_{d,x}$ stands for $p(\theta_x|d)$ which is the probability of choosing the model $\theta_x$ given the document $d$. 
 
 We estimate the general and specific models based on the patterns of the occurrences of terms in different documents in the set and make them fixed in the estimation process as infinitely strong priors. 
-We consider the collection model, i.e. the set of all the existing documents, $\theta_C$ as an estimation for $\theta_g$:
+We consider the collection model, i.e., the set of all the existing documents, $\theta_C$ as an estimation for $\theta_g$:
 \begin{equation}
 p(t|\theta_g) = 
 p(t|\theta_C) = \frac{c(t,C)}{\sum_{t' \in V} c(t',C)},

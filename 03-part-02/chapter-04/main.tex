@@ -51,7 +51,7 @@ In the following sections, we will address these research questions.
 
 \section{Conclusion}
 In this chapter, we focused on addressing \textbf{\resqname{c4}}. 
-We proposed to use unsupervised methods in order to programmatically generate large amounts of training data, as weakly annotated data, to train effective neural ranking models. We focus on the task of assessing the relevance, i.e. ranking documents given a query that suffers from a large-scale publicly available training set. We examine various neural ranking models with different ranking architectures and objectives, and different input representations. 
+We proposed to use unsupervised methods in order to programmatically generate large amounts of training data, as weakly annotated data, to train effective neural ranking models. We focus on the task of assessing the relevance, i.e., ranking documents given a query that suffers from a large-scale publicly available training set. We examine various neural ranking models with different ranking architectures and objectives, and different input representations. 
 
 To investigate \textbf{\resqname{c4.1}}, We used over six million queries to train our models and evaluated them on Robust04 and ClueWeb 09-Category B collections, in an ad-hoc retrieval setting.  The experiments showed that our best performing model significantly outperforms the BM25 model (our weak supervision signal) by over $13\%$ and $35\%$ MAP improvements in the Robust04 and ClueWeb collections, respectively. 
 We also demonstrated that in the case of having a small amount of training data, we can improve the performance of supervised learning by pre-training the network on weakly supervised data.

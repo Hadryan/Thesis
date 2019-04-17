@@ -84,7 +84,7 @@ We use the mix-strategy discussed in~\citep{ZS14} to generate the datasets. Unli
 \subsection{Subject-Verb Agreement}
 Next, we consider the task of predicting number-agreement between subjects and verbs in English sentences~\citep{linzen2016assessing}. Succeeding in this task is a strong indicator that a model can learn to approximate syntactic structure and therefore it was proposed by~\citet{linzen2016assessing} as a proxy for assessing the ability of different models to capture hierarchical structure in natural language. 
 
-Two experimental setups were proposed by ~\citet{linzen2016assessing} for training a model on this task: 1) training with a language modeling objective, i.e., next word prediction, and 2) as binary classification, i.e. predicting the number of the verb given the sentence. 
+Two experimental setups were proposed by ~\citet{linzen2016assessing} for training a model on this task: 1) training with a language modeling objective, i.e., next word prediction, and 2) as binary classification, i.e., predicting the number of the verb given the sentence. 
 We follow the experimental protocol of ~\citet{linzen2016assessing} for solving the task using a language modeling training setup, i.e.\ a next word prediction objective, followed by calculating the ranking accuracy of the target verb at test time. 
 
 In this task, in order to have different levels of difficulty, ``agreement attractors'' are used, i.e.\ one or more intervening nouns with the opposite number from the subject with the goal of confusing the model. In this case, the model needs to correctly identify the head of the syntactic subject that corresponds to a given verb and ignore the intervening attractors in order to predict the correct form of that verb.
@@ -101,7 +101,7 @@ Here are some examples for this task in which subjects and the corresponding ver
 
 \input{04-part-03/chapter-06/figs_and_tables/table_sva_results.tex}
 Our results are summarized in Table~\ref{tab:sva}. The best LSTM with attention from the literature achieves 99.18\% on this task~\citep{yogatama2018memory}, outperforming a vanilla Transformer~\citep{tran18}. UTs significantly outperform standard Transformers, and achieve an \emph{average} result comparable to the current state of the art (99.2\%). However, we see that UTs (and particularly with dynamic halting) perform progressively better than all other models as the number of attractors increases (see the last row, $\Delta$).
-The recurrent inductive bias, i.e. the fact that we can repeat the computations in depth, helps the Universal Transformer to capture the hierarchical relations and better model the structure of the data.
+The recurrent inductive bias, i.e., the fact that we can repeat the computations in depth, helps the Universal Transformer to capture the hierarchical relations and better model the structure of the data.
 
 \subsection{LAMBADA Language Modeling}
 The LAMBADA task~\citep{paperno2016lambada} is a language modeling task consisting of predicting a missing target word given a broader context of 4-5 preceding sentences. The dataset was specifically designed so that humans are able to accurately predict the target word when shown the full context, but not when only shown the target sentence in which it appears. It, therefore, goes beyond language modeling, and tests the ability of a model to incorporate broader discourse and longer term context when predicting the target word\footnote{\url{http://clic.cimec.unitn.it/lambada/appendix_onefile.pdf}}.

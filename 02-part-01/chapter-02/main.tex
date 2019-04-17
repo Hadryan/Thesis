@@ -36,7 +36,7 @@ While estimating \acswlm, as a distribution over terms to represent an entity gi
 
 \subsection{Preliminaries}
 ~\label{chap2_preliminaries}
-In Part~\ref{part1} of this thesis, i.e. Chapter~\ref{chap:2} and ~\ref{chap:3}, an ``entity'' can refer to a concept, a person, an organization, a category, or an ideology. The entity can be an abstract entity for which we have \emph{no direct observation}, for instance, learning a representation for a parliamentary party, given speeches of its member, or learning to model relevance, given a set of documents that are labeled as relevant.
+In Part~\ref{part1} of this thesis, i.e., Chapter~\ref{chap:2} and ~\ref{chap:3}, an ``entity'' can refer to a concept, a person, an organization, a category, or an ideology. The entity can be an abstract entity for which we have \emph{no direct observation}, for instance, learning a representation for a parliamentary party, given speeches of its member, or learning to model relevance, given a set of documents that are labeled as relevant.
 We assume the cases where the entity is associated with a set of texts that are sequences of words. The associated texts with an entity, for instance for the aforementioned examples, can be speeches given by the person, the documents published by the organization, the text associated by instances of the category, and the set of documents describing the ideology.
 %
 % We also focus on learning representations that capture the \emph{notion of relevance} for applications like retrieval, where the main goal is retrieving relevant information, given a query, and classification where the main goal is to classify entities into classes based on their relevance to the underlying concepts of class labels.
@@ -89,7 +89,7 @@ We also employed \acswlm as a group profiling approach for the task of contextua
 We named our model, significant ``words'' language model in honor of \citeauthor{Luhn:1958}, however, it could be employed in non-textual environments, since in general, the idea is to extract significant ``features'' representing the shared essence of a group of entities.
 
 % connecting chapter 2 to chapter 3:
-The process of estimating \acswlm leads to a sparse model, i.e. $\theta_{sw}$ assigns zero probability to many terms that are identified as either too general or too specific for representing an entity. 
+The process of estimating \acswlm leads to a sparse model, i.e., $\theta_{sw}$ assigns zero probability to many terms that are identified as either too general or too specific for representing an entity. 
 % Sparsity has a central role in human episodic memory. In the human brain, sparse activities is important to separate representations as it reduces the risk that a single neuron holds representations of two overlapping memories\citep{cho2018blockchain}. In addition to human brain, for 
 In many systems, sparsity is a desirable property, for instance sparse representations are easier to interpret or more likely to posses separability which is important for collision resistance hash functions. 
 In Chapter~\ref{chap:3}, we extend \acswlm to hierarchically structured entities and discuss separability as a key objective for learning the representations.

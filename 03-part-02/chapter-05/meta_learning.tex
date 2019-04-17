@@ -90,7 +90,7 @@ Our optimization objective is composed of two terms: (1) the \cnet loss $\mathca
 
 Both networks are trained by alternating between the \emph{weak supervision} and the \emph{full supervision} mode.
 %
-In the \emph{full supervision} mode, the parameters of the \cnet are updated using training instance drawn from training set $\mathcal{D}_s$. We use cross-entropy loss function for the \cnet to capture the difference between the predicted confidence score of instance $j$, i.e. $\tilde{c}_j$ and the target score $c_j$:
+In the \emph{full supervision} mode, the parameters of the \cnet are updated using training instance drawn from training set $\mathcal{D}_s$. We use cross-entropy loss function for the \cnet to capture the difference between the predicted confidence score of instance $j$, i.e., $\tilde{c}_j$ and the target score $c_j$:
 \begin{equation}
 % \nonumber
 \mathcal{L}_c = \sum_{j\in V} -  c_j \log(\tilde{c}_j) - (1-c_j) \log(1-\tilde{c}_j),

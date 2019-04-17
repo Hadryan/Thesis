@@ -83,7 +83,7 @@ There is a key point in this hierarchy to which we will refer for estimating mod
 First assume that the goal is to estimate a language model representing category $c$, as one of the entities in the middle layer of the hierarchy, and we need the estimated model possessing \emph{horizontal separability}. 
 To estimate a horizontally separable model of a category, which represents the category in a way that it is distinguishable from other categories in the middle layer, the key strategy is to eliminate terms that are common across all the categories (overlapping features) and preserve only the discriminating ones.
 
-To do so, we consider there is a general model that captures all the \emph{common} terms of all the categories in the middle layer, $\theta_c^{g}$.  Also we assume that the standard language model of $c$, i.e the model estimated  from concatenation of all the documents in $c$ using MLE, $\theta_{c}$, is drawn from the mixture of the \emph{latent horizontally separable model}, $\theta_{c}^{hs}$, and general model that represents shared terms of all categories, i.e. $\theta_c^{g}$:
+To do so, we consider there is a general model that captures all the \emph{common} terms of all the categories in the middle layer, $\theta_c^{g}$.  Also we assume that the standard language model of $c$, i.e the model estimated  from concatenation of all the documents in $c$ using MLE, $\theta_{c}$, is drawn from the mixture of the \emph{latent horizontally separable model}, $\theta_{c}^{hs}$, and general model that represents shared terms of all categories, i.e., $\theta_c^{g}$:
 \begin{equation}
 p(t|\theta_{c})  =  \lambda p(t|\theta_{c}^{hs}) + (1-\lambda) p(t|\theta_c^g),
 \end{equation}
@@ -129,7 +129,7 @@ Now assume that we want to extract a language model possessing \emph{vertical se
 In the procedure of making the model horizontally separable, we argued that we can reduce the problem to removing terms representing the top node, which results in a model that is separable from the top node in the upper layer. This means that we are already half-way towards making a model vertically separable; thus, the model only requires to be separable from its descendant entities in the lower layer.  
 Back to the meaning of the ``IsA'' relations in the hierarchy, the model of each node is a general representation of all its descendants. So making the model of a category separable from its descendant documents means to remove terms that describe each individual documents, but not all of them. We call these terms, document specific terms.
 
-For each category $c$, we assume there is a  model, $\theta_d^{s}$, that captures document specific terms, i.e. terms from documents in that category that are good indicators for individual documents but not supported by all of them. Also we assume that the standard language model of $c$, $\theta_{c}$, is drawn from the mixture of the \emph{latent vertically separable model}, $\theta_{c}^{vs}$, and $\theta_d^{s}$: 
+For each category $c$, we assume there is a  model, $\theta_d^{s}$, that captures document specific terms, i.e., terms from documents in that category that are good indicators for individual documents but not supported by all of them. Also we assume that the standard language model of $c$, $\theta_{c}$, is drawn from the mixture of the \emph{latent vertically separable model}, $\theta_{c}^{vs}$, and $\theta_d^{s}$: 
 \begin{eqnarray}
 p(t|\theta_{c}) & = & \lambda p(t|\theta_{c}^{vs}) + (1-\lambda) p(t|\theta_d^s)
 \end{eqnarray}

@@ -102,9 +102,9 @@ Table~\ref{tbl_main_ranking} shows the performance on both datasets. As can be s
 
 \input{03-part-02/chapter-05/figs_and_tables/table_ranking_results.tex}
 
-In the ranking task, the \std is designed in particular to be trained on weak annotations~\citep{Dehghani:2017:SIGIR}, hence training the network only on weak supervision, i.e. $\text{NN}_{\text{W}}$ performs better than $\text{NN}_{\text{S}}$. This can be due to the fact that ranking is a complex task requiring many training samples to learn representations that can be used to assess the relevance, while relatively few data with strong labels are available.
+In the ranking task, the \std is designed in particular to be trained on weak annotations~\citep{Dehghani:2017:SIGIR}, hence training the network only on weak supervision, i.e., $\text{NN}_{\text{W}}$ performs better than $\text{NN}_{\text{S}}$. This can be due to the fact that ranking is a complex task requiring many training samples to learn representations that can be used to assess the relevance, while relatively few data with strong labels are available.
 
-Alternating between strong and weak data during training, i.e. $\text{NN}_{\text{W}\text{/S}^+}$ seems to bring little (but statistically significant) improvement. However, we can gain better results by the typical fine-tuning strategies.  Among the fine-tuning experiments, updating all the parameters of the \tnet (or \std), i.e. $\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$, is the best fine-tuning strategy. Updating only the parameters of the representation layer based on the strong labels, i.e. $\text{NN}_{\text{W}} \to \text{NN}^{\text{Rep}}_{\text{S}}$, works better than updating only parameters of the supervision layer, i.e. $\text{NN}_{\text{W}} \to \text{NN}^{\text{Sup}}_{\text{S}}$. This supports our designed choice of a shared embedding layer in \cws which gets updated on set $V$.
+Alternating between strong and weak data during training, i.e., $\text{NN}_{\text{W}\text{/S}^+}$ seems to bring little (but statistically significant) improvement. However, we can gain better results by the typical fine-tuning strategies.  Among the fine-tuning experiments, updating all the parameters of the \tnet (or \std), i.e., $\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$, is the best fine-tuning strategy. Updating only the parameters of the representation layer based on the strong labels, i.e., $\text{NN}_{\text{W}} \to \text{NN}^{\text{Rep}}_{\text{S}}$, works better than updating only parameters of the supervision layer, i.e., $\text{NN}_{\text{W}} \to \text{NN}^{\text{Sup}}_{\text{S}}$. This supports our designed choice of a shared embedding layer in \cws which gets updated on set $V$.
 
 \fwl is the best performing baselines, and \cws achieves 97\% of the performance of \fwl. The main advantage of \cws over \fwl is that it is trained in a single stage process and needs to meet the examples in $\mathcal{D}_w$ (which is a reasonably large set) only one time, while \fwl has three sequential stages during training and it needs to iterate two times over all the examples in $\mathcal{D}_w$. Also employing a Gaussian Process as part of the model in \fwl limits its scalability, while the components of \cws are all neural networks, and this eases the increase in the capacity of the model. 
 % With all that, we find \cws a much more efficient model in terms of training cost, with losing little to no performance.
@@ -115,7 +115,7 @@ As an ablation study on \cws, we tried different training strategies and report 
 %
 \cws$_\text{CT}$ is to let the \cnet to be trained separately, while still being able to enjoy shared learned information from the \tnet. Compared to \cws, \cws$_\text{CT}$ is less efficient as we need two rounds of training on weakly labeled data. 
 
-While it seems reasonable to make use of strong labels for updating \emph{all} parameters of the \tnet, CWS$_\text{JT}^+$ achieves no better results than \cws. We speculate that during training, the direction of the parameter optimization is profoundly affected by the type of supervision signal and while we control the magnitude of the gradients, we do not change their directions. Hence alternating between two sets with different label qualities (different supervision signal types, i.e. weak and strong) confuses the supervision layer of the \tnet. 
+While it seems reasonable to make use of strong labels for updating \emph{all} parameters of the \tnet, CWS$_\text{JT}^+$ achieves no better results than \cws. We speculate that during training, the direction of the parameter optimization is profoundly affected by the type of supervision signal and while we control the magnitude of the gradients, we do not change their directions. Hence alternating between two sets with different label qualities (different supervision signal types, i.e., weak and strong) confuses the supervision layer of the \tnet. 
 
 In \cws$_\text{ST}$,  the strong dataset, $\mathcal{D}_s$, is too small to train a high-quality \cnet without taking advantage of the vast amount of weakly annotated data in $\mathcal{D}_w$ to learn better representations, so CWS$_\text{ST}$ is not able to improve the performance over $\text{NN}_W$ significantly and also we noticed that this strategy leads to a slow convergence compared to the $\text{NN}_W$. 
 Also transferring learned information from \tnet to \cnet via progressive training, i.e., CWS$_\text{PT}$, performs no better than full sharing of the representation learning layer.
@@ -125,12 +125,12 @@ Also transferring learned information from \tnet to \cnet via progressive traini
 \input{03-part-02/chapter-05/figs_and_tables/table_ranking_res_fwl.tex}
 Table~\ref{tbl_variants_rank_fwl} presents the results of some experiments we have done as ablation studies on \fwl. 
 
-Weighting the gradient updates from weak labels during pretraining and fine-tuning the network with strong labels, i.e. NN$_{\text{W}^\omega \to \text{S}}$ seems to work quite well.
+Weighting the gradient updates from weak labels during pretraining and fine-tuning the network with strong labels, i.e., NN$_{\text{W}^\omega \to \text{S}}$ seems to work quite well.
 %
 Comparing the performance of \fwlnospace$_{unsuprep}$ to \fwl indicates that, first of all, learning the representation of the input data downstream of the main task leads to better results compared to a task-independent unsupervised or self-supervised way. Also, the dramatic drop in the performance compared to the \fwl, emphasizes the importance of the preretraining the \std on weakly labeled data.
 
 %
-We can gain improvement by fine-tuning the NN$_\text{W}$ using labels generated by the \tch without considering their confidence score, i.e. \fwl$\backslash\Sigma$. This means we just augmented the fine-tuning process by generating a fine-tuning set using \tch which is better than $\mathcal{D}_s$ in terms of quantity and $\mathcal{D}_w$ in terms of quality. This baseline is equivalent to setting $\beta = 0$ in Equation~\ref{eqn:eta2}. However, we see a big jump in performance when we use \fwl to include the estimated label quality from the \tch, leading to the best overall results.
+We can gain improvement by fine-tuning the NN$_\text{W}$ using labels generated by the \tch without considering their confidence score, i.e., \fwl$\backslash\Sigma$. This means we just augmented the fine-tuning process by generating a fine-tuning set using \tch which is better than $\mathcal{D}_s$ in terms of quantity and $\mathcal{D}_w$ in terms of quality. This baseline is equivalent to setting $\beta = 0$ in Equation~\ref{eqn:eta2}. However, we see a big jump in performance when we use \fwl to include the estimated label quality from the \tch, leading to the best overall results.
 
 \subsection{Sentiment Classification}
 In sentiment classification, the goal is to predict the sentiment (e.g., positive, negative, or neutral) of a sentence. Each training sample $x$ consists of a sentence $s$ and its sentiment label $\tilde{y}$.
@@ -195,7 +195,7 @@ Similar to the ranking task, we set $l=1$ the length scale of RBF kernel, set $\
 
 
 \subsubsection{Collections}
-We test our model on the twitter message-level sentiment classification of SemEval-15 Task 10B \citep{rosenthal:2015}. Datasets of SemEval-15 subsume the test sets from previous editions of SemEval, i.e. SemEval-13 and SemEval-14. Each tweet was preprocessed so that URLs and usernames are masked.
+We test our model on the twitter message-level sentiment classification of SemEval-15 Task 10B \citep{rosenthal:2015}. Datasets of SemEval-15 subsume the test sets from previous editions of SemEval, i.e., SemEval-13 and SemEval-14. Each tweet was preprocessed so that URLs and usernames are masked.
 
 \mypar{Data with strong labels.} 
 We use train (9,728 tweets) and development (1,654 tweets) data from SemEval-13 for training and SemEval-13-test (3,813 tweets) for validation.
@@ -218,7 +218,7 @@ We report Macro-F1, the official SemEval metric, in Table~\ref{tbl_main_sent}.
 
 Among all the baselines, \fwl is the best performing approach. \cws also outperforms all the baselines. 
 
-For this task, since the amount of data with strong labels are larger compared to the ranking task, the performance of $\text{NN}_{\text{S}}$ is acceptable. Alternately sampling from weak and strong data, i.e.  $\text{NN}_{\text{W}\text{/S}^+}$ gives better results than either of learning from just weak or just strong labels. However, pretraining on weak labels then fine-tuning both the supervision layer and the representation learning layer on strong labels, further improves the performance.  
+For this task, since the amount of data with strong labels are larger compared to the ranking task, the performance of $\text{NN}_{\text{S}}$ is acceptable. Alternately sampling from weak and strong data, i.e.,  $\text{NN}_{\text{W}\text{/S}^+}$ gives better results than either of learning from just weak or just strong labels. However, pretraining on weak labels then fine-tuning both the supervision layer and the representation learning layer on strong labels, further improves the performance.  
 
 Besides the baselines, we also report the best performing systems which are also convolution-based models (\citealt{Rouvier:2016} on SemEval-14; \citealt{Deriu2016:SemEval} on SemEval-15). Both \cws and \fwl outperform these methods.
 
@@ -232,8 +232,8 @@ In sentiment classification, compared to the ranking task, it is easier to estim
 \input{03-part-02/chapter-05/figs_and_tables/table_sentiment_res_fwl.tex}
 The results of a set of experiments we have done as ablation studies on \fwl is presented Table~\ref{tbl_variants_sent_fwl}. 
 
-Having static weighting on the gradient updates, i.e. NN$_{\text{W}^\omega \to \text{S}}$, leads to the performance that is better than simple fine-tuning, i.e. $\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$ in Table~\ref{tbl_main_sent} .
+Having static weighting on the gradient updates, i.e., NN$_{\text{W}^\omega \to \text{S}}$, leads to the performance that is better than simple fine-tuning, i.e., $\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$ in Table~\ref{tbl_main_sent} .
 %
-For this task, similar to the ranking task, learning the representation in an unsupervised task independent fashion, i.e. \fwlnospace$_{unsuprep}$, does not lead to good results compared to the \fwl.
+For this task, similar to the ranking task, learning the representation in an unsupervised task independent fashion, i.e., \fwlnospace$_{unsuprep}$, does not lead to good results compared to the \fwl.
 %
-Similar to the ranking task, fine-tuning $\text{NN}_{\text{W}}$ based on labels generated by $\mathcal{GP}$ instead of data with strong labels, regardless of the confidence score, i.e. \fwl$\backslash\Sigma$, works better than standard fine-tuning. 
+Similar to the ranking task, fine-tuning $\text{NN}_{\text{W}}$ based on labels generated by $\mathcal{GP}$ instead of data with strong labels, regardless of the confidence score, i.e., \fwl$\backslash\Sigma$, works better than standard fine-tuning. 
