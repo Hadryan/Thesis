@@ -6,7 +6,7 @@ However, these two independent stages do not leverage the full capacity of infor
 In this section, we address the first research question of this chapter:
 \resq{c5.1}
 
-We introduce a semi-\:supervised method that leverages a small amount of data with strong labels to improve the learning from a large amount of data with weak labels. This model, in fact, offers learning from \emph{Controlled Weak Supervision} and we refer to it by \emph{\cws} in the rest of this chapter.
+We introduce a semi-supervised method that leverages a small amount of data with strong labels to improve the learning from a large amount of data with weak labels. This model, in fact, offers learning from \emph{Controlled Weak Supervision} and we refer to it by \emph{\cws} in the rest of this chapter.
 %
 \cws has three main components:
 A \wa, which can be a heuristic model, a weak or biased classifier, or even a human via crowd-sourcing and it is employed to annotate a massive amount of unlabeled data, a \tnet, which uses a large set of weakly annotated instances by the \wa to learn the main task, and a \cnet, which is trained on a small set with strong labels to estimate confidence scores for instances annotated by the \wa. 
@@ -32,7 +32,7 @@ we study the performance of \cws by focusing on two applications: sentiment clas
 
 \subsection{Learning from Controlled Weak Supervision}
 \label{sec:method}
-In the following, we describe our recipe for semi-\:supervised learning of neural networks, in a scenario where along with a small human-labeled training set a large set of weakly labeled instances is leveraged.
+In the following, we describe our recipe for semi-supervised learning of neural networks, in a scenario where along with a small human-labeled training set a large set of weakly labeled instances is leveraged.
 
 % \subsection{General Architecture}
 % \label{sec:generalarchitecture}

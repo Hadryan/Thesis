@@ -108,7 +108,7 @@ To avoid the ranking effect in the evaluation of the TRF task, we have used modi
 queries $Q$, the $RI$ measure is defined as: $RI(Q) = \nicefrac{N^+ - N^-}{|Q|}$, where $N^+$ is the number of queries helped by the feedback method and $N^-$ is the number of queries hurt.
 
 In our experiments, as the baseline methods, we have used the most popular unsupervised state-of-the-arts for the feedback task that are proposed in the language modeling framework. 
-Our baseline methods are: the maximum likelihood estimation\:---\:without feedback (MLE)~\citep{Lafferty:2001}, the simple mixture model (SMM)~\citep{Zhai:SMM:2001},  the divergence minimization model (DMM)~\citep{Zhai:SMM:2001}, the relevance models (RM3 and RM4)~\citep{Abdul-jaleel:2004,Lavrenko:2001}, the regularized mixture model (RMM)~\citep{Tao:2006}, and maximum-entropy divergence minimization model (MEDMM)~\citep{Lv:2014}. 
+Our baseline methods are: the maximum likelihood estimation---without feedback (MLE)~\citep{Lafferty:2001}, the simple mixture model (SMM)~\citep{Zhai:SMM:2001},  the divergence minimization model (DMM)~\citep{Zhai:SMM:2001}, the relevance models (RM3 and RM4)~\citep{Abdul-jaleel:2004,Lavrenko:2001}, the regularized mixture model (RMM)~\citep{Tao:2006}, and maximum-entropy divergence minimization model (MEDMM)~\citep{Lv:2014}. 
 
 
 \subsection{\acswlm for Relevance Feedback}
@@ -263,7 +263,7 @@ Beside the group-based ranking, we generate a ranked list of suggestions based o
 Using \acswlm, we learn the contribution of each of \emph{specific}, and \emph{general}, \emph{group} (which is in fact \emph{significant words}) models, i.e.\ $\lambda_{user,s}$, $\lambda_{user,g}$, and $\lambda_{user,sw}$. Having these parameters empowers us to efficiently combine the group-based model with the preferences-based model for content customization. To this end, we smooth the preferences-based model of the user with both the group model and the general model using JM-smoothing \citep{Zhai:2001} employing the learn parameters.
 
 \input{02-part-01/chapter-02/figs_and_tables/plot_cs_perf.tex}
-Figure~\ref{fig:Chart1} presents the performance of well as preferences\:-\:based suggestion as well as when we employ different grouping criteria for group-\:based suggestion. The combinations of preferences\:-\:based suggestion and group-\:based suggestion are also reported. 
+Figure~\ref{fig:Chart1} presents the performance of well as preferences-based suggestion as well as when we employ different grouping criteria for group-based suggestion. The combinations of preferences-based suggestion and group-based suggestion are also reported. 
 
 Among the group-based strategies, suggestions based on the duration of the trip is the most effective strategy. Also age of the user and the type of the group the user travels with, are rather important while type of the trip is not so important. This could be due to the fact that most of the time, the user's interests and attractions do not change based on the type of trip which could be ``business'' or ``holiday''. 
 On the other hand, combining the preferences-based suggestions with group-based suggestions in all grouping strategies leads to improvement. This means in case of incompleteness of user's profile, customizing the content based on the groups that user belongs to, implicitly fills the missing information and improves the performance of the suggestions. However, this depends on the quality of the groups profiles that should reflect significant (not general, not specific) characteristics of the groups.

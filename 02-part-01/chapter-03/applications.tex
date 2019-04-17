@@ -1,8 +1,8 @@
 \section{\achswlm for Hierarchical Classification}
-Two\:-\:dimensional separability as the main properties of \achswlm makes the learned representations of the entities in the hierarchy less sensitive to the structural changes for instance when the hierarchy evolves over time. Here in this section, we address our last research question of this chapter:
+Two-dimensional separability as the main properties of \achswlm makes the learned representations of the entities in the hierarchy less sensitive to the structural changes for instance when the hierarchy evolves over time. Here in this section, we address our last research question of this chapter:
 \resq{c3.3}
 
-Before evaluating the transferability of two\:-\:dimensionaly separable representations over time, we intrinsically study the separability of the representations learned by \achswlm. We use parliamentary data as one of the interesting collections with hierarchically structured data that can evolve over time. The structure of the parliamentary hierarchy has been shown in Figure~\ref{fig:ParHierarchy}.  First, we introduce the collection we have used, and then we analyze the quality of \achswlm on providing horizontal and vertical separability over the hierarchy. 
+Before evaluating the transferability of two-dimensionaly separable representations over time, we intrinsically study the separability of the representations learned by \achswlm. We use parliamentary data as one of the interesting collections with hierarchically structured data that can evolve over time. The structure of the parliamentary hierarchy has been shown in Figure~\ref{fig:ParHierarchy}.  First, we introduce the collection we have used, and then we analyze the quality of \achswlm on providing horizontal and vertical separability over the hierarchy. 
 
 \subsection{Data Collection}
 We use the Dutch parliamentary data which forms a hierarchical structure that can evolve over time. The data are collected and annotated as the part of
@@ -19,10 +19,10 @@ The whole corpus consists of 14.7 million terms from 240,501 speeches and contai
 No stemming and no lemmatization is done on the data and also stop words, and common words are not removed in data preprocessing.  After data preparation, we estimate \acswlm\ for all entities in the hierarchy as it is explained in Section~\ref{sec:hswlm}.
 
 %---------------------------------------
-\subsection{Two\:-\:Dimensional Separability of \achswlm}
+\subsection{Two-Dimensional Separability of \achswlm}
 \label{subsec:achswlmep}
 %---------------------------------------
-Here we investigate the ability of \achswlm on providing language models for hierarchical entities that are two\:-\:dimensionally separable. 
+Here we investigate the ability of \achswlm on providing language models for hierarchical entities that are two-dimensionally separable. 
 Based on the explained procedure of estimating \achswlm, the language models of entities in the hierarchy is repeatedly updated, so that the resulting models are both \emph{horizontally} and \emph{vertically} separable in the hierarchy. To assess this fact, we estimate \achswlm on the parliamentary data and look into the separability between entities in the same layer or in different layers.
 
 Figures~\ref{fig:HSS} and~\ref{fig:HSP} illustrate the probability distribution over terms based on the estimated \achswlm in the status and party layer respectively. We sort the probability distribution on the term weight of the first model and plot the other models in this exact order.
@@ -43,7 +43,7 @@ As can be seen in the status layer, Figures~\ref{fig:HSS}, the distributions ove
     \caption{\label{fig:HS} \emph{Horizontal Separability}: probability distribution over terms based on \hswlms in status layer and party layer.}
 \end{figure}
 
-Besides, we illustrate the horizontal separability of \achswlm of some pairs of parties. Figures \ref{fig:HSPCO}, \ref{fig:HSPOO}, and \ref{fig:HSPCC} show the separability of models of two parties in three cases, respectively: 1) different statuses, 2) both in the status of opposition, 3) both in the status of government. It can be seen that in all cases of being in the same status or different status, estimated \hswlms are separable. The interesting point is in Figure~\ref{fig:HSPCC} that presents the models of two government parties that are strongly separable. This rooted in the fact that in this period there was an unusual coalition government consisting of a right\:-\:wing and a left\:-\:wing party. So, although they have an agreement in the status layer, their model is highly separable in terms of having opposite spectrum in party layer.
+Besides, we illustrate the horizontal separability of \achswlm of some pairs of parties. Figures \ref{fig:HSPCO}, \ref{fig:HSPOO}, and \ref{fig:HSPCC} show the separability of models of two parties in three cases, respectively: 1) different statuses, 2) both in the status of opposition, 3) both in the status of government. It can be seen that in all cases of being in the same status or different status, estimated \hswlms are separable. The interesting point is in Figure~\ref{fig:HSPCC} that presents the models of two government parties that are strongly separable. This rooted in the fact that in this period there was an unusual coalition government consisting of a right-wing and a left-wing party. So, although they have an agreement in the status layer, their model is highly separable in terms of having opposite spectrum in party layer.
 
 
 \begin{figure}[!t]
@@ -84,7 +84,7 @@ In order to illustrate the vertical separability of \achswlm, we choose two diff
         \caption{\label{fig:VS} \emph{Vertical Separability}: probability distribution over terms in different layers based on \hswlms in complete paths from the root to the terminal entities in the hierarchy}
 \end{figure}
 
-Two\:-\:dimensional separation property of \achswlm in the hierarchy is essentially due to the parsimonization effect in two directions. 
+Two-dimensional separation property of \achswlm in the hierarchy is essentially due to the parsimonization effect in two directions. 
 Intuitively, the horizontal separability is mainly the result of the specification stage. For example, when an entity is parsimonized given its direct parent, since the data in its parent is formed by pooling the data from the entity and its siblings, parsimonization makes the model of the entity separable from its siblings, which provide \emph{horizontal separation} in the resulting language models. On the other hand, vertical separability is mainly due to the generalization stage (and implicitly specification). For example, when an entity is parsimonized given its children, since they are specified already, parsimonization gets rid of the specific terms of the lower layer from the entity's model.
 
 
@@ -121,7 +121,7 @@ On the other side, consider the goal is to model language usage of ``Government'
 As another indicator of the effectiveness of \acswlm, it outperforms the SVM bringing all the data together from three different periods in both party and status classification. This is because it gets the chance of having richer train data which leads to more precise models. While in SVM, changes in the parliamentary composition make speeches diverse, and this makes it not to be able to learn a concrete model. 
 \subsection{Invariance of the Representations}
 \input{02-part-01/chapter-03/figs_and_tables/plot_cross_period_party_rep_divergence.tex}
-As an intrinsic evaluation of the models, we evaluate the invariance of representations learned by our model over different periods\:---\:how similar are models of a particular in the hierarchy when trained on data from different periods. 
+As an intrinsic evaluation of the models, we evaluate the invariance of representations learned by our model over different periods---how similar are models of a particular in the hierarchy when trained on data from different periods. 
 %
 Since \achswlm is supposed to capture the essence of entities, not only \achswlm of an entity learned using an individual period should be valid for representing the entity on other periods, but also models of the same entity learned on data from different periods should be invariant. 
 
@@ -144,4 +144,4 @@ As expected, the diversity of features for different parties in a same period is
 
 Considering these observations together reveals that SVM learns representations on the basis of features that are indicators of issues related to the status of parties, since they are the most discriminating terms considering one period and in within period experiments, the performance of SVM is indebted to the separability of parties based on their statuses. Hence, after changing the status in the cross period experiments, the trained model of the previous period generated by SVM fails to predict the accurate party.  In the same way, the status classifier is affected by different parties forming a government in different periods, leading to lower accuracies.   
 
-This is exactly the point which the strengths of \achswlm kicks in. In fact, two\:-\:dimensional separability in the feature representation, enables $SVM_{\achswlm}$ to tackle the problem of having non-stable features in the model when the status of a party changes over time. In other words, eliminating the effect of the status layer in the party model, which is the result of the horizontal separation, ensures that the party model captures the terms related to the party ideology, not its status. Thereby, not only $SVM_{\achswlm}$ learns an effective model with acceptable accuracy in within period experiments, but also its learned models remain valid when the statuses of parties change. 
+This is exactly the point which the strengths of \achswlm kicks in. In fact, two-dimensional separability in the feature representation, enables $SVM_{\achswlm}$ to tackle the problem of having non-stable features in the model when the status of a party changes over time. In other words, eliminating the effect of the status layer in the party model, which is the result of the horizontal separation, ensures that the party model captures the terms related to the party ideology, not its status. Thereby, not only $SVM_{\achswlm}$ learns an effective model with acceptable accuracy in within period experiments, but also its learned models remain valid when the statuses of parties change. 

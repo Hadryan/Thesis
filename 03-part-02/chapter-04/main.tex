@@ -63,7 +63,7 @@ The first is the proper input representation. Providing the network with raw dat
 The second ingredient is to target the right goal and define a proper objective function. In the case of having weakly annotated training data, by targeting some explicit labels from the data, we may end up with a model that learned to express the data very well, but is incapable of going beyond it. 
 This is especially the case with deep neural networks where there are many parameters and it is easy to learn a model that overfits the data.
 %
-The third ingredient is providing the network with a considerable amount of training examples. 
+The third ingredient is providing the network with a considerable amount of diverse training examples. 
 As an example, during the experiments we noticed that using the \feedthree, the network needs a lot of examples to learn embeddings that are more effective for retrieval compared to pre-trained embeddings. 
 Thanks to weak supervision, we can generate as much training data as we need with almost no cost.
 

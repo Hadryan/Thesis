@@ -155,7 +155,7 @@ The representation function $\psi$ consists of three components: an embedding fu
 \psi(q, d) = [\odot_{i=1}^{|q|}(\mathcal{E}(t_i^q), \mathcal{W}(t_i^q)) || \odot_{i=1}^{|d|} (\mathcal{E}(t_i^d), \mathcal{W}(t_i^d))],
 \end{equation}
 where $t_i^q$ and $t_i^d$ denote the $i^{th}$ term in query $q$ and document $d$, respectively. 
-For the network of the \modelthree, another similar term is concatenated with the above vector for the second document. The embedding function $\mathcal{E}$ transforms each term to a dense $m$-\:dimensional float vector as its representation, which is learned during the training phase. The weighting function $\mathcal{W}$ assigns a weight to each term in the vocabulary set, which is supposed to learn term global importance for the retrieval task. The compositionality function $\odot$ projects a set of $n$ embedding and weighting pairs to an $m$-\:dimensional representation, independent from the value of $n$. The compositionality function is given by:
+For the network of the \modelthree, another similar term is concatenated with the above vector for the second document. The embedding function $\mathcal{E}$ transforms each term to a dense $m$-dimensional float vector as its representation, which is learned during the training phase. The weighting function $\mathcal{W}$ assigns a weight to each term in the vocabulary set, which is supposed to learn term global importance for the retrieval task. The compositionality function $\odot$ projects a set of $n$ embedding and weighting pairs to an $m$-dimensional representation, independent from the value of $n$. The compositionality function is given by:
 \begin{equation}
 \odot_{i=1}^n(\mathcal{E}(t_i), \mathcal{W}(t_i)) = \sum_{i=1}^n \widehat{\mathcal{W}}(t_i)\cdot \mathcal{E}(t_i),
 \end{equation}
@@ -210,7 +210,7 @@ We attempt to break down our experiments and analysis to different parts address
 Table~\ref{tbl_main} presents the performance of all model combinations.
 Interestingly, combinations of the \modeltwo and the \modelthree with \feedthree outperform BM25 by significant margins in both collections. For instance, the \modelthree with \feedthree that shows the best performance among the other methods, surprisingly, improves BM25 by over $13\%$ and $35\%$ in Robust04 and ClueWeb collections respectively, in terms of MAP. Similar improvements can be observed for the other evaluation metrics.
 
-Regarding the modeling architecture, in the \modeltwo and the \modelthree, compared to the \modelone, we define objective functions that target to learn ranking instead of scoring. This is particularly important in weak supervision, as the scores are imperfect values\:---\:using the ranking objective alleviates this issue by forcing the model to learn a preference function rather than reproduce absolute scores.
+Regarding the modeling architecture, in the \modeltwo and the \modelthree, compared to the \modelone, we define objective functions that target to learn ranking instead of scoring. This is particularly important in weak supervision, as the scores are imperfect values---using the ranking objective alleviates this issue by forcing the model to learn a preference function rather than reproduce absolute scores.
 %
 In other words, using the ranking objective instead of learning to predict calibrated scores allows the \modeltwo and the \modelthree to learn to distinguish between examples whose scores are close. This way, some small amount of noise, which is a common problem in weak supervision, would not perturb the ranking as easily~\citep{Zamani:2018:ictir}.
 
@@ -327,7 +327,7 @@ We have also examined the \modelone with a network with a single linear hidden l
 Comparing the results of this experiment with \mone-\fthree in Table~\ref{tbl_main}, we can see that with a single-linear network we are not able to achieve a performance that is as good as a deep neural network with non-linearity.
 %
 This shows that the most important superiority of deep neural networks over other machine learning methods is their ability to learn an effective representation and take all the interactions between query and document(s) into consideration for approximating an effective ranking/scoring function. 
-This can be achieved when we have a deep enough network with non-\:linear activations.
+This can be achieved when we have a deep enough network with non-linear activations.
 
 %\alexi{Mosi@: we should also include supervised learning experiments on smaller subsets of human judgments, if possible. The idea is that in these scenarios where labeled data is scarce, weak supervision is really useful. Having plots, where we use various percentages of labeled examples and observing how weak supervision is increasingly important as the number of labeled examples becomes smaller.}
 \input{03-part-02/chapter-04/figs_and_tables/table_semisup_results.tex}
@@ -335,7 +335,7 @@ This can be achieved when we have a deep enough network with non-\:linear activa
 %
 In this set of experiments, we investigate whether employing weak supervision as a pre-training step helps to improve the performance of supervised ranking, when a small amount of training data is available. Table~\ref{tbl_semisup} shows the performance of the \modelthree with the \feedthree in three situations: (1) when it is only trained on weakly supervised data (similar to the previous experiments), (2) when it is only trained on supervised data, i.e., relevance judgments, and (3) when the parameters of the network is pre-trained using the weakly supervised data and then fine-tuned using relevance judgments.
 %
-In all the supervised scenarios, we performed 5-fold cross-\:validation over the queries of each collection and in each step, we used the TREC relevance judgments of the training set as a supervised signal. For each query with $m$ relevant documents, we also randomly sampled $m$ non-relevant documents as negative instances. Binary labels are used in the experiments: $1$ for relevant documents and $0$ for non-relevant ones.
+In all the supervised scenarios, we performed 5-fold cross-validation over the queries of each collection and in each step, we used the TREC relevance judgments of the training set as a supervised signal. For each query with $m$ relevant documents, we also randomly sampled $m$ non-relevant documents as negative instances. Binary labels are used in the experiments: $1$ for relevant documents and $0$ for non-relevant ones.
 
 The results in Table~\ref{tbl_semisup} suggest that pre-training the network with a weak supervision signal, significantly improves the performance of supervised ranking.
 %
