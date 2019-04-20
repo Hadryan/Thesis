@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  OPENING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Human can effortlessly learn about new concepts and solve complex problems from limited, noisy or inconsistent observations and routinely make successful generalization based on them, yet it remains a key challenge for machines to learn from such imperfect supervision. Most of today's success of data-driven machine learning systems depends on the availability of a massive amount of high-quality labeled data and in many cases.
+Humans can effortlessly learn about new concepts and solve complex problems from limited, noisy or inconsistent observations and routinely make successful generalizations based on them, yet it remains a key challenge for machines to learn from such imperfect supervision. Most of today's success of data-driven machine learning systems depends on the availability of a massive amount of high-quality labeled data and in many cases.
 
 % detour to human learning
 In the context of human learning, the argument of learning with imperfect supervision has been advanced under the name ``\emph{poverty of the stimulus}'', proposed by \citet{chomsky1980rules}. It suggests that human children can learn something as complex as a natural language from the limited inputs of variable quality and need no evidence for much of the knowledge they bring to the learning process. 
@@ -36,14 +36,14 @@ In this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term cove
 %  SECOND PART OF THE TITLE: "[...] FOR LANGUAGE UNDERSTANDING"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % why language understanding?
-We focus on language understanding and reasoning as a pivotal problem in artificial intelligence.  Understanding language is one of the extraordinary cognitive abilities of human. 
+We focus on language understanding and reasoning as a pivotal problem in artificial intelligence.  Understanding language is one of the extraordinary cognitive abilities of humans. 
 There have been several attempts to study whether non-human animals can acquire human language~\citep{pepperberg2017animal}, like Project Nim\footnote{\url{https://nl.wikipedia.org/wiki/Project_Nim}}, a research project that was mounted in the 1970s to determine whether a chimpanzee, named Nim Chimpsky, raised in close contact with humans could develop a limited language. 
 
 Regardless of the fact that at the end of the project Nim was using language to communicate or simply going through a bag of tricks to get things, it was much more limited compared to what a human child can develop in the early years. 
 %
 This indicates that achieving human-level understanding and generation of language would not be an easy goal for machines either and despite the good performance on benchmark datasets, machines are nowhere near the skill of humans at language understanding and reasoning.
 
-Here, in this thesis, we concentrate on language understanding and reasoning in more principled ways to improve the learning process than ad-hoc and domain or task specific tricks and investigate our ideas on a wide range of sequence modeling and language understanding tasks.
+Here, in this thesis, we concentrate on language understanding and reasoning in more principled ways to improve the learning process than ad-hoc and domain or task-specific tricks and investigate our ideas on a wide range of sequence modeling and language understanding tasks.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  CLOSING THE INTRO SECTION IF THE INTRODUCTION CHAPTER!
@@ -65,6 +65,7 @@ In practice, to deal with data scarcity in many tasks and applications, we can u
 % a list of alternative approaches
 This can be done for instance by:
 \begin{itemize}
+\setlength\itemsep{0em}
 \item 
 Using distant, or heuristic supervision~\citep{Deriu2016:SemEval,Severyn:2015:SemEval, Dehghani:2016:SIGIR, dehghani:2018:ICLR, Dehghani:2017:nips_metalearn, Ratner:2016,Rekatsinas:2017,Varma:2017};
 %
@@ -102,7 +103,7 @@ We formulate the main research question that is addressed in this thesis as foll
 
 Based on the above terminology, i.e., features versus label and noisy versus limited, we can presume different types of imperfections in the supervision signal. In each part of this thesis, we target one or some of these types and proposed ideas that can improve the learning process with whit that type of imperfection in supervision. 
 
-Figure~\ref{fig:thesis_parts} summarizes the different types of supervision we consider in each part of this thesis.
+Figure~\ref{fig:thesis_parts} summarizes the different types of imperfection of the supervision that we consider in each part of this thesis.
 \begin{figure}[t]
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
@@ -122,7 +123,7 @@ Figure~\ref{fig:thesis_parts} summarizes the different types of supervision we c
         \includegraphics[width=0.55\linewidth]{01-introduction/figs_and_tables/fig_p3.png}
         \caption{\label{fig:p3}Part III}
     \end{subfigure}
-\caption{\label{fig:thesis_parts}Type of imperfections in the supervision that we deal with in each art of this thesis.}
+\caption{\label{fig:thesis_parts}Different types of imperfection in the supervision that we deal with in each part of this thesis.}
 \end{figure}
 
 In Part~\ref{part1} of the thesis, we address the problem of noisy features. We propose robust models that can deal with non-relevant terms in relevant documents when modeling the notion of relevance in the context of relevance feedback tasks for document ranking. We also propose models that are capable of detecting and ignoring the unstable features that change over time when learning representations from data that evolves over time, as noisy factors in the data. We also partly address the problems of noisy labels by modeling the relevance in pseudo-relevance feedback tasks for document ranking, where top-k ranked documents in a retrieval run are assumed as relevant documents, while this assumption does not hold for all cases.
@@ -141,8 +142,8 @@ The main research question that is addressed in Part~\ref{part3} is:
 \resq{p3}
 
 
-\subsection{Language Understanding Tasks}
-We study the above research questions in the context of sequence modeling and natural language understanding, generation, and reasoning tasks. In the course of this thesis, we cover a wide range of tasks, including:
+\subsection{Language Understanding and Sequence Modeling Tasks}
+We study our research questions in the context of sequence modeling and natural language understanding, generation, and reasoning tasks. In the course of this thesis, we cover a wide range of tasks, including:
 \begin{itemize}
 \item 
 Assessing relevance for ranking (Chapter~\ref{chap:2}, \ref{chap:4}; \ref{chap:5}), 
@@ -233,6 +234,10 @@ In this chapter, we address the following research question:
 We introduced Universal Transformer~\citep{Dehghani:ICLR:2019}, a self-attentive concurrent-recurrent sequence model, which is an extension of the Transformer model~\citep{vaswani2017attention}. The Universal Transformer introduces recurrence in depth by repeatedly modifying a series of vector representations for each position of the sequence in parallel, by combining information from different positions using self-attention and applying a recurrent transition function across all time steps. 
 In the simplest form, a Universal Transformer with a fixed number of iterations is almost equivalent to a multi-layer Transformer with tied parameters across all its layers. By sharing weights, we can save massively on the number of parameters that we are training and fewer parameters means that we learn faster with fewer data points.  We show that the elegant idea of introducing recurrence in depth enables the Universal Transformer to extrapolate from training data much better on a range of algorithmic and language understanding tasks~\citep{Dehghani:ICLR:2019, Dehghani:2019:WSDM}.
 
+\bigskip
+While the three parts of the thesis offer a complete story aligned with the goal of \emph{improving the learning process by incorporating prior knowledge, introducing right biases, and making best use of the observations from the data}, they can be read independently. 
+Each of the chapters of the thesis also has their own independent research questions, proposed ideas, and take home messages, but we recommend reading them with the order they appeared in the parts.
+
 
 \section{Origins}
 Next, we present the origins of each chapter in terms of the papers they are based on.
@@ -249,12 +254,16 @@ Next, we present the origins of each chapter in terms of the papers they are bas
                 \item \bibentry{Dehghani2016:trec}.
                 \item \bibentry{Dehghani:2016:SIGIR} (SIGIR Doctoral Consortium Award).
             \end{itemize}
+            
+            {\footnotesize{MD designed the models, implemented the algorithms, ran the experiments, and did most of the writing. HA helped with the implementation and experiments. JK and DH helped with designing the model. HA, JK, DH, and MM contributed to the writing.}\medskip}
+            
     
             \item[]\textbf{Chapter 3:} \emph{\titleof{c3}}
             \begin{itemize}[label=\textbullet] 
                 \item \bibentry{Dehghani:2016:ICTIR} (Best Paper Award).
                 \item \bibentry{Dehghani:2016:CLEF} (Best Paper Honorable Mention).
             \end{itemize}
+            {\footnotesize{MD designed the models, implemented the algorithms, ran the experiments, and did most of the writing. HA helped with the implementation and experiments. JK helped with designing the model. HA, JK, and MM contributed to the the writing.}\medskip}
         \end{itemize}
 %  
 % \end{itemize}
@@ -270,13 +279,17 @@ Next, we present the origins of each chapter in terms of the papers they are bas
                 \item \bibentry{dehghani:2017:neuir}.
                 \item \bibentry{Dehghani2017:CIKM}.
             \end{itemize}
-    
+            {\footnotesize{MD designed the models, implemented the algorithms, ran the experiments, and did most of the writing. 
+            SR and HZ helped with designing the models. SR helped with the implementation. HZ, HA, AS, SR, and JK helped with designing the experiments. EA and PF mentored the (internship) project. HZ, HA, JK, BC, MdR, SR, AS, and PF helped with writing.}\medskip}
+                        
             \item[] \textbf{Chapter 5:} \emph{\titleof{c5}}
             \begin{itemize}[label=\textbullet] 
                 \item \bibentry{dehghani:2018:ICLR}.
                 \item \bibentry{Dehghani:2017:nips_metalearn}.
                 \item \bibentry{Dehghani:2017avoiding}.
             \end{itemize}
+            {\footnotesize{MD designed the models, implemented the algorithms, ran the experiments, and did most of the writing. 
+            AM helped with designing the models. AM, SG, JK, and AS helped with designing the experiments. AM, SG, AS, SR, JK, and BS helped with writing.}\medskip}
         \end{itemize}
 %   
 % \end{itemize}
@@ -292,12 +305,14 @@ Next, we present the origins of each chapter in terms of the papers they are bas
                 \item \bibentry{Dehghani:2019:WSDM}.
             \end{itemize}
         \end{itemize}
+        {\footnotesize{MD co-designed the core model (first paper) with SG, and MD extend the model (second paper). MD implemented the algorithms, ran all the experiments, and helped the writing. SG and OV mentored the (internship) project. SG did most of the writing. OV, JU, and LK helped with designing the model and designing the experiments. OV, JU, LK, HA, JK, and MdR helped with the writing.}\medskip}
 %
 \end{itemize}
 
 The thesis also indirectly builds on the following papers (listed in reverse chronological order):
 %  
 \begin{itemize}
+    \item \bibentry{Dehghani:2019:ICLR-LLD}.
     \item \bibentry{Dehghani:2018:SIGIRForum}.
     \item \bibentry{Zamani:2018:CIKM}.
     \item \bibentry{Azarbonyad:2018:TKDE}.
@@ -318,4 +333,5 @@ The thesis also indirectly builds on the following papers (listed in reverse chr
     \item \bibentry{Azarbonyad:2015:CLEF}.
     \item \bibentry{Azarbonyad:2015:SIGIR}.
     \item \bibentry{Dehghani:2015:ECIR}.
+    \item \bibentry{Olieman:2014:ERD}
 \end{itemize}

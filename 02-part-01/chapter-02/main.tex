@@ -2,7 +2,7 @@
 \label{chap:2}
 %
 \begin{quote}
-When learning representations of concepts and entities from the data, there are general features that are not expressive enough to make distinctions and specific features that do not generalize to all instances. Taking the structure and the relations in the data into account can help learning representations that capture only and all significant features and are less affected by the noisy factors in the data.
+When learning representations of concepts and entities from the data, there are general features that are propertyless common observations that do not have enough expressivity to make distinctions, and specific features that are unreliable rare observations that do not generalize to all instances. Taking the structure and the relations in the data into account can help learning representations that capture only and all significant features and are less affected by the noisy factors in the data.
 \end{quote}
 %
 \section{Introduction}
@@ -80,7 +80,7 @@ In the following sections, we will address these research questions one by one.
 
 \section{Conclusion} 
 In this chapter, we focused on addressing \textbf{\resqname{c2}}.
-Inspired by the discussion on the early work by~\citet{Luhn:1958} about \emph{significant words}, we address \textbf{\resqname{c2.1}} by proposing \emph{\swlms}\ (\acswlm) to estimate a representation for a set of documents that captures significant terms by avoiding the distracting effect of common observation as well as rare observation which .
+Inspired by the discussion on the early work by~\citet{Luhn:1958} about \emph{significant words}, we address \textbf{\resqname{c2.1}} by proposing \emph{\swlms}\ (\acswlm) to estimate a representation for a set of documents that captures significant terms by avoiding the distracting effect of common observation as well as rare observation.
 
 To investigate \textbf{\resqname{c2.2}}, We utilized \acswlm in relevance feedback problem and showed that as the feedback model, it presents promising performance on both true and pseudo relevance feedback. Analyzing the results, we indicated that the strength of \acswlm in feedback is due the fact that it is capable of controlling the contribution of feedback documents in the feedback model based on their level of relevancy which copes with the problem of topic drift in query expansion. We assessed the robustness of \acswlm in different experiments and showed that in PRF, both it has the least vulnerability against noise in the data in the form of non-relevant terms and/or non-relevant documents in feedback set.
 %
@@ -88,6 +88,7 @@ We also employed \acswlm as a group profiling approach for the task of contextua
 
 We named our model, significant ``words'' language model in honor of \citeauthor{Luhn:1958}, however, it could be employed in non-textual environments, since in general, the idea is to extract significant ``features'' representing the shared essence of a group of entities.
 
+\bigskip
 % connecting chapter 2 to chapter 3:
 The process of estimating \acswlm leads to a sparse model, i.e., $\theta_{sw}$ assigns zero probability to many terms that are identified as either too general or too specific for representing an entity. 
 % Sparsity has a central role in human episodic memory. In the human brain, sparse activities is important to separate representations as it reduces the risk that a single neuron holds representations of two overlapping memories\citep{cho2018blockchain}. In addition to human brain, for 

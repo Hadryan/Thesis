@@ -2,38 +2,38 @@
 \part{\titleof{p1}}
 \label{part1}
 %
-The world is structural, or at least, humans understand it in structural terms. We approach new problems armed with extensive \emph{prior experience and knowledge} about these structures and when we learn. 
+The world is structured, or at least, humans understand it in structural terms. We approach new problems armed with extensive \emph{prior experience and knowledge} about these structures and when we learn. 
 When we learn, we either fit the new knowledge into our existing structured representations or we adjust the existing structure to better accommodate our new and the old observations~\citep{battaglia2018relational}.
 %
-Our brain uses \emph{hierarchies} to abstract away fine-grained differences and model different levels of associations~\citep{Ballard:2015}. Using such a structure as a prior, we automatically condense the information, which not only has the impurity removal effect but also eliminates unnecessary details, which eventually help us to memorize, think and reason in a more efficient way.
+Our brain uses \emph{hierarchies} to abstract away fine-grained differences and model different levels of associations~\citep{Ballard:2015}. Using such a structure as a prior, we automatically condense the information, which not only has the effect of removing impurity of the data but also eliminates unnecessary details, which eventually helps us to memorize, think and reason in a more efficient way.
 
-When building intelligent machines, we need to consider that real-world data can be complex, limited, highly variable, and noisy. However, in many cases, there is a general structure that the data follow and taking this structure into account facilitates modeling complex information, adding biases to compensate the limited availability of the data, discovering robust knowledge from the data, and learning representations that are less affected by non-essential features. 
+When building intelligent machines, we need to consider that real-world data can be complex, limited, highly variable, and noisy. However, in many cases, there is a general structure that the data follows and taking this structure into account facilitates modeling complex information, adding biases to compensate for the limited availability of the data, discovering robust knowledge from the data, and learning representations that are less affected by non-essential features. 
 %
 In Part~\ref{part1} of this thesis, we address one of our research questions:
 \resq{p1}
 
-Understand language is a complex task and given imperfect supervision, considering no knowledge as a prior in the learning process seems to be unrealistic even for human: 
+Understanding language is a complex task and given imperfect supervision, considering no knowledge as a prior in the learning process seems to be unrealistic even for humans: 
 \begin{quote}
-    ``\emph{Narrowly limited extent of the available data [...] leaves little hope that much of the structure of the language can be learned by an organism initially uninformed as to its general character.}''~\citet{chomsky1965}
+    ``\emph{Narrowly limited extent of the available data [...] leaves little hope that much of the structure of the language can be learned by an organism initially uninformed as to its general character.}'' Chomsky~\citep{chomsky1965}
 \end{quote}
 
-In this part of the thesis, we focus on transforming the textual data into digestible representations, which is the key step for any data-oriented method~\citep{Bengio:2013} employed for language understanding. 
-We concern with questions surrounding how we can best learn representations that are \emph{precise}, \emph{robust against noise}, and \emph{transferable over time} for textual entities that can be \emph{abstract concepts for which we have no direct observation}, for instance, learning a representation for a parliamentary party, given speeches of its member, or learning to model relevance, given a set of documents that are labeled as relevant.
+In this part of the thesis, we focus on transforming textual data into digestible representations, which is the key step for any data-oriented method employed for language understanding~\citep{Bengio:2013}. 
+We are concerned with questions surrounding how we can best learn representations that are \emph{precise}, \emph{robust against noise}, and \emph{transferable over time} for textual entities that can be \emph{abstract concepts for which we have no direct observation}, for instance, learning a representation for a parliamentary party, given speeches of its member, or learning to model relevance, given a set of documents that are labeled as relevant.
 
 
 In the first chapter of this part, Chapter~\ref{chap:2}, we address the following research question:
 \resq{c2}
 
 We introduce \emph{\swlms} (\acswlm)~\citep{Dehghani:2016:SIGIR} of a set of documents, that capture all, and only, the significant shared terms from these documents.  This is achieved by adjusting the weights of terms already well explained by the document collection as well as the weight of terms that are only explained by specific documents, which eventually results in having the significant terms left in the model. 
-We apply the resulting models to two main language understanding applications: feedback problem in information retrieval~\citep{Dehghani:CIKM2016:long, Dehghani:CIKM2016:short}, and group profiling in content personalization and recommendation tasks~\citep{Dehghani:2016:CHIIR,Dehghani2016:trec}. We furthered argue that \acswlm are remarkably robust representations that are insensitive to the noisy terms and at the same time interpretable by human inspection. 
+We apply the resulting models to two main language understanding applications: the feedback problem in information retrieval~\citep{Dehghani:CIKM2016:long, Dehghani:CIKM2016:short}, and group profiling in content personalization and recommendation tasks~\citep{Dehghani:2016:CHIIR,Dehghani2016:trec}. We further argue that \acswlm are remarkably robust representations that are insensitive to the noisy terms and at the same time interpretable by human inspection. 
 
-Then, in the second chapter of this part, Chapter~\ref{chap:3} we get down to the following research question:
+Then, in the second chapter of this part, Chapter~\ref{chap:3}, we get down to the following research question:
 \resq{c3}
 
-We extend \emph{\swlms} to the hierarchical structure and introduce \emph{\hswlms} (\achswlm)~\citep{Dehghani:2016:ICTIR, Dehghani:2016:CLEF} that learns representations for hierarchical entities. \achswlm iteratively sparsifies the representation of the entities by discarding features that are well explained by their ancestors, i.e., general features, as well as features that reflect the characteristics of individual descendants, i.e., specific features. This leads to representations for entities that are both vertically and horizontally separable, in terms of their position in the hierarchy. We discuss what makes separability a desirable property for classifiers and show how obtaining this property leads to time-agnostic representations, i.e., representations that are invariant to the structural changes in the data during the time.
+We extend \emph{\swlms} to hierarchical structures and introduce \emph{\hswlms} (\achswlm)~\citep{Dehghani:2016:ICTIR, Dehghani:2016:CLEF} that learn representations for hierarchical entities. \achswlm iteratively sparsifies the representation of the entities by discarding features that are well explained by their ancestors, i.e., general features, as well as features that reflect the characteristics of individual descendants, i.e., specific features. This leads to representations for entities that are both vertically and horizontally separable, in terms of their position in the hierarchy. We discuss what makes separability a desirable property for classifiers and show how obtaining this property leads to time-agnostic representations, i.e., representations that are invariant to the structural changes in the data during the time.
 
 \medskip
-We show that taking the structure and the relations in the data into account, which is, in fact, a form inductive bias, we can effectively learn representations that are less affected by the noisy variant factors in the data. We use the learned representations to solve different language understanding tasks and observe boosts in the performance, in particular, due to the robustness of the learned representations against noise.
+We show that taking the structure and relations in the data into account, which is, in fact, a form of inductive bias, we can effectively learn representations that are less affected by the noisy variant factors in the data. We use the learned representations to solve different language understanding tasks and observe boosts in performance, in particular, due to the robustness of the learned representations against noise.
 
 \input{02-part-01/chapter-02/main.tex}
 \input{02-part-01/chapter-03/main.tex}

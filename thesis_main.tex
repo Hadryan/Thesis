@@ -5,6 +5,8 @@
 % \documentclass[table, draft]{style/illcdiss}
 \documentclass[table]{style/illcdiss}
 
+% \usepackage[nottoc]{tocbibind}
+
 %If you want to use MakeIndex, uncomment these lines
 %\usepackage{makeidx}     % only with Latex2e
 %\makeindex
@@ -18,26 +20,27 @@
 \input{thesis_resqs.tex}
 
 \usepackage{bookmark}
+\usepackage{fancyhdr}
+
 
 \nobibliography*
 
 \begin{document}
-\urlstyle{rm}
+\urlstyle{rm} 
+
 \newenvironment{resqbox}%
-{\vspace{-6pt}
-\begin{leftbar}{gray}
-\vspace{-20pt}
-\begin{quotation}\begin{noindent}}%
-{\end{noindent}\end{quotation}
-\vspace{-7pt}
-\end{leftbar}
-\vspace{-6pt}}
+{\vspace{-6pt} \begin{leftbar}{gray} \vspace{-20pt} \begin{quotation}\begin{noindent}}%
+{\end{noindent}\end{quotation} \vspace{-7pt}\end{leftbar} \vspace{-6pt}}
 
 
 \pagestyle{plain}
 \pagenumbering{roman}
 
 %%  \include the `front matter'
+\cleardoublepage
+\pagestyle{headings}
+\pagenumbering{arabic}
+
 \frontmatter
 \include{thesis_front}
 \include{thesis_dedication}
@@ -51,14 +54,12 @@
 \pagestyle{headings}
 \pagenumbering{arabic}
 
-\pagenumbering{arabic}
-
 %%     The main reason we used to split the document in parts, was to compile only the relevant chapters... 
 \mainmatter
 \input{01-introduction/main}
-% \input{02-part-01/main}
-% \input{03-part-02/main}
-% \input{04-part-03/main}
+\input{02-part-01/main}
+\input{03-part-02/main}
+\input{04-part-03/main}
 
 \bookmarksetup{startatroot} % Lift from parts
 \addtocontents{toc}{\bigskip} % skip
@@ -70,6 +71,7 @@
 % \include{thesis_appendix}
 
 %%  \include the `end matter'
+\cleardoublepage % if you are so inclined
 \bibliographystyle{apalike}
 \bibliography{thesis_ref}
 

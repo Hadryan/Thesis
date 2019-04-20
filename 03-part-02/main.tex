@@ -22,7 +22,7 @@ In this chapter, we propose to train a neural ranking model using weak labels th
 Then, in the second chapter of this part, Chapter~\ref{chap:5} we focus on the following research question:
 \resq{c5}
 
-In this chapter we introduce \emph{Learning with Controlled Weak Supervision (\cws)}~\cite{Dehghani:2017:nips_metalearn, Dehghani:2017avoiding} and \emph{Fidelity Weighted Learning (\fwl)}~\citep{dehghani:2018:ICLR}, two semi-supervised approaches for training neural networks, where we have a large set of data with weak labels and a small amount of data with true labels. 
+In this chapter we introduce \emph{Learning with Controlled Weak Supervision (\cws)}~\cite{Dehghani:2017:nips_metalearn, Dehghani:2017avoiding} and \emph{Fidelity Weighted Learning (\fwl)}~\citep{dehghani:2018:ICLR,Dehghani:2019:ICLR-LLD}, two semi-supervised approaches for training neural networks, where we have a large set of data with weak labels and a small amount of data with true labels. 
 %
 In \cws we train two neural networks in a meta-learning setup: a \tnet, the learner and a \cnet, the meta-learner.  The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that are weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
 %

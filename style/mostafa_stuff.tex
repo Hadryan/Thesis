@@ -340,20 +340,4 @@
 \renewcommand*{\citep}[1]{{\small\realcitep{#1}}}
 
 \input{insbox}
-
-% % for rq envs
-% \renewenvironment{leftbar}[1][\hsize]
-% {%
-%     \vspace{-7pt}
-%     \def\FrameCommand
-%     {%  
-%         {\vspace{-10pt}\color{gray}\vrule width 3pt}%
-%         \hspace{0pt}%must no space.
-%         % \fboxsep=\FrameSep\colorbox{yellow}%
-%     }%
-%     \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
-% }
-% {\endMakeFramed}
-
-
-
+\usepackage{mdframed}

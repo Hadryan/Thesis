@@ -253,8 +253,8 @@
 \if@twoside
   \renewcommand{\ps@headings}{%
       \let\@oddfoot\@empty\let\@evenfoot\@empty
-      \def\@evenhead{\thepage\hfil\itshape\leftmark}%
-      \def\@oddhead{{\itshape\rightmark}\hfil\thepage}%
+      \def\@evenhead{\thepage\hfil\itshape\footnotesize\leftmark}%
+      \def\@oddhead{{\itshape\footnotesize\rightmark}\hfil\thepage}%
       \let\@mkboth\markboth
       \def\chaptermark##1{\markboth{%
          \ifnum \c@secnumdepth >\m@ne

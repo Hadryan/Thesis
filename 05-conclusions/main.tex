@@ -1,61 +1,98 @@
 \chapter{Conclusion}
-\todo{finalize the Conclusion after the introduction is finalized.}
+The success of today's machine learning algorithms in complex tasks depends strongly on the availability of large scalded high quality labeled data. In practice, however, for many applications and domains, the available training data is limited or noisy and it is difficult to build machines that can learn with such imperfect training data.
+%
+This is while humans are capable of uncovering the underlying concepts, relations, and structure of the sparsely observed data with variable quality and use that knowledge to go far beyond the paucity of the data and routinely make successful generalizations based on them.
 
-Improving machines on language understanding can help moving toward detecting core cognitive ingredients of human-level intelligence and get closer to the bigger goal of creating artificial general intelligence.
+The argument of \emph{poverty of stimulus}~\citep{chomsky1980rules} in human learning suggests that the observed data does not seem rich enough for selecting a correct target hypothesis without posing an a priori knowledge~\citep{chomsky1971problems}.
+%
+In par with this, when designing machine learning algorithms, pure \emph{data-driven} learning, which relies only on previous experience, does not seem to be able to learn generalizable solutions and the \emph{innately primed} learning, which is based on having a part of the knowledge encoded in the model in the form of strong and weak biases, can help algorithms to learn solutions that better generalize to unseen instances~\citep{Mitchell80theneed, Mitchell:1997:ML}.
 
-\todo{add this to the conclusion: We can piece together information from the sparse and noisy data and see something that by definition is impossible to see, like black holes!}
-
-There are invariant properties of human languages that reflect ``the innate schematism of mind that is applied to the data of experience'' and that ``might reasonably be attributed to the organism itself as its contribution to the task of the acquisition of knowledge'' (Chomsky, 1971).
-
-While in many situations like language understanding and reasoning , human is capable of uncovering the underlying concepts, relations, and structure of the sparsely observed data with variable quality and use that knowledge to go far beyond the paucity of the data and routinely draw successful generalization on them.
-
-% When designing algorithms, we can also consider \emph{data-driven} learning which relies on generalization from previous experience, and \emph{innately primed} learning which is based on having the significant part of the knowledge encoded into the model in the form of strong and weak biases. ~\footnote{There has been a long discussion in linguistics between rationalists and empiricists. Here, we just want to draw a connection between discussions in learning process in human and machine.}
-
-Here in this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples. This imperfection can be in the number or coverage of training examples like learning from \emph{incomplete supervision} where only a limited subset of data is labeled or no labeled data is available. The imperfection can refer to the labeling process like in \emph{inexact supervision} where only coarse-grained annotations are provided or \emph{inaccurate supervision} where the given labels are noisy and they are not always ground truth~\citep{zhou2018brief}. We also extend the imperfect supervision to situations where instead of labels, data, i.e. feature vectors, are noisy or subject to change during time.
-
-While human can effortlessly learn about new concepts and solve complex problems from limited, noisy or inconsistent observations and routinely draw successful generalization on them.
-
-Human are capable of uncovering the underlying concepts, relations, and structure of sparsely observed data with variable quality and use that knowledge to go far beyond the paucity of the data.
-
-For instance, a child has the ability to produce an infinite number of new sentences by composing sparely observed words~\citep{lake2017building} or generalize the concept of ``penguin'' from a single picture in a book~\citep{vinyals2016matching}. 
+Here, in this thesis, we focused on the problem of poverty of stimulus for learning algorithms. We argued that even noisy and limited signals can contain a great deal of valid information that can be incorporated along with prior knowledge and biases that are encoded into learning algorithms in order to solve complex problems. 
+We concentrated on language understanding and reasoning as much of humans' intelligence is reflected in language and study how to improve the learning with imperfect supervision signal in the context of language understanding and sequence modeling tasks.
 
 
+\section{Research Questions and Conclusions}
+In this thesis, we focused on learning with imperfect supervision. We referred to ``\emph{imperfect supervision}'' as a general term covering a variety of situations where the learning process is based on imperfect training examples. This imperfection can be in the number or coverage of training examples like learning from \emph{incomplete supervision}, where only a limited subset of data is labeled or no labeled data is available. The imperfection can refer to the labeling process like in \emph{inexact supervision} where only coarse-grained annotations are provided or \emph{inaccurate supervision} where the given labels are noisy and they are not always ground truth~\citep{zhou2018brief}. We also consider situations where not only the labels in the training data but also feature vectors can be limited, noisy, or subject to change during time.
+
+We formulated the main research question of the thesis as:
+%
+\resq{main}
+%
+As the \textbf{general conclusion}, we found that we can improve the process of learning with imperfect supervision by i) \emph{employing the prior knowledge in learning algorithms} (Part~\ref{part1}), ii) \emph{augmenting data and meta-learning how to better use the data} (Part~\ref{part1}), and iii) \emph{introducing inductive biases to learning algorithms} (Part~\ref{part1}). 
+%
+These general ideas are, in fact, the key ingredients for building any learning algorithms that can generalize beyond (imperfections in) the observed data ~\citet{Mitchell80theneed}.
 
 
+We braked down our main research question into three questions and addressed each of them in each part of this thesis.
+The first question, that we addressed in Part~\ref{part1} of the thesis, was:
+%
+\resq{p1}
+
+In Part~\ref{part1}, we focused on learning representations for the entities and abstract concepts, like relevance, a parliamentary party, etc., given a data in which the features and labels can be noisy or subject to change during time.
+
+First, in Chapter~\ref{chap:2} inspired by the discussion on the early work by~\citet{Luhn:1958} about \emph{significant words} we introduced \emph{\swlms}\ (\acswlm) that estimate a representation for an entity or concept that is associated with a set of textual documents in a way that the estimated representation captures significant features by avoiding the distracting effect of common features as well as rare features. We evaluated \acswlm on a set of problems including (pseudo-)relevance feedback in document ranking and group profiling in contextual suggestion and recommendation and showed that we can improve the quality and robustness of representations by making them less independent on general or specific features, but more rely on significant features.
+
+Then, in Chapter~\ref{chap:3}, we extended our discussions in Chapter~\ref{chap:2} to hierarchical structures and introduced \hswlms (\achswlm) for estimating separable representations for hierarchical entities. We demonstrated that based on the ranking and classification principles, the \emph{separation property} in the data representation is a desirable foundational property which leads to separability of scores and consequently improves the accuracy of classifiers' decisions. 
+
+We showed that in order to have horizontally and vertically separable representations for hierarchically structured data, they should capture all, and only, the essential features of the entities taking their position in the hierarchy into account, which is the key idea of \achswlm. We evaluated the performance of classification over time using separable representations learned by \achswlm and showed that separability makes the model more robust and transferable over time by filtering out non-essential and non-stable features.
+
+\textbf{The main conclusion of Part~\ref{part1}} is that incorporating some prior knowledge can help to improve the robustness of the outcome of the learning process in noisy and variable environments. We showed that taking the general structure of the data, which is, in fact, a form of inductive bias, can help to learn representations that are not only effective but also less affected by noisy factors in the data.
 
 
+The second question, that we addressed in Part~\ref{part2} of the thesis, was:
+%
+\resq{p2}
 
-% 
-Some researchers believe that the intrinsic complexity of the world means we should not build prior knowledge into our systems:
-\begin{quote}
-``\emph{Seeking an improvement that makes a difference in the shorter term, researchers seek to leverage their human knowledge of the domain, but the only thing that matters in the long run is the leveraging of computation.}
-\end{quote}
+In Part~\ref{part2}, we focused on how to augment the training data using a vast amount of data that are not hand-labeled, but weakly annotated using, for instance, a heuristic function. We discuss how to train learning algorithms using such weak labels and how to learn properties of the weakly annotated data, like the quality of labels and incorporate those in the learning process.  
 
+First, in Chapter~\ref{chap:4}, we proposed to use unsupervised methods in order to programmatically generate large amounts of training data, as weakly annotated data, to train effective neural ranking models. We focus on the task of assessing the relevance, i.e., ranking documents given a query. We examined various neural ranking models with different ranking architectures and objectives, and different input representations.
 
- The bitter lesson is based on the historical observations that 1) AI researchers have often tried to build knowledge into their agents, 2) this always helps in the short term, and is personally satisfying to the researcher, but 3) in the long run it plateaus and even inhibits further progress, and 4) breakthrough progress eventually arrives by an opposing approach based on scaling 
+We found that: 1) Providing the network with raw data and letting the network to learn the features that matter, gives the network a chance of learning how to ignore imperfection in the training data. 2) In the case of having weakly annotated training data, by targeting some explicit labels from the data, we may end up with a model that learned to express the data very well, but is incapable of going beyond it. 3) When learning by weakly annotated data, it is crucial to provide the network with a considerable amount of diverse training examples to help the model learn at the edge of its capacity.
 
+Then, in Chapter~\ref{chap5}, we proposed a set of systematic approaches that are tasks and architecture independent and can meta-learn the quality of the labels and explicitly control the learning process with respect to the estimated qualities. We introduced two semi-supervised learning approaches in the presence of weakly labeled data: Learning from Controlled Weak Supervision (\cws) and \fwlfulllc (\fwl).
 
-These two need not run counter to each other, but in practice they tend to. Time spent on one is time not spent on the other.
+\cws is a meta-learning approach that unifies learning to estimate the confidence score of weak annotations and training neural networks to learn a target task with controlled weak supervision, i.e., using weak labels to updating the parameters but taking their estimated confidence scores into account. \fwl is a student-teacher framework in which the student network is in charge of learning a target task given a vast amount of samples with weak labels associated with fidelity scores that are generated by the teacher network.  We applied both \cws and \fwl to document ranking and sentiment classification and empirically verified that they improve the learning process in terms of performance and convergence time. 
 
-
-We want AI agents that can discover like we can, not which contain what we have discovered. 
-
-\footnote{``The Bitter Lesson'' by Rich Sutton: http://www.incompleteideas.net/IncIdeas/BitterLesson.html}.  
-
-While some believe that the complexity leads to crippling intractability for the search and learning approaches on which empiricists proposes to rely and only with the right prior knowledge, the right inductive biases, can we ever get a handle on that complexity.
-
-Incorporate human knowledge when designing algorithms  but what that knowledge should be and when and how to use it is the main question.
-
-% our position
-We believe that for injecting human knowledge into models, ad-hoc and domain specific tricks do not hold up and deeper and more principled ways, like abstract and general inductive biases are needed for intelligent systems.
+\textbf{The main conclusion of part~\ref{part2}} is that we can design models that are capable of learning from weakly annotated data by defining proper training objectives. We also found that we can use the data to metal-learn some properties of the data, like the quality of labels and incorporate these properties in the learning process.
 
 
-\begin{quote}
-``\emph{We are agnostic at this point, perfectly prepared to accept that
-perhaps at some time in the future data-driven algorithmic techniques for language learning will hit a serious roadblock, or that credible evidence for innate
-task-specific language acquisition mechanisms will turn up. We are also willing to accept it as a possibility that once linguists and philosophers get straight
-on what is required to establish an instance of the APS [argument on poverty of stimulus], the distinction between data-driven and innately-primed learning will be less absolute.}''~\citep{pullum2002empirical}
-\end{quote}
+The last question, that we addressed in Part~\ref{part3} of the thesis, was:
+%
+\resq{p3}
+
+In Part~\ref{part3}, we focused on some of the sequence processing neural networks and study the role of inductive biases, like recurrent inductive bias, on the generalization and data efficiency of these models on different language understanding and sequence modeling tasks.
+
+In Chapter~\ref{chap:6}, we argue that the lack of recurrent inductive bias in feed-forward self-attentive models, like Transformer, can lead to the failure of the model on complex reasoning tasks with limited data, algorithmic tasks where length generalization over training samples is needed, and structured language understanding tasks. We proposed Universal Transformer, a self-attentive concurrent-recurrent sequence model, in which we introduce recurrence in depth by repeatedly modifying a series of vector representations for each position of the sequence in parallel. The key idea of the universal transformer is sharing the parameters across the layers which forms a recurrent inductive bias in depth and saves massively on the number of parameters and leads to a more data efficient model. 
+
+We also discussed other assumptions that encoding them in the model as inductive biases can help extrapolating from training data and better generalizing at test time.  We also introduced some variants of the Universal Transformer with conditional computations and showed that it can achieve stronger results compared to the fixed-depth Universal Transformer.
+
+\textbf{The main conclusion of Part~\ref{part3}} is that injecting inductive biases into learning algorithms can improve their data-efficiency and generalization. These inductive biases are in fact innate prior knowledge for the learning algorithms that can eventually help overcoming the challenging problem of poverty of stimulus.
 
 
-\section{Research Questions and General Conclusion}
+\section{Towards Building Machines that Deal with Poverty of Stimulus}
+
+There has been a long discussion between empiricists and rationalists in the context of human learning concerning the extent to which we are dependent on our experiences and observations in our effort to gain knowledge.  
+%
+Empiricists claim that sensory observations (data) are the ultimate source of all our concepts and knowledge, while rationalists claim that there are significant ways in which our concepts and knowledge are gained independently of our experiences and observations. 
+
+A similar discussion has been raised in machine learning in the context of learning algorithms.
+%
+Some machine learning researchers believe that the intrinsic complexity of the world means we should not build any prior knowledge into our systems: ``Seeking an improvement that makes a difference in the shorter term, researchers seek to leverage their human knowledge of the domain, but the only thing that matters in the long run is the leveraging of computation.''\footnote{``The Bitter Lesson'' by Rich Sutton: \url{http://www.incompleteideas.net/IncIdeas/BitterLesson.html}}. 
+
+Some other machine learning researchers, on the other hand, believe that the complexity of the world, as the mater of fact, leads to crippling intractability for the approaches on which empiricists proposes to rely on and argue that only with the right prior knowledge and the right inductive biases, we can ever get a handle on that complexity.
+
+In practice, we do not apply either rigorous empiricist or rationalist approaches.  When we pursue more explanatory rationalist approaches, we always recognize the importance of observations and the data as the means by which reality affects our understanding.  When taking a data-driven approach, we make use of reasoning at least in the act of observing data, i.e., choices such as how data is selected, assumptions we make and biases to our algorithms, and the overall architectures of our solution. 
+
+We believe, to build machines that can create knowledge a truce between these two main approaches is essential.
+There is no doubt that the success of deep learning is very much a success of scale and in general, machine learning methods that survive the test of time and make breakthrough progress tend to scale.
+But incorporating knowledge or inductive biases has its own success stories and the question here is more about ``what'' that knowledge or biases should be and ``when'' and ``how'' it should be incorporated. 
+
+While finding the right inductive biases is hard, they can enable progress on intractable problems or situations where we cannot rely on arbitrarily scaling of computation such as settings with noisy or limited data, which characterizes most real-world applications. 
+Besides, scalability can be defined in many dimensions, If a method is ``scalable'' with more data and computation, it has the chance of succeeding only in a subset of problems that we can gather infinite data for them. 
+However, you can define the ``scale'', as in ``scale to new problems'', which is, in fact, the ability of generalization, where inductive biases can play crucial roles to achieve it, especially when considering the problem of poverty of stimulus.
+
+
+\bigskip
+% closing paragraph
+We are enthusiastic about the recent developments on machine learning models that are able to learn with imperfect supervision. 
+By combining the ideas around how to incorporate general prior knowledge, how to better use the data and meta learn its properties, and how to injecting right inductive biases, we hope that further improvements presented in this thesis will help us build learning algorithms that are more powerful, more data efficient, and more generalizable and in a bigger picture, help machines to get closer to the human-level intelligence. 
