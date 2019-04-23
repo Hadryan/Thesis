@@ -2,8 +2,8 @@
 \centering
 \begin{tikzpicture}
 \begin{axis}[%
-ylabel=Absolute P@5 Improvement ,
-xlabel=Average Rating,
+ylabel=Absolute P@5 improvement ,
+xlabel=Average rating,
 scatter/classes={%
     a={mark=*,draw=black},
     b={mark=*,draw=red}
@@ -23,6 +23,8 @@ legend style={
             column sep=5pt,
         },
     },
+	tick label style={font=\fontsize{7}{9}\selectfont},
+    label style = {font=\fontsize{8}{10}\selectfont},
 % scatter/classes={
 % 	a={mark=square*,draw=b},%
 % 	b={mark=triangle*,draw=g},%
@@ -94,8 +96,8 @@ x     y      label
 3.2333333333	0.04	a
     };
 
-\legend{Biased rating behaviour, Neutral rating behaviour}
+\legend{Biased rating behavior, Neutral rating behavior}
 \end{axis}
 \end{tikzpicture}
-\caption{\label{fig:gprates}Improvement of the performance of contextual suggestion by help of group profiles for users with different rating behavior.}
+\caption{\label{fig:gprates}Improvement of the performance of contextual suggestion using group profiles for users with different rating behavior.}
     \end{figure}

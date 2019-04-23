@@ -32,19 +32,20 @@
         minor tick num=1,
         %x tick label style={/pgf/number format/1000 sep=},
         x tick label style={rotate=45,anchor=east},
-    xtick=data,
-    %legend style={at={(0.9,0.95),font=\fontsize{5}{6}},
-    anchor=north,
-    ylabel={MAP},
-  legend style={at={(0.965,-0.28)}
-  %legend style={at={(0.965,0.95),font=\fontsize{5}{6}}
-  ,legend columns=-1},
-    nodes near coords,
-    every node near coord/.append style={font=\tiny, rotate=90, anchor=west},
-    %nodes near coords align={vertical},
-%    tick label style={font=\tiny}
-            xtick={1,2,3,4,5,6,7},
-            xticklabels={
+        tick label style={font=\fontsize{7}{9}\selectfont},
+        label style = {font=\fontsize{8}{10}\selectfont},
+        xtick=data,
+        %legend style={at={(0.9,0.95),font=\fontsize{5}{6}},
+        anchor=north,
+        ylabel={MAP},
+       legend style={at={(0.965,-0.28), font=\fontsize{9}{11}\selectfont}
+       ,legend columns=-1},
+        nodes near coords,
+        every node near coord/.append style={font=\tiny, rotate=90, anchor=west},
+        %nodes near coords align={vertical},
+    %    tick label style={font=\tiny}
+        xtick={1,2,3,4,5,6,7},
+        xticklabels={
             age,
             gender,
             group,
@@ -53,7 +54,7 @@
             season,
             preferences
         },
-        ]
+    ]
                 
 \addplot[plot 0,bar group size={0}{2}]
         coordinates 
@@ -87,6 +88,6 @@
 \end{tikzpicture}
 % \vspace{-4pt}
 \caption{
-Performance of employing user preferences\:-\:based and group-\:based customization on contextual suggestion task. Improvements of combining group-\:based and preferences\:-\:based approach over the preferences\:-\:based approach and corresponding group-\:based approaches are statistically significant based on one-tailed t-test, with p-value $<$ 0.05. \label{fig:Chart1}}
+Performance of employing user preferences-based and group-based customization on contextual suggestion task. Improvements of combining group-based and preferences-based approach over the preferences-based approach and corresponding group-based approaches are statistically significant based on one-tailed t-test, with p-value $<$ 0.05. \label{fig:Chart1}}
 %  \vspace{-5pt}
  \end{figure}

@@ -341,3 +341,10 @@
 
 \input{insbox}
 \usepackage{mdframed}
+
+\newcommand\blankfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}

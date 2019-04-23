@@ -14,7 +14,7 @@
         xticklabels at=edge bottom,
         vertical sep=0pt,
         },
-        xlabel=Number of Feedback document,
+        xlabel=Number of feedback documents,
         xtick align=outside,xtick pos=left,
         scale only axis,
 	    minor tick num=1,
@@ -24,6 +24,7 @@
         cycle list name=exotic, 
         enlarge x limits=0.05,
         ticklabel style = {font=\tiny,xshift=0.5ex},
+        xlabel style = {font=\fontsize{8}{10}\selectfont},
         ]
 \nextgroupplot[
         grid = both,
@@ -34,7 +35,7 @@
         ylabel=Average Precision,
         height=4.5cm, 
         legend columns=2,
-        ylabel style = {font=\fontsize{6}{7}\selectfont},
+        ylabel style = {font=\fontsize{7}{8}\selectfont},
         legend style={
             legend image post style={xscale=0.75},
             inner sep=0pt,
@@ -65,7 +66,7 @@
                 ymax=1,
                 ytick = {0,0.2,0.4,0.6,0.8},
                 ylabel=$\lambda$s in \acswlm,
-                ylabel style = {font=\fontsize{6}{7}\selectfont},
+                ylabel style = {font=\fontsize{7}{8}\selectfont},
                 height=1.2cm,
                 ybar,
                 bar width= 5pt,
@@ -92,7 +93,7 @@
 \draw (5.08,2.3) ellipse (0.37cm and 1.7cm);
 % \vspace{-5pt}
 \end{tikzpicture}
-\caption{\label{fig:pp}Dealing with poison pills: Effectiveness of different feedback systems facing with a bad relevant document in topic $374$ of TREC Robust04.}
+\caption{\label{fig:pp}Dealing with poison pills: Effectiveness of different feedback systems faced with a poison pill (harmful relevant document) in topic $374$ of TREC Robust04.}
 % \vspace{-13pt}
 \end{figure}
 
