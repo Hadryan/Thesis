@@ -1,7 +1,7 @@
 \newcommand{\resqcontent}[1]{%
     \IfEqCase{#1}{%
     % -------------MAIN I-------------
-    {main}{How can we improve the learning process when the supervision signal, i.e., data and/or labels, is noisy or limited, for language understanding?}
+    {main}{How can we improve the learning process for language understanding tasks, when the supervision signal, i.e., data and/or labels, is noisy or limited?}
     % -------------PART I-------------
     {p1}{How to use the structure of the data as prior knowledge to learn robust and effective representations of entities and concepts, when the data is noisy or highly variable?}
     % -------------chapter 2-------------
@@ -23,15 +23,15 @@
     % -------------PART II-------------
     {p2}{How to design learning algorithms that can learn from weakly annotated samples, while generalizing over the imperfection in their labels?}
     % -------------chapter 4-------------
-    {c4}{How to train neural networks using pseudo-labels that are generated pragmatically, as the weak supervision signal, that will exhibit superior generalization capabilities?}%
+    {c4}{How to train neural networks using pragmatically generated pseudo-labels as the weak supervision signal, in a way that they exhibit superior generalization capabilities?}%
     %
     {c4.1}{Can labels from an unsupervised heuristic-based model be used as pragmatically generated weak supervision signal to train an effective neural network?}
     %
     {c4.2}{What setup in terms of input representation and learning objective is most suitable for a neural ranker when training on pragmatically generated labeled data?}
     %
-    {c4.3}{How learning from weak supervision signals can help to preserve privacy while training neural networks on sensitive data?}
+    {c4.3}{How can learning from weak supervision signals help to preserve privacy while training neural networks on sensitive data?}
     % -------------chapter 5-------------
-    {c5}{How we can best leverage the capacity of information in a given large set of weakly annotated samples and a small set of samples with high-quality labels to train a neural network?}%
+    {c5}{Given a large set of weakly annotated samples and a small set of samples with high-quality labels, how can we best leverage the capacity of information in these sets to train a neural network?}%
     %
     {c5.1}{When learning from samples of variable quality, can we meta learn an adjustment for the magnitude of the parameter updates in backpropagation based on the merit of labels?}
     %

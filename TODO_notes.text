@@ -35,3 +35,16 @@
  - change " to '' quote
 
  - bib in TOC
+
+
+@misc{TheBitterLesson,
+  title = {The Bitter Lesson},
+  howpublished = {\url{http://www.incompleteideas.net/IncIdeas/BitterLesson.html}},
+  note = {by Rich Sutton. Accessed: 2019-04.}
+}
+
+@misc{maxblogpost,
+  title = {Do we still need models or just more data and compute?},
+  howpublished = {\url{https://staff.fnwi.uva.nl/m.welling/wp-content/uploads/Model-versus-Data-AI-1.pdf}},
+  note = {by Max Welling. Accessed: 2019-04.}
+}

@@ -258,7 +258,7 @@ The rest of the hyper-parameters are set to the default values of the Transforme
 In the \emph{Multihop Reasoning} layer, we have a Universal Transformer Encoder with hidden\_size $=512$ and num\_attention\_heads $=4$. 
 We set the number of recurrent steps in depth to 12. The rest of the hyper-parameters are set to the default values of the Universal Transformer model.
 %
-We train with the batch size of $4,096$ tokens. We use Adam with learning rate of $1e-9$, $\beta_1 = 0.9$, $\beta_2 = 0.98$, $L_2$ weight decay of $1e-04$, learning rate warmup over the first $16,000$ steps, and linear decay of the learning rate. 
+We train with the batch size of $4,096$ tokens. We use Adam with learning rate of $1\times 10^{-9}$, $\beta_1 = 0.9$, $\beta_2 = 0.98$, $L_2$ weight decay of $1\times 10^{-04}$, learning rate warmup over the first $16,000$ steps, and linear decay of the learning rate. 
 We use a dropout probability of $0.1$ on all layers.
 %
 Since in our model answers are generated using the decoder instead of extracting from the context, to improve the quality of generation, we pretrain all the parameters of the Transformer decoder downstream of the task of language modeling. The embeddings are shared between encoder and decoder, thus the \emph{Input Embedding} layer also enjoys the pretraining. This helps to improve the performance especially in terms of metrics that consider the exact match of the generated answer with the ground truth.

@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  OPENING
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Humans can effortlessly learn about new concepts and solve complex problems from limited, noisy or inconsistent observations and routinely make successful generalizations based on them, yet it remains a key challenge for machines to learn from such imperfect supervision. Most of today's success of data-driven machine learning systems depends on the availability of a massive amount of high-quality labeled data and in many cases.
+Humans can learn about new concepts and solve complex problems from limited, noisy or inconsistent observations and routinely make successful generalizations based on them, yet it remains a key challenge for machines to learn from such imperfect supervision. Most of today's success of data-driven machine learning systems depends on the availability of a massive amount of high-quality labeled data.
 
 % detour to human learning
 In the context of human learning, the argument of learning with imperfect supervision has been advanced under the name ``\emph{poverty of the stimulus}'', proposed by \citet{chomsky1980rules}. It suggests that human children can learn something as complex as a natural language from the limited inputs of variable quality and need no evidence for much of the knowledge they bring to the learning process. 
@@ -39,11 +39,11 @@ In this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term cove
 We focus on language understanding and reasoning as a pivotal problem in artificial intelligence.  Understanding language is one of the extraordinary cognitive abilities of humans. 
 There have been several attempts to study whether non-human animals can acquire human language~\citep{pepperberg2017animal}, like Project Nim\footnote{\url{https://nl.wikipedia.org/wiki/Project_Nim}}, a research project that was mounted in the 1970s to determine whether a chimpanzee, named Nim Chimpsky, raised in close contact with humans could develop a limited language. 
 
-Regardless of the fact that at the end of the project Nim was using language to communicate or simply going through a bag of tricks to get things, it was much more limited compared to what a human child can develop in the early years. 
+Regardless of whether at the end of the project Nim was using language to communicate or simply going through a bag of tricks to get things, Nim's language was much more limited compared to what a human child can develop in the early years. 
 %
 This indicates that achieving human-level understanding and generation of language would not be an easy goal for machines either and despite the good performance on benchmark datasets, machines are nowhere near the skill of humans at language understanding and reasoning.
 
-Here, in this thesis, we concentrate on language understanding and reasoning in more principled ways to improve the learning process than ad-hoc and domain or task-specific tricks and investigate our ideas on a wide range of sequence modeling and language understanding tasks.
+Here, in this thesis, we concentrate on language understanding and reasoning in more principled ways to improve the learning process than ad-hoc and domain or task-specific tricks to improve the output. We investigate our ideas on a wide range of sequence modeling and language understanding tasks.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  CLOSING THE INTRO SECTION IF THE INTRODUCTION CHAPTER!
@@ -51,12 +51,12 @@ Here, in this thesis, we concentrate on language understanding and reasoning in 
 \medskip
 % Although machine learning has made a lot of progress on mastering its practical shortcomings, e.g., modern neural networks overcoming the limitations of the early perceptrons~\citep{minsky69perceptrons}, some of the fundamental limitations, e.g., Chomsky's Poverty of Stimulus, remain.
 
-The main problem we study in this thesis is the poverty of stimulus for learning algorithms and to overcome this problem, we focus on  i) \emph{employing the prior knowledge}, ii) \emph{augmenting data and meta-learning how to better use the data}, and iii) \emph{introducing inductive biases to learning algorithms}, all to improve the learning process. We believe these approaches are great ways to move toward better machine learning systems that are able to generalize over observed imperfect supervision signals and as \citet{Mitchell80theneed} states in his paper:
+The main problem we study in this thesis is the poverty of stimulus for learning algorithms and to overcome this problem, we focus on  i) \emph{employing the prior knowledge}, ii) \emph{augmenting data and meta-learning how to better use the data}, and iii) \emph{introducing inductive biases to learning algorithms}, all to improve the learning process. We believe these approaches are important ways to move toward better machine learning systems that are able to generalize over observed imperfect supervision signals. As \citet{Mitchell80theneed} already states in his paper:
 \begin{quote}
 ``\emph{If biases and initial knowledge are at the heart of the ability to generalize beyond observed data, then efforts to study machine learning must focus on the combined use of prior knowledge, biases, and observation in guiding the learning process. It would be wise to make the biases and their use in controlling learning just as explicit as past research has made their observations and use.}''
 \end{quote}
 
-There are many domains and applications that suffer from the lack of a large amount of high quality labeled data. We believe building machine learning systems that can learn with imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to those domains with limited or noisy data.
+There are many domains and applications that suffer from the lack of a large amount of high quality labeled data, since it is not possible or economically not reasonable to build such training datasets. We believe building machine learning systems that can learn with imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to those domains with limited or noisy data.
 
 
 \section{Problem Description and Research Questions}
@@ -74,6 +74,12 @@ Using distant, or heuristic supervision~\citep{Deriu2016:SemEval,Severyn:2015:Se
 Using incidental signals that exist in the data and the environment independently of the tasks and they are co-related to the target tasks~\citep{roth2017incidental}; 
 %
 \item
+Introducing a form of structured prior knowledge~\citep{Dehghani:CIKM2016:long,Dehghani:2016:ICTIR};
+%
+\item
+Exploiting noisy and inaccurate labels~\citep{Vahdat:2017, Lee:2013,Hinton:2015,Brodley:1999,reed2014training, Patrini:2016, patrini2016loss,malach2017decoupling};
+%
+\item
 Using indirect supervision, like providing supervision by specifying constraints that should hold over the output space~\citep{stewart2017label, clarke2010driving};
 %
 \item
@@ -86,24 +92,17 @@ Using transfer learning to generalize knowledge across domains and tasks~\citep{
 Using active learning and response-based supervision in which the model receives feedback from interacting with an environment~\citep{clarke2010driving,riezler2014response};
 %
 \item
-Introducing a form of structured prior knowledge~\citep{Dehghani:CIKM2016:long,Dehghani:2016:ICTIR};
-%
-\item
 Zero/one/few-shot learning~\citep{vinyals2016matching,finn2017model,snell2017prototypical,socher2013zero};
-%
-\item
-Exploiting noisy and inaccurate labels~\citep{Vahdat:2017, Lee:2013,Hinton:2015,Brodley:1999,reed2014training, Patrini:2016, patrini2016loss,malach2017decoupling};
 %
 \item
 Injecting inductive biases into algorithms to generalize better on unobserved data~\citep{cohen2016group, cohen2016steerable, Dehghani:ICLR:2019}.
 \end{itemize}
 
-In general supervised learning scenario, each training sample, which is used as the supervision signal, consist of a \emph{feature vector} (also called data instance) and a \emph{label}. However, in many domains and applications, there is an imperfection in the supervision signal. Here, in this thesis, we focus on two main problems: dealing with \emph{noisy} training data and dealing with \emph{limited} training data. 
+In a general supervised learning scenario, each training sample, which is used as the supervision signal, consist of a \emph{feature vector} (also called data instance) and a \emph{label}. However, in many domains and applications, there is an imperfection in the supervision signal. Here, in this thesis, we focus on two main problems: dealing with \emph{noisy} training data and dealing with \emph{limited} training data. 
 We formulate the main research question that is addressed in this thesis as follows:
 \resq{main}
 
 Based on the above terminology, i.e., features versus label and noisy versus limited, we can presume different types of imperfections in the supervision signal. In each part of this thesis, we target one or some of these types and proposed ideas that can improve the learning process with whit that type of imperfection in supervision. 
-
 Figure~\ref{fig:thesis_parts} summarizes the different types of imperfection of the supervision that we consider in each part of this thesis.
 \begin{figure}[t]
     \centering
@@ -127,18 +126,19 @@ Figure~\ref{fig:thesis_parts} summarizes the different types of imperfection of 
 \caption{\label{fig:thesis_parts}Different types of imperfection in the supervision that we deal with in each part of this thesis.}
 \end{figure}
 
+\bigskip
 In Part~\ref{part1} of the thesis, we address the problem of noisy features. We propose robust models that can deal with non-relevant terms in relevant documents when modeling the notion of relevance in the context of relevance feedback tasks for document ranking. We also propose models that are capable of detecting and ignoring the unstable features that change over time when learning representations from data that evolves over time, as noisy factors in the data. We also partly address the problems of noisy labels by modeling the relevance in pseudo-relevance feedback tasks for document ranking, where top-k ranked documents in a retrieval run are assumed as relevant documents, while this assumption does not hold for all cases.
 
 The proposed models in Part~\ref{part1} organized around the idea of exploring how the structure of the data can be incorporated as prior knowledge to learn representations that are more robust against noise and changes in the data during the time. 
 The following research question is the main question is central to Part~\ref{part1} of the thesis:
 \resq{p1}
 
-
+\bigskip
 In Part~\ref{part2} of the thesis, we target the problem of noisy or weak labels. We study how we can develop neural networks that can learn from weakly annotated training samples with the ability to go beyond the imperfection of the weak labels. We study different architectural choices and objective functions for neural ranking models to find a more noise tolerant model when learning from pseudo-labels.  We also introduce ideas that meta-learn the fidelity of weakly annotated labels and modulate the learning process based on the fidelity scores of weakly labeled samples. In fact, in this part, we make assumptions in the act of observing the data, like how to select the data based on the fidelity of data points, which is also a form of incorporating knowledge and biases.
 In this part, we address the following research question:
 \resq{p2}
 
-
+\bigskip
 In Part~\ref{part3}, we deal with the problem of limited labeled data, for instance, in the context of bAbI reasoning tasks with 1k training samples where the tasks are complex and training data is limited. We also study the cases where we have a lot of labeled samples, but with limited coverage, which can be seen as the limitation in the diversity of feature vectors. For instance in the context of algorithmic tasks, with the intention of assessing the ability of models on length generalization, we have plenty of training data but the distribution of sample's length in training is different from the test set. 
 In this part, we investigate the idea of injecting some inductive biases\footnote{Inductive biases are ``any biases for choosing one generalization over another, other than strict consistency with the observed training samples.'' as defined by~\citet{Mitchell80theneed}. We elaborate on this at the beginning of Part~\ref{part3}.} into models in order to encode modeling assumptions that help the models to be more data efficient and generalize better.
 The main research question that is addressed in Part~\ref{part3} is:
@@ -149,40 +149,40 @@ The main research question that is addressed in Part~\ref{part3} is:
 We study our research questions in the context of sequence modeling and natural language understanding, generation, and reasoning tasks. In the course of this thesis, we cover a wide range of tasks, including:
 \begin{itemize}
 \item 
-Assessing relevance for ranking (Chapter~\ref{chap:2}, \ref{chap:4}; \ref{chap:5}), 
+Assessing relevance for ranking (Chapter~\ref{chap:2}, \ref{chap:4}, \ref{chap:5});
 %
 \item 
 (Pseudo)-relevance feedback for document ranking(Chapter~\ref{chap:2});
 %
 \item 
-Machine Translation (Chapter~\ref{chap:5});
+Contextual suggestion and recommendation~\citep{hashemioverview} (Chapter~\ref{chap:2});
 %
 \item 
-Natural language reasoning ---bAbI tasks~\citep{weston2015towards} (Chapter~\ref{chap:5});
-%
-\item 
-Broad context language modeling~\citep{paperno2016lambada} (Chapter~\ref{chap:5});
-%
-\item 
-Contextual suggestion and recommendation~\citep{hashemioverview} (Chapter~\ref{chap:3});
-%
-\item 
-Open-domain question answering~\citep{dunn2017searchqa, dhingra2017quasar} (Chapter~\ref{chap:5});
-%
-\item 
-Modeling hierarchical structure in natural language ---subject-verb agreement task~\citep{linzen2016assessing} (Chapter~\ref{chap:3});
-%
-\item 
-Text classification~\citep{Hirst:2014} (Chapter~\ref{chap:3});
+Text classification (over time)~\citep{Hirst:2014} (Chapter~\ref{chap:3});
 %
 \item 
 Sentiment analysis~\citep{rosenthal2017semeval, Nakov:2016, rosenthal:2015} (Chapter~\ref{chap:5}); 
 %
 \item 
-Learning to execute computer programs~\citep{ZS14} (Chapter~\ref{chap:5}); 
+Machine Translation (Chapter~\ref{chap:6});
 %
 \item 
-Algorithmic problems, like arithmetic and sequence memorization tasks ~\citep{neural_gpu} (Chapter~\ref{chap:5});
+Natural language reasoning ---bAbI tasks~\citep{weston2015towards} (Chapter~\ref{chap:6});
+%
+\item 
+Broad context language modeling~\citep{paperno2016lambada} (Chapter~\ref{chap:6});
+%
+\item 
+Open-domain question answering~\citep{dunn2017searchqa, dhingra2017quasar} (Chapter~\ref{chap:6});
+%
+\item 
+Modeling the structure in natural language sentences---subject-verb agreement task~\citep{linzen2016assessing} (Chapter~\ref{chap:6});
+%
+\item 
+Learning to execute computer programs~\citep{ZS14} (Chapter~\ref{chap:6}); 
+%
+\item 
+Algorithmic problems, like arithmetic and sequence memorization tasks ~\citep{neural_gpu} (Chapter~\ref{chap:6}).
 \end{itemize}
 
 Besides the challenges of learning from imperfect supervision in many of these tasks, some of them are difficult tasks that, for instance, require learning rich representations, or capturing complex underlying relations, or detecting and understanding abstract concepts and reasoning about them.
@@ -229,7 +229,7 @@ In \cws we train two neural networks in a meta-learning setup: a \tnet, the lear
 \fwl is a student-teacher approach in which we modulate the parameter updates to a \emph{student} network (trained on the task we care about) on a per-sample basis according to the posterior confidence of its label-quality estimated by a \emph{teacher} (who has access to the high-quality labels).  
 
 \subsection*{PART III: \titleof{p3}}
-In this part, we discuss injecting inductive biases into learning algorithms as a way to help them to come up with more generalizable solutions when they are provided with limited observations. We further discuss how we can improve the generalization of Transformers, the self-attentive feed-forward networks for sequence modeling, by introducing a recurrent inductive bias into their architecture.
+In this part, we discuss injecting inductive biases into learning algorithms as a way to help them to come up with more generalizable solutions when they are provided with limited observations. We further discuss how we can improve the generalization of Transformers~\citep{transformer}, the self-attentive feed-forward networks for sequence modeling, by introducing a recurrent inductive bias into their architecture.
 
 \subsubsection*{Chapter 6: \titleof{c6}}
 In this chapter, we address the following research question:
@@ -308,7 +308,7 @@ Next, we present the origins of each chapter in terms of the papers they are bas
                 \item \bibentry{Dehghani:2019:WSDM}.
             \end{itemize}
         \end{itemize}
-        {\footnotesize{MD co-designed the core model (first paper) with SG, and MD extend the model (second paper). MD implemented the algorithms, ran all the experiments, and helped the writing. SG and OV mentored the (internship) project. SG did most of the writing. OV, JU, and LK helped with designing the model and designing the experiments. OV, JU, LK, HA, JK, and MdR helped with the writing.}\medskip}
+        {\footnotesize{MD co-designed the core model (first paper) with SG, and MD extend the model (second paper). MD implemented the algorithms, ran all the experiments, and helped with the writing. SG and OV mentored the (internship) project. SG did most of the writing. OV, JU, and LK helped with designing the model and designing the experiments. OV, JU, LK, HA, JK, and MdR helped with the writing.}\medskip}
 %
 \end{itemize}
 

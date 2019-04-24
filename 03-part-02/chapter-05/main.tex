@@ -50,7 +50,7 @@ In the following sections, we will address these research questions, and support
 \section{Conclusion}
 Training neural networks using large amounts of weakly annotated data is an attractive approach in scenarios where an adequate amount of data with true labels is not available, a situation which often arises in practice.
 %
-In this chapter, to address \textbf{\resqname{c5}}, we introduced two semi-supervised learning approaches in the presence of weakly labeled data: Learning from Controlled Weak Supervision (\cws) and \fwlfulllc (\fwl).
+In this chapter, to address \textbf{\resqname{c5}}: ``\emph{\resqcontent{c5}},'' we introduced two semi-supervised learning approaches in the presence of weakly labeled data: Learning from Controlled Weak Supervision (\cws) and \fwlfulllc (\fwl).
 
 \cws is a meta-learning approach that we proposed to address \textbf{\resqname{c5.1}}. It unifies learning to estimate the confidence score of weak annotations and training neural networks to learn a target task with controlled weak supervision, i.e., using weak labels to updating the parameters but taking their estimated confidence scores into account. This helps to alleviate updates from instances with unreliable labels that may harm the performance.
 
@@ -60,6 +60,6 @@ We applied both \cws and \fwl to document ranking and sentiment classification, 
 
 \bigskip
 %conclusion of part 2 and connection to part 3
-In part~\ref{part2} to address \textbf{\resqname{p2}}, we explored different ideas for developing models that are capable of learning from weakly annotated data. We start with exploring how different architectural choices and different objective functions can be employed for learning with pseudo-labels that are programatically generated to augment training data. Then we study how to metal-learn the quality of labels and how to incorporate them in the learning process.
+In part~\ref{part2} to address \textbf{\resqname{p2}}: ``\emph{\resqcontent{p2}},'' we explored different ideas for developing models that are capable of learning from weakly annotated data. We start with exploring how different architectural choices and different objective functions can be employed for learning with pseudo-labels that are programatically generated to augment training data. Then we study how to metal-learn the quality of labels and how to incorporate them in the learning process.
 %
 In the next part, we study how we can employ inductive biases as modeling assumptions to design models that are not effective, but also data-efficient.
