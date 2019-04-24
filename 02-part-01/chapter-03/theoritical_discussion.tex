@@ -24,72 +24,81 @@ Since in many applications, autonomous systems need to decide how to classify an
 there exists a threshold $p$, $0<p<1$, such that for any set of items, if all and only those items with probability of class membership greater than $p$ are assigned to the class, the expected effectiveness of the classification will be the best possible for that set of items.}
 \end{displayquote}
 
-PTP, in fact, discusses optimizing the effectiveness of classifiers by making items separable regarding their probability of class membership, which is a discussion on ``separability in the score space''. Based on PTP, optimizing a threshold for separating items is a theoretically trivial task; however, there are practical difficulties. 
+PTP, in fact, discusses optimizing the effectiveness of classifiers by making items separable regarding their probability of class membership, which is a discussion on ``separability in the score space.'' Based on PTP, optimizing a threshold for separating items is a theoretically trivial task; however, there are practical difficulties. 
 
 % 1) Difficult to achieve the optimum threshold in practice (why?):
 The main difficulty refers to the fact that retrieval models are not necessarily capable of measuring actual probabilities of relevance for documents \citep{Arampatzis:2001}, so they do not guarantee to generate a set of scores from which the optimum cutoff can be inferred. 
 % 2) Emerging research to deal with this difficulty (analyzing score distributions of rel/irrel):
 In this regard, a great deal of work has been done on analyzing the score distribution over relevant and non-relevant documents to utilize this information for finding the appropriate threshold between relevant and non-relevant documents \citep{Kanoulas:2009,Arampatzis:2009,Arampatzis:2001}. 
-% 3) separability in scores distributions makes threshold finding easier -> separation property is desirable in score space!
+% 3) separability in score distributions makes threshold finding easier -> separation property is desirable in score space!
 %
-It is a clear fact that the more the score distributions of relevant and non-relevant documents are separable, the easier it is to determine the optimum threshold. 
-So, obtaining the \emph{separation property} in the scores distributions of relevant and non-relevant documents is one of the key focus areas for retrieval models.
+The more the score distributions of relevant and non-relevant documents are separable, the easier it is to determine the optimum threshold. 
+So, obtaining the \emph{separation property} in the score distributions of relevant and non-relevant documents is one of the key focus areas for retrieval models.
 
 % 4) separability of scores is directly related to the score generating function. But changing score generation functions to generate separable scores are complex -> instead: we can serve score functions with separable terms distribution -> then, since term dist. is a direct sign of relevancy, based on PRP, score functions are supposed to generate separable scores.
-There are two ways to obtain separability in the scores distributions.  We could address the complex underlying process of score generation and investigate ranking functions that yield a separable score distribution, as in the score distributional approaches \citep{Arampatzis:2001}.  Alternatively, we can investigate ways to provide existing scoring functions with a highly separable representation of the data. 
+There are two ways to obtain separability in the score distributions.  We could address the complex underlying process of score generation and investigate ranking functions that yield a separable score distribution, as in the score distributional approaches \citep{Arampatzis:2001}.  Alternatively, we can investigate ways to provide existing scoring functions with a highly separable representation of the data. 
 That is, the ``term distribution'' directly provides information about the ``probability of relevance'' \citep{Crestani:1998} and if there are separable distributions over $terms$ of relevant and non-relevant documents, a scoring function satisfying PRP will generate scores that separate the classes of relevant and non-relevant documents. 
 % 6)So, separation property in feature space is favorable -> Done!
-Thus, a \emph{separation property} on feature distribution for representing the data is a favorable property, which follows better accuracy of classifiers' decisions.
+Thus, a \emph{separation property} on feature distribution for representing the data is a favorable property, which follows a better accuracy of classifiers' decisions.
 
 In this chapter, we investigate the role of separation in the term or feature spaces, in which we introduce a formal definition for separability and formulate a principle on the effectiveness of classification based on separation property and leave a more formal treatment to future work.
  
-As a formal and general definition, we can refer to the model separability as follows:
+As a formal and general definition, we can refer to representation separability as follows:
 
 \begin{mydef}
 \label{def:sep}
-The model of an entity is epistemologically ``{separable}'' if, and only if, it has %possesses adequate 
-unique, non-overlapping features that distinguish it from other models.
+The representation of an entity is ``{separable}'' if, and only if, it has %possesses adequate 
+unique, non-overlapping features that distinguish it from other representations.
 \end{mydef}
 
-We argued that how separability in feature space leads to the separability in score space. Based on this and the given definition of the separability, we present \emph{\ssp (\acssp)}, which is a counterpart of the PTP~\citep{Lewis:1995} in the feature space:
+We argued that separability in feature space leads to separability in score space. Based on this and the given definition of separability, we present the \emph{\ssp (\acssp)}, which is a counterpart of the PTP~\citep{Lewis:1995} in the feature space:
 
 \begin{displayquote}
-\emph{For a given set of items presented to a classification system, for each class there exists at least one feature $\delta$ in the representation of items, and a threshold $\tau$, such that for any set of items, if all and only those items with $\delta > \tau$ are assigned to the class, the classification will have the optimal possible performance for that set of items in terms of a given effectiveness measure.}
+\emph{For a given set of items presented to a classification system, for each class there exists at least one feature value $\delta$ in the representation of items, and a threshold $\tau$, such that for any set of items, if all and only those items with $\delta > \tau$ are assigned to the class, the classification will have the optimal possible performance for that set of items in terms of a given effectiveness measure.}
 \end{displayquote}
 
-\acssp, in general, is a stronger version of PTP. In strict binary classification, if you have PTP, which holds on the whole feature space, \acssp will be satisfied, however in the multi-class case, \acssp is stronger and it implies PTP, but not the other way around.
-Based on PTP, there is always an underlying probabilistic scoring function on the set of \emph{whole} features, which generates membership probabilities as the scores of items and these scores make items separable with regards to a threshold. So, the scoring function can be deemed as a mapping function which maps items to a new feature space in which the score of each item is a single feature representation of that item (membership probabilities (or scores) in PTP would be equivalent to $\delta$ in \acssp). Thus, when the \acssp holds, the PTP and PRP will also hold.  One could envision a stronger version of the \acssp in which ``all'' the features in the representations need to be non-overlapping, but the \acssp is sufficient for optimizing the effectiveness of the classifier.  The separation principle can be formally extended to hierarchical classification in a straightforward way.  In the rest of this section, we will discuss the separation property in the hierarchical classification and explain how to estimate separable representations with the aim of satisfying \acssp in order to improve the classification effectiveness.
+\acssp, in general, is a stronger version of PTP. 
+In strict binary classification, if you have PTP, which holds on the whole feature space, \acssp will be satisfied, however in the multi-class case, \acssp is stronger and it implies PTP, but not the other way around.
+
+Based on PTP, there is always an underlying probabilistic scoring function on the set of all features, which generates membership probabilities as the scores of items. These scores make items separable with regards to a threshold. 
+So, the scoring function can be deemed as a mapping function which maps items to a new feature space in which the score of each item is a single feature representation of that item (membership probabilities, i.e., scores, in PTP would be equivalent to $\delta$ in \acssp). Thus, when the \acssp holds, the PTP and PRP will also hold.  
+
+One could consider a stronger version of the \acssp in which ``all'' the features in the representations need to be non-overlapping, but the \acssp is sufficient for optimizing the effectiveness of the classifier.  The separation principle can be formally extended to hierarchical classification in a straightforward way.  In the rest of this section, we will discuss the separation property for the hierarchical classification and explain how to estimate separable representations with the aim of satisfying \acssp in order to improve the classification effectiveness.
 
 \subsection{Horizontal and Vertical Separability}
 \label{subsec:vhs}
 
-In hierarchical text classification, there are two types of boundaries existing in the data, horizontal boundaries, and vertical boundaries. Hence, a separation property should be established in two dimensions. It means, not only separation between entities' representation in one layer is required, but also the separation between the distribution of terms in different layers is needed.
+In hierarchically structured data, there are two main types of boundaries existing in the data, horizontal boundaries, and vertical boundaries~\citep{Dehghani:2016:ICTIR}. Hence, a separation property should be established in two dimensions. This means that not only separation between entities' representation in one layer is required, but a concept related to separation between the distribution of terms in different layers is needed.
 
 The separation between entities in the same layer is a related concept to the fundamental goal of all classifiers on the data with a flat structure, which is making the data in different classes distinguishable~\citep{Sebastiani:2002}. However, separation between entities in different layers is a concept related to difference of abstraction level and modeling data in different layers in a separable way can help the scoring procedures to figure out the meaning behind the layers and make their decisions less affected by the concepts of other unrelated layers, thus leading to conceptually cleaner and theoretically more accurate models.
 
-Based on Definition~\ref{def:sep}, we formally define horizontal and vertical separability in the hierarchy as follows:
+Based on Definition~\ref{def:sep}, we formally define horizontal and vertical separability in the representation of hierarchically structured entities as follows:
+
 \begin{mydef}
-The model of an entity in the hierarchy is ``horizontally separable'' if, and only if, it is \emph{separable} compared to other entities in the same layer, with the same abstraction level.
+The representation of an entity in the hierarchy is ``horizontally separable'' if, and only if, it is \emph{separable} compared to other entities in the same layer, with the same abstraction level.
 \end{mydef}
 
 \begin{mydef}
-The model of an entity in the hierarchy is ``vertically separable'' if, and only if, it is \emph{separable} compared to other entities in the other layers, with different abstraction levels.
+The representation of an entity in the hierarchy is ``vertically separable'' if, and only if, it is \emph{separable} compared to other entities in the other layers, with different abstraction levels.
 \end{mydef}
 
-To formalize these concepts, consider we have a simple three layers hierarchy of text documents with ``IsA'' relations, where the individual documents take place in the lowest layer, and each node in the middle layer determines a category, representing a group of documents, i.e., its children, and the supernode on the top of the hierarchy deemed to represent all the documents in all the groups in the hierarchy. 
+To formalize these concepts, consider an example where we have a simple three layer hierarchy of text documents with ``IsA'' relations, where the individual documents take place in the lowest layer, and each node in the middle layer determines a category, representing a group of documents, i.e., its children, and the supernode at the top of the hierarchy deemed to represent all the documents in all the groups in the hierarchy. 
 %
-There is a key point in this hierarchy to which we will refer for estimating models for the hierarchical entities: ``each node in the hierarchy is a general representation of its descendants''.
+There is a key point in this hierarchy to which we will refer for learning representations for the hierarchical entities: ``each node in the hierarchy is a general representation of its descendants.''
 
-First assume that the goal is to estimate a language model representing category $c$, as one of the entities in the middle layer of the hierarchy, and we need the estimated model possessing \emph{horizontal separability}. 
-To estimate a horizontally separable model of a category, which represents the category in a way that it is distinguishable from other categories in the middle layer, the key strategy is to eliminate terms that are common across all the categories (overlapping features) and preserve only the discriminating ones.
+First assume that the goal is to estimate a language model representing category $c$, as one of the entities in the middle layer of the hierarchy, and we need the learned representation to possess \emph{horizontal separability}. 
+To estimate a horizontally separable representation of a category, which represents the category in such a way that it is distinguishable from other categories in the middle layer, the key strategy is to eliminate terms that are common across all the categories (overlapping features) and preserve only the discriminating ones.
 
-To do so, we consider there is a general model that captures all the \emph{common} terms of all the categories in the middle layer, $\theta_c^{g}$.  Also we assume that the standard language model of $c$, i.e the model estimated  from concatenation of all the documents in $c$ using MLE, $\theta_{c}$, is drawn from the mixture of the \emph{latent horizontally separable model}, $\theta_{c}^{hs}$, and general model that represents shared terms of all categories, i.e., $\theta_c^{g}$:
+To do so, we consider there is a general model that represents all the \emph{common} terms of all the categories in the middle layer, $\theta_c^{g}$. 
+Also, the standard language model of $c$ is the model estimated from concatenation of all the documents in $c$ using MLE, $\theta_{c}$. 
+We assume that $\theta_{c}$ is drawn from the mixture of the \emph{latent horizontally separable model}, $\theta_{c}^{hs}$, and the general model that represents shared terms of all categories, $\theta_c^{g}$:
 \begin{equation}
 p(t|\theta_{c})  =  \lambda p(t|\theta_{c}^{hs}) + (1-\lambda) p(t|\theta_c^g),
 \end{equation}
 %
 where $\lambda$ is the mixture coefficient.
-Regarding the meaning of the relations between nodes in the hierarchy, top node in the hierarchy is supposed to be a general representation of all categories. On the other hand $\theta_c^{g}$ supposed to be a model capturing general features of all the categories in the middle layer. Thus, we can approximate $\theta_c^{g}$ with the estimated model of the top node in the hierarchy, $\theta_{all}$:
+Regarding the meaning of the relations between nodes in the hierarchy, the top node in the hierarchy is supposed to be a general representation of all categories.
+On the other hand, $\theta_c^{g}$, is supposed to represent the general features of all the categories in the middle layer. Thus, we can approximate $\theta_c^{g}$ with the estimated model of the top node in the hierarchy, $\theta_{all}$:
 \begin{equation}
  p(t|\theta_c) \approx \lambda p(t|\theta_{c}^{hs}) + (1-\lambda) p(t|\theta_{all}).
  \label{mixture}
@@ -100,7 +109,7 @@ We estimate $\theta_{all}$ using MLE as follows:
 p(t|\theta_{all}) = \frac{tf(t,all)}{\sum_{t'} tf(t',all)} = \frac{\sum_{c \in all}{\sum_{d \in c}{tf(t,d)}}}{{\sum_{c \in all}{\sum_{d \in c}{\sum_{t' \in d}{tf(t',d)}}}}},
 \label{eq:cmodel}
 \end{equation}
-where $tf(t,d)$ indicates the frequency of term $t$ in document $d$ and $\theta_{all}$ is in fact collection language model. 
+where $tf(t,d)$ indicates the frequency of term $t$ in document $d$ and $\theta_{all}$ is in fact the collection language model. 
 
 Now, the goal is to extract $\theta_{c}^{hs}$. With regard to the generative models, when a term $t$ is generated using the mixture model in Equation~\ref{mixture}, first a model is chosen based on $\lambda$ and then the term is sampled using the chosen model.  The log-likelihood function for generating the whole category $c$ is:
 \begin{equation}
@@ -112,26 +121,26 @@ With the goal of maximizing this likelihood function, the maximum likelihood est
 \\
 \textbf{E-step:}
 \begin{equation}
-e_t = tf(t|c).\frac{\lambda p(t|\theta_{c}^{hs})}{\lambda p(x|\theta_{c}^{hs}) + (1-\lambda) p(x|\theta_{all})}
+e_t = tf(t|c)\cdot \frac{\lambda p(t|\theta_{c}^{hs})}{\lambda p(x|\theta_{c}^{hs}) + (1-\lambda) p(x|\theta_{all})}
 \label{EM-E},
 \end{equation}
 \textbf{M-step:}
 \begin{equation}
-p(x|\theta_{c}^{hs}) = \frac{e_t}{\sum_{t' \in \mathcal{V}} e_t'}, \mathrm{~i.e.~normalizing~the~model},
+p(x|\theta_{c}^{hs}) = \frac{e_t}{\sum_{t' \in \mathcal{V}} e_t'}, \mathrm{~i.e.,~normalizing~the~model},
 \label{EM-M}
 \end{equation}
-where $\mathcal{V}$ is the set of all terms with non-zero probability in $\theta_c$. In Equation~\ref{EM-E}, $\theta_c$ is the maximum likelihood estimation of category $c$: $p(t|\theta_{c}) = \nicefrac{\sum_{d \in c}c(t,d)}{\sum_{d \in c}{\sum_{t' \in d} c(t',d)}}$ and $\theta_{c}^{hs}$ represents the horizontally separable model, which in the first iteration it is initialized by the maximum likelihood estimation, similar to $\theta_c$. 
+where $\mathcal{V}$ is the set of all terms with non-zero probability in $\theta_c$. In Equation~\ref{EM-E}, $\theta_c$ is the maximum likelihood estimation of category $c$: $p(t|\theta_{c}) = \nicefrac{\sum_{d \in c}c(t,d)}{\sum_{d \in c}{\sum_{t' \in d} c(t',d)}}$ and $\theta_{c}^{hs}$ represents the horizontally separable model, which is initialized by the maximum likelihood estimation in the first iteration, similar to $\theta_c$. 
 
-Considering the above process, a horizontally separable model is a model which is \textbf{specified} by taking out general features that have a high probability in ``all'' categories or let's say collection language model, which is similar to the concept of the parsimonious language model, introduced by~\citet{Hiemstra:2004}.
+Considering the above process, a horizontally separable model is a model that is \textbf{specified} by taking out general features that have a high probability in ``all'' categories, i.e., collection language model, which is similar to the concept of the parsimonious language model, introduced by~\citet{Hiemstra:2004}.
 
-Now assume that we want to extract a language model possessing \emph{vertical separability} for the category $c$, i.e., a model that makes this category distinguishable from entities both in the lower layer (each individual document) and the top layer (collection of all documents).
+Now assume that we want to extract a language model possessing \emph{vertical separability} for the category $c$, i.e., a representation that makes this category distinguishable from entities both in the lower layer (each individual document) and the top layer (collection of all documents).
 %
-In the procedure of making the model horizontally separable, we argued that we can reduce the problem to removing terms representing the top node, which results in a model that is separable from the top node in the upper layer. This means that we are already half-way towards making a model vertically separable; thus, the model only requires to be separable from its descendant entities in the lower layer.  
-Back to the meaning of the ``IsA'' relations in the hierarchy, the model of each node is a general representation of all its descendants. So making the model of a category separable from its descendant documents means to remove terms that describe each individual documents, but not all of them. We call these terms, document specific terms.
+In the procedure of making the representation horizontally separable, we argued that we can reduce the problem to removing terms representing the top node, which results in a representation that is separable from the top node in the upper layer. This means that we are already half-way towards making a representation vertically separable; thus, the representation only requires it to be made separable from its descendant entities in the lower layer.  
+Recall that the representation of each node is, in fact, a general representation of all its descendants. So making the representation of a category separable from its descendant documents can be translated to removing terms that describe individual documents, but not reflect the shared commonalities of all descendant documents in that category. We call these terms, document specific terms.
 
-For each category $c$, we assume there is a  model, $\theta_d^{s}$, that captures document specific terms, i.e., terms from documents in that category that are good indicators for individual documents but not supported by all of them. Also we assume that the standard language model of $c$, $\theta_{c}$, is drawn from the mixture of the \emph{latent vertically separable model}, $\theta_{c}^{vs}$, and $\theta_d^{s}$: 
+For each category $c$, we assume there is a  model, $\theta_d^{s}$, that captures document specific terms, i.e., terms from documents in that category that are good indicators for individual documents but not supported by all of them. Also, we assume that the standard language model of $c$, $\theta_{c}$, is drawn from the mixture of the \emph{latent vertically separable model}, $\theta_{c}^{vs}$, and $\theta_d^{s}$: 
 \begin{eqnarray}
-p(t|\theta_{c}) & = & \lambda p(t|\theta_{c}^{vs}) + (1-\lambda) p(t|\theta_d^s)
+p(t|\theta_{c}) & = & \lambda p(t|\theta_{c}^{vs}) + (1-\lambda) p(t|\theta_d^s),
 \end{eqnarray}
 where $\lambda$ is the mixing coefficient. 
 We estimate $\theta_d^s$ using the following equation:
@@ -146,13 +155,13 @@ p(t|\theta_{d_i}) \prod_{\substack{d_j\in c \\ j \neq i}} (1-p(t|\theta_{d_j}))
 where $p(t|\theta_{d_i}) = \nicefrac{c(t,d_i)}{\sum_{t' \in d_i} c(t',d_i)}$. This equation assigns a high probability to a term if it has high probability in one of the document models, but not others, marginalizing over all the document models.  This way, the higher the probability is, the more specific the term will be. 
 Now, the goal is to extract the $\theta_{c}^{vs}$. An EM algorithm, similar to Equations~\ref{EM-E} and~\ref{EM-M} can be applied for estimating $\theta_{c}^{vs}$ by removing the effect of $\theta_d^s$ from $\theta_{c}$.
 
-Considering the above process, a vertically separable model is a model which is \textbf{generalized} by taking out specific terms that have a high probability in one of the descendant documents, but not others.  
+Considering the above process, a vertically separable representation is a representation that is \textbf{generalized} by downweighting specific terms that have a high probability in one of the descendant documents, but not others.  
 
 \subsection{Two-Dimensional Separability}
-In order to have fully separable models in hierarchical classification, they should own two-dimensional separation property. We define two-dimensional separability as follows:
+In order to have fully separable representations in hierarchical classification, they should own two-dimensional separation property. We define two-dimensional separability as follows:
 \begin{mydef}
-The model of an entity in the hierarchy is ``two-dimensionally separable'' if, and only if, it is both horizontally and vertically separable at the same time.
+The representation of an entity in the hierarchy is ``two-dimensionally separable'' if, and only if, it is both horizontally and vertically separable at the same time.
 \end{mydef}
 
-Intuitively, if a model of an entity is two-dimensionally separable, it should capture \emph{all}, and \emph{only}, the essential features of the entity taking its relative position in the hierarchy into consideration.  In the next section, we will discuss how to estimate two-dimensional separable models for entities in the hierarchies with more than three layers.
+Intuitively, if a representation of an entity is two-dimensionally separable, it should capture \emph{all}, and \emph{only}, the essential features of the entity taking its relative position in the hierarchy into consideration.  In the next section, we will discuss how to estimate two-dimensional separable representations for entities in hierarchies with more than three layers.
 

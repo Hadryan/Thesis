@@ -29,7 +29,7 @@ The performance of machine learning models is often strongly correlated with the
 the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting}.  
 However, in many real-world applications, large-scaled high-quality training data is not available.
 This highlights the increasing need for building models with the ability to learn complex tasks with \emph{imperfect supervision}. 
-In this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training examples~\citep{zhou2018brief}.
+In this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term covering a variety of situations where the learning process is based on imperfect training samples~\citep{zhou2018brief}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -98,7 +98,7 @@ Exploiting noisy and inaccurate labels~\citep{Vahdat:2017, Lee:2013,Hinton:2015,
 Injecting inductive biases into algorithms to generalize better on unobserved data~\citep{cohen2016group, cohen2016steerable, Dehghani:ICLR:2019}.
 \end{itemize}
 
-In general supervised learning scenario, each training example, which is used as the supervision signal, consist of a \emph{feature vector} (also called data instance) and a \emph{label}. However, in many domains and applications, there is an imperfection in the supervision signal. Here, in this thesis, we focus on two main problems: dealing with \emph{noisy} training data and dealing with \emph{limited} training data. 
+In general supervised learning scenario, each training sample, which is used as the supervision signal, consist of a \emph{feature vector} (also called data instance) and a \emph{label}. However, in many domains and applications, there is an imperfection in the supervision signal. Here, in this thesis, we focus on two main problems: dealing with \emph{noisy} training data and dealing with \emph{limited} training data. 
 We formulate the main research question that is addressed in this thesis as follows:
 \resq{main}
 
@@ -134,12 +134,12 @@ The following research question is the main question is central to Part~\ref{par
 \resq{p1}
 
 
-In Part~\ref{part2} of the thesis, we target the problem of noisy or weak labels. We study how we can develop neural networks that can learn from weakly annotated training examples with the ability to go beyond the imperfection of the weak labels. We study different architectural choices and objective functions for neural ranking models to find a more noise tolerant model when learning from pseudo-labels.  We also introduce ideas that meta-learn the fidelity of weakly annotated labels and modulate the learning process based on the fidelity scores of weakly labeled examples. In fact, in this part, we make assumptions in the act of observing the data, like how to select the data based on the fidelity of data points, which is also a form of incorporating knowledge and biases.
+In Part~\ref{part2} of the thesis, we target the problem of noisy or weak labels. We study how we can develop neural networks that can learn from weakly annotated training samples with the ability to go beyond the imperfection of the weak labels. We study different architectural choices and objective functions for neural ranking models to find a more noise tolerant model when learning from pseudo-labels.  We also introduce ideas that meta-learn the fidelity of weakly annotated labels and modulate the learning process based on the fidelity scores of weakly labeled samples. In fact, in this part, we make assumptions in the act of observing the data, like how to select the data based on the fidelity of data points, which is also a form of incorporating knowledge and biases.
 In this part, we address the following research question:
 \resq{p2}
 
 
-In Part~\ref{part3}, we deal with the problem of limited labeled data, for instance, in the context of bAbI reasoning tasks with 1k training examples where the tasks are complex and training data is limited. We also study the cases where we have a lot of labeled examples, but with limited coverage, which can be seen as the limitation in the diversity of feature vectors. For instance in the context of algorithmic tasks, with the intention of assessing the ability of models on length generalization, we have plenty of training data but the distribution of sample's length in training is different from the test set. 
+In Part~\ref{part3}, we deal with the problem of limited labeled data, for instance, in the context of bAbI reasoning tasks with 1k training samples where the tasks are complex and training data is limited. We also study the cases where we have a lot of labeled samples, but with limited coverage, which can be seen as the limitation in the diversity of feature vectors. For instance in the context of algorithmic tasks, with the intention of assessing the ability of models on length generalization, we have plenty of training data but the distribution of sample's length in training is different from the test set. 
 In this part, we investigate the idea of injecting some inductive biases\footnote{Inductive biases are ``any biases for choosing one generalization over another, other than strict consistency with the observed training samples.'' as defined by~\citet{Mitchell80theneed}. We elaborate on this at the beginning of Part~\ref{part3}.} into models in order to encode modeling assumptions that help the models to be more data efficient and generalize better.
 The main research question that is addressed in Part~\ref{part3} is:
 \resq{p3}

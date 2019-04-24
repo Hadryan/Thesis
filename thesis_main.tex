@@ -2,8 +2,8 @@
 %%
 %% Author: Mostafa Dehghani
 %%
-\documentclass[table, draft]{style/illcdiss}
-%\documentclass[table]{style/illcdiss}
+% \documentclass[table, draft]{style/illcdiss}
+\documentclass[table]{style/illcdiss}
 
 % \usepackage[nottoc]{tocbibind}
 
@@ -26,7 +26,7 @@
 \nobibliography*
 
 \begin{document}
-\urlstyle{rm} 
+\urlstyle{sf} 
 
 \newenvironment{resqbox}%
 {\vspace{-6pt} \begin{leftbar}{gray} \vspace{-20pt} \begin{quotation}\begin{noindent}}%
@@ -56,10 +56,10 @@
 
 %%     The main reason we used to split the document in parts, was to compile only the relevant chapters... 
 \mainmatter
-%\input{01-introduction/main}
+\input{01-introduction/main}
 \input{02-part-01/main}
-%\input{03-part-02/main}
-%\input{04-part-03/main}
+\input{03-part-02/main}
+\input{04-part-03/main}
 
 \bookmarksetup{startatroot} % Lift from parts
 \addtocontents{toc}{\bigskip} % skip

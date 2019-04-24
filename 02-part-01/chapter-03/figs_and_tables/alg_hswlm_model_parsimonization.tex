@@ -6,7 +6,7 @@
  \ForAll{term $t$ in the vocabulary}
      \State \begin{small}$P(t|\theta_B) \xleftarrow{normalized} \sum_{b_i\in B} \bigg(P(t|\theta_{b_i}) \prod_{\substack{b_j\in B \\ j \neq i}} (1-P(t|\theta_{b_j}))\bigg)$ \end{small}
      \Repeat
-         \State \begin{small}E-Step: $P[t\in \mathcal{V}] \gets P(t|\theta_e).\frac{\alpha P(t|\tilde{\theta}_e)}{\alpha P(t|\tilde{\theta}_e) + (1-\alpha) P(t|\theta_B)}$ \end{small}
+         \State \begin{small}E-Step: $P[t\in \mathcal{V}] \gets P(t|\theta_e)\cdot \frac{\alpha P(t|\tilde{\theta}_e)}{\alpha P(t|\tilde{\theta}_e) + (1-\alpha) P(t|\theta_B)}$ \end{small}
           \State \begin{small}M-Step: $P(t|\tilde{\theta}_e) \gets \frac{ P[t \in \mathcal{V}]}{\sum_{t' \in \mathcal{V}} P[t' \in \mathcal{V}]}$ \end{small}
      \Until{$\tilde{\theta_t}$ becomes stable}
  \EndFor

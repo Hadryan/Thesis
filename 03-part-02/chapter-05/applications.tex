@@ -36,7 +36,7 @@ We opt for a simple fully connected feed-forward network with $l$ hidden layers 
 \small
 \mathcal{L}_t = \sum_{i\in B_U} \tilde{c}_i [- \tilde{y}_i \log (\hat{y}_i) - (1-\tilde{y}_i) \log(1-\hat{y}_i)],
 \end{equation}
-where $B_U$ is a batch of instances from $U$, and $\tilde{c}_i$ is the confidence score of the weakly annotated instance $i$, estimated by the \cnet.
+where $B_U$ is a batch of samples from $U$, and $\tilde{c}_i$ is the confidence score of the weakly annotated sample $i$, estimated by the \cnet.
 
 The general schema of the \tnet (or \std) is illustrated in Figure~\ref{fig:ranker}. More details are provided in Section~\ref{sec:modeltwo}.
 
@@ -162,7 +162,7 @@ This layer is a simple fully connected feed-forward network with $l$ hidden laye
 % \nonumber
 \mathcal{L}_t = \sum_{i\in B_U} \tilde{c}_i \sum_{k \in K} - \tilde{y}_i^k \log (\hat{y}_i^k),
 \end{equation}
-where $B_U$ is a batch of instances from $U$, and $\tilde{c}_i$ is the confidence score of the weakly annotated instance $i$, and $K$ is a set of classes. 
+where $B_U$ is a batch of samples from $U$, and $\tilde{c}_i$ is the confidence score of the weakly annotated sample $i$, and $K$ is a set of classes. 
 The general schema of the \tnet (or \std) is illustrated in Figure~\ref{fig:sentiment}.
 
 \subsubsection{The \wa}
@@ -226,7 +226,7 @@ Besides the baselines, we also report the best performing systems which are also
 \input{03-part-02/chapter-05/figs_and_tables/table_sentiment_res_cws.tex}
 Similar to the ranking task, we have done an ablation study on \cws by trying different strategies for training \cws. The results of these experiments are presented in Table~\ref{tbl_variants_sent_cws}. \cws$_\text{CT}$ archives the highest performance among all the training strategies, however, as we discussed in Section~\ref{sec:res_and_disc_ranking}, it is not as efficient as \cws. 
 
-In sentiment classification, compared to the ranking task, it is easier to estimate the confidence score of instances concerning the amount of available supervised data. Therefore, \cws$_\text{ST}$ improves the performance over $\text{NN}_{\text{S}}$ in Table~\ref{tbl_main_sent}. 
+In sentiment classification, compared to the ranking task, it is easier to estimate the confidence score of samples concerning the amount of available supervised data. Therefore, \cws$_\text{ST}$ improves the performance over $\text{NN}_{\text{S}}$ in Table~\ref{tbl_main_sent}. 
 
 
 \input{03-part-02/chapter-05/figs_and_tables/table_sentiment_res_fwl.tex}

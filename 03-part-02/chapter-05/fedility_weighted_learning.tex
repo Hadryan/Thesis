@@ -39,7 +39,7 @@ We then create the \emph{soft dataset} $\mathcal{D}_{sw}=\{(x_t,\bar{y}_t)\}$ us
 \Sigma(x_t) &=& h(K_{\rm post}(x_t,x_t))
 \sshrink
 \end{eqnarray*}
-The generated labels are called \emph{soft labels}. Therefore, we refer to $\mathcal{D}_{sw}$ as a soft dataset. $g(.)$ transforms the output of $\mathcal{GP}$ to the suitable output space. For example in classification tasks, $g(.)$ would be the softmax function to produce probabilities that sum up to one. 
+The generated labels are called \emph{soft labels}. Therefore, we refer to $\mathcal{D}_{sw}$ as a soft dataset. $g(.)$ transforms the output of $\mathcal{GP}$ to the suitable output space. For example, in classification tasks, $g(.)$ would be the softmax function to produce probabilities that sum up to one. 
 For multidimensional-output tasks where a vector of variances is provided by the $\mathcal{GP}$, the vector $K_{\rm post}(x_t,x_t)$ is passed through an aggregating function $h(.)$ to generate a scalar value for the uncertainty of each sample. 
 Note that we train $\mathcal{GP}$ only on the strong dataset $\mathcal{D}_s$ but then use it to generate soft labels $\bar{y}_t = \tfunc(x_t)$ and uncertainty $\Sigma(x_t)$ for samples belonging to $\mathcal{D}_{sw}=\mathcal{D}_w\cup \mathcal{D}_s$.
 
@@ -60,7 +60,7 @@ More specifically, we update the parameters of the \std by training on $\mathcal
   \pmb{w}^* &=& \argmin_{\pmb{w} \in \mathcal{W}} \> \frac{1}{N}\sum_{(x_t,\bar{y}_t) \in \mathcal{D}_{sw}}l(\pmb{w}, x_t, \bar{y}_t) + \mathcal{R}(\pmb{w}), \\
   \pmb{w}_{t+1} &=& \pmb{w}_t - \eta_t(\nabla l(\pmb{w},x_t,\bar{y}_t) + \nabla \mathcal{R}(\pmb{w}))
 \end{eqnarray*}
-where $l(\cdot)$ is the per-example loss, $\eta_t$ is the total learning rate, $N$ is the size of the soft dataset $\mathcal{D}_{sw}$, $\pmb{w}$ is the parameters of the \std network, and $\mathcal{R(.)}$ is the regularization term. %Regularization term is the usual regularization used by optimization packages (e.g. weight decay). Therefore, we do not go into its details here.
+where $l(\cdot)$ is the per-sample loss, $\eta_t$ is the total learning rate, $N$ is the size of the soft dataset $\mathcal{D}_{sw}$, $\pmb{w}$ is the parameters of the \std network, and $\mathcal{R(.)}$ is the regularization term. %Regularization term is the usual regularization used by optimization packages (e.g. weight decay). Therefore, we do not go into its details here.
 
 We define the total learning rate as $\eta_t = \eta_1(t)\eta_2(x_t)$, where $\eta_1(t)$ is the usual learning rate of our chosen optimization algorithm that anneals over training iterations, and $\eta_2(x_t)$ is a function of the label uncertainty $\Sigma(x_t)$ that is computed by the \tch for each data point. Multiplying these two terms gives us the total learning rate. In other words, $\eta_2$ represents the \emph{fidelity} (quality) of the current sample, and is used to multiplicatively modulate $\eta_1$. Note that the first term does not necessarily depend on each data point, whereas the second term does. We propose
 \begin{equation}
@@ -68,7 +68,7 @@ We define the total learning rate as $\eta_t = \eta_1(t)\eta_2(x_t)$, where $\et
  \eta_2(x_t) = \exp[-\beta \Sigma(x_t)],    
 \end{equation}
 to exponentially decrease the learning rate for data point $x_t$ if its corresponding soft label $\bar{y}_t$ is unreliable (far from a true sample).
-In practice, when using mini-batches, we implement this by multiplying the loss of each example in the batch by its fidelity score and average over these fidelity-weighted losses in the batch when calculating the batch gradient based on that loss. In Equation~\ref{eqn:eta2}, $\beta$ is a positive scalar hyper-parameter. Intuitively, small $\beta$ results in a \std which listens more carefully to the \tch and copies its knowledge, while a large $\beta$ makes the \std pay less attention to the \tch, staying with its initial weak knowledge. 
+In practice, when using mini-batches, we implement this by multiplying the loss of each sample in the batch by its fidelity score and average over these fidelity-weighted losses in the batch when calculating the batch gradient based on that loss. In Equation~\ref{eqn:eta2}, $\beta$ is a positive scalar hyper-parameter. Intuitively, small $\beta$ results in a \std which listens more carefully to the \tch and copies its knowledge, while a large $\beta$ makes the \std pay less attention to the \tch, staying with its initial weak knowledge. 
 More concretely speaking, as $\beta \to 0$ \std places more trust in the labels $\bar{y}_t$ estimated by the \tch and the \std copies the knowledge of the \tch. On the other hand, as $\beta \to \infty$, \std puts less weight on the extrapolation ability of $\mathcal{GP}$ and the parameters of the \std are not affected by the correcting information from the \tch. 
 
 

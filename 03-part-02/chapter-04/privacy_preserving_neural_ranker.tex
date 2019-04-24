@@ -3,7 +3,7 @@ Deep neural networks perform better as the training dataset grows bigger and bec
 It has been shown that a trained model may inadvertently
 and implicitly store some of its training data and we can retrieve some of the information about samples in the training data~\citep{Shokri:2015}, either by directly by analyzing internal model parameters or indirectly by repeatedly querying the model as a black-box to gather data and do analysis on those data~\citep{Fredrikson:2015}. 
 
-This requires us to design and use the learning algorithms that protect the privacy of users, for instance by guaranteeing that the output model generalizes away from the specifics of any
+This requires us to design and use the learning algorithms that protect the privacy of users, for instance, by guaranteeing that the output model generalizes away from the specifics of any
 individual user. Recently, \citet{Papernot:2017} proposed Private Aggregation of Teacher Ensembles (PATE), a generally applicable approach to providing strong privacy guarantees for training data.  PATE uses a noisy aggregation of the signal that comes from multiple models trained with disjoint datasets, to train a new model that guarantees a certain level of differential privacy.
 
 Almost all deferentially private algorithms add noise to introduce ambiguity. Hence, the training signals become less perfect and employing noise-robust models can support injecting noise, yielding strong privacy guarantees, while having a limited impact on accuracy.

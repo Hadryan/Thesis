@@ -9,18 +9,18 @@ In this section, we address the first research question of this chapter:
 We introduce a semi-supervised method that leverages a small amount of data with strong labels to improve the learning from a large amount of data with weak labels. This model, in fact, offers learning from \emph{Controlled Weak Supervision} and we refer to it by \emph{\cws} in the rest of this chapter.
 %
 \cws has three main components:
-A \wa, which can be a heuristic model, a weak or biased classifier, or even a human via crowd-sourcing and it is employed to annotate a massive amount of unlabeled data, a \tnet, which uses a large set of weakly annotated instances by the \wa to learn the main task, and a \cnet, which is trained on a small set with strong labels to estimate confidence scores for instances annotated by the \wa. 
+A \wa, which can be a heuristic model, a weak or biased classifier, or even a human via crowd-sourcing and it is employed to annotate a massive amount of unlabeled data, a \tnet, which uses a large set of weakly annotated samples by the \wa to learn the main task, and a \cnet, which is trained on a small set with strong labels to estimate confidence scores for samples annotated by the \wa. 
 
 The confidence scores estimated by the \cnet define the magnitude of the weight updates applied to the \tnet during training. This way, the \cnet helps the \tnet to avoid the mistakes of her teacher, i.e., \wa, by down-weighting the weight updates from weak labels that do not look reliable according to \cnet.
 %
 \cws, in fact, employs teacher-student paradigm in which, the \tnet (student) and the \cnet (teacher) are trained jointly in a multi-task fashion and they share parameters of the representation learning layer to share their understanding of the data.
 
-From a meta-learning perspective~\citep{Andrychowicz:2016,Finn2017:ICML,Ravi:2016}, the goal of the \cnet, as the meta-learner, trained jointly with the \tnet, as the learner, is to calibrate the learning rate of the \tnet for each instance in the batch. I.e., the weights $\pmb{w}$ of the \tnet $f_w$ at step $t+1$ are updated as follows:
+From a meta-learning perspective~\citep{Andrychowicz:2016,Finn2017:ICML,Ravi:2016}, the goal of the \cnet, as the meta-learner, trained jointly with the \tnet, as the learner, is to calibrate the learning rate of the \tnet for each sample in the batch. I.e., the weights $\pmb{w}$ of the \tnet $f_w$ at step $t+1$ are updated as follows:
 \begin{equation}
 \pmb{w}_{t+1} = \pmb{w}_t - \frac{\eta_t}{b}\sum_{i=1}^b c_{\theta}(x_i, \tilde{y}_i)  \nabla \mathcal{L}(f_{\pmb{w_t}}(x_i), \tilde{y_i})
 %+ \nabla \mathcal{R}(\pmb{w_t})
 \end{equation}
-where $\eta_t$ is the global learning rate, $\mathcal{L}(\cdot)$ is the loss of predicting $\hat{y}=f_w(x_i)$ for an input $x_i$ when the label is $\tilde{y}$; $c_\theta(\cdot)$ is a scoring function learned by the \cnet taking input instance $x_i$ and its noisy label $\tilde{y}_i$. Thus, we can effectively control the contribution to the parameter updates for the \tnet from weakly labeled instances based on how reliable their labels are according to the \cnet (learned on a small supervised data).
+where $\eta_t$ is the global learning rate, $\mathcal{L}(\cdot)$ is the loss of predicting $\hat{y}=f_w(x_i)$ for an input $x_i$ when the label is $\tilde{y}$; $c_\theta(\cdot)$ is a scoring function learned by the \cnet taking input instance $x_i$ and its noisy label $\tilde{y}_i$. Thus, we can effectively control the contribution to the parameter updates for the \tnet from weakly labeled samples based on how reliable their labels are according to the \cnet (learned on a small supervised data).
 
 Our setup requires running a \wa to label a large amount of unlabeled data, which is done at pre-processing time. For a large class of tasks, it is possible to use a simple heuristic, or implicit human feedback to generate weak labels. This set is then used to train the \tnet.  
 In contrast, a small expert-labeled set is used to train the \cnet, which estimates how good the weak annotations are, i.e., controls the effect of weak labels on updating the parameters of the \tnet.
@@ -32,7 +32,7 @@ we study the performance of \cws by focusing on two applications: sentiment clas
 
 \subsection{Learning from Controlled Weak Supervision}
 \label{sec:method}
-In the following, we describe our recipe for semi-supervised learning of neural networks, in a scenario where along with a small human-labeled training set a large set of weakly labeled instances is leveraged.
+In the following, we describe our recipe for semi-supervised learning of neural networks, in a scenario where along with a small human-labeled training set a large set of weakly labeled samples is leveraged.
 
 % \subsection{General Architecture}
 % \label{sec:generalarchitecture}
@@ -57,7 +57,7 @@ In the following, we describe our recipe for semi-supervised learning of neural 
     \label{fig:model_cws}
 \end{figure}
 
-In our proposed model we train a multi-task neural network that jointly learns the confidence score of weakly labeled instances and the main task using controlled supervised signals.
+In our proposed model we train a multi-task neural network that jointly learns the confidence score of weakly labeled samples and the main task using controlled supervised signals.
 %
 The high-level representation of the model is shown in Figure~\ref{fig:model_cws}: it comprises a \wa and two neural networks: the \cnet and the \tnet. 
 

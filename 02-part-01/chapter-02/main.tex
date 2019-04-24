@@ -37,7 +37,7 @@ While estimating \acswlm, as a distribution over terms to represent an entity gi
 \subsection{Preliminaries}
 \label{chap2_preliminaries}
 In Part~\ref{part1} of this thesis, i.e., Chapter~\ref{chap:2} and ~\ref{chap:3}, an ``entity'' can refer to a concept, a person, an organization, a category, or an ideology~\citep{Dehghani:2016:SIGIR}. The entity can be an abstract entity for which we have \emph{no direct observation}, for instance, learning a representation for a parliamentary party, given speeches of its member, or learning to model relevance, given a set of documents that are labeled as relevant.
-We assume the cases where the entity is associated with a set of textual documents. The textual documents associated with an entity, for instance for the aforementioned examples, can be speeches given by the person, the documents published by the organization, the associated text by instances of the category, and the set of documents describing the ideology.
+We assume the cases where the entity is associated with a set of textual documents. The textual documents associated with an entity, for instance, for the aforementioned examples, can be speeches given by the person, the documents published by the organization, the associated text by instances of the category, and the set of documents describing the ideology.
 %
 % We also focus on learning representations that capture the \emph{notion of relevance} for applications like retrieval, where the main goal is retrieving relevant information, given a query, and classification where the main goal is to classify entities into classes based on their relevance to the underlying concepts of class labels.
 %
@@ -60,7 +60,7 @@ The unigram language model clearly makes unrealistic assumptions about independe
 %
 In information retrieval, bigram or trigram language models tend not to improve much over the unigram language model. This might be due to the data sparseness where bigram or trigram language models overfit, or the information about presence or absence of words and word frequencies may be sufficient to determine the relevance of a document while the exact word order may not be so important, unlike other language understanding tasks like machine translation or speech recognition. For machine translation, unigram language models are clearly insufficient and more sophisticated language models would be needed~\citep{zhai2008statistical}. 
 
-Since a language model is a probabilistic model of text data, a direct way of evaluating a language model would be to assess how well the model fits the test data, for instance using the likelihood of the test data given a model to be evaluated, where a higher likelihood would indicate a better fit, thus a better language model.
+Since a language model is a probabilistic model of text data, a direct way of evaluating a language model would be to assess how well the model fits the test data, for instance, using the likelihood of the test data given a model to be evaluated, where a higher likelihood would indicate a better fit, thus a better language model.
 However, fitting the data well does not necessarily imply better performance for the task at hand. To avoid this gap, here we use an indirect way of evaluating the quality of a language model by assessing their contribution to the retrieval or classification performance.
 
 \subsection{Detailed Research Questions}
@@ -92,5 +92,5 @@ We named our model, significant ``words'' language model in honor of \citeauthor
 % connecting chapter 2 to chapter 3:
 The process of estimating \acswlm leads to a sparse model, i.e., $\theta_{sw}$ assigns zero probability to many terms that are identified as either too general or too specific for representing an entity. 
 % Sparsity has a central role in human episodic memory. In the human brain, sparse activities is important to separate representations as it reduces the risk that a single neuron holds representations of two overlapping memories\citep{cho2018blockchain}. In addition to human brain, for 
-Sparsity is a desirable property, for instance sparse representations are easier to interpret or more likely to posses separability which is important for collision resistance hash functions. 
+Sparsity is a desirable property, for instance, sparse representations are easier to interpret or more likely to posses separability which is important for collision resistance hash functions. 
 In Chapter~\ref{chap:3}, we extend \acswlm to hierarchically structured entities and discuss separability as a key objective for learning the representations.
