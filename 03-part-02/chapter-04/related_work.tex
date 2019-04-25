@@ -36,10 +36,6 @@ To circumvent the lack of human-labeled training examples, unsupervised learning
 For example in NLP, various methods for learning distributed word representations, e.g., word2vec~\citep{Mikolov:2013}, GloVe~\citep{Pennington:2014}, and sentence representations, e.g., paragraph vectors~\citep{Le:2014} and skip-thought~\citep{Kiros:2015} have been shown very useful to pre-train word embeddings that are then used for other tasks such as sentence classification, sentiment analysis, etc. Other generative approaches such as language modeling in NLP, and, more recently, various flavors of auto-encoders~\citep{Baldi:2012} and generative adversarial networks~\citep{Goodfellow:2014} in computer vision have shown a promise in building more accurate models.
 
 
-
-
-
-
 A lot of research has been done on the general problem of preserving the privacy of sensitive data in IR applications, where the question is how should we design effective IR systems without damaging users' privacy?  One of the solutions so far is to anonymize the data and try to hide the identity of users~\citep{Carpineto:2013, Zhang:2016}.  As an example, \citet{Zhang:2016} use a differential privacy approach for query log anonymization. However, there is no guarantee that the anonymized data will be as effective as the original data.
 
 Modeling privacy in machine learning is a challenging problem and there has been much research in this area. Preserving the privacy of deep learning models is even more challenging, as there are more parameters to be safeguarded~\citep{Phan:2016}. 

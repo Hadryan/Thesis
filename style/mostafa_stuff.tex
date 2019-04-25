@@ -36,7 +36,7 @@
 \usetikzlibrary{arrows,decorations.pathmorphing,fit,positioning,patterns}
 \usepackage{xspace} % insert space when needed.
 \usepackage[square,comma,numbers,sort&compress,sectionbib]{natbib}
-\usepackage{algorithm}
+\usepackage[chapter]{algorithm}
 \usepackage{algpseudocode}
 \usepackage{tkz-graph}
 \usepackage{tabularx} % Tables spanning the \linewidth or \textwidth
@@ -47,6 +47,10 @@
 \usepackage{microtype} % fixes the line braking to not exceed the line width
 % \usepackage{siunitx}
 
+\usepackage{footnote}
+\makesavenoteenv{tabular}
+\makesavenoteenv{table}
+\usepackage[bottom]{footmisc}
 
 % \captionsetup{font=footnotesize}
 % \newcommand{\floatfontsize}{\fontsize{10}{8}\selectfovnt}

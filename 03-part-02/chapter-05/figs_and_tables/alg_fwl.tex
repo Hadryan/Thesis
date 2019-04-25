@@ -4,12 +4,11 @@
 % \fontsize{9}{11}\selectfont
 \caption{\fwlfull.}%, 
 \begin{algorithmic}[1]
-\label{alg:main}
-
 \State Train the \std on samples from the weakly-annotated data $D_w$.
 \medskip
 \State Freeze the representation-learning component $\psi(.)$ of the \std and train \tch on the strong data $D_s={(\psi(x_j),y_j)}$. Apply \tch to unlabeled samples $x_t$ to obtain soft dataset $D_{sw}=\{(x_t, \bar{y}_t)\}$ where $\bar{y}_t=T(x_t)$ is the soft label and for each instance $x_t$, the uncertainty of its label, $\Sigma(x_t)$, is provided by the \tch.
 \medskip
 \State Train the \std on samples from $D_{sw}$ with SGD and modulate the step-size $\eta_t$ according to the per-sample quality estimated using the \tch (Equation~\ref{eqn:eta2}).
 \end{algorithmic}
+\label{alg:fwl:main}
 \end{algorithm}

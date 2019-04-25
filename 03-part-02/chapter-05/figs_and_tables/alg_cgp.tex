@@ -2,7 +2,6 @@
 % \small
 \caption{Clustered Gaussian processes.}%, 
 \begin{algorithmic}[1]
-\label{alg:CGP}
 \State Let $N$ be the sample size, $n$ the sample size of each cluster, $K$ the number of clusters, and $c_i$ the center of cluster $i$.
 \medskip
 \State Run K-means with $K$ clusters over all samples with true labels $\mathcal{D}_s=\{x_i,y_i\}$.
@@ -27,5 +26,6 @@ where $\mathcal{GP}_{c_i}$ is trained on $\mathcal{D}_s^{c_i}$ containing sample
 \medskip
 \State Use trained teacher $\tfunc_{c_i}(.)$ to evaluate the soft label and uncertainty for samples from $\mathcal{D}_{sw}$ to compute $\eta_2(x_t)$ required for step 3 of Algorithm~\ref{alg:main}. We use $\tfunc(.)$ as a wrapper for all teachers $\{T_{c_i}\}$.
 \end{algorithmic}
+\label{alg:CGP}
 \end{algorithm}
 \shrink

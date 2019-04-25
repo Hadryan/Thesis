@@ -1,6 +1,6 @@
 \begin{lstlisting}[language=Python, caption=UT with dynamic halting.]
 # While-loop stops when this predicate is FALSE
-# i.e. all ((probability < threshold) & (counter < max_steps)) are false
+# i.e., all ((probability < threshold) & (counter < max_steps)) are false
 def should_continue(u0, u1, halting_probability, u2, n_updates, u3):
 return tf.reduce_any(
             tf.logical_and(

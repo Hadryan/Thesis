@@ -37,20 +37,21 @@ In the following, we describe our recipe for semi-supervised learning of neural 
 % \subsection{General Architecture}
 % \label{sec:generalarchitecture}
 \begin{figure}[!t]%
-    \makebox[\textwidth][c]{
+    % \makebox[\textwidth][c]{
     \centering
-    \begin{subfigure}[t]{0.5\textwidth}
+    \begin{subfigure}[t]{0.9\textwidth}
         \centering
         \includegraphics[width=\textwidth]{03-part-02/chapter-05/figs_and_tables/fig_cws_train_v.pdf}
         \caption{\label{fig:train_u}\footnotesize{Full Supervision Mode: Training on batches with strong labels.}}
     \end{subfigure}%
-    ~
-    \begin{subfigure}[t]{0.5\textwidth}
+    \vfill
+    \vspace{20pt}
+    \begin{subfigure}[t]{0.9\textwidth}
         \centering
         \includegraphics[width=\textwidth]{03-part-02/chapter-05/figs_and_tables/fig_cws_train_u.pdf}
         \caption{\label{fig:train_v}\footnotesize{Weak Supervision Mode: Training on batches with weak labels.}}
     \end{subfigure}%
-    }
+    % }
     \caption{Learning from controlled weak supervision: Our proposed multi-task network for learning a target task in a semi-supervised fashion, using a large amount of weakly labeled data and a small amount of data with strong labels.
     %
     Faded parts of the network are disabled during the training in the corresponding mode. Red-dotted arrows show gradient propagation. Parameters of the parts of the network in red frames get updated in the backward pass, while parameters of the network in blue frames are fixed during the training. (Best viewed in color.)}
@@ -63,7 +64,7 @@ The high-level representation of the model is shown in Figure~\ref{fig:model_cws
 
 The goal of the \wa is to \emph{provide weak labels} $\tilde{y}_i$ for all the instances $x_i \in U \cup V$. We have this assumption that $\tilde{y}_i$ provided by the \wa are imperfect estimates of strong labels $y_i$, where $y_i$ are available for set $\mathcal{D}_s$, but not for set $\mathcal{D}_w$.
 
-The goal of the \cnet is to \emph{estimate the confidence score} $\tilde{c}_j$ of training instances. It is learned on examples from the training set $\mathcal{D}_s$, i.e a set of input $x_j$ and its strong label $y_j$ as well its weak label,  $\tilde{y}_j$,  that is annotated by the \wa.
+The goal of the \cnet is to \emph{estimate the confidence score} $\tilde{c}_j$ of training instances. It is learned on samples from the training set $\mathcal{D}_s$, i.e a set of input $x_j$ and its strong label $y_j$ as well its weak label,  $\tilde{y}_j$,  that is annotated by the \wa.
 The score $\tilde{c}_j$ is then used to control the effect of weakly labeled instances on updating the parameters of the \tnet in the backward pass of backpropagation.
 
 The \tnet is in charge of \emph{handling the main task} we want to learn, or in other words, approximating the underlying function that predicts the correct labels. 
@@ -88,9 +89,10 @@ It is noteworthy that the representation layer is shared between both networks, 
 Here, we explain how we train \cws in which we jointly update the parameters of \tnet, the learner and the \cnet, the meta-learner. 
 Our optimization objective is composed of two terms: (1) the \cnet loss $\mathcal{L}_c$, which captures the quality of the output from the \cnet and (2) the \tnet loss $\mathcal{L}_t$, which expresses the quality for the main task. 
 
-Both networks are trained by alternating between the \emph{weak supervision} and the \emph{full supervision} mode.
-%
-In the \emph{full supervision} mode, the parameters of the \cnet are updated using training instance drawn from training set $\mathcal{D}_s$. We use cross-entropy loss function for the \cnet to capture the difference between the predicted confidence score of instance $j$, i.e., $\tilde{c}_j$ and the target score $c_j$:
+Both networks are trained by alternating between the \emph{weak supervision} and the \emph{full supervision} mode:
+
+
+\textbf{Full Supervision Mode}: in this mode, the parameters of the \cnet are updated using training instance drawn from training set $\mathcal{D}_s$. We use cross-entropy loss function for the \cnet to capture the difference between the predicted confidence score of instance $j$, i.e., $\tilde{c}_j$ and the target score $c_j$:
 \begin{equation}
 % \nonumber
 \mathcal{L}_c = \sum_{j\in V} -  c_j \log(\tilde{c}_j) - (1-c_j) \log(1-\tilde{c}_j),
@@ -98,7 +100,7 @@ In the \emph{full supervision} mode, the parameters of the \cnet are updated usi
 %given that $c_j$ is not a probability I'm wondering if we can call this loss a cross-entropy --- it only makes sense if $c_j$ is a probability of binary event. Possibly, it's common to use in IR, but i've never seen it used like this on real-valued scores.} 
 The target score $c_j$ indicates how similar the strong and the weak labels are, and it is calculated with respect to the main task. 
 
-In the \emph{weak supervision} mode, the parameters of the \tnet are updated using training instances from $\mathcal{D}_w$. We use a weighted loss function, $\mathcal{L}_t$, to capture the difference between the predicted label $\hat{y}_i$ by the \tnet and target label $\tilde{y}_i$:
+\textbf{Weak Supervision Mode}: In this mode, the parameters of the \tnet are updated using training instances from $\mathcal{D}_w$. We use a weighted loss function, $\mathcal{L}_t$, to capture the difference between the predicted label $\hat{y}_i$ by the \tnet and target label $\tilde{y}_i$:
 \begin{equation}
 % \nonumber
 \mathcal{L}_t = \sum_{i\in U} \tilde{c}_i \mathcal{L}_i,
@@ -106,6 +108,7 @@ In the \emph{weak supervision} mode, the parameters of the \tnet are updated usi
 where $\mathcal{L}_i$ is the task-specific loss on training instance $i$ and $\tilde{c}_i$ is the confidence score of the weakly annotated instance $i$, estimated by the \cnet.
 Note that $\tilde{c}_i$ is treated as a constant during the weak supervision mode and there is no gradient propagation to the \cnet in the backward pass (as depicted in Figure~\ref{fig:train_u}). 
 
+\medskip
 We minimize two loss functions jointly by randomly alternating between full and weak supervision modes (for example, using a 1:10 ratio).
 During training and based on the chosen supervision mode, we sample a batch of training instances from $\mathcal{D}_s$ with replacement or from $\mathcal{D}_w$ without replacement (since $\mathcal{D}_w$ can be very large). Since in our setups usually $|\mathcal{D}_w| >> \mathcal{D}_s|$, the training process oversamples the instance from $\mathcal{D}_s$. 
 
@@ -114,3 +117,6 @@ Besides, we noticed that updating the representation layer with respect to the l
 
 % We also investigated other possible setups or training scenarios. For instance, we tried updating the parameters of the supervision layer of the \tnet using also data with strong labels. Or instead of using alternating sampling, we tried training the \tnet using controlled weak supervision signals after the \cnet is fully trained.
 % As shown in the experiments the architecture and training strategy described above provide the best performance.
+
+\medskip
+In the next section, we introduce another approach for learning the quality of labels and incorporating the estimated qualities to regulate the learning process. 
