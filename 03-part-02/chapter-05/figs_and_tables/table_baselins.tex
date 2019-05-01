@@ -19,21 +19,21 @@
 \\
 \bf 5 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$}  & Weak Supervision + Fine Tuning, i.e., the \tnet (or the \std) trained on weak dataset $\mathcal{D}_w$ and fine-tuned on strong dataset $\mathcal{D}_s$.
 \\
-\bf 6 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Sup}}_{\text{S}}$} & Weak Supervision + Supervision Layer Fine-Tuning, i.e., the \tnet (or the \std) trained only on on weak dataset $\mathcal{D}_w$ and the supervision layer is fine-tuned on strong dataset $\mathcal{D}_s$, while the representation learning layer is fixed.
+\bf 6 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Sup}}_{\text{S}}$} & Weak Supervision + Supervision Layer fine tuning, i.e., the \tnet (or the \std) trained only on on weak dataset $\mathcal{D}_w$ and the supervision layer is fine-tuned on strong dataset $\mathcal{D}_s$, while the representation learning layer is fixed.
 \\
 \bf 7 & \textbf{$\text{NN}_{\text{W}} \to \text{NN}^{\text{Rep}}_{\text{S}}$} & Weak Supervision + Representation Learning Layer Fine Tuning, i.e., the \tnet (or the \std) trained only on on weak dataset $\mathcal{D}_w$ and the representation layer is fine-tuned on strong dataset $\mathcal{D}_s$, while the representation learning layer is fixed.
 \\\midrule
 \multicolumn{3}{c}{\textbf{Controlled Weak Supervision}}
 \\\midrule
-\bf 8 & \textbf{\cws} & Learning from Controlled Weak Supervision that is explained in Section~\ref{sec:meta_learning}.
+\bf 8 & \textbf{\cws} & Learning from Controlled Weak Supervision as explained in Section~\ref{sec:meta_learning}.
 \\
-\bf 9 & \textbf{\cws$_\text{JT+}$} & Controlled Weak Supervision with Joint Training is the same as \cws (explained in Section~\ref{sec:modeltraining}), except that parameters of the supervision layer in \tnet are also updated using batches from $V$, with regards to the strong labels.
+\bf 9 & \textbf{\cwsnospace$_\text{JT+}$} & Controlled Weak Supervision with Joint Training is the same as \cws (explained in Section~\ref{sec:modeltraining}), except that parameters of the supervision layer in \tnet are also updated using batches from $V$, with regards to the strong labels.
 \\
-\bf 10 & \textbf{\cws$_\text{ST}$} & Separate Training, i.e., we consider the \cnet as a separate network, without sharing the representation learning layer, and train it on set $V$. We then train the \tnet on the controlled weak supervision signals.
+\bf 10 & \textbf{\cwsnospace$_\text{ST}$} & Separate Training, i.e., we consider the \cnet as a separate network, without sharing the representation learning layer, and train it on set $V$. We then train the \tnet on the controlled weak supervision signals.
 \\
-\bf 11 & \textbf{\cws$_\text{CT}$} & Circular Training, i.e., we train the \tnet on set $U$. Then the \cnet is trained on data with strong labels, and the \tnet is trained again but on controlled weak supervision signals.
+\bf 11 & \textbf{\cwsnospace$_\text{CT}$} & Circular Training, i.e., we train the \tnet on set $U$. Then the \cnet is trained on data with strong labels, and the \tnet is trained again but on controlled weak supervision signals.
 \\
-\bf 12 & \textbf{\cws$_\text{PT}$} & Progressive Training is the mixture of the two previous baselines. Inspired by \cite{Rusu:2016}, we transfer the learned information from the converged \tnet to the \cnet using progressive training. We then train the \tnet again on the controlled weak supervision signals.
+\bf 12 & \textbf{\cwsnospace$_\text{PT}$} & Progressive Training is the mixture of the two previous baselines. Inspired by \cite{Rusu:2016}, we transfer the learned information from the converged \tnet to the \cnet using progressive training. We then train the \tnet again on the controlled weak supervision signals.
 \\\midrule
 \multicolumn{3}{c}{\textbf{Fidelity Weighted Learning}}
 \\\midrule
@@ -41,9 +41,9 @@
 \\
 \bf 14 & \textbf{$\text{NN}_{\text{W}^\omega \to \text{NN}_\text{S}}$} & The \std trained on the weak data, but the step-size of each weak sample is weighted by a fixed value $0 \leq \omega \leq 1$, and fine-tuned on strong data. As an approximation for the optimal value for $\omega$, we have used the mean of $\eta_2$ of our model (below).
 \\
-\bf 15 & \textbf{\fwl$_{unsuprep}$} & The representation in the first step is trained in an unsupervised way\footnote{In the document ranking task, as the representation of documents and queries, we use weighted averaging over pretrained embeddings of their words based on their inverse document frequency~\citep{Dehghani:2017:SIGIR}. In the sentiment analysis task, we use skip-thoughts vectors\citep{kiros2015skip}.} and the student is trained on samples labeled by the \tch using the confidence scores.
+\bf 15 & \textbf{\fwlnospace$_{unsuprep}$} & The representation in the first step is trained in an unsupervised way\footnote{In the document ranking task, as the representation of documents and queries we use weighted averaging over pretrained embeddings of their words based on their inverse document frequency~\citep{Dehghani:2017:SIGIR}. In the sentiment analysis task, we use skip-thoughts vectors~\citep{kiros2015skip}.} and the student is trained on samples labeled by the \tch using the confidence scores.
 \\
-\bf 16 & \textbf{\fwl$\backslash\Sigma$} & The \std trained on the weakly labeled data and fine-tuned on samples labeled by the \tch without taking the confidence into account.
+\bf 16 & \textbf{\fwlnospace$\backslash\Sigma$} & The \std trained on the weakly labeled data and fine-tuned on samples labeled by the \tch without taking the confidence into account.
 \\\bottomrule
 \end{tabular}
 }

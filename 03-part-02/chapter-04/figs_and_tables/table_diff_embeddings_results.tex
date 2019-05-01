@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 \begin{table*}[tbp]
 \centering
-\caption{\label{tbl_res_m3f3_em}Performance of the \modelthree with variants of the \feedthree on different datasets. \ps indicates that the improvements over all other models are statistically significant, at the 0.05 level using the paired two-tailed t-test, with Bonferroni correction.}
+\caption{\label{tbl_res_m3f3_em}Performance of the \modelthree with variants of the \feedthree on different datasets. \rlap\smash{\ps} indicates that the improvements over all other models are statistically significant, at the 0.05 level using the paired two-tailed t-test, with Bonferroni correction.}
 %\begin{adjustbox}{max width=\columnwidth}
 %\begin{tabular}{@{}l@{~~~}c@{~~}c@{~~}c@{~~~}c@{~~}c@{~~}c@{}}
 \begin{adjustbox}{max width=\textwidth}
@@ -14,40 +14,40 @@
 & \textit{MAP} & \textit{P@20} & \textit{nDCG@20}  & \textit{MAP} & \textit{P@20} & \textit{nDCG@20}
 \\ \midrule
 \textbf{Pretrained (external) + Uniform weighting} 
-& 0.1656 & 0.2543 & 0.3017 
-& 0.0612 & 0.1300 & 0.1401
+& 0.1656\rlap\smash{\fs} & 0.2543\rlap\smash{\fs} & 0.3017\rlap\smash{\fs} 
+& 0.0612\rlap\smash{\fs} & 0.1300\rlap\smash{\fs} & 0.1401\rlap\smash{\fs}
 \\ 
 \textbf{Pretrained (external) + IDF weighting} 
-& 0.1711 & 0.2755 & 0.3104 
-& 0.0712 & 0.1346 & 0.1469
+& 0.1711\rlap\smash{\fs} & 0.2755\rlap\smash{\fs} & 0.3104\rlap\smash{\fs} 
+& 0.0712\rlap\smash{\fs} & 0.1346\rlap\smash{\fs} & 0.1469\rlap\smash{\fs}
 \\ 
 \textbf{Pretrained (external) + Weight learning} 
-& 0.1880 & 0.2890 & 0.3413 
-& 0.0756 & 0.1344 & 0.1583
+& 0.1880\rlap\smash{\fs} & 0.2890\rlap\smash{\fs} & 0.3413\rlap\smash{\fs} 
+& 0.0756\rlap\smash{\fs} & 0.1344\rlap\smash{\fs} & 0.1583\rlap\smash{\fs}
 \\ 
 \textbf{Pretrained (target) + Uniform weighting} 
-& 0.1217 & 0.2009 & 0.2791 
-& 0.0679 & 0.1331 & 0.1587
+& 0.1217\rlap\smash{\fs} & 0.2009\rlap\smash{\fs} & 0.2791\rlap\smash{\fs} 
+& 0.0679\rlap\smash{\fs} & 0.1331\rlap\smash{\fs} & 0.1587\rlap\smash{\fs}
 \\ 
 \textbf{Pretrained (target) + IDF weighting} 
-& 0.1402 & 0.2230 & 0.2876 
-& 0.0779 & 0.1674 & 0.1540
+& 0.1402\rlap\smash{\fs} & 0.2230\rlap\smash{\fs} & 0.2876\rlap\smash{\fs} 
+& 0.0779\rlap\smash{\fs} & 0.1674\rlap\smash{\fs} & 0.1540\rlap\smash{\fs}
 \\ 
 \textbf{Pretrained (target) + Weight learning} 
-& 0.1477 & 0.2266 & 0.2804 
-& 0.0816 & 0.1729 & 0.1608
+& 0.1477\rlap\smash{\fs} & 0.2266\rlap\smash{\fs} & 0.2804\rlap\smash{\fs} 
+& 0.0816\rlap\smash{\fs} & 0.1729\rlap\smash{\fs} & 0.1608\rlap\smash{\fs}
 \\
 \textbf{Learned + Uniform weighting} 
-& 0.2612 & 0.3602 & 0.4180 
-& 0.0912 & 0.2216 & 0.1841
+& 0.2612\rlap\smash{\fs} & 0.3602\rlap\smash{\fs} & 0.4180\rlap\smash{\fs}
+& 0.0912\rlap\smash{\fs} & 0.2216\rlap\smash{\fs} & 0.1841\rlap\smash{\fs}
 \\
 \textbf{Learned + IDF weighting} 
-& 0.2676 & 0.3619 & 0.4200 
-& 0.1032 & 0.2419 & 0.1922
+& 0.2676\rlap\smash{\fs} & 0.3619\rlap\smash{\fs} & 0.4200\rlap\smash{\fs} 
+& 0.1032\rlap\smash{\fs} & 0.2419\rlap\smash{\fs} & 0.1922\rlap\smash{\fs}
 \\ 
 \textbf{Learned + Weight learning} 
-& \textbf{0.2837}\ps & \textbf{0.3802}\ps & \textbf{0.4389}\ps
-& \textbf{0.1387}\ps & \textbf{0.2967}\ps & \textbf{0.2330}\ps
+& \textbf{0.2837}\rlap\smash{\ps} & \textbf{0.3802}\rlap\smash{\ps} & \textbf{0.4389}\rlap\smash{\ps}
+& \textbf{0.1387}\rlap\smash{\ps} & \textbf{0.2967}\rlap\smash{\ps} & \textbf{0.2330}\rlap\smash{\ps}
 \\ \bottomrule
 \end{tabular}
 \end{adjustbox}

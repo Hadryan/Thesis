@@ -1,10 +1,10 @@
 \section{Universal Transformer for Sequence Modeling}
 In this section, we address the following research question:
 \resq{c6.2}
-We evaluate Universal Transformers on a range of algorithmic and language understanding tasks and discuss the results. In the tasks that are chosen, we include some with limited number of training samples, or some with incomplete training set (lack of converge), but also tasks that do not suffer severely from imperfect supervision, to evaluate the performance of our model in both situations. 
+We evaluate Universal Transformers on a range of algorithmic and language understanding tasks and discuss the results. In the tasks that are chosen, we include some with limited number of training samples, or some with incomplete training set (lack of converge), but also tasks that do not suffer severely from imperfect supervision, to evaluate the performance of our model in both situations.  In all the experiments, we made sure that number of trainable parameters in the UT and the baselines are similar to have fair comparisons in terms of capacity of the models.
 
 \subsection{bAbI Question-Answering}
-The bAbi question answering dataset~\citep{weston2015towards} consists of 20 different synthetic tasks\footnote{\url{https://research.fb.com/downloads/babi}}. The aim is that each task tests a unique aspect of language understanding and reasoning, including the ability of: reasoning from supporting facts in a story, answering true/false type questions, counting, understanding negation and indefinite knowledge, understanding coreferences, time reasoning, positional and size reasoning, path-finding, and understanding motivations (to see examples for each of these tasks, please refer to Table 1 in \citep{weston2015towards}).
+The bAbi question answering dataset~\citep{weston2015towards} consists of 20 different synthetic tasks\footnote{\url{https://research.fb.com/downloads/babi}}. The aim is that each task tests a unique aspect of language understanding and reasoning, including the ability of: reasoning from supporting facts in a story, answering true/false type questions, counting, understanding negation and indefinite knowledge, understanding coreferences, time reasoning, positional and size reasoning, path-finding, and understanding motivations (to see examples for each of these tasks, please refer to Table 1 and 2 in Section 3 of \citep{weston2015towards}).
 
 There are two versions of the dataset, one with 1k training samples and the other with 10k samples. It is important for a model to be data-efficient to achieve good results using only the 1k training samples. Moreover, the original idea is that a single model should be evaluated across all the tasks (not tuning per task), which is the \emph{train joint} setup in Tables~\ref{tab:babi-results} and ~\ref{tbl:babi_details}.
 
@@ -15,7 +15,7 @@ This is mainly due to recurrent inductive bias in the Universal Transformer as w
 To encode the input, similar to~\cite{henaff2016tracking}, we first encode each fact in the story by applying a learned multiplicative positional mask to each word's embedding, and summing up all embeddings.
 We embed the question in the same way, and then feed the (Universal) Transformer with these embeddings of the facts and questions. 
 
-As originally proposed, models can either be trained on each task separately (``train single'') or jointly on all tasks (``train joint''). Table~\ref{tab:babi-results} summarizes our results. We conducted 10 runs with different initializations and picked the best model based on performance on the validation set, similar to previous work. Both the UT and UT with dynamic halting achieve state-of-the-art results on all tasks in terms of average error and number of failed tasks\footnote{Defined as $> 5\%$ error.}, in both the 10K and 1K training regime. Tables~\ref{tbl:babi_details} presents the results of best and average results of 10 runs breakdown by task.
+As originally proposed, models can either be trained on each task separately (``train single'') or jointly on all tasks (``train joint''). Table~\ref{tab:babi-results} summarizes our results. We conducted 10 runs with different initializations and picked the best model based on performance on the validation set, similar to previous work. Both the UT and UT with dynamic halting achieve state-of-the-art results on all tasks in terms of average error and number of failed tasks,\footnote{Defined as $> 5\%$ error.} in both the 10K and 1K training regime. Tables~\ref{tbl:babi_details} presents the results of best and average results of 10 runs breakdown by task.
 
 \input{04-part-03/chapter-06/figs_and_tables/table_babi_results.tex}
 \input{04-part-03/chapter-06/figs_and_tables/table_babi_detailed_results.tex}
@@ -28,7 +28,7 @@ Second, with dynamic halting we observe that the average ponder time (i.e., dept
 \begin{figure}[t]
  \centering
  \includegraphics[width=\textwidth]{04-part-03/chapter-06/figs_and_tables/fig_task3_example_ponder.png}
- \caption{Ponder time of UT with dynamic halting for encoding facts in a story and question in a bAbI task requiring three supporting facts.}
+ \caption{Ponder time of UT with dynamic halting (trained on 1k data with joint training) for encoding facts in a story and question in a bAbI task\#3 requiring three supporting facts.}
  \label{fig:act_ponder}
 \end{figure}
 Finally, we observe that the histogram of ponder times at different positions is more uniform in tasks requiring only one supporting fact compared to two and three, and likewise for tasks requiring two compared to three.  Especially for tasks requiring three supporting facts, many positions halt at step 1 or 2 already and only a few get transformed for more steps (see, for example, Figure~\ref{fig:act_ponder}). This is particularly interesting as the length of stories is indeed much higher in this setting, with more irrelevant facts which the model seems to successfully learn to ignore in this way.
@@ -38,9 +38,12 @@ Similar to dynamic memory networks~\citep{kumar2016ask}, there is an iterative a
 
 \input{04-part-03/chapter-06/figs_and_tables/fig_babi_attention_examples.tex}
 
-Figures~\ref{fig:ex1}, \ref{fig:ex2}, \ref{fig:ex3}, and \ref{fig:ex4} present visualizations of the attention distributions on bAbI tasks for some examples from Task 1, 2, and 3. The visualization of attention weights is over different time steps based on different heads over all the facts in the story and a question. Different color bars on the left side indicate attention weights based on different heads (4 heads in total).
+Figures~\ref{fig:ex1}, \ref{fig:ex2}, \ref{fig:ex3}, and \ref{fig:ex4} present visualizations of the self-attention distributions on bAbI tasks for some examples from Task 1, 2, and 3. The visualization of attention weights is over different time steps based on different heads over all the facts in the story and a question. In all these examples, we visualize the attention distributions when transforming the question representation (right hand side) in the encoder. Different color bars on the left side indicate attention weights based on different heads (4 heads in total) over facts and the question.
 
-The above examples illustrate that there is a notion of temporal states in UT, where the model updates its states (memory) in each step based on the output of previous steps, and this chain of updates can also be viewed as steps in a multi-hop reasoning process.
+Although attention distributions are not necessarily explanation of the process or the outcome~\citep{attentionisnotexplnation}, these examples illustrate that there is a notion of temporal states in UT, where the model updates its states (memory) in each step based on the output of previous steps, and this chain of updates can also be viewed as steps in a multi-hop reasoning process. 
+
+
+
 
 \subsection{Algorithmic Tasks}
 The generic neural network architectures cannot generalize well in algorithmic and numerical tasks requiring arithmetic operations such as addition, multiplication etc., even when they may successfully fit any given training data in such tasks, and sometimes they cannot even achieve that~\citep{trask2018neural}. This can be even harder when the distribution of samples' length is different in train and test set.
@@ -49,10 +52,12 @@ We trained UTs on three algorithmic tasks, namely Copy, Reverse, and (integer) A
 
 As an additional inductive bias for UTs on these tasks, when calculating the positional embedding, we use positions starting with randomized offsets per sample. This way, we further encourage the model to learn position-relative transformations, which improves length generalization.
 Results are shown in Table~\ref{tab:algorithmic}. Both UT and UT with randomized position offset outperform LSTM and vanilla Transformer by a wide margin on all three tasks. 
-The Neural GPU reports perfect results on this task~\citep{neural_gpu}, however, we note that this result required a special curriculum-based training protocol which was not used for other models.
+The Neural GPU reports perfect results on this task~\citep{neural_gpu}, however, we note that this result required a special curriculum-based training protocol, e.g., training on harder (longer) samples only after the model crossed a curriculum progress threshold on easier samples (shorter). 
+
+which was not used for other models.
 
 \input{04-part-03/chapter-06/figs_and_tables/table_alg_results.tex}
-
+\input{04-part-03/chapter-06/figs_and_tables/table_lte_results.tex}
 \subsection{Learning to Execute (LTE)}
 As another class of sequence-to-sequence learning problems, we also evaluate UTs on Learning to Execute (LTE) tasks. 
 LTE is a set of tasks indicating the ability of a model to learn to execute computer programs and was proposed by~\citet{ZS14}. These tasks include two subsets: 1) program evaluation tasks (program, control, and addition) that are designed to assess the ability of models for understanding numerical operations, if-statements, variable assignments, the compositionality of operations, and more, as well as 2) memorization tasks (copy, double, and reverse). 
@@ -76,7 +81,6 @@ nesting = 3.
 \end{tabular}
 \end{table}
 
-\input{04-part-03/chapter-06/figs_and_tables/table_lte_results.tex}
 
 We use the mix-strategy discussed in~\citep{ZS14} to generate the datasets. Unlike~\citep{ZS14}, we do not use any curriculum learning strategy during training and we make no use of target sequences at test time. Tables~\ref{tab:lte-mem} and \ref{tab:lte-prog} present the performance of an LSTM model, Transformer, and Universal Transformer on the program evaluation and memorization tasks, respectively. UT achieves perfect scores in all the memorization tasks and also outperforms both LSTMs and Transformers in all program evaluation tasks by a wide margin. 
 
@@ -84,8 +88,8 @@ We use the mix-strategy discussed in~\citep{ZS14} to generate the datasets. Unli
 \subsection{Subject-Verb Agreement}
 Next, we consider the task of predicting number-agreement between subjects and verbs in English sentences~\citep{linzen2016assessing}. Succeeding in this task is a strong indicator that a model can learn to approximate syntactic structure and therefore it was proposed by~\citet{linzen2016assessing} as a proxy for assessing the ability of different models to capture hierarchical structure in natural language. 
 
-Two experimental setups were proposed by ~\citet{linzen2016assessing} for training a model on this task: 1) training with a language modeling objective, i.e., next word prediction, and 2) as binary classification, i.e., predicting the number of the verb given the sentence. 
-We follow the experimental protocol of ~\citet{linzen2016assessing} for solving the task using a language modeling training setup, i.e., a next word prediction objective, followed by calculating the ranking accuracy of the target verb at test time. 
+Two experimental setups were proposed by \citet{linzen2016assessing} for training a model on this task: 1) training with a language modeling objective, i.e., next word prediction, and 2) as binary classification, i.e., predicting the number of the verb given the sentence. 
+We follow the experimental protocol of \citet{linzen2016assessing} for solving the task using a language modeling training setup, i.e., a next word prediction objective, followed by calculating the ranking accuracy of the target verb at test time. 
 
 In this task, in order to have different levels of difficulty, ``agreement attractors'' are used, i.e., one or more intervening nouns with the opposite number from the subject with the goal of confusing the model. In this case, the model needs to correctly identify the head of the syntactic subject that corresponds to a given verb and ignore the intervening attractors in order to predict the correct form of that verb.
 Here are some examples for this task in which subjects and the corresponding verbs are in boldface and agreement attractors are underlined:
@@ -104,7 +108,7 @@ Our results are summarized in Table~\ref{tab:sva}. The best LSTM with attention 
 The recurrent inductive bias, i.e., the fact that we can repeat the computations in depth, helps the Universal Transformer to capture the hierarchical relations and better model the structure of the data.
 
 \subsection{LAMBADA Language Modeling}
-The LAMBADA task~\citep{paperno2016lambada} is a language modeling task consisting of predicting a missing target word given a broader context of 4-5 preceding sentences. The dataset was specifically designed so that humans are able to accurately predict the target word when shown the full context, but not when only shown the target sentence in which it appears. It, therefore, goes beyond language modeling, and tests the ability of a model to incorporate broader discourse and longer term context when predicting the target word\footnote{\url{http://clic.cimec.unitn.it/lambada/appendix_onefile.pdf}}.
+The LAMBADA task~\citep{paperno2016lambada} is a language modeling task consisting of predicting a missing target word given a broader context of 4-5 preceding sentences. The dataset was specifically designed so that humans are able to accurately predict the target word when shown the full context, but not when only shown the target sentence in which it appears. It, therefore, goes beyond language modeling, and tests the ability of a model to incorporate broader discourse and longer term context when predicting the target word.\footnote{\url{http://clic.cimec.unitn.it/lambada/appendix_onefile.pdf}}
 Here is a sample from the dataset:
 
 \begin{table}[h!]
@@ -126,7 +130,7 @@ Here is a sample from the dataset:
 
 The LAMBADA task consists in predicting the target word given the whole passage (i.e., the context plus the target sentence). A ``control set''  is also provided which was constructed by randomly sampling passages of the same shape and size as the ones used to build LAMBADA, but without filtering them in any way. The control set is used to evaluate the models at standard language modeling before testing on the LAMBADA task, and therefore to ensure that low performance on the latter cannot be attributed simply to poor language modeling.
 
-The task is evaluated in two settings: as \emph{language modeling} (the standard setup) and as \emph{reading comprehension}. In the former (more challenging) case, a model is simply trained for the next-word prediction on the training data, and evaluated on the target words at test time (i.e., the model is trained to predict all words, not specifically challenging target words).  In the latter setting, introduced by Chu et al.~\cite{chu2017broad}, the target sentence (minus the last word) is used as the query for selecting the target word from the context sentences. Note that the target word appears in the context 81\% of the time, making this setup much simpler. However, the task is impossible in the remaining 19\% of the cases.
+The task is evaluated in two settings: as \emph{language modeling} (the standard setup) and as \emph{reading comprehension}. In the former (more challenging) case, a model is simply trained for the next-word prediction on the training data, and evaluated on the target words at test time (i.e., the model is trained to predict all words, not specifically challenging target words).  In the latter setting, introduced by Chu et al.~\cite{chu2017broad}, the target sentence (minus the last word) is used as the query for selecting the target word from the context sentences.\footnote{Note that the target word appears in the context 81\% of the time that lets selecting the word from context, which is simpler than generating it. However, the task is impossible in the remaining 19\% of the cases.} 
 
 \input{04-part-03/chapter-06/figs_and_tables/table_lambada_results.tex}
 
@@ -135,11 +139,18 @@ The results are shown in Table~\ref{tab:lambada}. Universal Transformer achieves
 Our best fixed UT results used 6 steps. However, the average number of steps that the best UT with dynamic halting took on the test data over all positions and samples was $8.2 \rpm 2.1$. In order to see if the dynamic model did better simply because it took more steps, we trained two fixed UT models with 8 and 9 steps respectively (see last two rows). Interestingly, these two models achieve better results compared to the model with 6 steps, but \emph{do not outperform the UT with dynamic halting}. This leads us to believe that dynamic halting may act as a useful regularizer for the model via incentivizing smaller numbers of steps for some of the input symbols, while allowing more computation for others.
 
 \subsection{Machine Translation}
-We trained a UT on the WMT 2014 English-German translation task using the same setup as reported in \citep{transformer} in order to evaluate its performance on a large-scale sequence-to-sequence task. Results are summarized in Table~\ref{tab:wmt}. The UT with a fully-connected recurrent transition function (instead of separable convolution) and without ACT improves by 0.9 BLEU over a Transformer and 0.5 BLEU over a Weighted Transformer with approximately the same number of parameters \citep{ahmed2017weighted}.
+We trained a UT on the WMT 2014 English-German translation task in order to evaluate its performance on a large-scale sequence-to-sequence task. Results are summarized in Table~\ref{tab:wmt}. 
+
+We used the same setup as reported in~\citep{transformer}. We trained on the standard WMT 2014 English-German dataset that consist of about 4.5 million sentence pairs. Sentences were encoded using byte-pair encoding~\citep{britz2017massive} that has a shared source-target vocabulary of about 37000 tokens.
+During training, we used the Adam optimizer\citep{adam} with $\beta_1 = 0.9$, $\beta_2 = 0.98$ and $\varepsilon = 10^{-9}$. We varied the learning
+rate over the course of training using similar to \citep{transformer}. 
+
+The UT with a fully-connected recurrent transition function (instead of separable convolution) and without ACT improves by 0.9 BLEU over a Transformer and 0.5 BLEU over a Weighted Transformer with approximately the same number of parameters \citep{ahmed2017weighted}.
 
 \input{04-part-03/chapter-06/figs_and_tables/table_mt_results.tex}
 
 \subsection{Open-Domain Question Answering}
+As another real-world language understanding task, we adapt a model based on UT for the Open-domain question answering task.
 Open-domain question answering aims to satisfy users who are looking for a direct answer to a complex information need. 
 This requires querying large open-domain knowledge sources like the Web. 
 Inferring the answer to a question given multiple documents that potentially contain the answer, is at the heart of the open-domain question answering task. 

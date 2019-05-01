@@ -1,16 +1,16 @@
 \section{Applying \cws and \fwl on Language Understanding Tasks}
 We apply \cws and \fwl, two approaches introduced in this chapter for learning from a vast amount of weakly annotated data, while a small set of labeled data exist, to two different tasks: \emph{document ranking} and \emph{sentiment classification}. 
-Whilst these two applications differ considerably, as do the exact operationalization of the proposed models to these cases, in both cases the human gold standard data is based on a cognitively complex, or subjective, judgments causing high interrater variation, increasing both the cost of obtaining labels as the need for larger sets of labels.
+Whilst these two applications differ considerably, as do the exact operationalizations of the proposed models to these cases, in both cases the human gold standard data is based on a cognitively complex, or subjective, judgments causing high interrater variation, increasing both the cost of obtaining labels and the need for larger sets of labels.
 
 \input{03-part-02/chapter-05/figs_and_tables/table_baselins.tex}
 For both tasks, we evaluate the performance of \cws as well as \fwl compared to some baselines that are described in Table~\ref{tbl_baselines}. In the rest of this chapter, we present results of different experiments and studies and we refer to these baselines using their id and name (first and the second column in Table~\ref{tbl_baselines}).
 
 \subsection{Document Ranking}
-This task is the core information retrieval problem and is challenging as the ranking model needs to learn a representation for long documents and capture the notion of relevance between queries and documents. Furthermore, as it was discussed in Chapter~\ref{chap:4}, the size of publicly available datasets with query-document relevance judgments is unfortunately quite small ($\sim 250$ queries).
+This task is a core information retrieval problem and is challenging as the ranking model needs to learn a representation for long documents and capture the notion of relevance between queries and documents. Furthermore, as it was discussed in Chapter~\ref{chap:4}, the size of publicly available datasets with query-document relevance judgments is unfortunately quite small (${\sim} 250$ queries).
 %
-In our experiments, ranking is cast as a regression task. Given each training sample $x$ as a triple of query $q$, and two documents $d^+$ and $d^-$, the goal is to learn a function $\mathcal{F} : \{<q, d^+, d^->\} \rightarrow \mathbb{R}$, which maps each data sample $x$ to a scalar output value $y$ indicating the probability of $d^+$ being ranked higher than $d^-$ with respect to $q$. 
+In our experiments, ranking is cast as a regression task. Given each training sample $x$ as a triple of query $q$, and two documents $d^+$ and $d^-$, the goal is to learn a function $\mathcal{F} : \{\langle q, d^+, d^- \rangle\} \rightarrow \mathbb{R}$, which maps each data sample $x$ to a scalar output value $y$ indicating the probability of $d^+$ being ranked higher than $d^-$ with respect to $q$. 
 
-\begin{figure}{t}
+\begin{figure}{!t}
     \centering
             \includegraphics[width=0.35\textwidth]{03-part-02/chapter-05/figs_and_tables/fig_ranker.pdf}
     \caption{The document ranker used as \tch in \cws and \std in \fwl.}
@@ -24,9 +24,9 @@ We employ the pairwise neural ranker architecture explained in Section~\ref{sec:
 Each training instance $x$ consists of a query $q$, and two documents $d^+$ and $d^-$. The labels, $\tilde{y}$ and $y$, are scalar values indicating the probability of $d^+$ being ranked higher than $d^-$ with respect to $q$.
 
 \mypar{The Representation Learning Layer.}
-This layer learns a function $\varepsilon: \mathcal{V} \rightarrow \mathbb{R}^{m}$  (where $\mathcal{V}$ denotes the vocabulary set, and $m$ is the number of embedding dimensions) that maps each word to its embedding which is downstream of the ranking task as well as a weighting function $\omega: \mathcal{V} \rightarrow \mathbb{R}$ which learns the global importance of each word. Then, the learned weights are used to compose word embeddings to generate query/document embeddings. The output of this layer is the concatenation of vectors representing query and two documents.
+This layer learns a function $\varepsilon: \mathcal{V} \rightarrow \mathbb{R}^{m}$  (where $\mathcal{V}$ denotes the vocabulary set, and $m$ is the dimension of embedding) that maps each word to its embedding as well as a weighting function $\omega: \mathcal{V} \rightarrow \mathbb{R}$ which learns the global importance of each word. Then, the learned weights are used to compose word embeddings to generate query/document embeddings. The output of this layer is the concatenation of vectors representing query and two documents.
 %
-In our experiments, we initialize the embedding function $\varepsilon$ with word2vec embeddings~\cite{Mikolov:2013} pre-trained on Google News and the weighting function $\omega$ with IDF.
+In our experiments, we initialize the embedding function $\varepsilon$ with word2vec embeddings~\citep{Mikolov:2013} pre-trained on Google News and the weighting function $\omega$ with IDF.
 
 \mypar{The Supervision Layer.} 
 This layer receives the vector representation of the inputs processed by the representation learning layer and outputs a prediction $\hat{y}_i$.
@@ -36,7 +36,7 @@ We opt for a simple fully connected feed-forward network with $l$ hidden layers 
 \small
 \mathcal{L}_t = \sum_{i\in B_U} \tilde{c}_i [- \tilde{y}_i \log (\hat{y}_i) - (1-\tilde{y}_i) \log(1-\hat{y}_i)],
 \end{equation}
-where $B_U$ is a batch of samples from $U$, and $\tilde{c}_i$ is the confidence score of the weakly annotated sample $i$, estimated by the \cnet.
+where $B_{\mathcal{D}_w}$ is a batch of samples from $\mathcal{D}_w$, and $\tilde{c}_i$ is the confidence score of the weakly annotated sample $i$, estimated by the \cnet.
 
 The general schema of the \tnet (or \std) is illustrated in Figure~\ref{fig:ranker}. More details are provided in Section~\ref{sec:modeltwo}.
 
@@ -46,34 +46,33 @@ $\tilde{y}_i = P_{q,d^+,d^-} = \nicefrac{s_{q,d^+}}{s_{q,d^+} + s_{q,d^-}}$,  wh
 
 
 \subsubsection{The \cnet in \cws}
-The \cnet is a regresses and we use a simple fully connected feed-forward network. To train the \cnet, the target label $c_j$ is calculated using the absolute difference of the strong label and the weak label: $c_j= 1-|y_j - \tilde{y}_j|$, where $y_j$ is calculated similar to $\tilde{y}_i$, but $s_{q,d}$ comes from strong labels provided by humans.
+The \cnet is a regressor and we use a simple fully connected feed-forward network. To train the \cnet, the target label $c_j$ is calculated using the absolute difference of the strong label and the weak label: $c_j= 1-|y_j - \tilde{y}_j|$, where $y_j$ is calculated similar to $\tilde{y}_i$, but $s_{q,d}$ comes from strong labels provided by humans.
 
 
 \subsubsection{The \tch in \fwl}
-We use Gaussian Process as the \tch in order to generate soft labels. We pass the mean of $\mathcal{GP}$ through the same function $g(.)$ that is applied on the output of the \std network, where the $g(.)$ is sigmoid for the document ranking task.
-Since we have one dimensional regression here, $\Sigma(x_t)$ is scalar and $h(.)$ is identity.
+We use Gaussian Process as the \tch in order to generate soft labels. We pass the mean of $\mathcal{GP}$ through the same function $g(\cdot)$ that is applied on the output of the \std network, where the $g(\cdot)$ is sigmoid for the document ranking task.
+Since we have one dimensional regression here, $\Sigma(x_t)$ is scalar and $h(\cdot)$ is identity.
 In the \tch, linear combinations of different kernels are used. For the document ranking task, we use sparse variational GP regression\footnote{\url{http://gpflow.readthedocs.io/en/latest/notebooks/SGPR_notes.html}}~\citep{Titsias2009variational} with this kernel:
 \begin{equation}
-k(x_i,x_j)=k_{\rm Matern3/2}(x_i,x_j)+{k_{\rm Linear}}(x_i,x_j)+k_{\rm White}(x_i,x_j)
+k(x_i,x_j)=k_{\rm Matern3/2}(x_i,x_j)+{k_{\rm Linear}}(x_i,x_j)+k_{\rm White}(x_i,x_j),
 \end{equation}
 
-where,
+where
 \begin{flalign*}
     \hspace{6em}
-    &&k_{\rm Matern3/2}(x_i,x_j) &= \left(1+\frac{\sqrt{3}\Vert x_i-x_j\Vert}{l}\right)\exp{\left(-\frac{\sqrt{3}\Vert x_i-x_j\Vert}{l}\right)} & \\
-    &&k_{\rm Linear}(x_i,x_j) &= \sigma_0^2+x_i.x_j & \\
-    &&k_{\rm White}(x_i,x_j) &= constant\_value, \quad \forall x_1=x_2 \text{ and } 0 \text{ otherwise} & 
+    &&k_{\rm Matern3/2}(x_i,x_j) &= \left(1+\frac{\sqrt{3}\Vert x_i-x_j\Vert}{l}\right)\exp{\left(-\frac{\sqrt{3}\Vert x_i-x_j\Vert}{l}\right)}, & \\
+    &&k_{\rm Linear}(x_i,x_j) &= \sigma_0^2+x_i \cdot x_j, & \\
+    &&k_{\rm White}(x_i,x_j) &= constant\_value ~\forall x_i=x_j \text{, and } 0 \text{ otherwise}. & 
 \end{flalign*}
 
-We empirically found $l=1$ satisfying value for the length scale of Matern3/2 kernel.
+We empirically found that $l=1$ satisfying value for the length scale of the Matern3/2 kernel.
 We also set $\sigma_0 = 0$ to obtain a homogeneous linear kernel. 
-The constant value of $K_{White}(.,.)$ determines the level of noise in the labels. This is different from the noise in weak labels. This term explains the fact that even in strong labels there might be a trace of noise due to the inaccuracy of human labelers. 
-
-It's noteworthy that we used clustered $\mathcal{GP}$ algorithm, explained in Section~\ref{sec:CGP}, and set the number of clusters to $50$ for this task..  
+The constant value of $K_{White}(\cdot,\cdot)$ determines the level of noise in the labels. This is different from the noise in weak labels. This term explains the fact that even in strong labels there might be a trace of noise due to the inaccuracy of human labelers. 
+We set the number of clusters to $50$ for this task in the clustered $\mathcal{GP}$ algorithm.  
 
 
 \subsubsection{Collections}
-We use two standard TREC collections for the task of ad-hoc retrieval: The first collection (\emph{Robust04}) consists of 500k news articles from different news agencies as a homogeneous collection. The second collection (\emph{ClueWeb}) is ClueWeb09 Category B, a large-scale web collection with over 50 million English documents, which is considered as a heterogeneous collection. Spam documents were filtered out using the Waterloo spam scorer~\footnote{\url{http://plg.uwaterloo.ca/~gvcormac/clueweb09spam/}}~\citep{Cormack:2011} with the default threshold $70\%$. 
+We use two standard TREC collections for the task of ad-hoc retrieval: The first collection (\emph{Robust04}) consists of 500k news articles from different news agencies as a homogeneous collection. The second collection (\emph{ClueWeb}) is ClueWeb09 Category B, a large-scale web collection with over 50 million English documents, which is considered to be a heterogeneous collection. Spam documents are filtered out using the Waterloo spam scorer\footnote{\url{http://plg.uwaterloo.ca/~gvcormac/clueweb09spam/}}~\citep{Cormack:2011} with the default threshold $70\%$.
 
 \mypar{Data with strong labels.} 
 We take query sets that contain human-labeled judgments: a set of 250 queries (TREC topics 301--450 and 601--700) for the Robust04 collection and a set of 200 queries (topics 1-200) for the experiments on the ClueWeb collection.
@@ -82,55 +81,53 @@ For each query, we take all documents judged as relevant plus the same number of
 \mypar{Data with weak labels.}
 We create a query set $Q$ using the unique queries appearing in the AOL query logs~\citep{Pass:2006}. 
 This query set contains web queries initiated by real users in the AOL search engine that were sampled from a three-month period from March 2006 to May 2006. 
-We applied standard pre-processing~\cite{Dehghani:2017:SIGIR,Dehghani2017:CIKM} on the queries: We filtered out a large volume of navigational queries containing URL substrings (``http'', ``www.'', ``.com'', ``.net'', ``.org'', ``.edu''). We also removed all non-alphanumeric characters from the queries. For each dataset, we took queries that have at least ten hits in the target corpus using our \wa method. Applying all these steps, 
-We collect 6.15 million queries to train on in Robust04 and 6.87 million queries for ClueWeb.
-To prepare the weakly labeled training set $\mathcal{D}_w$, we take the top $1,000$ retrieved documents using BM25 for each query from training query set $Q$, which in total leads to $\sim|Q|\times 10^6$ training samples. 
+We apply standard pre-processing~\citep{Dehghani:2017:SIGIR,Dehghani2017:CIKM} on the queries: We filter out a large volume of navigational queries containing URL substrings (``http'', ``www.'', ``.com'', ``.net'', ``.org'', ``.edu''). We also remov all non-alphanumeric characters from the queries. For each dataset, we take queries that have at least ten hits in the target corpus using our \wa method. Applying all these steps, we collect 6.15 million queries to train on in Robust04 and 6.87 million queries for ClueWeb.
+To prepare the weakly labeled training set $\mathcal{D}_w$, we take the top $1,000$ retrieved documents using BM25 for each query from training query set $Q$, which in total leads to ${\sim}|Q|\times 10^6$ training samples. 
 
 \subsubsection{Experimental Setup}
-For the evaluation of the whole model, we conducted 3-fold cross-validation. However, for each dataset, we first tuned all the hyper-parameters of the \tnet in \cws (and \std in the first step of \fwl) in the first step on the set with strong labels using batched GP bandits with an expected improvement acquisition function~\citep{Desautels:2014} and kept the optimal parameters of the \tnet (and \std) fixed for all the other experiments.
-The size and number of hidden layers for the \tnet (and \std) is selected from $\{64, 128, 256, 512\}$. The initial learning rate and the dropout parameter were selected from $\{10^{-3}, 10^{-5}\}$ and $\{0.0, 0.2, 0.5\}$, respectively. We considered embedding sizes of $\{300, 500\}$. The batch size in our experiments was set to $128$.  We use ReLU~\citep{Nair:2010} as a non-linear activation function $\alpha$ in \tnet (and \std).  We use the Adam optimizer~\citep{Kingma:2014} for training, and dropout as a regularization technique.
+We conduct 3-fold cross-validation. However, for each dataset, we first tun all the hyper-parameters of the \tnet in \cws (and \std in the first step of \fwl) in the first step on the set with strong labels using batched GP bandits with an expected improvement acquisition function~\citep{Desautels:2014} and keep the optimal parameters of the \tnet (and \std) fixed for all the other experiments.
+The size and number of hidden layers for the \tnet (and \std) is selected from $\{64, 128, 256, 512\}$. The initial learning rate and the dropout parameter are selected from $\{10^{-3}, 10^{-5}\}$ and $\{0.0, 0.2, 0.5\}$, respectively. We consider embedding sizes of $\{300, 500\}$. The batch size in our experiments is set to $128$.  We use ReLU~\citep{Nair:2010} as a non-linear activation function $\alpha$ in \tnet (and \std).  We use the Adam optimizer~\citep{Kingma:2014} for training, and dropout as a regularization technique.
 
 %
 At inference time, for each query, we take the top $2,000$ retrieved documents using BM25 as candidate documents and re-rank them using the trained models. We use the Indri\footnote{\url{https://www.lemurproject.org/indri.php}} implementation of BM25 with default parameters (i.e., $k_1 = 1.2$, $b = 0.75$, and $k_3 = 1,000$).
 
 \subsubsection{Results and Discussion} 
 \label{sec:res_and_disc_ranking}
-We conducted k-fold cross validation on $\mathcal{D}_s$ (the strong data) and report two standard evaluation metrics for ranking: mean average precision (MAP) of the top-ranked $1,000$
-documents and normalized discounted cumulative gain calculated for the top $20$ retrieved documents (nDCG@20). 
+We conduct k-fold cross validation on $\mathcal{D}_s$ (the strong data) and report two standard evaluation metrics for ranking: mean average precision (MAP) of the top-ranked $1,000$ documents and normalized discounted cumulative gain calculated for the top $20$ retrieved documents (nDCG@20). 
 Table~\ref{tbl_main_ranking} shows the performance on both datasets. As can be seen, \fwl and \cws both provide significant boosts on the performance on top of the baseline methods over both datasets.
 
 
 \input{03-part-02/chapter-05/figs_and_tables/table_ranking_results.tex}
 
-In the ranking task, the \std is designed in particular to be trained on weak annotations~\citep{Dehghani:2017:SIGIR}, hence training the network only on weak supervision, i.e., $\text{NN}_{\text{W}}$ performs better than $\text{NN}_{\text{S}}$. This can be due to the fact that ranking is a complex task requiring many training samples to learn representations that can be used to assess the relevance, while relatively few data with strong labels are available.
+In the ranking task, the \std is designed in particular to be trained on weak annotations~\citep{Dehghani:2017:SIGIR}, hence training the network only on weak supervision, i.e., $\text{NN}_{\text{W}}$ performs better than $\text{NN}_{\text{S}}$. This may be due to the fact that ranking is a complex task requiring many training samples to learn representations that can be used to assess the relevance, while relatively few data with strong labels are available.
 
-Alternating between strong and weak data during training, i.e., $\text{NN}_{\text{W}\text{/S}^+}$ seems to bring little (but statistically significant) improvement. However, we can gain better results by the typical fine-tuning strategies.  Among the fine-tuning experiments, updating all the parameters of the \tnet (or \std), i.e., $\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$, is the best fine-tuning strategy. Updating only the parameters of the representation layer based on the strong labels, i.e., $\text{NN}_{\text{W}} \to \text{NN}^{\text{Rep}}_{\text{S}}$, works better than updating only parameters of the supervision layer, i.e., $\text{NN}_{\text{W}} \to \text{NN}^{\text{Sup}}_{\text{S}}$. This supports our designed choice of a shared embedding layer in \cws which gets updated on set $V$.
+Alternating between strong and weak data during training, i.e., $\text{NN}_{\text{W}\text{/S}^+}$ seems to bring little (but statistically significant) improvement. However, we can gain better results by the typical fine tuning strategies.  Among the fine tuning experiments, updating all the parameters of the \tnet (or \std), i.e., $\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$, is the best fine tuning strategy. Updating only the parameters of the representation layer based on the strong labels, i.e., $\text{NN}_{\text{W}} \to \text{NN}^{\text{Rep}}_{\text{S}}$, works better than updating only parameters of the supervision layer, i.e., $\text{NN}_{\text{W}} \to \text{NN}^{\text{Sup}}_{\text{S}}$. This supports our designed choice of a shared embedding layer in \cws which gets updated on the set $\mathcal{D}_s$.
 
-\fwl is the best performing model, and \cws achieves 97\% of the performance of \fwl. The main advantage of \cws over \fwl is that it is trained in a single stage process and needs to see all the samples in $\mathcal{D}_w$ (which is a reasonably large set) only one time, while \fwl has three sequential stages during training and it needs to iterate two times over all the samples in $\mathcal{D}_w$. Also employing a Gaussian Process as part of the model in \fwl limits its scalability, while the components of \cws are all neural networks, and this eases the increase in the capacity of the model. 
+\fwl is the best performing model, and \cws achieves 97\% of the performance of \fwl. The main advantage of \cws over \fwl is that it is trained in a single stage process and needs to see all the samples in $\mathcal{D}_w$ (which is a reasonably large set) only one time, while \fwl has three sequential stages during training and it needs to iterate two times over all the samples in $\mathcal{D}_w$. Also, employing a Gaussian Process as part of the model in \fwl limits its scalability, while the components of \cws are all neural networks, and this eases the increase in the capacity of the model. 
 % With all that, we find \cws a much more efficient model in terms of training cost, with losing little to no performance.
 
 
 \input{03-part-02/chapter-05/figs_and_tables/table_ranking_res_cws.tex}
-As an ablation study on \cws, we tried different training strategies and report the results in Table~\ref{tbl_variants_rank_cws}. As shown, \cws and CWS$_\text{CT}$ perform better than other strategies.
+As an ablation study on \cws, we tried different training strategies and report the results in Table~\ref{tbl_variants_rank_cws}. As shown, \cws and \cwsnospace$_\text{CT}$ perform better than other strategies.
 %
-\cws$_\text{CT}$ is to let the \cnet to be trained separately, while still being able to enjoy shared learned information from the \tnet. Compared to \cws, \cws$_\text{CT}$ is less efficient as we need two rounds of training on weakly labeled data. 
+\cwsnospace$_\text{CT}$ is to let the \cnet to be trained separately, while still being able to enjoy shared learned information from the \tnet. Compared to \cws, \cwsnospace$_\text{CT}$ is less efficient as we need two rounds of training on weakly labeled data. 
 
-While it seems reasonable to make use of strong labels for updating \emph{all} parameters of the \tnet, CWS$_\text{JT}^+$ achieves no better results than \cws. We speculate that during training, the direction of the parameter optimization is profoundly affected by the type of supervision signal and while we control the magnitude of the gradients, we do not change their directions. Hence alternating between two sets with different label qualities (different supervision signal types, i.e., weak and strong) confuses the supervision layer of the \tnet. 
+While it seems reasonable to make use of strong labels for updating \emph{all} parameters of the \tnet, \cwsnospace$_\text{JT}^+$ achieves no better results than \cws. We speculate that during training, the direction of the parameter optimization is profoundly affected by the type of supervision signal and while we control the magnitude of the gradients, we do not change their directions. Hence alternating between two sets with different label qualities (different supervision signal types, i.e., weak and strong) confuses the supervision layer of the \tnet. 
 
-In \cws$_\text{ST}$,  the strong dataset, $\mathcal{D}_s$, is too small to train a high-quality \cnet without taking advantage of the vast amount of weakly annotated data in $\mathcal{D}_w$ to learn better representations, so CWS$_\text{ST}$ is not able to improve the performance over $\text{NN}_W$ significantly and also we noticed that this strategy leads to a slow convergence compared to the $\text{NN}_W$. 
-Also transferring learned information from \tnet to \cnet via progressive training, i.e., CWS$_\text{PT}$, performs no better than full sharing of the representation learning layer.
+In \cwsnospace$_\text{ST}$,  the strong dataset, $\mathcal{D}_s$, is too small to train a high-quality \cnet without taking advantage of the vast amount of weakly annotated data in $\mathcal{D}_w$ to learn better representations, so \cwsnospace$_\text{ST}$ is not able to improve the performance over $\text{NN}_W$ significantly and also we noticed that this strategy leads to a slow convergence compared to the $\text{NN}_W$. 
+Also, transferring learned information from the \tnet to the \cnet via progressive training, i.e., \cwsnospace$_\text{PT}$, performs no better than full sharing of the representation learning layer.
 
 
 
 \input{03-part-02/chapter-05/figs_and_tables/table_ranking_res_fwl.tex}
-Table~\ref{tbl_variants_rank_fwl} presents the results of some experiments we have done as ablation studies on \fwl. 
+Table~\ref{tbl_variants_rank_fwl} presents the results of experiments we have done as ablation studies on \fwl. 
 
-Weighting the gradient updates from weak labels during pretraining and fine-tuning the network with strong labels, i.e., NN$_{\text{W}^\omega \to \text{S}}$ seems to work quite well.
+Weighting the gradient updates from weak labels during pretraining and fine tuning the network with strong labels, i.e., NN$_{\text{W}^\omega \to \text{S}}$ seems to work quite well.
 %
-Comparing the performance of \fwlnospace$_{unsuprep}$ to \fwl indicates that, first of all, learning the representation of the input data downstream of the main task leads to better results compared to a task-independent unsupervised or self-supervised way. Also, the dramatic drop in the performance compared to the \fwl, emphasizes the importance of the preretraining the \std on weakly labeled data.
+Comparing the performance of \fwlnospace$_{unsuprep}$ to \fwl indicates that, first of all, learning the representation of the input data downstream of the main task leads to better results compared to a task-independent unsupervised or self-supervised way. Also, the dramatic drop in performance compared to \fwl, emphasizes the importance of the preretraining the \std on weakly labeled data.
 
 %
-We can gain improvement by fine-tuning the NN$_\text{W}$ using labels generated by the \tch without considering their confidence score, i.e., \fwl$\backslash\Sigma$. This means we just augmented the fine-tuning process by generating a fine-tuning set using \tch which is better than $\mathcal{D}_s$ in terms of quantity and $\mathcal{D}_w$ in terms of quality. This baseline is equivalent to setting $\beta = 0$ in Equation~\ref{eqn:eta2}. However, we see a big jump in performance when we use \fwl to include the estimated label quality from the \tch, leading to the best overall results.
+We can gain improvements by fine tuning the NN$_\text{W}$ using labels generated by the \tch without considering their confidence score, i.e., \fwlnospace$\backslash\Sigma$. This means we just augment the fine tuning process by generating a fine tuning set using a \tch, which is better than $\mathcal{D}_s$ in terms of quantity and $\mathcal{D}_w$ in terms of quality. This baseline is equivalent to setting $\beta = 0$ in Equation~\ref{eqn:eta2}. However, we see a big jump in performance when we use \fwl to include the estimated label quality from the \tch, leading to the best overall results.
 
 \subsection{Sentiment Classification}
 In sentiment classification, the goal is to predict the sentiment (e.g., positive, negative, or neutral) of a sentence. Each training sample $x$ consists of a sentence $s$ and its sentiment label $\tilde{y}$.
@@ -144,25 +141,25 @@ In sentiment classification, the goal is to predict the sentiment (e.g., positiv
 
 
 \subsubsection{The \tnet in \cws and the \std in \fwl}
-We use a convolutional model~\citep{Kim:2014} as the \tnet in \cws and the \std in \fwl, which is similar to the state-of-the-art model for Twitter sentiment classification from Semeval 2015 and 2016~\cite{Severyn:2015:SemEval,Deriu2016:SemEval,Deriu:2017,Severyn:2015:SIGIR}.
+We use a convolutional model~\citep{Kim:2014} as the \tnet in \cws and the \std in \fwl, which is similar to the state-of-the-art model for Twitter sentiment classification from Semeval 2015 and 2016~\citep{Severyn:2015:SemEval,Deriu2016:SemEval,Deriu:2017,Severyn:2015:SIGIR}.
 
 \mypar{The Representation Learning Layer} 
-The representation learning layer in this task consists of an embedding function $\varepsilon: \mathcal{V} \rightarrow \mathbb{R}^{m}$, where $\mathcal{V}$ denotes the vocabulary set and $m$ is the number of embedding dimensions.
+The representation learning layer in this task consists of an embedding function $\varepsilon: \mathcal{V} \rightarrow \mathbb{R}^{m}$, where $\mathcal{V}$ denotes the vocabulary set and $m$ is the dimension of the embedding.
 
-This function maps the sentence to a matrix $S \in \mathbb{R}^{m \times |s|}$, where each column represents the embedding of a word at the corresponding position in the sentence. We initialize the embedding matrix with word2vec embeddings~\cite{Mikolov:2013} pretrained on a collection of 50M tweets.
+This function maps the sentence to a matrix $S \in \mathbb{R}^{m \times |s|}$, where each column represents the embedding of a word at the corresponding position in the sentence. We initialize the embedding matrix with word2vec embeddings~\citep{Mikolov:2013} pretrained on a collection of 50M tweets.
 
 Matrix $S$ is passed through a convolution layer.  In this layer, a set of $f$ filters is applied to a sliding window of length $h$ over $S$ to generate a feature map matrix $O$. Each feature map $o_i$ for a given filter $F$ is generated by $o_i = \sum_{k,j}S[i:i+h]_{k,j} F_{k,j}$, where $S[i:i+h]$ denotes the concatenation of word vectors from position $i$ to $i+h$. The concatenation of all $o_i$ produces a feature vector $o \in \mathbb{R}^{|s|-h+1}$. The vectors $o$ are then aggregated over all $f$ filters into a feature map matrix $O \in \mathbb{R}^{f\times(|s|-h+1)}$.
 
 We also add a bias vector $b \in R^f$ to the result of a convolution.
-Each convolutional layer is followed by a non-linear activation function (we use ReLU\cite{Nair:2010}) which is applied element-wise. Afterward, the output is passed to the max pooling layer which operates on columns of the feature map matrix $O$ returning the largest value: $pool(o_i) : \mathbb{R}^{1\times(|s|-h+1)} \rightarrow \mathbb{R}$.
+Each convolutional layer is followed by a non-linear activation function (we use ReLU~\citep{Nair:2010}) which is applied element-wise. Afterward, the output is passed to a max pooling layer which operates on columns of the feature map matrix $O$ returning the largest value: $pool(o_i) : \mathbb{R}^{1\times(|s|-h+1)} \rightarrow \mathbb{R}$.
 
 \mypar{The Supervision Layer.} 
 This layer is a simple fully connected feed-forward network with $l$ hidden layers, followed by a softmax.  We employ the weighted cross entropy loss:
 \begin{equation}
 % \nonumber
-\mathcal{L}_t = \sum_{i\in B_U} \tilde{c}_i \sum_{k \in K} - \tilde{y}_i^k \log (\hat{y}_i^k),
+\mathcal{L}_t = \sum_{i\in B_{\mathcal{D}_w}} \tilde{c}_i \sum_{k \in K} - \tilde{y}_i^k \log (\hat{y}_i^k),
 \end{equation}
-where $B_U$ is a batch of samples from $U$, and $\tilde{c}_i$ is the confidence score of the weakly annotated sample $i$, and $K$ is a set of classes. 
+where $B_{\mathcal{D}_w}$ is a batch of samples from $\mathcal{D}_w$, and $\tilde{c}_i$ is the confidence score of the weakly annotated sample $i$, and $K$ is the set of classes. 
 The general schema of the \tnet (or \std) is illustrated in Figure~\ref{fig:sentiment}.
 
 \subsubsection{The \wa}
@@ -176,26 +173,26 @@ In this task, the \cnet is also a regressor and we use a simple fully connected 
 
 
 \subsubsection{The \tch in \fwl}
-Similar to the ranking task, we use Gaussian Process as the \tch in order to generate soft labels. We pass the mean of $\mathcal{GP}$ through the same function $g(.)$ that is applied on the output of the \std network, where the $g(.)$ is softmax for the sentiment classification task.
-Here in this task, $h(.)$ is an aggregation function that takes variance over several dimensions and outputs a single measure of variance. As a reasonable choice, the aggregating function $h(.)$ in the sentiment classification task (three classes) is \emph{mean} of variances over dimensions. 
+Similar to the ranking task, we use a Gaussian Process as the \tch in order to generate soft labels. We pass the mean of $\mathcal{GP}$ through the same function $g(\cdot)$ that is applied on the output of the \std network, where the $g(\cdot)$ is softmax for the sentiment classification task.
+Here in this task, $h(\cdot)$ is an aggregation function that takes the variance over several dimensions and outputs a single measure of variance. As a reasonable choice, the aggregation function $h(\cdot)$ in the sentiment classification task (three classes) is the \emph{mean} of variances over dimensions. 
 In the \tch, linear combinations of different kernels are used. For the sentiment classification task, we use sparse variational GP for multiclass classification\footnote{\url{http://gpflow.readthedocs.io/en/latest/notebooks/multiclass.html}}~\citep{hensman2014scalable} with the following kernel:
 \begin{equation}
 k(x_i,x_j)=k_{\rm RBF}(x_i,x_j)+{k_{\rm Linear}}(x_i,x_j)+k_{\rm White}(x_i,x_j)
 \end{equation}
-where,
+where
 \begin{flalign*}
     \hspace{6em}
-    &&k_{\rm RBF}(x_i,x_j) &= \exp{\left(\frac{\Vert x_i-x_j\Vert^2}{2l^2}\right)} & 
+    &&k_{\rm RBF}(x_i,x_j) &= \exp{\left(\frac{\Vert x_i-x_j\Vert^2}{2l^2}\right)}, & 
     \\
-    &&k_{\rm Linear}(x_i,x_j) &= \sigma_0^2+x_i.x_j & \\
-    &&k_{\rm White}(x_i,x_j) &= constant\_value, \quad \forall x_1=x_2 \text{ and } 0 \text{ otherwise} & 
+    &&k_{\rm Linear}(x_i,x_j) &= \sigma_0^2+x_i.x_j, & \\
+    &&k_{\rm White}(x_i,x_j) &= constant\_value ~\forall x_1=x_2 \text{, and } 0 \text{ otherwise}. & 
 \end{flalign*}
 
-Similar to the ranking task, we set $l=1$ the length scale of RBF kernel, set $\sigma_0 = 0$  for the linear kernel, and set the number of clusters to $30$ in clustered $\mathcal{GP}$ algorithm.
+Similar to the ranking task, we set $l=1$ as the length scale of the RBF kernel, $\sigma_0 = 0$  for the linear kernel, and the number of clusters to $30$ in the clustered $\mathcal{GP}$ algorithm.
 
 
 \subsubsection{Collections}
-We test our model on the twitter message-level sentiment classification of SemEval-15 Task 10B \citep{rosenthal:2015}. Datasets of SemEval-15 subsume the test sets from previous editions of SemEval, i.e., SemEval-13 and SemEval-14. Each tweet was preprocessed so that URLs and usernames are masked.
+We test our model on the Twitter message-level sentiment classification of SemEval-15 Task 10B~\citep{rosenthal:2015}. Datasets of SemEval-15 subsume the test sets from previous editions of SemEval, i.e., SemEval-13 and SemEval-14. Each tweet was preprocessed so that URLs and usernames are masked.
 
 \mypar{Data with strong labels.} 
 We use train (9,728 tweets) and development (1,654 tweets) data from SemEval-13 for training and SemEval-13-test (3,813 tweets) for validation.
@@ -205,9 +202,9 @@ To make your results comparable to the official runs on SemEval we us SemEval-14
 We use a large corpus containing 50M tweets collected during two months for both, training the word embeddings and creating the weakly annotated set $\mathcal{D}_w$ using the lexicon-based method explained in Section~\ref{sentiment-WA}. 
 
 \subsubsection{Experimental Setup}
-Similar to the document ranking task, we tuned hyper-parameters for the \tnet in \cws (and \std in the first step of \fwl) with respect to the strong labels of the validation set using batched GP bandits with an expected improvement acquisition function~\citep{Desautels:2014} and kept the optimal parameters fixed for all the other experiments.  
-The size and number of hidden layers for the classifier and is selected from $\{32, 64, 128\}$.
-We tested the model with both, $1$ and $2$ convolutional layers. The number of convolutional feature maps and the filter width is selected from $\{200,300\}$ and $\{ 3, 4, 5\}$, respectively. The initial learning rate and the dropout parameter were selected from $\{1E-3, 1E-5\}$ and $\{0.0, 0.2, 0.5\}$, respectively. We considered embedding sizes of $\{100, 200\}$ and the batch size in these experiments was set to $64$. ReLU~\citep{Nair:2010} is used as a non-linear activation function in \tnet (and \std).  Adam optimizer~\citep{Kingma:2014} is used for training, and dropout as a regularizer.
+Similar to the document ranking task, we tune hyper-parameters for the \tnet in \cws (and \std in the first step of \fwl) with respect to the strong labels of the validation set using batched GP bandits with an expected improvement acquisition function~\citep{Desautels:2014} and keep the optimal parameters fixed for all the other experiments.  
+The size and number of hidden layers for the classifier and s selected from $\{32, 64, 128\}$.
+We test the model with both, $1$ and $2$ convolutional layers. The number of convolutional feature maps and the filter width is selected from $\{200,300\}$ and $\{ 3, 4, 5\}$, respectively. The initial learning rate and the dropout parameter are selected from $\{1E-3, 1E-5\}$ and $\{0.0, 0.2, 0.5\}$, respectively. We consider embedding sizes of $\{100, 200\}$ and the batch size in these experiments was set to $64$. The ReLU~\citep{Nair:2010} is used as a non-linear activation function in \tnet (and \std). The Adam optimizer~\citep{Kingma:2014} is used for training, and dropout as a regularizer.
 
 %In the rest of the section, we will present the main results of the introduced baseline methods and the proposed models, \cws and \fwl,  
 
@@ -218,22 +215,22 @@ We report Macro-F1, the official SemEval metric, in Table~\ref{tbl_main_sent}.
 
 Among all the baselines, \fwl is the best performing approach. \cws also outperforms all the baselines. 
 
-For this task, since the amount of data with strong labels are larger compared to the ranking task, the performance of $\text{NN}_{\text{S}}$ is acceptable. Alternately sampling from weak and strong data, i.e.,  $\text{NN}_{\text{W}\text{/S}^+}$ gives better results than either of learning from just weak or just strong labels. However, pretraining on weak labels then fine-tuning both the supervision layer and the representation learning layer on strong labels, further improves the performance.  
+For this task, since the amount of data with strong labels is larger than for the ranking task, the performance of $\text{NN}_{\text{S}}$ is acceptable. Alternately sampling from weak and strong data, i.e.,  $\text{NN}_{\text{W}\text{/S}^+}$ gives better results than either of learning from just weak or just strong labels. However, pretraining on weak labels and then fine tuning both the supervision layer and the representation learning layer on strong labels, further improves the performance.  
 
-Besides the baselines, we also report the best performing systems which are also convolution-based models (\citealt{Rouvier:2016} on SemEval-14; \citealt{Deriu2016:SemEval} on SemEval-15). Both \cws and \fwl outperform these methods.
+Besides the baselines, we also report the best performing systems that are also convolution-based models (\citealt{Rouvier:2016} on SemEval-14; \citealt{Deriu2016:SemEval} on SemEval-15). Both \cws and \fwl outperform these methods.
 
 
 \input{03-part-02/chapter-05/figs_and_tables/table_sentiment_res_cws.tex}
-Similar to the ranking task, we have done an ablation study on \cws by trying different strategies for training \cws. The results of these experiments are presented in Table~\ref{tbl_variants_sent_cws}. \cws$_\text{CT}$ archives the highest performance among all the training strategies, however, as we discussed in Section~\ref{sec:res_and_disc_ranking}, it is not as efficient as \cws. 
+Similar to the ranking task, we have done an ablation study on \cws by trying different strategies for training \cws. The results of these experiments are presented in Table~\ref{tbl_variants_sent_cws}. \cwsnospace$_\text{CT}$ archives the highest performance among all the training strategies, however, as we discussed in Section~\ref{sec:res_and_disc_ranking}, it is not as efficient as \cws. 
 
-In sentiment classification, compared to the ranking task, it is easier to estimate the confidence score of samples concerning the amount of available supervised data. Therefore, \cws$_\text{ST}$ improves the performance over $\text{NN}_{\text{S}}$ in Table~\ref{tbl_main_sent}. 
+In sentiment classification, compared to the ranking task, it is easier to estimate the confidence score of samples concerning the amount of available supervised data. Therefore, \cwsnospace$_\text{ST}$ improves the performance over $\text{NN}_{\text{S}}$ in Table~\ref{tbl_main_sent}. 
 
 
 \input{03-part-02/chapter-05/figs_and_tables/table_sentiment_res_fwl.tex}
 The results of a set of experiments we have done as ablation studies on \fwl are presented in Table~\ref{tbl_variants_sent_fwl}. 
 
-Having static weighting on the gradient updates, i.e., NN$_{\text{W}^\omega \to \text{S}}$, leads to a performance that is better than simple fine-tuning, i.e., $\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$ in Table~\ref{tbl_main_sent}.
+Having static weighting on the gradient updates, i.e., NN$_{\text{W}^\omega \to \text{S}}$, leads to a performance that is better than simple fine tuning, i.e., $\text{NN}_{\text{W}} \to \text{NN}_{\text{S}}$ in Table~\ref{tbl_main_sent}.
 %
-For this task, similar to the ranking task, learning the representation in an unsupervised task independent fashion, i.e., \fwlnospace$_{unsuprep}$, does not lead to good results compared to the \fwl.
+For this task, similar to the ranking task, learning the representation in an unsupervised task-independent fashion, i.e., \fwlnospace$_{unsuprep}$, does not lead to good results compared to \fwl.
 %
-Similar to the ranking task, fine-tuning $\text{NN}_{\text{W}}$ based on labels generated by $\mathcal{GP}$ instead of data with strong labels, regardless of the confidence score, i.e., \fwl$\backslash\Sigma$~\citep{Veit:2017}, works better than standard fine-tuning. 
+Similar to the ranking task, fine tuning $\text{NN}_{\text{W}}$ based on labels generated by $\mathcal{GP}$ instead of data with strong labels, regardless of the confidence score, i.e., \fwlnospace$\backslash\Sigma$~\citep{Veit:2017}, works better than standard fine tuning. 

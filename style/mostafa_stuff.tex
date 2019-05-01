@@ -42,8 +42,8 @@
 \usepackage{tabularx} % Tables spanning the \linewidth or \textwidth
 \usepackage{tikz-qtree}
 \usepackage{xargs} 
-\usepackage{caption}
-\usepackage{subcaption}
+\usepackage[skip=0pt]{caption}
+\usepackage[skip=0pt]{subcaption}
 \usepackage{microtype} % fixes the line braking to not exceed the line width
 % \usepackage{siunitx}
 
@@ -279,13 +279,17 @@
 \newcommand{\mthree}{RankProb\xspace}
 
 
-\newcommand{\Feedone}{Dense vector representation\xspace}
-\newcommand{\Feedtwo}{Sparse vector representation\xspace}
-\newcommand{\Feedthree}{Embedding vector representation\xspace}
+\newcommand{\Feedone}{Dense Vector Representation\xspace}
+\newcommand{\Feedtwo}{Sparse Vector Representation\xspace}
+\newcommand{\Feedthree}{Embedding Vector Representation\xspace}
 
 \newcommand{\feedone}{dense vector representation\xspace}
 \newcommand{\feedtwo}{sparse vector representation\xspace}
 \newcommand{\feedthree}{embedding vector representation\xspace}
+
+\newcommand{\feedones}{dense vector representations\xspace}
+\newcommand{\feedtwos}{sparse vector representations\xspace}
+\newcommand{\feedthrees}{embedding vector representations\xspace}
 
 \newcommand{\fone}{Dense\xspace}
 \newcommand{\ftwo}{Sparse\xspace}
@@ -299,6 +303,7 @@
 \newcommand{\cnet}{confidence network\xspace}
 
 \newcommand{\cws}{CWS\xspace}
+\newcommand{\cwsnospace}{CWS}
 
 \newcommand{\fwl}{FWL\xspace}
 \newcommand{\fwlnospace}{FWL}
