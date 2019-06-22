@@ -5,11 +5,11 @@
 % \documentclass[table, draft]{style/illcdiss}
 \documentclass[table]{style/illcdiss}
 
-% \usepackage[nottoc]{tocbibind}
+% \usepackage{tocbibind}
 
 %If you want to use MakeIndex, uncomment these lines
-%\usepackage{makeidx}     % only with Latex2e
-%\makeindex
+\usepackage{makeidx}     % only with Latex2e
+\makeindex
 \usepackage[utf8]{inputenc}
 \typeout{Mostafa Dehghani's PhD Thesis.}
 
@@ -47,7 +47,7 @@
 \frontmatter
 \include{thesis_front}
 \include{thesis_dedication}
-\tableofcontents
+\tableofcontents                % display table of contents
 \include{thesis_acknowledgements}
 \include{thesis_quote}
 
@@ -59,15 +59,15 @@
 
 %%     The main reason we used to split the document in parts, was to compile only the relevant chapters... 
 \mainmatter
-% \input{01-introduction/main}
-% \input{02-part-01/main}
-% \input{03-part-02/main}
+\input{01-introduction/main}
+\input{02-part-01/main}
+\input{03-part-02/main}
 \input{04-part-03/main}
 
 \bookmarksetup{startatroot} % Lift from parts
 \addtocontents{toc}{\bigskip} % skip
 
-% \input{05-conclusions/main}
+\input{05-conclusions/main}
 
 
 \appendix
@@ -75,12 +75,13 @@
 
 %%  \include the `end matter'
 \cleardoublepage % if you are so inclined
+\addcontentsline{toc}{chapter}{References}
 \bibliographystyle{apalike}
 \bibliography{thesis_ref}
 
-% \include{thesis_index}
-% \include{thesis_samenvatting}
-% \include{thesis_abstract}
+\include{thesis_index}
+\include{thesis_samenvatting}
+\include{thesis_abstract}
 
 %%  finally, \include the list of previous ILLC dissertations
 
