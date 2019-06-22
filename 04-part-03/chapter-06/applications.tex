@@ -1,30 +1,32 @@
 \section{Universal Transformer for Sequence Modeling}
 In this section, we address the following research question:
 \resq{c6.2}
-We evaluate Universal Transformers on a range of algorithmic and language understanding tasks and discuss the results. In the tasks that are chosen, we include some with limited number of training samples, or some with incomplete training set (lack of converge), but also tasks that do not suffer severely from imperfect supervision, to evaluate the performance of our model in both situations.  In all the experiments, we made sure that number of trainable parameters in the UT and the baselines are similar to have fair comparisons in terms of capacity of the models.
+We evaluate Universal Transformers on a range of algorithmic and language understanding tasks and discuss the results. In the tasks that are chosen, we include some with a limited number of training samples, or some with an incomplete training set (lack of converge), but also tasks that do not suffer severely from imperfect supervision, to evaluate the performance of our model in both situations.  
+
+In all the experiments, we made sure that the number of trainable parameters in the UT and the baselines are similar to have fair comparisons in terms of capacity of the models.
 
 \subsection{bAbI Question-Answering}
-The bAbi question answering dataset~\citep{weston2015towards} consists of 20 different synthetic tasks\footnote{\url{https://research.fb.com/downloads/babi}}. The aim is that each task tests a unique aspect of language understanding and reasoning, including the ability of: reasoning from supporting facts in a story, answering true/false type questions, counting, understanding negation and indefinite knowledge, understanding coreferences, time reasoning, positional and size reasoning, path-finding, and understanding motivations (to see examples for each of these tasks, please refer to Table 1 and 2 in Section 3 of \citep{weston2015towards}).
+The bAbi question answering dataset~\citep{weston2015towards} consists of 20 different synthetic tasks.\footnote{\url{https://research.fb.com/downloads/babi}} The aim is that each task tests a unique aspect of language understanding and reasoning, including the ability to reason from supporting facts in a story, answer true/false type questions, count, understand negation and indefinite knowledge, understand coreferences, time reasoning, positional and size reasoning, path-finding, and understanding motivations (to see examples for each of these tasks, please refer to Table 1 and 2 in Section 3 of \citep{weston2015towards}).
+\input{04-part-03/chapter-06/figs_and_tables/table_babi_results.tex}
 
 There are two versions of the dataset, one with 1k training samples and the other with 10k samples. It is important for a model to be data-efficient to achieve good results using only the 1k training samples. Moreover, the original idea is that a single model should be evaluated across all the tasks (not tuning per task), which is the \emph{train joint} setup in Tables~\ref{tab:babi-results} and ~\ref{tbl:babi_details}.
 
-Solving all the bAbI tasks by training a model on the 1k training dataset is pretty challenging as some of the tasks are rather complex and with only 1k samples for each task, its hard for most of models to generalize well. So data efficiency should be a key property to be considered here. 
-We tried a standard Transformer and observed that it does not achieve good results on bAbI tasks\footnote{We experimented with different hyper-parameters and different network sizes, but it always overfits.}. However, we have designed a model based on the Universal Transformer which achieves state-of-the-art results bAbI task. 
-This is mainly due to recurrent inductive bias in the Universal Transformer as well as the fact that sharing parameters across depth decreases the number of parameters which helps the model generalize better.
+Solving all the bAbI tasks by training a model on the 1k training dataset is challenging as some of the tasks are rather complex and with only 1k samples for each task, its hard for most of models to generalize well. So data efficiency should be a key property to be considered here. 
+We tried a standard Transformer and observed that it does not achieve good results on bAbI tasks.\footnote{We experimented with different hyper-parameters and different network sizes, but it always overfits.} However, we have designed a model based on the Universal Transformer which achieves state-of-the-art results bAbI task. 
+
+\input{04-part-03/chapter-06/figs_and_tables/table_babi_detailed_results.tex}
+
 
 To encode the input, similar to~\cite{henaff2016tracking}, we first encode each fact in the story by applying a learned multiplicative positional mask to each word's embedding, and summing up all embeddings.
 We embed the question in the same way, and then feed the (Universal) Transformer with these embeddings of the facts and questions. 
 
 As originally proposed, models can either be trained on each task separately (``train single'') or jointly on all tasks (``train joint''). Table~\ref{tab:babi-results} summarizes our results. We conducted 10 runs with different initializations and picked the best model based on performance on the validation set, similar to previous work. Both the UT and UT with dynamic halting achieve state-of-the-art results on all tasks in terms of average error and number of failed tasks,\footnote{Defined as $> 5\%$ error.} in both the 10K and 1K training regime. Tables~\ref{tbl:babi_details} presents the results of best and average results of 10 runs breakdown by task.
 
-\input{04-part-03/chapter-06/figs_and_tables/table_babi_results.tex}
-\input{04-part-03/chapter-06/figs_and_tables/table_babi_detailed_results.tex}
+To understand the working of the model better, we analyzed both the attention distributions and the average ACT ponder times for this task. 
 
+First, we observe that the attention distributions start out very uniform, but get progressively sharper in later steps around the correct supporting facts that are required to answer each question, which is indeed very similar to how humans would solve the task. 
 
-To understand the working of the model better, we analyzed both the attention distributions and the average ACT ponder times for this task. First, we observe that the attention distributions start out very uniform, but get progressively sharper in later steps around the correct supporting facts that are required to answer each question, which is indeed very similar to how humans would solve the task. 
-%
 Second, with dynamic halting we observe that the average ponder time (i.e., depth of the per-symbol recurrent processing chain) over all positions in all samples in the test data for tasks requiring three supporting facts is higher ($3.8 \rpm 2.2$) than for tasks requiring only two ($3.1 \rpm 1.1$), which is in turn higher than for tasks requiring only one supporting fact ($2.3 \rpm 0.8$). This indicates that the model adjusts the number of processing steps with the number of supporting facts required to answer the questions. 
-
 \begin{figure}[t]
  \centering
  \includegraphics[width=\textwidth]{04-part-03/chapter-06/figs_and_tables/fig_task3_example_ponder.png}
@@ -36,25 +38,26 @@ Finally, we observe that the histogram of ponder times at different positions is
 Similar to dynamic memory networks~\citep{kumar2016ask}, there is an iterative attention process in UTs that allows the model to condition its attention over memory on the result of previous iterations. 
 %
 
+Figures~\ref{fig:ex1}, \ref{fig:ex2}, \ref{fig:ex3}, and \ref{fig:ex4} present visualizations of the self-attention distributions on bAbI tasks for some examples from Task 1, 2, and 3. The visualization of attention weights is over different time steps based on different heads over all the facts in the story and a question. 
+
+In all these examples, we visualize the attention distributions when transforming the question representation (right hand side) in the encoder. Different color bars on the left side indicate attention weights based on different heads (4 heads in total) over facts and the question.
+
+Although attention distributions are not necessarily explanations of the process or the outcome~\citep{attentionisnotexplnation}, these examples illustrate that there is a notion of temporal states in UT, where the model updates its states (memory) in each step based on the output of previous steps, and this chain of updates can also be viewed as steps in a multi-hop reasoning process. 
 \input{04-part-03/chapter-06/figs_and_tables/fig_babi_attention_examples.tex}
 
-Figures~\ref{fig:ex1}, \ref{fig:ex2}, \ref{fig:ex3}, and \ref{fig:ex4} present visualizations of the self-attention distributions on bAbI tasks for some examples from Task 1, 2, and 3. The visualization of attention weights is over different time steps based on different heads over all the facts in the story and a question. In all these examples, we visualize the attention distributions when transforming the question representation (right hand side) in the encoder. Different color bars on the left side indicate attention weights based on different heads (4 heads in total) over facts and the question.
-
-Although attention distributions are not necessarily explanation of the process or the outcome~\citep{attentionisnotexplnation}, these examples illustrate that there is a notion of temporal states in UT, where the model updates its states (memory) in each step based on the output of previous steps, and this chain of updates can also be viewed as steps in a multi-hop reasoning process. 
-
+The results of the Universal Transformer on bAbI tasks is a proxy of ability of the model to learn to do some basic reasoning, while being data efficient.  
+This is mainly due to recurrent inductive bias in the Universal Transformer as well as the fact that sharing parameters across depth decreases the number of parameters which helps the model generalize better.
 
 
 
 \subsection{Algorithmic Tasks}
-The generic neural network architectures cannot generalize well in algorithmic and numerical tasks requiring arithmetic operations such as addition, multiplication etc., even when they may successfully fit any given training data in such tasks, and sometimes they cannot even achieve that~\citep{trask2018neural}. This can be even harder when the distribution of samples' length is different in train and test set.
+Generic neural network architectures cannot generalize well in algorithmic and numerical tasks requiring arithmetic operations such as addition, multiplication etc., even when they may successfully fit any given training data in such tasks, and sometimes they cannot even achieve that~\citep{trask2018neural}. This can be even harder when the distribution of samples' length is different in train and test set.
 
 We trained UTs on three algorithmic tasks, namely Copy, Reverse, and (integer) Addition, all on strings composed of decimal symbols (`0'-`9'). In all the experiments, we train the models on sequences with maximum length of 40 and evaluated on sequences with maximum length of 400~\citep{neural_gpu} to assess the ability of the models on \emph{length generalization}. In fact, the limitation in training data in this task is the lack of coverage over all possible samples (all possible length), not the number of training samples.
 
 As an additional inductive bias for UTs on these tasks, when calculating the positional embedding, we use positions starting with randomized offsets per sample. This way, we further encourage the model to learn position-relative transformations, which improves length generalization.
 Results are shown in Table~\ref{tab:algorithmic}. Both UT and UT with randomized position offset outperform LSTM and vanilla Transformer by a wide margin on all three tasks. 
 The Neural GPU reports perfect results on this task~\citep{neural_gpu}, however, we note that this result required a special curriculum-based training protocol, e.g., training on harder (longer) samples only after the model crossed a curriculum progress threshold on easier samples (shorter). 
-
-which was not used for other models.
 
 \input{04-part-03/chapter-06/figs_and_tables/table_alg_results.tex}
 \input{04-part-03/chapter-06/figs_and_tables/table_lte_results.tex}
@@ -91,6 +94,8 @@ Next, we consider the task of predicting number-agreement between subjects and v
 Two experimental setups were proposed by \citet{linzen2016assessing} for training a model on this task: 1) training with a language modeling objective, i.e., next word prediction, and 2) as binary classification, i.e., predicting the number of the verb given the sentence. 
 We follow the experimental protocol of \citet{linzen2016assessing} for solving the task using a language modeling training setup, i.e., a next word prediction objective, followed by calculating the ranking accuracy of the target verb at test time. 
 
+\input{04-part-03/chapter-06/figs_and_tables/table_sva_results.tex}
+
 In this task, in order to have different levels of difficulty, ``agreement attractors'' are used, i.e., one or more intervening nouns with the opposite number from the subject with the goal of confusing the model. In this case, the model needs to correctly identify the head of the syntactic subject that corresponds to a given verb and ignore the intervening attractors in order to predict the correct form of that verb.
 Here are some examples for this task in which subjects and the corresponding verbs are in boldface and agreement attractors are underlined:
 \begin{table}[h!]
@@ -102,13 +107,11 @@ Here are some examples for this task in which subjects and the corresponding ver
 \textbf{Three attractors:} &  The \textbf{ratio} of \underline{men} to \underline{women} and \underline{children} \textbf{is} not clear. 
 \end{tabular}
 \end{table}
-
-\input{04-part-03/chapter-06/figs_and_tables/table_sva_results.tex}
 Our results are summarized in Table~\ref{tab:sva}. The best LSTM with attention from the literature achieves 99.18\% on this task~\citep{yogatama2018memory}, outperforming a vanilla Transformer~\citep{tran18}. UTs significantly outperform standard Transformers, and achieve an \emph{average} result comparable to the current state of the art (99.2\%). However, we see that UTs (and particularly with dynamic halting) perform progressively better than all other models as the number of attractors increases (see the last row, $\Delta$).
 The recurrent inductive bias, i.e., the fact that we can repeat the computations in depth, helps the Universal Transformer to capture the hierarchical relations and better model the structure of the data.
 
 \subsection{LAMBADA Language Modeling}
-The LAMBADA task~\citep{paperno2016lambada} is a language modeling task consisting of predicting a missing target word given a broader context of 4-5 preceding sentences. The dataset was specifically designed so that humans are able to accurately predict the target word when shown the full context, but not when only shown the target sentence in which it appears. It, therefore, goes beyond language modeling, and tests the ability of a model to incorporate broader discourse and longer term context when predicting the target word.\footnote{\url{http://clic.cimec.unitn.it/lambada/appendix_onefile.pdf}}
+The LAMBADA task~\citep{paperno2016lambada} is a language modeling task consisting of predicting a missing target word given a broader context of 4--5 preceding sentences. The dataset was specifically designed so that humans are able to accurately predict the target word when shown the full context, but not when only shown the target sentence in which it appears. It, therefore, goes beyond language modeling, and tests the ability of a model to incorporate broader discourse and longer term context when predicting the target word.\footnote{\url{http://clic.cimec.unitn.it/lambada/appendix_onefile.pdf}}
 Here is a sample from the dataset:
 
 \begin{table}[h!]
@@ -130,7 +133,7 @@ Here is a sample from the dataset:
 
 The LAMBADA task consists in predicting the target word given the whole passage (i.e., the context plus the target sentence). A ``control set''  is also provided which was constructed by randomly sampling passages of the same shape and size as the ones used to build LAMBADA, but without filtering them in any way. The control set is used to evaluate the models at standard language modeling before testing on the LAMBADA task, and therefore to ensure that low performance on the latter cannot be attributed simply to poor language modeling.
 
-The task is evaluated in two settings: as \emph{language modeling} (the standard setup) and as \emph{reading comprehension}. In the former (more challenging) case, a model is simply trained for the next-word prediction on the training data, and evaluated on the target words at test time (i.e., the model is trained to predict all words, not specifically challenging target words).  In the latter setting, introduced by Chu et al.~\cite{chu2017broad}, the target sentence (minus the last word) is used as the query for selecting the target word from the context sentences.\footnote{Note that the target word appears in the context 81\% of the time that lets selecting the word from context, which is simpler than generating it. However, the task is impossible in the remaining 19\% of the cases.} 
+The task is evaluated in two settings: as \emph{language modeling} (the standard setup) and as \emph{reading comprehension}. In the former (more challenging) case, a model is simply trained for the next-word prediction on the training data, and evaluated on the target words at test time (i.e., the model is trained to predict all words, not specifically challenging target words).  In the latter setting, introduced by Chu et al.~\cite{chu2017broad}, the target sentence (minus the last word) is used as the query for selecting the target word from the context sentences.\footnote{Note that the target word appears in the context 81\% of the time that lets selecting the word from context, which is simpler than generating it. However, the task is impossible to be solve in the remaining 19\% of the cases.} 
 
 \input{04-part-03/chapter-06/figs_and_tables/table_lambada_results.tex}
 
@@ -157,7 +160,7 @@ Inferring the answer to a question given multiple documents that potentially con
 Most open-domain question answering systems described in the literature first retrieve relevant documents or passages, select one or a few of them as the context, and then feed the question and the context to a reading comprehension system to extract the answer~\citep{buck2017ask, chen2017reading, seo2016bidirectional, dhingra2016gated}. 
 However, the information needed to answer complex questions is not always contained in a single, directly relevant document that is ranked high. In many cases, there is a need to read multiple documents, combine them, and reason over the facts from these documents to be able to give the correct answer to the question.
 
-For example, in Figure~\ref{fig:example}, in order to infer the correct answer to the question: ``\texttt{Who is the Spanish artist, sculptor and draughtsman famous for co-founding the Cubist movement?}'' given the top-ranked document, a reading comprehension system most likely will extract ``\texttt{Georges Braque}'' as the answer, which is not the correct answer. 
+For example, in Figure~\ref{fig:example}, in order to infer the correct answer to the question: ``{\texttt Who is the Spanish artist, sculptor and draughtsman famous for co-founding the Cubist movement?}'' given the top-ranked document, a reading comprehension system most likely will extract ``\texttt{Georges Braque}'' as the answer, which is not the correct answer. 
 In this example, in order to infer the correct answer, one has to go down the ranked list, gather and encode facts, even those that are not immediately relevant to the question, like ``\emph{Malaga is a city in Spain},'' which can be inferred from a document at rank 66, and then in a multi-step reasoning process, infer some new facts, including ``\emph{Picasso was a Spanish artist}'' given documents at ranks~12 and~66, and ``\emph{Picasso, who was a Spanish artist, co-founded the Cubist}'' given the previously inferred fact and the document ranked third. 
 
 \begin{figure}[!t]
@@ -200,7 +203,7 @@ We employ \tracrnet on two public open-domain question answering datasets, Searc
 
 \subsubsection{\tracrnet} % : Transform, Combine, and Reason}
 \label{sec:tra}
-In the setup we consider here, the model is given a question $q$ and a set of $n$ relevant documents $C_q=\{D^q_1, D^q_2, \ldots D^q_n\}$ retrieved from the web using a search engine as the input, and the goal is to ``generate'' the answer $a_q$ to the question $q$ based on the supporting document(s) in the set $C_q$.
+In the setup we consider here, the model is given a question $q$ and a set of $n$ relevant documents $C_q=\{D^q_1, D^q_2, \ldots, D^q_n\}$ retrieved from the web using a search engine as the input, and the goal is to ``generate'' the answer $a_q$ to the question $q$ based on the supporting document(s) in the set $C_q$.
 
 This is different from the standard Reading Comprehension (RC) tasks~\cite{hermann2015teaching,xiong2016dynamic}. 
 First of all, in RC a single document (passage) is given, from which the answer should be extracted. 
@@ -240,7 +243,7 @@ In addition, the depth-wise recurrency in the Universal Transformer establishes 
 \mypar{Output decoder} 
 After $T$ steps of refining the representations of documents and the question in the Universal Transformer Encoder, the final output is a matrix of $d$-dimensional vector representations $H \in \mathbb{R}^{(|C_q|+1) \times d}$ for all the documents in $C_q$ and the question $q$.
 
-Given this, we use a stack of $N$ Transformer Decoder blocks (see  the \texttt{Transformer Decoder} in Figure~\ref{fig:model_tracrnet}) to decode the answer.
+We use a stack of $N$ Transformer Decoder blocks (see  the \texttt{Transformer Decoder} in Figure~\ref{fig:model_tracrnet}) to decode the answer.
 To generate answers from the model at inference time, we run the model autoregresively~\citep{graves2013generating}, where the model consumes the previously generated symbols at each time step in order to generate the distribution over the vocabulary for the next symbol. From this distribution, we select the symbol with the highest probability as the next symbol.   
 
 
@@ -421,7 +424,7 @@ Making use of self-attentive feed-forward neural networks as building blocks of 
 
 \begin{figure}[!t]
  \centering
- \includegraphics[width=0.6\textwidth]{04-part-03/chapter-06/figs_and_tables/plot_different_num_docs.png}
+ \includegraphics[width=0.75\textwidth]{04-part-03/chapter-06/figs_and_tables/plot_different_num_docs.png}
   %\vspace{5pt}
  \caption{Performance in terms of F1 of \tracrnet and baselines (R$^3$~\citep{wang2017r} and \citet{lin2018denoising}'s model) with different numbers of candidate documents on Quasar-T dataset.}
  \label{fig:diff_num_docs}

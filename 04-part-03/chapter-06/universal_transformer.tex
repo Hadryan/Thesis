@@ -16,34 +16,29 @@ In each recurrent time-step, the representation of every position is concurrentl
 \subsubsection{\textsc{Encoder:}}
 Given an input sequence of length $m$, we start with a matrix whose rows are initialized as the $d$-dimensional embeddings of the symbols at each position of the sequence $H^0 \in \mathbb{R}^{m \times d}$. The UT then iteratively computes representations $H^t$ at step $t$ for all $m$ positions in parallel by applying the multi-headed dot-product self-attention mechanism from \cite{transformer}, followed by a recurrent transition function. We also add residual connections around each of these function blocks and apply dropout and layer normalization \citep{srivastava2014dropout, layernorm2016}.
 
-Before describing the detail of the first block of the universal transformer, i.e., the multi-head attention, we explain the attention mechanism in general.
-An attention mechanism usually is based on a memory-query paradigm. In this setup, there exist a memory $M$ that contains a collection of items, each representing information from a source modality (like the hidden state of the encoder), and a query $q$ vector that contains information from a target modality (like the hidden state of the decoder).\footnote{In self-attention, queries and memory are from the same modality.}
+Before describing the details of the first block of the universal transformer, i.e., the multi-head attention, we explain the attention mechanism in general as the main building block of many of state-of-the-art models.
+An attention mechanism is usually based on a memory-query paradigm. In this setup, there exist a memory $M$ that contains a collection of items, each representing information from a source modality (like the hidden state of the encoder), and a query $q$ vector that contains information from a target modality (like the hidden state of the decoder).\footnote{In self-attention, queries and memory are from the same modality.}
 Each item in the memory is associated with a key and value ($k_i$, and $v_i$), where the key is used to compute the probability that indicates how well the query matches the item:
 \begin{equation}
 a_i = \frac{exp(f_{\text{att}}(q, k_i)}{\sum_{j=1}^|M| exp(f_{\text{att}}(q, k_j)},
 \end{equation}
-where the $f_\text{att}$ can be dot the product function~\citep{luong2015effective} or a multilayer perceptron~\citep{bahdanau2014neural}. Then, given the attention distributions over all items in the memory which is calculated by querying the memory with query $q$, we can output a value which is a sum over all the values in the memory weighted by their probabilities, which can  be fed to other parts of the model for further calculation.
+where the $f_\text{att}$ can be the dot product function~\citep{luong2015effective} or a multilayer perceptron~\citep{bahdanau2014neural}. Then, given the attention distributions over all items in the memory which is calculated by querying the memory with query $q$, we can output a value that is a sum over all the values in the memory weighted by their probabilities, which can  be fed to other parts of the model for further calculation.
 
-
-
-In Universal Transformer, similar to the Transformer, we use the scaled dot-product attention which combines queries $Q$, keys $K$ and values $V$ as follows
+In the Universal Transformer, similar to the Transformer, we use the scaled dot-product attention which combines queries $Q$, keys $K$ and values $V$ as follows
 
 \begin{equation}
    \textsc{Attention}(Q, K, V) = \textsc{softmax} \left( \frac{QK^T}{\sqrt{d}} \right) V,
 \end{equation}
 
-where $d$ is the number of columns of $Q$, $K$ and $V$. We use the multi-head version with $k$ heads, as introduced in \citep{transformer},
-
+where $d$ is the number of columns of $Q$, $K$ and $V$. We use the multi-head version with $k$ heads, as introduced in \citep{transformer}:
 \begin{align}
     \label{MultiheadSelfAttention}
     \textsc{MultiHeadSelfAttention}(H^t) &= \textsc{Concat}(\mathrm{head_1}, ..., \mathrm{head_k})W^O\\
-    \text{where}~\mathrm{head_i} &= \textsc{Attention}(H^t W^Q_i, H^t W^K_i, H^t W^V_i)
+    \text{where}~\mathrm{head_i} &= \textsc{Attention}(H^t W^Q_i, H^t W^K_i, H^t W^V_i),
 \end{align}
-
 and we map the state $H^t$ to queries, keys and values with affine projections using learned parameter matrices $W^Q \in \mathbb{R}^{d \times d/k}$, $W^K \in \mathbb{R}^{d \times d/k}$, $W^V \in \mathbb{R}^{d \times d/k}$ and $W^O \in \mathbb{R}^{d \times d}$.
 
-At step $t$, the UT then computes revised representations $H^t \in \mathbb{R}^{m \times d}$ for all $m$ input positions as follows
-
+At step $t$, the UT then computes revised representations $H^t \in \mathbb{R}^{m \times d}$ for all $m$ input positions as follows:
 \begin{align}
     \label{RecurrentTransition}
     H^t &= \textsc{LayerNorm}(A^{t} + \textsc{Transition}(A^t) ) \\
@@ -68,7 +63,6 @@ The decoder shares the same basic recurrent structure of the encoder. However, a
 
 Like the Transformer model, the UT is autoregressive \citep{graves2013generating}. Trained using teacher-forcing, at generation time it produces its output one symbol at a time, with the decoder consuming the previously produced output positions. During training, the decoder input is the target output, shifted to the right by one position.
 The decoder self-attention distributions are further masked so that the model can only attend to positions to the left of any predicted symbol. Finally, the per-symbol target distributions are obtained by applying an affine transformation $O \in \mathbb{R}^{d \times V}$ from the final decoder state to the output vocabulary size $V$, followed by a softmax which yields an $(m \times V)$-dimensional output matrix normalized over its rows:
-
 \begin{equation}
  p\left(y_{pos} | y_{[1:pos - 1]}, H^T\right) = \textsc{softmax}(OH^T)
 \end{equation}
@@ -89,7 +83,7 @@ In sequence processing systems, certain symbols (e.g., some words or phonemes) a
 Inspired by the interpretation of Universal Transformers as applying self-attentive RNNs in parallel to all positions in the sequence, we also add a dynamic ACT halting mechanism to each position, i.e., to each per-symbol self-attentive RNN. Once the per-symbol recurrent block halts, its state is simply copied to the next step until all blocks halt, or we reach a maximum number of steps. The final output of the encoder is then the final layer of representations produced in this way. Figure~\ref{fig:adaptive_ut} illustrates a Universal Transformer encoder with $T$, number of revisions, dynamically determined for each position.
 
 
-We implement the dynamic halting based on ACT~\citep{graves2016adaptive}. In each step of the UT with dynamic halting, we are given the halting probabilities, remainders, number of updates up to that point, and the previous state (all initialized as zeros), as well as a scalar threshold between 0 and 1 (a hyper-parameter). We then compute the new state for each position and calculate the new per-position halting probabilities based on the state for each position~\footnote{The current implementation of adaptive computation time does not allow for a fully end-to-end backpropable gradient of the proposed training loss. However, the discontinuity of the cost function might not imply that meaningful learning is not possible and in fact, the experiments in the original paper~\citep{graves2016adaptive} as well as here in Universal Transformer with adaptive halting suggest it works fine.}. The UT then decides to halt for some positions that crossed the threshold, and updates the state of other positions until the model halts for all positions or reaches a predefined maximum number of steps. 
+We implement dynamic halting based on ACT~\citep{graves2016adaptive}. In each step of the UT with dynamic halting, we are given the halting probabilities, remainders, number of updates up to that point, and the previous state (all initialized as zeros), as well as a scalar threshold between 0 and 1 (a hyper-parameter). We then compute the new state for each position and calculate the new per-position halting probabilities based on the state for each position.\footnote{The current implementation of adaptive computation time does not allow for a fully end-to-end backpropable gradient of the proposed training loss. However, the discontinuity of the cost function might not imply that meaningful learning is not possible and in fact, the experiments in the original paper~\citep{graves2016adaptive} as well as here in Universal Transformer with adaptive halting suggest it works fine.} The UT then decides to halt for some positions that crossed the threshold, and updates the state of other positions until the model halts for all positions or reaches a predefined maximum number of steps. 
 The following is a simplified TensorFlow~\citep{tensorflow2015-whitepaper} code that shows the details for the adapted ACT mechanism.
 \input{04-part-03/chapter-06/figs_and_tables/alg_ut_with_act.tex}
 
@@ -114,7 +108,7 @@ With respect to their computational power, the key difference between the Transf
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.6\textwidth, trim={0.1cm 0.5cm 0.1cm 1.2cm}, clip]{04-part-03/chapter-06/figs_and_tables/fig_universality_example.png}
+\includegraphics[width=0.7\textwidth, trim={0.1cm 0.5cm 0.1cm 1.2cm}, clip]{04-part-03/chapter-06/figs_and_tables/fig_universality_example.png}
 \end{figure}
 
 An intuitive example are functions whose execution requires the sequential processing of each input element. In this case, for any given choice of depth $T$, one can construct an input sequence of length $N>T$ that cannot be processed correctly by a standard Transformer. With an appropriate, input-length dependent choice of sequential steps, however, a Universal Transformer, RNNs or Neural GPUs can execute such a function.

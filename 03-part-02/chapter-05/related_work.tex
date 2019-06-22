@@ -19,7 +19,7 @@ Constraint-based supervision is another form of weak supervision in which constr
 
 In the proposed \cws and \fwl, we can employ these approaches as the weak annotator to provide imperfect labels for the unlabeled data, however, a small amount of data with strong labels is also needed, which puts our model in the class of semi-supervised models. 
 
-Some noise cleansing methods have been proposed to remove or correct mislabeled samples~\citep{Brodley:1999}.
+Some noise cleaning methods have been proposed to remove or correct mislabeled samples~\citep{Brodley:1999}.
 There are some studies showing that weak or noisy labels can be leveraged by modifying the loss function~\citep{reed2014training, Patrini:2016, patrini2016loss, Vahdat:2017} or changing the update rule to avoid imperfections of noisy data~\citep{malach2017decoupling, Dehghani:2017:nips_metalearn, Dehghani:2017avoiding}.  
 
 One direction of research focuses on modeling the pattern of the noise or weakness in the labels. For instance, methods that use a generative model to correct weak labels such that a discriminative model can be trained more effectively~\citep{Ratner:2016,Rekatsinas:2017,Varma:2017}.

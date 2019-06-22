@@ -1,5 +1,3 @@
- - mention equal number of parameters for all baselines (equal capacity).
-
  - unify font size and font family for plots (axis and ticks labels)
  
  - fix numbering for definitions (it should come after "DEFINITION")
@@ -52,3 +50,5 @@
  - footnote in the able in baseline table chap 5
 
  - acro package for indexing all the acronyms at the end.
+
+ - fig caption under / table caption above
