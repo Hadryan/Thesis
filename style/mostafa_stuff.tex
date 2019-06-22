@@ -101,8 +101,8 @@
 \renewcommand{\shrink}{}
 \renewcommand{\sshrink}{}
 
-
-
+% \fontsize{9}{11}\selectfont
+\newcommand{\algfontsize}{\small}
 
 
 \usepackage{framed} 
@@ -130,7 +130,10 @@
 % \usepackage{setspace}
 % \setstretch{1.1}
 
-\newtheorem{mydef}{\textbf{Definition}}%[chapter]
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\newtheorem{mydef}{\textbf{\textsc{Definition}}}[chapter]
 
 \newcommand{\tracrnet}{TraCRNet\xspace} 
 
@@ -224,9 +227,13 @@
 }
  
 \lstset{style=mystyle}
+\usepackage[htt]{hyphenat} % long texttt to break
 
 \renewcommand{\texttt}[1]{{\fontsize{10}{11}\fontfamily{pcr}\selectfont{#1}}}
-% \renewcommand{\url}[1]{{\fontfamily{pcr}\selectfont{\url{#1}}}}
+
+% \renewcommand{\url}[1]{{\fontfamily{pcr}\tt{\url{#1}}}}
+
+
 \renewcommand{\todo}[1]{\textcolor{red}{{\bf [TODO: }{\em #1}{\bf ]}}}
 
 

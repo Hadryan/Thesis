@@ -51,13 +51,13 @@ The theory of LUPI was first developed and proved for support vector machines by
 in~\citep{lopez:2015} that dark knowledge and LUPI can be unified under a single umbrella, called \emph{generalized distillation}. The core idea of these models is \emph{machines-teaching-machines}. As the name suggests, a machine is learning the knowledge embedded in another machine. In our case, the \std is correcting its knowledge by receiving privileged information about label uncertainty from the \tch. 
 
 \fwl extends the core idea of LUPI in the following directions:
-\begin{itemize}[leftmargin=*]%
-%save some space
-\setlength{\topsep}{0.1pt}
-\setlength{\partopsep}{0.1pt}
-\setlength{\itemsep}{0.1pt}
-\setlength{\parskip}{0.1pt}
-\setlength{\parsep}{0.1pt}
+\begin{itemize}%[leftmargin=*]%
+% %save some space
+% \setlength{\topsep}{0.1pt}
+% \setlength{\partopsep}{0.1pt}
+% \setlength{\itemsep}{0.1pt}
+% \setlength{\parskip}{0.1pt}
+% \setlength{\parsep}{0.1pt}
     \item Trainable teacher: It is often assumed that the teacher in LUPI framework has some additional true information. We show that when this extra information is not available, one can still use the LUPI setup and define an implicit teacher whose knowledge is learned from the true data. In this approach, the performance of the final \std-\tch system depends on a clever answer to the following question: which information should be considered as the privileged knowledge of \tch.
   \item Bayesian teacher: The proposed teacher is Bayesian. It provides posterior uncertainty of the label of each sample.
   \item Mutual representation: We introduced module $\psi(\cdot)$ that learns a mutual embedding (representation) for both \std and teacher. This is in particular interesting because it defines a two-way channel between teacher and \std. 

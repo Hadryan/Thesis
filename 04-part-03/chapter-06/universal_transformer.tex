@@ -75,7 +75,7 @@ To generate from the model, the encoder is run once for the conditioning input s
 \begin{figure}
  \centering
  \includegraphics[width=1.0\textwidth]{04-part-03/chapter-06/figs_and_tables/fig_adaptive-universal-transformer.pdf}
- \caption{An unrolled visualization of Universal Transformer with dynamic halting. It illustrates different numbers of recurrent revisions per position (best viewed in colour).}
+ \caption{An unrolled visualization of Universal Transformer with dynamic halting. It illustrates different numbers of recurrent revisions per position (best viewed in color).}
  \label{fig:adaptive_ut}
 \end{figure}
 In sequence processing systems, certain symbols (e.g., some words or phonemes) are usually more ambiguous than others. It is therefore reasonable to allocate more processing resources to these more ambiguous symbols. Adaptive Computation Time (ACT) \citep{graves2016adaptive} is a mechanism for dynamically modulating the number of computational steps needed to process each input symbol (called the ``ponder time'') in standard recurrent neural networks based on a scalar \emph{halting probability} predicted by the model at each step.

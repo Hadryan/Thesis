@@ -1,0 +1,23 @@
+ - unify font size and font family for plots (axis and ticks labels)
+ - unify the colors of plots (all over the thesis) -- super hard!
+ - check all the footnotes (to be placed on the same page)
+ - add \fontfamily{courier}\selectfont to all plots
+ - \url{} make them nicer (the current \texttt{} is pretty ugly)
+ - check  all the RQs to be first in the text and second placed correctly
+ - fix bib entries (specially the origins)
+ - reference to my papers at the intro of parts/chapters
+ - bib in TOC
+ - footnote in the able in baseline table chap 5
+ - acro package for indexing all the acronyms at the end.
+ - fix these references in the conclusion:
+    @misc{TheBitterLesson,
+      title = {The Bitter Lesson},
+      howpublished = {\url{http://www.incompleteideas.net/IncIdeas/BitterLesson.html}},
+      note = {by Rich Sutton. Accessed: 2019-04.}
+    }
+    @misc{maxblogpost,
+      title = {Do we still need models or just more data and compute?},
+      howpublished = {\url{https://staff.fnwi.uva.nl/m.welling/wp-content/uploads/Model-versus-Data-AI-1.pdf}},
+      note = {by Max Welling. Accessed: 2019-04.}
+    }
+
