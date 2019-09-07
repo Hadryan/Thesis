@@ -68,15 +68,15 @@ As the \textbf{general conclusion} of this thesis, we found that we can improve 
 %
 These general ideas are, in fact, the key ingredients for building any learning algorithms that can generalize beyond (imperfections in) the observed data ~\citep{Mitchell80theneed}.
 
-% \subsection{Contributions}
-% Here is a list of main contributions of this thesis to in solving problems in machine learning, natural language processing, and information retrieval:
-% \begin{itemize}
-%     \item We proposed approaches for learning \emph{robust} and \emph{time agnostic} representations for documents, given the relations in the data as prior knowledge.
-%     \item We presented a new family of models, significant words language models, that capture only and all essential features for representing a set of documents and showed not only they are easily inspectable by human, but also effective in classification, (pseudo)-relevance feedback for document ranking, and contextual suggestion tasks. 
-%     \item We proposed using heuristic unsupervised models as weak labelers to create a large-scale weakly annotated training set, for tasks where no such training set is available like document ranking, and studied the effectiveness of different general architectures for neural rankers and various objective functions when learning with weak supervision. Our work provided a groundwork for many research on 
-%     \item We proposed an approach for learning to learn from weak supervision, by jointly learning the main task's objective as well as labels' quality.
-%     \item We proposed a modified version 
-% \end{itemize}
+\subsection{Contributions}
+Here is a list of main contributions of this thesis to solving problems in information retrieval, natural language processing, and machine learning:
+\begin{itemize}
+    \item We proposed approaches for learning \emph{robust} and \emph{time agnostic} representations for documents, given the relations in the data as prior knowledge.
+    \item We presented a new family of models, significant words language models, that capture only and all essential features for representing a set of documents and showed they are not only easily inspectable by human, but also effective in many tasks, like classification, (pseudo)-relevance feedback for document ranking, and contextual suggestion. 
+    \item We proposed using heuristic unsupervised models as weak labelers to create a large-scale weakly annotated training set, for tasks where no such training set is available like document ranking. We further studied the effectiveness of different general architectures for neural rankers and various objective functions when learning with weak supervision. This provided excellent groundwork for many researchers to apply deep neural networks on search and ranking problems.
+    \item We proposed approaches for learning to learn from weak supervision, by jointly optimizing for the objectives of the main task as well as learning and incorporating fidelity of labels. The proposed ideas have been used by many researchers on applications/tasks where the labels in the training set are of variable qualities.  
+    \item We proposed Turing complete version of the transformer model, the universal transformer, in which we introduce recurrence-in-depth that increases generalization and effectiveness of the model due to the introduced recurrent inductive bias. We also used adaptive computation and sowed effectiveness of efficiency of the model in several sequence modeling tasks. 
+\end{itemize}
 
 
 \section{Towards Building Machines that Deal with Poverty of Stimulus}
