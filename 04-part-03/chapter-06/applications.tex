@@ -27,17 +27,18 @@ To understand the working of the model better, we analyzed both the attention di
 First, we observe that the attention distributions start out very uniform, but get progressively sharper in later steps around the correct supporting facts that are required to answer each question, which is indeed very similar to how humans would solve the task. 
 
 Second, with dynamic halting we observe that the average ponder time (i.e., depth of the per-symbol recurrent processing chain) over all positions in all samples in the test data for tasks requiring three supporting facts is higher ($3.8 \rpm 2.2$) than for tasks requiring only two ($3.1 \rpm 1.1$), which is in turn higher than for tasks requiring only one supporting fact ($2.3 \rpm 0.8$). This indicates that the model adjusts the number of processing steps with the number of supporting facts required to answer the questions. 
+
+Finally, we observe that the histogram of ponder times at different positions is more uniform in tasks requiring only one supporting fact compared to two and three, and likewise for tasks requiring two compared to three.  Especially for tasks requiring three supporting facts, many positions halt at step 1 or 2 already and only a few get transformed for more steps (see, for example, Figure~\ref{fig:act_ponder}). This is particularly interesting as the length of stories is indeed much higher in this setting, with more irrelevant facts which the model seems to successfully learn to ignore in this way.
+
+Similar to dynamic memory networks~\citep{kumar2016ask}, there is an iterative attention process in UTs that allows the model to condition its attention over memory on the result of previous iterations. 
+%
+
 \begin{figure}[t]
  \centering
  \includegraphics[width=\textwidth]{04-part-03/chapter-06/figs_and_tables/fig_task3_example_ponder.png}
  \caption{Ponder time of UT with dynamic halting (trained on 1k data with joint training) for encoding facts in a story and question in a bAbI task\#3 requiring three supporting facts.}
  \label{fig:act_ponder}
 \end{figure}
-Finally, we observe that the histogram of ponder times at different positions is more uniform in tasks requiring only one supporting fact compared to two and three, and likewise for tasks requiring two compared to three.  Especially for tasks requiring three supporting facts, many positions halt at step 1 or 2 already and only a few get transformed for more steps (see, for example, Figure~\ref{fig:act_ponder}). This is particularly interesting as the length of stories is indeed much higher in this setting, with more irrelevant facts which the model seems to successfully learn to ignore in this way.
-
-Similar to dynamic memory networks~\citep{kumar2016ask}, there is an iterative attention process in UTs that allows the model to condition its attention over memory on the result of previous iterations. 
-%
-
 Figures~\ref{fig:ex1}, \ref{fig:ex2}, \ref{fig:ex3}, and \ref{fig:ex4} present visualizations of the self-attention distributions on bAbI tasks for some examples from Task 1, 2, and 3. The visualization of attention weights is over different time steps based on different heads over all the facts in the story and a question. 
 
 In all these examples, we visualize the attention distributions when transforming the question representation (right hand side) in the encoder. Different color bars on the left side indicate attention weights based on different heads (4 heads in total) over facts and the question.
@@ -306,7 +307,7 @@ Table~\ref{tab:main_results} presents the results of the baseline models, \tracr
     \centering
     \caption{Performance of \tracrnet compared to the baseline models.}
     \label{tab:main_results}
-    \begin{adjustbox}{max width=0.7\textwidth}
+    \begin{adjustbox}{max width=0.9\textwidth}
     \begin{tabularx}{\linewidth}{Xccccc}
         \toprule
         \multirow{2}{*}{\textbf{model}} & \multicolumn{2}{c}{\textbf{SearchQA}} & & \multicolumn{2}{c}{\textbf{Quasar-T}}\\
@@ -355,7 +356,7 @@ Table~\ref{tab:no_mhr_results} presents the results of the model in these situat
     \centering
     \caption{Performance of \tracrnet with and without the \emph{Multihop Reasoning} layer; numbers in parenthesis indicate percentage of performance loss.}
     \label{tab:no_mhr_results}
-    \begin{adjustbox}{max width=0.7\textwidth}
+    \begin{adjustbox}{max width=0.9\textwidth}
     \begin{tabularx}{\linewidth}{@{}Xc@{~~}c@{~~}c@{~~}c@{~~}c@{}}
         \toprule
         \multirow{2}{*}{\textbf{model}} & \multicolumn{2}{c}{\textbf{SearchQA}} & & \multicolumn{2}{c}{\textbf{Quasar-T}}\\

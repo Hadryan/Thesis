@@ -2,16 +2,16 @@
 \part{\titleof{p2-with-break}} % doesn't work!
 \label{part2}
 The unprecedented success of data-driven approaches in machine learning has turned data into a first-class citizen in machine learning. Most of the times, the more data you have, the more accurate your model will be~\citep{halevy2009unreasonable,sun2017revisiting} and it is more crucial to provide massive amounts of training data when the models become more deep and complex.
-Collecting such training sets by hand is often infeasible due to the time and expense of labeling data. Besides, hand-labeled training sets are static and we might need complete relabeling, for instance, when the modeling goals changes. Thus moving beyond fully supervised learning, like adapting weak supervision with the hope of overcoming the poverty of stimulus, is a key direction in machine learning research.
+Collecting such training sets by hand is often infeasible due to the time and expense of labeling data. Besides, hand-labeled training sets are static and we might need complete relabeling, for instance, when the modeling goals changes. Thus moving beyond fully supervised learning, like adopting weak supervision with the hope to overcome the poverty of stimulus, is a key direction in machine learning research.
 
-Humans can learn from weak and inconsistent signals\citep{chomsky1980rules}. However, it seems difficult to build fault-tolerant machine learning systems that learn, while even imperfect signals can contain a great deal of valid information.
+Humans can learn from weak and inconsistent signals\citep{chomsky1980rules}. However, it seems difficult to build fault-tolerant machine learning systems that learn, even though imperfect signals can contain a great deal of valid information.
 Given the fact that only a tiny portion of real word applications operate under perfect conditions, an essential aspect of any practical learning algorithm is the need to learn from inconsistent data provided by different sensors, noisy or weak supervision, and even when crucial information is missing from the supervision signal.
 
 In Part~\ref{part2} of this thesis, we address the following research question:
 \resq{p2}
 
 The imperfect samples can come from labels provided by non-expert crowd workers, be the output of other models that are weaker (for instance, with low accuracy or coverage), biased, or models trained on data from different related domains. 
-In this part, we aim to study how we can provide supervision signals for machine learning systems, by labeling training data programmatically instead of labeling by hand~\citep{Ratner:2016}. Then, given a vast amount of programmatically generated labeled data, and maybe a small set of samples with true labels,  we discuss how to design neural networks that leverage the full capacity of the information in the data and go beyond the imperfection of weakly annotated data.
+In this part, we aim to study how we can provide supervision signals for machine learning systems by labeling training data programmatically instead of labeling by hand~\citep{Ratner:2016}. Then, given a vast amount of programmatically generated labeled data, and maybe a small set of samples with true labels,  we discuss how to design neural networks that leverage the full capacity of the information in the data and go beyond the imperfection of weakly annotated data.
 
 
 In the first chapter of this part, Chapter~\ref{chap:4}, we address the following research question:
@@ -24,7 +24,7 @@ Then, in the second chapter of this part, Chapter~\ref{chap:5}, we focus on the 
 
 In this chapter we introduce \emph{Learning with Controlled Weak Supervision (\cws)}~\cite{Dehghani:2017:nips_metalearn, Dehghani:2017avoiding} and \emph{Fidelity Weighted Learning (\fwl)}~\citep{dehghani:2018:ICLR,Dehghani:2019:ICLR-LLD}, two semi-supervised approaches for training neural networks, where we have a large set of data with weak labels and a small amount of data with true labels. 
 %
-In \cws we train two neural networks in a meta-learning setup: a \tnet, the learner and a \cnet, the meta-learner.  The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that are weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
+In \cws we train two neural networks in a meta-learning setup: a \tnet, the learner and a \cnet, the meta-learner.  The \tnet is optimized to perform a given task and is trained using a large set of unlabeled data that is weakly annotated. We propose to control the magnitude of the gradient updates to the \tnet using the scores provided by the second \cnet, which is trained on a small amount of supervised data. Thus we avoid that the weight updates computed from noisy labels harm the quality of the \tnet model.
 %
 \fwl is a student-teacher approach in which we modulate the parameter updates to a \emph{student} network (trained on the task we care about) on a per-sample basis according to the posterior confidence of its label-quality estimated by a \emph{teacher} (who has access to the high-quality labels).  
 

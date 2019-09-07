@@ -18,7 +18,7 @@ Along with this line, Chomsky noted~\citep{chomsky1980rules}:
 Like humans, machines are confronted with the intriguing problem of the poverty of stimulus in learning and knowledge acquisition, although capturing such human-level learning abilities, given imperfect supervision, in machines remains a fundamental challenge in many domains~\citep{lake2017building}. 
 %
 % pos in machines and the necessity of {data-driven + innately primed} learning 
-In machine learning, a similar discussion has been put forward on how learning algorithms can deal with the problem of \emph{poverty of stimulus}. It has been argued that a learner that makes no prior assumptions has no rational basis for generalizing over unseen instances~\citep{Mitchell:1997:ML}, which implies ``the futility of unbiased learning''.\footnote{There has been a long discussion between rationalists and empiricists. Here, we just want to draw a connection between the process of learning in humans and machines in terms of \emph{poverty of stimulus}.}
+In machine learning, a similar discussion has been put forward on how learning algorithms can deal with the problem of \emph{poverty of stimulus}. It has been argued that a learner that makes no prior assumptions has no rational basis for generalizing over unseen instances~\citep{Mitchell:1997:ML}, which implies ``the futility of unbiased learning''.\footnote{There has been a long discussion between rationalists and empiricists in Philosophy and linguistics. Here, we just want to draw a connection between the process of learning in humans and machines in terms of \emph{poverty of stimulus}.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  FIRST PART OF THE TITLE: "LEARNING WITH IMPERFECT SUPERVISION [...]"
@@ -38,7 +38,6 @@ In this thesis, we use ``\emph{imperfect supervision}'' as an umbrella term cove
 % why language understanding?
 We focus on language understanding and reasoning as a pivotal problem in artificial intelligence.  Understanding language is one of the extraordinary cognitive abilities of humans. 
 There have been several attempts to study whether non-human animals can acquire human language~\citep{pepperberg2017animal}, like Project Nim\footnote{\url{https://nl.wikipedia.org/wiki/Project_Nim}}, a research project that was mounted in the 1970s to determine whether a chimpanzee, named Nim Chimpsky, raised in close contact with humans could develop a limited language. 
-
 Regardless of whether at the end of the project Nim was using language to communicate or simply going through a bag of tricks to get things, Nim's language was much more limited compared to what a human child can develop in the early years. 
 %
 This indicates that achieving human-level understanding and generation of language would not be an easy goal for machines either and despite the good performance on benchmark datasets, machines are nowhere near the skill of humans at language understanding and reasoning.
@@ -51,13 +50,12 @@ Here, in this thesis, we concentrate on language understanding and reasoning in 
 \medskip
 % Although machine learning has made a lot of progress on mastering its practical shortcomings, e.g., modern neural networks overcoming the limitations of the early perceptrons~\citep{minsky69perceptrons}, some of the fundamental limitations, e.g., Chomsky's Poverty of Stimulus, remain.
 
-The main problem we study in this thesis is the poverty of stimulus for learning algorithms and to overcome this problem, we focus on  i) \emph{employing the prior knowledge}, ii) \emph{augmenting data and meta-learning how to better use the data}, and iii) \emph{introducing inductive biases to learning algorithms}, all to improve the learning process. We believe these approaches are important ways to move toward better machine learning systems that are able to generalize over observed imperfect supervision signals. As \citet{Mitchell80theneed} already states in his paper:
+The main problem we study in this thesis is the poverty of stimulus for learning algorithms and how to overcome this problem, we focus on  i) \emph{employing prior knowledge}, ii) \emph{augmenting data and learning to learn how to better use the data}, and iii) \emph{introducing inductive biases into learning algorithms}, all to improve the learning process. We believe these approaches are important ways to move toward better machine learning systems that are able to generalize over observed imperfect supervision signals. As \citet{Mitchell80theneed} already states in his paper:
 \begin{quote}
 ``\emph{If biases and initial knowledge are at the heart of the ability to generalize beyond observed data, then efforts to study machine learning must focus on the combined use of prior knowledge, biases, and observation in guiding the learning process. It would be wise to make the biases and their use in controlling learning just as explicit as past research has made their observations and use.}''
 \end{quote}
 
-There are many domains and applications that suffer from the lack of a large amount of high quality labeled data, since it is not possible or economically not reasonable to build such training datasets. We believe building machine learning systems that can learn with imperfect supervision can be considered as a part of the bigger effort to democratize AI by making it dramatically easier to extend AI-powered systems to those domains with limited or noisy data.
-
+There are many domains and applications that suffer from the lack of a large amount of high quality labeled data, since it is not either possible or economically reasonable to build such training datasets. Building machine learning systems that can learn with imperfect supervision dramatically extends the scope where AI-powered systems can be applied, and more generally, contributes to the broader goal of democratizing AI.
 
 \section{Problem Description and Research Questions}
 Curating a large amount of high quality labeled training data has become the primary bottleneck in developing new methods and applications in machine learning~\citep{Ratner:2016}. 
@@ -102,8 +100,8 @@ In a general supervised learning scenario, each training sample, which is used a
 We formulate the main research question that is addressed in this thesis as follows:
 \resq{main}
 
-Based on the above terminology, i.e., features versus label and noisy versus limited, we can presume different types of imperfections in the supervision signal. In each part of this thesis, we target one or some of these types and proposed ideas that can improve the learning process with whit that type of imperfection in supervision. 
-Figure~\ref{fig:thesis_parts} summarizes the different types of imperfection of the supervision that we consider in each part of this thesis.
+Based on the above terminology, i.e., features versus label and noisy versus limited, we can presume different types of imperfections in the supervision signal. In each part of this thesis, we target one or some of these types and proposed ideas that can improve the learning process with that type of imperfection in supervision. 
+Figure~\ref{fig:thesis_parts} summarizes the different types of imperfection of the supervision that we consider in each part of this thesis.\footnote{These combinations are the most common and rational cases in practical situations.}
 \begin{figure}[t]
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
@@ -129,7 +127,7 @@ Figure~\ref{fig:thesis_parts} summarizes the different types of imperfection of 
 \bigskip
 In Part~\ref{part1} of the thesis, we address the problem of noisy features. We propose robust models that can deal with non-relevant terms in relevant documents when modeling the notion of relevance in the context of relevance feedback tasks for document ranking. We also propose models that are capable of detecting and ignoring the unstable features that change over time when learning representations from data that evolves over time, as noisy factors in the data. We also partly address the problems of noisy labels by modeling the relevance in pseudo-relevance feedback tasks for document ranking, where top-k ranked documents in a retrieval run are assumed as relevant documents, while this assumption does not hold for all cases.
 
-The proposed models in Part~\ref{part1} organized around the idea of exploring how the structure of the data can be incorporated as prior knowledge to learn representations that are more robust against noise and changes in the data during the time. 
+The proposed models in Part~\ref{part1} organized around the idea of exploring how the structure of the data can be incorporated as prior knowledge to learn representations that are more robust against noise and changes in the data over the time. 
 The following research question is the main question is central to Part~\ref{part1} of the thesis:
 \resq{p1}
 
@@ -187,14 +185,14 @@ Algorithmic problems, like arithmetic and sequence memorization tasks ~\citep{ne
 
 Besides the challenges of learning from imperfect supervision in many of these tasks, some of them are difficult tasks that, for instance, require learning rich representations, or capturing complex underlying relations, or detecting and understanding abstract concepts and reasoning about them.
 %
-Although we mainly focus on sequence modeling and language-related tasks and evaluate our proposed ideas on these tasks, many of the proposed algorithms in this thesis have no strong tie to language and can be easily extended to other domains like computer vision.
+Although we mainly focus on sequence modeling and language-related tasks and evaluate our proposed ideas on these tasks, many of the proposed algorithms in this thesis can be easily extended to other domains like computer vision.
 %
 
 In the next section, we present an overview of the thesis and introduce the structure of the content and summarize different chapters in each part of the thesis.
 
 \section{Thesis Overview}
 This thesis consists of the introductory matter, followed by five main
-chapters that are divided into three parts that are described in the previous section. Finally, it closes off with the Conclusions and Bibliography. 
+chapters that are divided into three parts that are described in the previous section.~\footnote{This thesis consists of papers that contribute to the field of information retrieval, natural language processing, and machine learning, thus the terminology used in different parts might change accordingly.} Finally, it closes off with the Conclusions and Bibliography. 
 
 \subsection*{PART I: \titleof{p1}}
 In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant over time. We break our discussions in this part of the thesis into two chapters:
@@ -308,7 +306,7 @@ Next, we present the origins of each chapter in terms of the papers they are bas
                 \item \bibentry{Dehghani:2019:WSDM}.
             \end{itemize}
         \end{itemize}
-        {\footnotesize{MD co-designed the core model (first paper) with SG, and MD extend the model (second paper). MD implemented the algorithms, ran all the experiments, and helped with the writing. SG and OV mentored the (internship) project. SG did most of the writing. OV, JU, and LK helped with designing the model and designing the experiments. OV, JU, LK, HA, JK, and MdR helped with the writing.}\medskip}
+        {\footnotesize{MD co-designed the core model (first paper) with SG, and MD extend the model (second paper). MD implemented the algorithms, ran all the experiments, and helped with the writing. SG and OV mentored the (internship) project. SG led the writing. OV, JU, and LK helped with designing the model and designing the experiments. OV, JU, LK, HA, JK, and MdR helped with the writing.}\medskip}
 %
 \end{itemize}
 
