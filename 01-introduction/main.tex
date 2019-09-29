@@ -18,7 +18,7 @@ Along with this line, Chomsky noted~\citep{chomsky1980rules}:
 Like humans, machines are confronted with the intriguing problem of the poverty of stimulus in learning and knowledge acquisition, although capturing such human-level learning abilities, given imperfect supervision, in machines remains a fundamental challenge in many domains~\citep{lake2017building}. 
 %
 % pos in machines and the necessity of {data-driven + innately primed} learning 
-In machine learning, a similar discussion has been put forward on how learning algorithms can deal with the problem of \emph{poverty of stimulus}. It has been argued that a learner that makes no prior assumptions has no rational basis for generalizing over unseen instances~\citep{Mitchell:1997:ML}, which implies ``the futility of unbiased learning''.\footnote{There has been a long discussion between rationalists and empiricists in Philosophy and linguistics. Here, we just want to draw a connection between the process of learning in humans and machines in terms of \emph{poverty of stimulus}.}
+In machine learning, a similar discussion has been put forward on how learning algorithms can deal with the problem of \emph{poverty of stimulus}. It has been argued that a learner that makes no prior assumptions has no rational basis for generalizing over unseen instances~\citep{Mitchell:1997:ML}, which implies ``the futility of unbiased learning''.\footnote{There has been a long discussion between rationalists and empiricists in Philosophy and linguistics. Here, we just want to draw a connection between the process of learning in humans and machines in terms of the \emph{poverty of stimulus}.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  FIRST PART OF THE TITLE: "LEARNING WITH IMPERFECT SUPERVISION [...]"
@@ -101,7 +101,8 @@ We formulate the main research question that is addressed in this thesis as foll
 \resq{main}
 
 Based on the above terminology, i.e., features versus label and noisy versus limited, we can presume different types of imperfections in the supervision signal. In each part of this thesis, we target one or some of these types and proposed ideas that can improve the learning process with that type of imperfection in supervision. 
-Figure~\ref{fig:thesis_parts} summarizes the different types of imperfection of the supervision that we consider in each part of this thesis.\footnote{These combinations are the most common and rational cases in practical situations.}
+Figure~\ref{fig:thesis_parts} summarizes the different types of imperfection of the supervision that we consider in each part of this thesis.
+%\footnote{These combinations are the most common and rational cases in practical situations.}
 \begin{figure}[t]
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
@@ -185,14 +186,14 @@ Algorithmic problems, like arithmetic and sequence memorization tasks ~\citep{ne
 
 Besides the challenges of learning from imperfect supervision in many of these tasks, some of them are difficult tasks that, for instance, require learning rich representations, or capturing complex underlying relations, or detecting and understanding abstract concepts and reasoning about them.
 %
-Although we mainly focus on sequence modeling and language-related tasks and evaluate our proposed ideas on these tasks, many of the proposed algorithms in this thesis can be easily extended to other domains like computer vision.
+Although we mainly focus on sequence modeling, text processing, and language-related tasks and evaluate our proposed ideas on these tasks, many of the proposed algorithms in this thesis can be easily extended to other domains like computer vision.
 %
 
 In the next section, we present an overview of the thesis and introduce the structure of the content and summarize different chapters in each part of the thesis.
 
 \section{Thesis Overview}
 This thesis consists of the introductory matter, followed by five main
-chapters that are divided into three parts that are described in the previous section.~\footnote{This thesis consists of papers that contribute to the field of information retrieval, natural language processing, and machine learning, thus the terminology used in different parts might change accordingly.} Finally, it closes off with the Conclusions and Bibliography. 
+chapters that are divided into three parts that are described in the previous section.~\footnote{This thesis consists of papers that contribute to the field of information retrieval, natural language processing, and machine learning, thus the terminology used in different parts might slightly change accordingly.} Finally, it closes off with the Conclusions and Bibliography. 
 
 \subsection*{PART I: \titleof{p1}}
 In this part, we explore how taking the general structured of the data into account can help to estimate representations that capture only the significant features when the data is noisy and highly variant over time. We break our discussions in this part of the thesis into two chapters:
