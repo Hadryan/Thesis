@@ -4,22 +4,22 @@
 \newcommand{\printtitle}{%
 {\Huge \titleof{main-with-break}}}    
 
-\begin{titlepage}
-\par\vskip 2cm
-\begin{center}
-\printtitle
-\vfill
-{\LARGE Mostafa Dehghani}                           %PERSONALIZE
-\vskip 2cm
-\end{center}
-\end{titlepage}
+% \begin{titlepage}
+% \par\vskip 2cm
+% \begin{center}
+% \printtitle
+% \vfill
+% {\LARGE Mostafa Dehghani}                           %PERSONALIZE
+% \vskip 2cm
+% \end{center}
+% \end{titlepage}
 %
 % Skip a page to start on a right page again.
 % If you're printing single-sided, simply delete    %PERSONALIZE
 % the following line.
 %
-\mbox{}\newpage
-\setcounter{page}{1}
+% \mbox{}\newpage
+% \setcounter{page}{1}
 
 %%the very first page: the `franse pagina'
 \par\vskip 2cm
@@ -47,16 +47,6 @@ homepage: {\tt http://www.illc.uva.nl/}
 \end{center}
 \vfill
 
-% If you're supported by NWO adapt the following 6 lines;
-% otherwise simply delete them.
-%
-\noindent%
-The investigations were supported by the            %PERSONALIZE
-Philosophy Research Foundation\linebreak (SWON), 
-which is subsidized by the Netherlands 
-Organization for Scientific\linebreak Research (NWO).
-\par\vspace {2cm}
-
 % If you want to add CIP data (a summary of all the data used in
 % library catalogs in a standard format), uncomment the following
 % three lines and add the CIP data in between
@@ -65,18 +55,15 @@ Organization for Scientific\linebreak Research (NWO).
 %{\tt CIP gegevens}                                 % PERSONALIZE
 %\\[4ex]                                            %PERSONALIZE
 
-%Copyright and accreditation stuff, plus ISBN
+% If you're supported by NWO adapt the following 6 lines;
+% otherwise simply delete them.
 %
 \noindent%
-% Copyright: put your name here
-Copyright \copyright\ 2019 by Mostafa Dehghani\\[2ex] %PERSONALIZE
-% Cover design, if your cover was designed by someone else
-Cover design by XXXX \\                       %PERSONALIZE
-%Maybe some additional info on the production of the dissertation.
-%Don't forget your printing shop
-Printed and bound by your printer.\\[2ex]           %PERSONALIZE
-%ISBN number: ask your printing shop to obtain one for you
-ISBN: 90--XXXX--XXX--X                              %PERSONALIZE
+This research was supported by the Netherlands Organization for Scientific Research
+(ExPoSe project, NWO CI \# 314.99.108; DiLiPaD project, NWO Digging into Data
+\# 600.006.014), Nederlab (340-6148-t1-6), and by the European Community’s Seventh
+Framework Program (FP7/2007-2013) under grant agreement ENVRI, number 283465.
+\par\vspace {2cm}
 
 % Dedication, table of contents and acknowledgements
 % are handled in the main file
@@ -95,10 +82,10 @@ aan de Universiteit van Amsterdam\\
 op gezag van de Rector Magnificus\\
 prof. dr. ir. K.I.J. Maex\\                                 %PERSONALIZE
 ten overstaan van een door het College voor Promoties ingestelde\\
-\mbox{commissie, in het openbaar te verdedigen in de Aula der Universiteit}\\        %PERSONALIZE
+\mbox{commissie, in het openbaar te verdedigen in Agnietenkapel}\\        %PERSONALIZE
 % Note: If your UvA PhD defense is located at the Agnietenkapel, simply write
 % 'te verdedigen in de Agnietenkapel \\', i.e. do not add 'der Universiteit'
-op maandag 1 januari 2001, te 12.00 uur \\ }        %PERSONALIZE
+op vrijdag 28 februari 2020, te 10.00 uur \\ }        %PERSONALIZE
 \par\vspace {1cm} {\large door}
 \par \vspace {1cm} % Note: next should be your _full_ name
 {\Large Mostafa Dehghani}                        %PERSONALIZE
@@ -110,7 +97,30 @@ op maandag 1 januari 2001, te 12.00 uur \\ }        %PERSONALIZE
 % If you were born inside the Netherlands, you should OMIT your birth country.
 \end{center}
 
-%%the fourth page: promotores, ISBN etc.
+%%the Fourth page: the `copyright stuff'
+\clearpage
+\par\vskip 2cm
+\newenvironment{bottompar}{\par\vspace*{\fill}}{\clearpage}
+
+\begin{bottompar}
+%Copyright and accreditation stuff, plus ISBN
+%
+\noindent%
+% Copyright: put your name here
+Copyright \copyright\ 2020 by Mostafa Dehghani\\[2ex] %PERSONALIZE
+% Cover design, if your cover was designed by someone else
+Cover design by Mostafa Dehghani \\                       %PERSONALIZE
+%Maybe some additional info on the production of the dissertation.
+%Don't forget your printing shop
+Printed and bound by your printer.\\[2ex]           %PERSONALIZE
+%ISBN number: ask your printing shop to obtain one for you
+ISBN: 90--XXXX--XXX--X                              %PERSONALIZE
+
+% Dedication, table of contents and acknowledgements
+% are handled in the main file
+\end{bottompar}
+
+%%the Fifth page: promotores, ISBN etc.
 \clearpage
 \noindent%
 {\bf Promotiecommisie}\\
@@ -122,12 +132,12 @@ Promotoren:
 
 \\
 Overige leden: 
-& Prof. Dr. Arianna Betti    &  University of Amsterdam \\ 
-& Prof. Dr. W. Bruce Croft  & University of Massachusetts, Amherst \\ 
-& Dr. Stephan Gouws    &  Google DeepMind \\ 
-& Dr. Claudia Hauff  &  Delft University of Technology \\ 
-& Prof. Dr. Max Welling    &  University of Amsterdam \\ 
-
+& Prof.dr. W.B. Croft   &  University of Massachusetts Amherst \\ 
+& Dr. S. Gouws  &  DeepMind \\ 
+& Dr. C. Hauff   &   TU Delft \\ 
+& Prof.dr. M. Welling    &  University of Amsterdam \\ 
+& Prof.dr. A. Betti    &  University of Amsterdam \\ 
+& Prof.dr. E. Kanoulas    &  University of Amsterdam \\ 
 
 \end{tabular}\\
 \\
