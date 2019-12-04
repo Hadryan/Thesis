@@ -304,12 +304,12 @@
    \markboth{Samenvatting}{Samenvatting}%
 }
 
-\newcommand{\abstract}{%
-   \chapter*{Abstract}%
-   \addcontentsline{toc}{chapter}{Abstract}%
-   \markboth{Abstract}{Abstract}%
+\newcommand{\summary}{%
+   \chapter*{Summary}%
+   \addcontentsline{toc}{chapter}{Summary}%
+   \markboth{Summary}{Summary}%
 }
-
+   
 \newcommand{\curriculum}{%
    \chapter*{Curriculum Vitae}
    \addcontentsline{toc}{chapter}{Curriculum Vitae}
