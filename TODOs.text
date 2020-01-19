@@ -10,7 +10,7 @@
  - add \fontfamily{courier}\selectfont to all plots
 
 
- - \url{} make them nicer (the current \texttt{} is pretty ugly)
+ - \url{} make them nicer (the current \texttt{} is pretty ugly)  [Use \urlstyle{} e.g. \urlstyle{sf}]
 
 
  - check  all the RQs to be first in the text and second placed correctly

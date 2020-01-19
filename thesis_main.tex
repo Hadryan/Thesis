@@ -60,9 +60,9 @@
 %%     The main reason we used to split the document in parts, was to compile only the relevant chapters... 
 \mainmatter
 \input{01-introduction/main}
-% \input{02-part-01/main}
-% \input{03-part-02/main}
-% \input{04-part-03/main}
+\input{02-part-01/main}
+\input{03-part-02/main}
+\input{04-part-03/main}
 
 \bookmarksetup{startatroot} % Lift from parts
 \addtocontents{toc}{\bigskip} % skip
@@ -84,8 +84,7 @@
 \include{thesis_samenvatting}
 
 %%  finally, \include the list of previous ILLC dissertations
-
 \cleardoublepage % if you are so inclined
-\include{illcdissertations}
+\input{style/illcdissertations.tex}
 
 \end{document}
