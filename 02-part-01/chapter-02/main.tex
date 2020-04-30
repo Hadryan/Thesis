@@ -52,7 +52,7 @@ As the standard and simple of estimating the language model, we can use maximum 
 
 By writing down the log-likelihood function and using the Lagrange multiplier to combine the constraint of $\sigma_{w in v}p(w|d) =1$ with the original log-likelihood function, we can get to a new unconstrained optimization problem. Then, by taking partial derivatives of this function and setting them to zero, we can obtain the solution for $\theta$ which gives each word a probability equal to its relative frequency in $d$:
 \begin{equation}
-    p(w|\hat{\theta} = \frac{c(w, d)}{|d|},
+    p(w|\hat{\theta}) = \frac{c(w, d)}{|d|},
 \end{equation}
 where $c(w, d)$ is the count of word $w$ in $d$ and $|d|$ is the length of $d$ that is equal to total number of word occurrences in $d$.
 

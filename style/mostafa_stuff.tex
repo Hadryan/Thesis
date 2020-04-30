@@ -378,3 +378,57 @@
     \thispagestyle{empty}%
     \addtocounter{page}{-1}%
     \newpage}
+    
+    
+
+
+% to add chapter label:
+\usepackage[contents={},opacity=1,scale=1,color=black]{background}
+\usepackage{tikzpagenodes}
+\usepackage{totcount}
+\usetikzlibrary{calc}
+\newif\ifMaterial
+\newlength\LabelSize
+\setlength\LabelSize{2.5cm}
+\AtBeginDocument{%
+\regtotcounter{chapter}
+\setlength\LabelSize{\dimexpr\textheight/8
+%\totvalue{chapter}
+\relax}
+\ifdim\LabelSize>1.5cm\relax
+  \global\setlength\LabelSize{1.5cm}
+\fi
+}
+
+\newcommand\AddLabels{%
+\Materialtrue%
+\AddEverypageHook{%
+\ifMaterial%
+\ifodd\value{page} %
+ \backgroundsetup{
+  angle=90,
+  position={current page.east|-current page text area.north  east},
+  vshift=15pt,
+  hshift=-\thechapter*\LabelSize,
+  contents={%
+  \tikz\node[fill=gray!30,anchor=west,text width=\LabelSize,
+    align=center,text height=15pt,text depth=10pt,font=\large\sffamily] {\thechapter};
+  }%
+ }
+ \else
+ \backgroundsetup{
+  angle=90,
+  position={current page.west|-current page text area.north west},
+  vshift=-15pt,
+  hshift=-\thechapter*\LabelSize,
+  contents={%
+  \tikz\node[fill=gray!30,anchor=west,text width=\LabelSize,
+    align=center,text height=15pt,text depth=10pt,font=\large\sffamily] {\thechapter};
+  }%
+ }
+ \fi
+ \BgMaterial%
+\else\relax\fi}%
+}
+
+\newcommand\RemoveLabels{\Materialfalse}
