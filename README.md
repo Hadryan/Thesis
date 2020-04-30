@@ -6,3 +6,5 @@ This is the latex source of my PhD thesis:
 
 Please check 
 [my homepage](https://mostafadehghani.com/2020/02/28/the-phd-thesis) for more information and the complied pdf version of the thesis.
+
+![](thesis_cover.png)
